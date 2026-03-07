@@ -626,10 +626,12 @@
 
     /* ── FOOTER ── */
     footer {
-      text-align: center; padding: 32px 40px;
-      font-size: 11px; color: rgba(255,255,255,0.18); letter-spacing: 0.06em;
+      text-align: center; padding: 48px 40px 40px;
+      font-size: 11px; color: rgba(255,255,255,0.2); letter-spacing: 0.06em;
       border-top: 1px solid rgba(255,255,255,0.05);
     }
+    footer .author-name { font-size: 13px; color: rgba(255,255,255,0.7); }
+    footer .author-title { font-size: 11px; color: rgba(255,255,255,0.35); margin-top: 2px; }
     /* ── RESPONSIVE ── */
     @media (max-width: 768px) {
 
@@ -785,14 +787,6 @@
           <div class="aud-action">How the engine runs</div>
           <div class="aud-dest">Architecture, flows &amp; decisioning logic</div>
         </a>
-      </div>
-    </div>
-
-    <div class="author-block">
-      <div class="author-avatar">SD</div>
-      <div>
-        <div class="author-name">Stuart Dunlop</div>
-        <div class="author-title">Strategic Solution Specialist · Salesforce</div>
       </div>
     </div>
 
@@ -1321,7 +1315,14 @@
   </div>
 
   <footer>
-    Salesforce &nbsp;·&nbsp; Internal Use Only &nbsp;·&nbsp; Next Best Action — AE Narrative &nbsp;·&nbsp; 2026
+    <div style="display:flex; align-items:center; justify-content:center; gap:14px; margin-bottom:12px;">
+      <div class="author-avatar">SD</div>
+      <div style="text-align:left;">
+        <div class="author-name">Stuart Dunlop</div>
+        <div class="author-title">Strategic Solution Specialist · Salesforce</div>
+      </div>
+    </div>
+    <div>Salesforce &nbsp;·&nbsp; Internal Use Only &nbsp;·&nbsp; 2026</div>
   </footer>
 
   <!-- PASSWORD GATE -->
