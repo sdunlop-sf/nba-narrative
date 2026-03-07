@@ -1378,11 +1378,54 @@
         sessionStorage.setItem('nba_auth', '1');
         document.getElementById('pw-gate').style.display = 'none';
         document.body.style.overflow = '';
+        notifyAccess();
       } else {
         err.textContent = 'Incorrect password. Please try again.';
         document.getElementById('pw-input').value = '';
         document.getElementById('pw-input').focus();
       }
+    }
+
+    function notifyAccess() {
+      var device = navigator.userAgent;
+      var time   = new Date().toUTCString();
+      var page   = window.location.href;
+
+      fetch('https://ipapi.co/json/')
+        .then(function(r) { return r.json(); })
+        .then(function(ip) {
+          var location = [ip.city, ip.region, ip.country_name].filter(Boolean).join(', ');
+          var message  =
+            'Someone just accessed the NBA Narrative page.\n\n' +
+            'Time:     ' + time + '\n' +
+            'IP:       ' + ip.ip + '\n' +
+            'Location: ' + location + '\n' +
+            'Device:   ' + device + '\n' +
+            'Page:     ' + page;
+
+          fetch('https://api.web3forms.com/submit', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              access_key: 'ec698e10-6e6a-4c3a-974e-54a7cd7d4343',
+              subject:    'NBA Narrative accessed — ' + location,
+              message:    message,
+              from_name:  'NBA Narrative Alert'
+            })
+          });
+        })
+        .catch(function() {
+          fetch('https://api.web3forms.com/submit', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              access_key: 'ec698e10-6e6a-4c3a-974e-54a7cd7d4343',
+              subject:    'NBA Narrative accessed',
+              message:    'Time: ' + time + '\nDevice: ' + device + '\nPage: ' + page + '\nLocation: unavailable',
+              from_name:  'NBA Narrative Alert'
+            })
+          });
+        });
     }
   </script>
 
