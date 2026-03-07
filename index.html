@@ -156,6 +156,21 @@
     .problem-closer p em { color: #f87171; font-style: normal; font-weight: 700; }
     .problem-closer p strong { color: #fff; }
 
+    /* ── AUTHOR ── */
+    .author-block {
+      display: flex; align-items: center; gap: 12px;
+      margin-top: 48px; justify-content: center;
+    }
+    .author-avatar {
+      width: 40px; height: 40px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--blue), #032D60);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px; font-weight: 700; color: #fff; flex-shrink: 0;
+      border: 1px solid rgba(0,161,224,0.4);
+    }
+    .author-name { font-size: 14px; font-weight: 600; color: rgba(255,255,255,0.85); }
+    .author-title { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
     /* ── AUDIENCE GUIDE ── */
     .audience-guide {
       display: flex; gap: 12px; margin-top: 48px; justify-content: center; flex-wrap: wrap;
@@ -773,6 +788,14 @@
       </div>
     </div>
 
+    <div class="author-block">
+      <div class="author-avatar">SD</div>
+      <div>
+        <div class="author-name">Stuart Dunlop</div>
+        <div class="author-title">Strategic Solution Specialist · Salesforce</div>
+      </div>
+    </div>
+
     <div class="scroll-hint" style="margin-top: 40px;">scroll to explore</div>
   </div>
 
@@ -1300,6 +1323,68 @@
   <footer>
     Salesforce &nbsp;·&nbsp; Internal Use Only &nbsp;·&nbsp; Next Best Action — AE Narrative &nbsp;·&nbsp; 2026
   </footer>
+
+  <!-- PASSWORD GATE -->
+  <div id="pw-gate" style="
+    display:none; position:fixed; inset:0; z-index:9999;
+    background:#080F1E; align-items:center; justify-content:center;
+    flex-direction:column; gap:0;
+  ">
+    <div style="
+      background:rgba(255,255,255,0.04); border:1px solid rgba(0,161,224,0.25);
+      border-radius:20px; padding:48px 40px; text-align:center; width:100%; max-width:380px;
+      margin: 0 24px;
+    ">
+      <div style="width:44px;height:44px;border-radius:50%;background:rgba(0,161,224,0.1);
+        border:1px solid rgba(0,161,224,0.3);display:flex;align-items:center;
+        justify-content:center;margin:0 auto 20px;font-size:18px;">🔒</div>
+      <div style="font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;
+        color:#00A1E0;margin-bottom:10px;">Protected Resource</div>
+      <h2 style="font-size:20px;font-weight:800;margin-bottom:6px;">Next Best Action</h2>
+      <p style="font-size:13px;color:rgba(255,255,255,0.45);margin-bottom:28px;line-height:1.6;">
+        Stuart Dunlop · Strategic Solution Specialist
+      </p>
+      <input id="pw-input" type="password" placeholder="Enter password"
+        style="width:100%;padding:12px 16px;border-radius:10px;border:1px solid rgba(255,255,255,0.12);
+        background:rgba(255,255,255,0.06);color:#fff;font-size:14px;outline:none;
+        font-family:inherit;margin-bottom:10px;box-sizing:border-box;"
+        onkeydown="if(event.key==='Enter')checkPw()"
+      />
+      <div id="pw-error" style="font-size:12px;color:#f87171;margin-bottom:10px;min-height:16px;"></div>
+      <button onclick="checkPw()" style="
+        width:100%;padding:13px;border-radius:10px;border:none;cursor:pointer;
+        background:linear-gradient(135deg,#00A1E0,#0077a8);color:#fff;
+        font-size:14px;font-weight:700;font-family:inherit;
+        transition:opacity 0.2s;
+      " onmouseover="this.style.opacity=0.85" onmouseout="this.style.opacity=1">
+        Continue
+      </button>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      var PASS = 'SFNBA2026!';
+      var gate = document.getElementById('pw-gate');
+      if (sessionStorage.getItem('nba_auth') === '1') return;
+      gate.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+    })();
+
+    function checkPw() {
+      var val = document.getElementById('pw-input').value;
+      var err = document.getElementById('pw-error');
+      if (val === 'SFNBA2026!') {
+        sessionStorage.setItem('nba_auth', '1');
+        document.getElementById('pw-gate').style.display = 'none';
+        document.body.style.overflow = '';
+      } else {
+        err.textContent = 'Incorrect password. Please try again.';
+        document.getElementById('pw-input').value = '';
+        document.getElementById('pw-input').focus();
+      }
+    }
+  </script>
 
 </body>
 </html>
