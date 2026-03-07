@@ -615,6 +615,112 @@
       font-size: 11px; color: rgba(255,255,255,0.18); letter-spacing: 0.06em;
       border-top: 1px solid rgba(255,255,255,0.05);
     }
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+
+      /* Nav */
+      nav { padding: 0 20px; }
+      .nav-links { display: none; }
+
+      /* Hero */
+      .hero { padding: 90px 24px 60px; }
+      .hero h1 { font-size: 32px; }
+      .hero p { font-size: 15px; }
+      .audience-guide { flex-direction: column; align-items: stretch; gap: 10px; }
+      .aud-card { max-width: 100%; }
+
+      /* Sections */
+      .page-section { padding: 60px 24px; }
+      .problem-wrap { padding: 60px 24px; }
+      .engine-wrap { padding: 60px 24px; }
+      .stack-wrap { padding: 60px 24px; }
+      .closing-wrap { padding: 0 24px 60px; }
+      .section-h { font-size: 28px; }
+
+      /* Problem grid */
+      .problem-grid { grid-template-columns: 1fr; }
+      .prob-stat { font-size: 40px; }
+      .problem-closer { padding: 24px; }
+      .problem-closer p { font-size: 15px; }
+
+      /* Cloud cards */
+      .cloud-grid { grid-template-columns: 1fr; }
+
+      /* Pull quote */
+      .pull-quote { flex-direction: column; gap: 8px; padding: 24px; }
+      .pq-mark { font-size: 40px; }
+      .pull-quote p { font-size: 15px; }
+
+      /* Contrast row */
+      .contrast-row { flex-direction: column; }
+      .contrast-col { padding: 24px; }
+      .contrast-divider { width: 100%; height: 40px; border-left: none; border-top: 1px solid rgba(255,255,255,0.06); border-bottom: 1px solid rgba(0,161,224,0.18); writing-mode: horizontal-tb; }
+
+      /* Metrics */
+      .metrics-row { grid-template-columns: 1fr; }
+
+      /* Stack layers */
+      .stack-layer { grid-template-columns: 1fr; }
+      .sl-accent { display: none; }
+      .sl-left {
+        border-right: none; border-bottom: 1px solid rgba(255,255,255,0.06);
+        padding: 20px 20px 14px; flex-direction: row; align-items: center; gap: 12px;
+        background: rgba(255,255,255,0.03);
+      }
+      .sl-left .sl-step { margin-bottom: 0; font-size: 9px; white-space: nowrap; }
+      .sl-left .sl-product { font-size: 14px; }
+      .sl-left .sl-product-sub { display: none; }
+      .sl-right { padding: 20px; }
+      .sl-desc { font-size: 13px; }
+      .promo-split { grid-template-columns: 1fr; }
+      .pers-split { grid-template-columns: 1fr; }
+
+      /* One liner */
+      .one-liner { grid-template-columns: 1fr 1fr; gap: 20px; padding: 28px 24px; }
+      .ol-block:not(:last-child)::after { display: none; }
+      .ol-line { font-size: 12px; }
+
+      /* CRM cycle */
+      .cycle-intro { flex-direction: column; gap: 10px; padding: 20px; }
+      .ci-divider { width: 100%; height: 1px; }
+      .cycle-stage { grid-template-columns: 1fr; }
+      .stage-left {
+        border-right: none; border-bottom: 1px solid rgba(255,255,255,0.06);
+        padding: 16px 20px; flex-direction: row; align-items: center; gap: 10px;
+      }
+      .stage-left .stage-num { font-size: 9px; white-space: nowrap; margin-bottom: 0; }
+      .stage-left .stage-name { font-size: 13px; }
+      .stage-left .stage-sub { display: none; }
+      .stage-right { flex-direction: column; padding: 20px; gap: 16px; }
+      .stage-crm { padding-right: 0; border-right: none; border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 16px; }
+      .bridge-line { flex-direction: column; gap: 12px; padding: 24px; }
+
+      /* Engine */
+      .trigger-block { flex-direction: column; gap: 10px; }
+      .mf-step { grid-template-columns: 64px 1fr; }
+      .mf-step-num { padding: 16px 10px; }
+      .step-badge { width: 24px; height: 24px; font-size: 10px; }
+      .mf-step-body { padding: 16px; }
+      .loop-steps { flex-direction: column; }
+      .loop-arrow { transform: rotate(90deg); align-self: center; }
+      .arb-exec { grid-template-columns: 1fr; }
+      .key-insight { grid-template-columns: 1fr; }
+
+      /* Closing */
+      .closing-card { padding: 40px 24px; }
+      .closing-card h2 { font-size: 24px; }
+
+      /* Footer */
+      footer { padding: 24px; font-size: 10px; }
+    }
+
+    @media (max-width: 400px) {
+      .hero h1 { font-size: 26px; }
+      .prob-stat { font-size: 36px; }
+      .one-liner { grid-template-columns: 1fr; }
+      .problem-statement h2 { font-size: 26px; }
+    }
+
   </style>
 </head>
 <body>
