@@ -499,47 +499,56 @@
     .ol-block:nth-child(4) .ol-cap { color: var(--teal); }
     .ol-line { font-size: 14px; font-weight: 600; color: rgba(255,255,255,0.8); line-height: 1.4; }
 
-    /* ── MARKETER BLOCK ── */
-    .marketer-block {
-      margin-bottom: 40px;
-      border: 1px solid rgba(251,191,36,0.2); border-radius: 18px; overflow: hidden;
-      background: linear-gradient(135deg, rgba(251,191,36,0.04), rgba(251,191,36,0.01));
+    /* ── DIGITAL LABOUR ROLE CARDS ── */
+    .dl-roles {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 40px;
     }
-    .mb-label {
-      font-size: 9px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase;
-      color: #fbbf24; padding: 16px 28px 0;
+    .dl-card {
+      border-radius: 18px; overflow: hidden; display: flex; flex-direction: column;
     }
-    .mb-cols {
-      display: grid; grid-template-columns: 1fr 40px 1fr; align-items: stretch; padding: 16px 28px 24px;
+    .dl-card.dl-rep  { border: 1px solid rgba(0,161,224,0.3); }
+    .dl-card.dl-mkt  { border: 1px solid rgba(251,191,36,0.3); }
+
+    .dl-card-head {
+      padding: 24px 26px 20px;
     }
-    .mb-col { padding: 0 8px; }
-    .mb-col-label {
-      font-size: 9px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
-      margin-bottom: 8px;
+    .dl-rep  .dl-card-head { background: linear-gradient(135deg, rgba(0,161,224,0.12), rgba(0,161,224,0.03)); border-bottom: 1px solid rgba(0,161,224,0.2); }
+    .dl-mkt  .dl-card-head { background: linear-gradient(135deg, rgba(251,191,36,0.1),  rgba(251,191,36,0.02));  border-bottom: 1px solid rgba(251,191,36,0.18); }
+
+    .dl-role-tag {
+      font-size: 9px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 8px;
     }
-    .mb-before .mb-col-label { color: rgba(255,255,255,0.3); }
-    .mb-after .mb-col-label { color: #fbbf24; }
-    .mb-before p { font-size: 14px; color: rgba(255,255,255,0.4); line-height: 1.7; }
-    .mb-after p { font-size: 14px; color: rgba(255,255,255,0.75); line-height: 1.7; }
-    .mb-after p strong { color: #fbbf24; }
-    .mb-divider {
-      display: flex; align-items: center; justify-content: center;
-      color: rgba(251,191,36,0.4); font-size: 20px;
+    .dl-rep .dl-role-tag { color: var(--blue); }
+    .dl-mkt .dl-role-tag { color: #fbbf24; }
+
+    .dl-card-title { font-size: 17px; font-weight: 700; line-height: 1.35; margin-bottom: 8px; color: rgba(255,255,255,0.92); }
+    .dl-card-before {
+      font-size: 12px; color: rgba(255,255,255,0.35); line-height: 1.6;
+      padding: 8px 12px; border-radius: 8px; margin-top: 4px;
+      border-left: 2px solid rgba(255,255,255,0.08);
     }
-    .mb-closer {
-      font-size: 13px; font-weight: 700; color: rgba(255,255,255,0.5);
-      text-align: center; padding: 14px 28px;
-      border-top: 1px solid rgba(251,191,36,0.12);
-      letter-spacing: 0.02em;
+    .dl-card-before::before {
+      content: 'Before: '; font-weight: 700; color: rgba(255,255,255,0.25);
     }
 
+    .dl-card-body { padding: 20px 26px 24px; flex: 1; }
+    .dl-benefits { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    .dl-benefits li {
+      display: flex; gap: 10px; font-size: 13px; color: rgba(255,255,255,0.65); line-height: 1.6;
+    }
+    .dl-benefits li .dl-tick {
+      flex-shrink: 0; width: 18px; height: 18px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 10px; font-weight: 700; margin-top: 1px;
+    }
+    .dl-rep .dl-tick  { background: rgba(0,161,224,0.15);  color: var(--blue); }
+    .dl-mkt .dl-tick  { background: rgba(251,191,36,0.15); color: #fbbf24; }
+    .dl-benefits li strong { color: rgba(255,255,255,0.9); }
+
     @media (max-width: 768px) {
-      .mb-cols { grid-template-columns: 1fr; padding: 12px 20px 20px; }
-      .mb-before { margin-bottom: 8px; }
-      .mb-divider { transform: rotate(90deg); margin: 4px 0; }
-      .mb-label { padding: 14px 20px 0; }
-      .mb-closer { padding: 12px 20px; }
-      .mb-before p, .mb-after p { font-size: 13px; }
+      .dl-roles { grid-template-columns: 1fr; }
+      .dl-card-head { padding: 20px 20px 16px; }
+      .dl-card-body { padding: 16px 20px 20px; }
     }
 
     /* ── COMPETITIVE ── */
@@ -1318,18 +1327,42 @@
     <h2 class="section-h">Digital Labour — One Person<br/><span class="grad">Doing What Used to Take<br/>a Team</span></h2>
     <p class="section-p">This applies to reps and marketers equally. The constraint has never been ambition — it's always been capacity. Digital labour removes that ceiling.</p>
 
-    <div class="contrast-row">
-      <div class="contrast-col before">
-        <div class="col-label">Without digital labour</div>
-        <h4>Humans are the bottleneck</h4>
-        <p>A rep covers 5 accounts well and the rest get missed. A marketer briefs a campaign to a segment of thousands and calls it personalisation. Every signal that fires outside business hours, outside a rep's open accounts, or outside the campaign schedule — expires unacted on.</p>
+    <div class="dl-roles">
+
+      <!-- REP CARD -->
+      <div class="dl-card dl-rep">
+        <div class="dl-card-head">
+          <div class="dl-role-tag">Sales Rep</div>
+          <div class="dl-card-title">From covering accounts<br/>to closing relationships</div>
+          <div class="dl-card-before">A rep covers 5 accounts well — the rest get missed signals or nothing at all.</div>
+        </div>
+        <div class="dl-card-body">
+          <ul class="dl-benefits">
+            <li><span class="dl-tick">✓</span><span><strong>Digital SDR handles Tier 1 autonomously</strong> — before the rep needs to act</span></li>
+            <li><span class="dl-tick">✓</span><span><strong>Signals fire on every account</strong>, whether the rep is looking or not</span></li>
+            <li><span class="dl-tick">✓</span><span>Pipeline surfaces <strong>highest-value actions, ranked by propensity</strong></span></li>
+            <li><span class="dl-tick">✓</span><span>Human rep steps in only when <strong>the relationship demands it</strong></span></li>
+          </ul>
+        </div>
       </div>
-      <div class="contrast-divider">→</div>
-      <div class="contrast-col after">
-        <div class="col-label">With NBA + Digital Labour</div>
-        <h4>Capacity becomes unlimited</h4>
-        <p>Digital labour runs thousands of simultaneous, two-way personalised conversations — rep-side and marketing-side — each informed by real signals, each learning from the response. Humans step in only when the relationship demands it. The scale that used to require a team now requires a catalogue and a set of rules.</p>
+
+      <!-- MARKETER CARD -->
+      <div class="dl-card dl-mkt">
+        <div class="dl-card-head">
+          <div class="dl-role-tag">Marketer</div>
+          <div class="dl-card-title">From briefing campaigns<br/>to running an engine</div>
+          <div class="dl-card-before">Brief the agency. Send one message to 50,000. Wait six weeks. Margin set in a spreadsheet, never adjusted in flight.</div>
+        </div>
+        <div class="dl-card-body">
+          <ul class="dl-benefits">
+            <li><span class="dl-tick">✓</span><span><strong>Define the promotions catalogue once</strong> — offers, thresholds, eligible segments</span></li>
+            <li><span class="dl-tick">✓</span><span><strong>Thousands of personalised conversations</strong> run simultaneously against those rules</span></li>
+            <li><span class="dl-tick">✓</span><span><strong>Margin is a live constraint</strong> in every decision — not a post-campaign measurement</span></li>
+            <li><span class="dl-tick">✓</span><span>One marketer manages <strong>what previously required a team</strong></span></li>
+          </ul>
+        </div>
       </div>
+
     </div>
 
     <div class="metrics-row">
@@ -1345,22 +1378,6 @@
         <div class="metric-val">∞</div>
         <div class="metric-desc">Two-way conversations at scale — structurally impossible before digital labour</div>
       </div>
-    </div>
-
-    <div class="marketer-block">
-      <div class="mb-label">The marketer's new role</div>
-      <div class="mb-cols">
-        <div class="mb-col mb-before">
-          <div class="mb-col-label">Before</div>
-          <p>Brief the agency. Approve the creative. Send one message to a segment of 50,000. Wait six weeks to measure. Margin is a planning assumption — set in a spreadsheet before the campaign runs, never adjusted in flight.</p>
-        </div>
-        <div class="mb-divider">→</div>
-        <div class="mb-col mb-after">
-          <div class="mb-col-label">Now</div>
-          <p>One marketer defines the promotions catalogue — which offers are live, at what margin threshold, to which eligible segments. Digital labour runs thousands of individual conversations against those rules simultaneously. <strong>Margin isn't a post-campaign measurement. It's a live constraint built into every decision the engine makes.</strong></p>
-        </div>
-      </div>
-      <div class="mb-closer">One marketer. One catalogue. The output of a team.</div>
     </div>
 
     <div class="pull-quote">
