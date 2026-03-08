@@ -269,29 +269,49 @@
       font-size: 15px; color: var(--muted); line-height: 1.75; max-width: 560px; margin-bottom: 56px;
     }
 
-    /* ── FRAME 1: AE MOMENTS ── */
-    .ae-moments {
-      display: flex; flex-direction: column; gap: 0; margin-bottom: 48px;
-      border: 1px solid var(--border); border-radius: 18px; overflow: hidden;
+    /* ── FRAME 1: FROM → TO ── */
+    .ft-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 48px; }
+    .ft-row { display: grid; grid-template-columns: 1fr 40px 1fr; align-items: stretch; }
+    .ft-context {
+      grid-column: 1 / -1; font-size: 9px; font-weight: 700;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: rgba(255,255,255,0.18); padding: 0 0 6px 2px;
     }
-    .ae-card {
-      display: grid; grid-template-columns: 60px 1fr;
-      border-bottom: 1px solid var(--border);
-      transition: background 0.2s;
+    .ft-from {
+      padding: 20px 22px; border-radius: 12px 0 0 12px;
+      background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07);
+      border-right: none;
     }
-    .ae-card:last-child { border-bottom: none; }
-    .ae-card:hover { background: rgba(0,161,224,0.03); }
-    .ae-num {
-      display: flex; align-items: flex-start; justify-content: center;
-      padding: 28px 0 28px; font-size: 11px; font-weight: 800;
-      letter-spacing: 0.08em; color: rgba(0,161,224,0.35);
-      border-right: 1px solid var(--border);
+    .ft-arrow {
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(255,255,255,0.02);
+      border-top: 1px solid rgba(255,255,255,0.07);
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      color: rgba(0,161,224,0.45); font-size: 20px; font-weight: 300;
     }
-    .ae-body { padding: 24px 28px; }
-    .ae-body h4 { font-size: 16px; font-weight: 700; margin-bottom: 8px; color: rgba(255,255,255,0.9); }
-    .ae-body p { font-size: 14px; color: rgba(255,255,255,0.6); line-height: 1.75; }
-    .ae-body p strong { color: rgba(255,255,255,0.85); }
-    .ae-body p em { color: var(--blue); font-style: normal; }
+    .ft-to {
+      padding: 20px 22px; border-radius: 0 12px 12px 0;
+      background: rgba(0,161,224,0.07); border: 1px solid rgba(0,161,224,0.2);
+      border-left: none;
+    }
+    .ft-badge {
+      display: inline-block; font-size: 8px; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      padding: 2px 8px; border-radius: 4px; margin-bottom: 8px;
+    }
+    .ft-from .ft-badge { background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.3); }
+    .ft-to .ft-badge { background: rgba(0,161,224,0.15); color: var(--blue); }
+    .ft-from h5 {
+      font-size: 14px; font-weight: 700; line-height: 1.4; margin-bottom: 6px;
+      color: rgba(255,255,255,0.5);
+    }
+    .ft-to h5 {
+      font-size: 14px; font-weight: 700; line-height: 1.4; margin-bottom: 6px;
+      color: rgba(255,255,255,0.95);
+    }
+    .ft-from p { font-size: 13px; color: rgba(255,255,255,0.35); line-height: 1.65; }
+    .ft-to p { font-size: 13px; color: rgba(255,255,255,0.7); line-height: 1.65; }
+    .ft-to p strong { color: var(--blue); font-weight: 700; }
 
     /* ── FRAME 1: CLOUD CARDS (kept for reference, unused) ── */
     .cloud-grid {
@@ -813,12 +833,15 @@
       .problem-closer { padding: 24px; }
       .problem-closer p { font-size: 15px; }
 
-      /* AE moments */
-      .ae-card { grid-template-columns: 48px 1fr; }
-      .ae-num { font-size: 10px; padding: 20px 0; }
-      .ae-body { padding: 18px 18px; }
-      .ae-body h4 { font-size: 15px; }
-      .ae-body p { font-size: 13px; }
+      /* From → To */
+      .ft-row { grid-template-columns: 1fr; }
+      .ft-context { padding-bottom: 4px; }
+      .ft-from { border-radius: 10px 10px 0 0; border-right: 1px solid rgba(255,255,255,0.07); border-bottom: none; }
+      .ft-arrow { border-top: none; border-bottom: none; border-left: 1px solid rgba(255,255,255,0.07); border-right: 1px solid rgba(0,161,224,0.2); padding: 10px 0; font-size: 18px; transform: rotate(90deg); }
+      .ft-to { border-radius: 0 0 10px 10px; border-left: 1px solid rgba(0,161,224,0.2); border-top: none; }
+      .ft-from h5 { font-size: 13px; }
+      .ft-to h5 { font-size: 13px; }
+      .ft-from p, .ft-to p { font-size: 12px; }
 
       /* Cloud cards */
       .cloud-grid { grid-template-columns: 1fr; }
@@ -1160,37 +1183,65 @@
     <h2 class="section-h">Your Customer Already Has NBA.<br/><span class="grad">Here's What the Engine Unlocks.</span></h2>
     <p class="section-p">The conversation isn't "what is NBA" — it's what the engine adds that native can't do: fires whether a rep is looking or not, routes intelligently to human or digital, and learns from every outcome.</p>
 
-    <div class="ae-moments">
+    <div class="ft-list">
 
-      <div class="ae-card">
-        <div class="ae-num">01</div>
-        <div class="ae-body">
-          <h4>Real-time signal → instant routing</h4>
-          <p>Native NBA fires when a rep opens a record. The engine fires the moment Data 360 detects the signal — limit hit, renewal approaching, usage spike. High propensity + low complexity routes to a digital SDR agent. High relationship value surfaces to the AE's pipeline view with context. <strong>Same signal. Intelligent routing. No rep action required.</strong></p>
+      <div class="ft-row">
+        <div class="ft-context">Signal detection</div>
+        <div class="ft-from">
+          <div class="ft-badge">Native NBA</div>
+          <h5>Fires when a rep opens a record</h5>
+          <p>Signal sits waiting. Most accounts go unactioned for days — or until the customer moment has already passed.</p>
+        </div>
+        <div class="ft-arrow">→</div>
+        <div class="ft-to">
+          <div class="ft-badge">With the engine</div>
+          <h5>Fires the moment Data 360 detects the signal</h5>
+          <p>Limit hit, renewal approaching, usage spike — engine routes instantly. High propensity → digital SDR. High value → <strong>surfaces to AE's pipeline view with context and recommended action.</strong></p>
         </div>
       </div>
 
-      <div class="ae-card">
-        <div class="ae-num">02</div>
-        <div class="ae-body">
-          <h4>Every logged call adjusts the next action</h4>
-          <p>Sales Dialer logs every outcome automatically. The engine reads it in real time — deal health shifts on a single call, next contact recommendation adjusts, risk flags surface to the manager. <strong>The rep calls. The engine decides what happens next.</strong></p>
+      <div class="ft-row">
+        <div class="ft-context">Call &amp; Dialer</div>
+        <div class="ft-from">
+          <div class="ft-badge">Native NBA</div>
+          <h5>Logged call sits in activity history</h5>
+          <p>Rep decides manually what to do next. Deal health shifts go unnoticed until the next pipeline review.</p>
+        </div>
+        <div class="ft-arrow">→</div>
+        <div class="ft-to">
+          <div class="ft-badge">With the engine</div>
+          <h5>Every outcome adjusts the next action in real time</h5>
+          <p>Deal health shifts on a single call. Next action recommendation updates. <strong>Risk surfaces to the manager before the rep even writes their notes.</strong></p>
         </div>
       </div>
 
-      <div class="ae-card">
-        <div class="ae-num">03</div>
-        <div class="ae-body">
-          <h4>Pipeline stage move → prescriptive next step</h4>
-          <p>Stage movement is a trigger. Deal moves to Proposal? NBA fires: <em>"3 similar deals that closed from here all used an ROI calculator — here's one, ready to send."</em> <strong>The pipeline isn't just a reporting tool. It's an action engine.</strong></p>
+      <div class="ft-row">
+        <div class="ft-context">Pipeline progression</div>
+        <div class="ft-from">
+          <div class="ft-badge">Native NBA</div>
+          <h5>Stage move updates the forecast</h5>
+          <p>A reporting event. The rep figures out what to do next based on experience and instinct.</p>
+        </div>
+        <div class="ft-arrow">→</div>
+        <div class="ft-to">
+          <div class="ft-badge">With the engine</div>
+          <h5>Stage move triggers a prescriptive action</h5>
+          <p>Deal moves to Proposal → NBA fires: <strong>"3 similar deals that closed from here used an ROI calculator — here's one, ready to send."</strong> The pipeline is an action engine.</p>
         </div>
       </div>
 
-      <div class="ae-card">
-        <div class="ae-num">04</div>
-        <div class="ae-body">
-          <h4>Resolved service case → revenue action</h4>
-          <p>Case resolves with positive sentiment — peak trust moment. If the agent is still on the interaction, the engine surfaces an upgrade recommendation before they close. If the case just closed, it queues a digital follow-up 24 hours later. <strong>Service becomes a revenue motion without the rep changing how they work.</strong></p>
+      <div class="ft-row">
+        <div class="ft-context">Service interaction</div>
+        <div class="ft-from">
+          <div class="ft-badge">Native NBA</div>
+          <h5>Case closes, rep moves on</h5>
+          <p>The moment of peak trust — a positive resolution — passes. No revenue action is taken. The window closes.</p>
+        </div>
+        <div class="ft-arrow">→</div>
+        <div class="ft-to">
+          <div class="ft-badge">With the engine</div>
+          <h5>Resolved case triggers a revenue action</h5>
+          <p>Agent still on interaction → surfaces upgrade recommendation before they close. Case just closed → <strong>queues digital follow-up 24 hours later, when trust is still high.</strong></p>
         </div>
       </div>
 
