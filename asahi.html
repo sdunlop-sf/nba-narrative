@@ -1,0 +1,1205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smart Selling · Asahi Beverages</title>
+  <style>
+    :root {
+      --bg:     #070C1A;
+      --blue:   #4A8FE7;
+      --blue2:  #6AB0FF;
+      --gold:   #F5A623;
+      --muted:  rgba(255,255,255,0.45);
+      --border: rgba(255,255,255,0.07);
+      --card:   rgba(255,255,255,0.03);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg); color: #fff;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 56px; height: 60px;
+      background: rgba(7,12,26,0.9); backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-brand {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 13px; font-weight: 700; letter-spacing: 0.04em;
+    }
+    .nav-pip { width: 8px; height: 8px; border-radius: 50%; background: var(--gold); }
+    .nav-brand span { color: var(--muted); font-weight: 400; font-size: 12px; }
+    .nav-tag {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--gold); padding: 3px 10px; border-radius: 6px;
+      border: 1px solid rgba(245,166,35,0.3); background: rgba(245,166,35,0.07);
+    }
+
+    /* ── HERO ── */
+    .hero {
+      padding: 140px 56px 80px; max-width: 1100px; margin: 0 auto; text-align: center;
+    }
+    .hero-eyebrow {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 20px;
+    }
+    .hero h1 {
+      font-size: clamp(32px, 5vw, 62px); font-weight: 800; line-height: 1.1;
+      letter-spacing: -0.03em; margin-bottom: 24px;
+    }
+    .hero h1 .grad {
+      background: linear-gradient(120deg, var(--gold), #FCBD00);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .hero-sub {
+      font-size: 17px; color: var(--muted); max-width: 680px; margin: 0 auto; line-height: 1.75;
+    }
+    .hero-sub em { color: rgba(255,255,255,0.75); font-style: normal; }
+    .hero-kpi {
+      display: flex; align-items: center; justify-content: center; gap: 32px;
+      margin-top: 40px; flex-wrap: wrap;
+    }
+    .hero-kpi-item {
+      display: flex; flex-direction: column; align-items: center; gap: 4px;
+      padding: 16px 28px; border-radius: 14px;
+      background: rgba(245,166,35,0.07); border: 1px solid rgba(245,166,35,0.2);
+    }
+    .hero-kpi-val { font-size: 28px; font-weight: 800; color: var(--gold); letter-spacing: -0.02em; }
+    .hero-kpi-label { font-size: 11px; color: var(--muted); letter-spacing: 0.06em; }
+    .hero-kpi-divider { width: 1px; height: 48px; background: var(--border); }
+
+    /* ── SHARED ── */
+    .wrap { width: 100%; max-width: 1100px; margin: 0 auto; padding: 96px 40px; }
+    .eyebrow {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--gold); margin-bottom: 14px;
+    }
+    .section-h {
+      font-size: clamp(26px, 3.5vw, 44px); font-weight: 800; line-height: 1.15;
+      letter-spacing: -0.025em; margin-bottom: 16px;
+    }
+    .section-h .grad {
+      background: linear-gradient(120deg, var(--gold), #FCBD00);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .section-p { font-size: 15px; color: var(--muted); max-width: 640px; line-height: 1.75; margin-bottom: 48px; }
+    .divider { border: none; border-top: 1px solid var(--border); max-width: 1100px; margin: 0 auto; }
+
+    /* ── CHALLENGE CARDS ── */
+    .prob-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .prob-card {
+      background: var(--card); border: 1px solid var(--border); border-radius: 16px;
+      padding: 28px 28px; position: relative; overflow: hidden;
+    }
+    .prob-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    }
+    .prob-card.pc-1::before { background: linear-gradient(90deg, #E53E3E, transparent); }
+    .prob-card.pc-2::before { background: linear-gradient(90deg, var(--gold), transparent); }
+    .prob-card.pc-3::before { background: linear-gradient(90deg, #7c3aed, transparent); }
+    .prob-card.pc-4::before { background: linear-gradient(90deg, var(--blue), transparent); }
+    .prob-icon { font-size: 24px; margin-bottom: 14px; }
+    .prob-card h4 { font-size: 15px; font-weight: 700; margin-bottom: 8px; }
+    .prob-card p  { font-size: 13px; color: var(--muted); line-height: 1.7; }
+    .prob-card .prob-quote {
+      margin-top: 12px; padding: 10px 14px; border-radius: 8px;
+      background: rgba(255,255,255,0.04); border-left: 2px solid rgba(245,166,35,0.4);
+      font-size: 12px; color: rgba(255,255,255,0.55); font-style: italic; line-height: 1.6;
+    }
+    .prob-card .prob-quote cite { display: block; margin-top: 4px; font-size: 10px; font-style: normal; color: rgba(255,255,255,0.3); letter-spacing: 0.06em; }
+
+    /* ── ASAHI IQ / SIGNALS ── */
+    .iq-wrap {
+      border: 1px solid rgba(245,166,35,0.25); border-radius: 20px; overflow: hidden;
+      margin-bottom: 48px;
+    }
+    .iq-head {
+      background: rgba(245,166,35,0.07); border-bottom: 1px solid rgba(245,166,35,0.15);
+      padding: 18px 28px; display: flex; align-items: center; gap: 12px;
+    }
+    .iq-badge {
+      font-size: 9px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--gold); background: rgba(245,166,35,0.12); padding: 3px 10px; border-radius: 6px;
+    }
+    .iq-name { font-size: 16px; font-weight: 700; }
+    .iq-sub  { font-size: 12px; color: var(--muted); margin-left: auto; }
+    .iq-body { padding: 28px; display: grid; grid-template-columns: 1fr 1px 1fr; gap: 0; }
+    .iq-col-divider { background: var(--border); }
+    .iq-col { padding: 0 28px; }
+    .iq-col:first-child { padding-left: 0; }
+    .iq-col:last-child  { padding-right: 0; }
+    .iq-col-label {
+      font-size: 9px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 14px;
+    }
+    .iq-sig-grid { display: flex; flex-direction: column; gap: 8px; }
+    .iq-sig {
+      display: flex; align-items: center; gap: 10px;
+      background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 10px; padding: 10px 14px;
+    }
+    .iq-sig-icon { font-size: 14px; flex-shrink: 0; }
+    .iq-sig-text { font-size: 12px; color: rgba(255,255,255,0.7); }
+    .iq-sig-score {
+      margin-left: auto; font-size: 10px; font-weight: 700; letter-spacing: 0.08em;
+      padding: 2px 8px; border-radius: 5px; flex-shrink: 0;
+    }
+    .iq-sig-score.high { background: rgba(245,166,35,0.15); color: var(--gold); }
+    .iq-sig-score.med  { background: rgba(74,143,231,0.15); color: var(--blue); }
+    .iq-sig-score.low  { background: rgba(255,255,255,0.06); color: var(--muted); }
+
+    /* ── FROM→TO (shared) ── */
+    .ft-wrap { display: grid; grid-template-columns: 1fr 40px 1fr; align-items: stretch; gap: 0; margin-bottom: 48px; }
+    .ft-from { padding: 24px 26px; border-radius: 14px 0 0 14px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07); border-right: none; }
+    .ft-arrow { display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.02); border-top: 1px solid rgba(255,255,255,0.07); border-bottom: 1px solid rgba(255,255,255,0.07); color: rgba(245,166,35,0.5); font-size: 20px; }
+    .ft-to { padding: 24px 26px; border-radius: 0 14px 14px 0; background: rgba(245,166,35,0.06); border: 1px solid rgba(245,166,35,0.2); border-left: none; }
+    .ft-badge { font-size: 8px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; padding: 2px 8px; border-radius: 4px; margin-bottom: 10px; display: inline-block; }
+    .ft-from .ft-badge { background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.3); }
+    .ft-to   .ft-badge { background: rgba(245,166,35,0.15); color: var(--gold); }
+    .ft-from h5 { font-size: 14px; font-weight: 700; color: rgba(255,255,255,0.45); margin-bottom: 8px; line-height: 1.35; }
+    .ft-to   h5 { font-size: 14px; font-weight: 700; color: rgba(255,255,255,0.95); margin-bottom: 8px; line-height: 1.35; }
+    .ft-from p  { font-size: 13px; color: rgba(255,255,255,0.3); line-height: 1.65; }
+    .ft-to   p  { font-size: 13px; color: rgba(255,255,255,0.7); line-height: 1.65; }
+    .ft-to   p strong { color: var(--gold); }
+
+    /* ── DENODO / STACK SECTION ── */
+    .denodo-callout {
+      background: linear-gradient(135deg, rgba(74,143,231,0.06), rgba(245,166,35,0.04));
+      border: 1px solid rgba(74,143,231,0.2); border-radius: 16px;
+      padding: 28px 32px; margin-bottom: 48px; display: flex; gap: 20px; align-items: flex-start;
+    }
+    .denodo-icon { font-size: 28px; flex-shrink: 0; margin-top: 2px; }
+    .denodo-label { font-size: 9px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--blue); margin-bottom: 6px; }
+    .denodo-callout h4 { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+    .denodo-callout p  { font-size: 13px; color: var(--muted); line-height: 1.7; }
+    .denodo-callout p strong { color: rgba(255,255,255,0.8); }
+
+    /* ── STACK LAYERS ── */
+    .stack-layer {
+      display: grid; grid-template-columns: 56px 1fr 1fr; align-items: stretch;
+      border-top: 1px solid var(--border);
+    }
+    .stack-layer:first-of-type { border-top: none; }
+    .sl-num {
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; font-weight: 800; color: rgba(255,255,255,0.15);
+      border-right: 1px solid var(--border);
+    }
+    .sl-left {
+      padding: 20px 24px; border-right: 1px solid var(--border);
+      display: flex; flex-direction: column; justify-content: center;
+    }
+    .sl-product { font-size: 14px; font-weight: 700; margin-bottom: 3px; }
+    .sl-product-sub { font-size: 11px; color: var(--muted); }
+    .sl-right { padding: 20px 28px; display: flex; align-items: center; }
+    .sl-right p { font-size: 13px; color: var(--muted); line-height: 1.65; }
+    .sl-right p strong { color: rgba(255,255,255,0.8); }
+    .stack-wrap {
+      border: 1px solid rgba(74,143,231,0.2); border-radius: 18px; overflow: hidden; margin-bottom: 48px;
+    }
+    .stack-header {
+      background: rgba(74,143,231,0.07); padding: 14px 24px; border-bottom: 1px solid rgba(74,143,231,0.12);
+      display: flex; align-items: center; gap: 10px;
+    }
+    .stack-header-label { font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--blue); }
+    .stack-header-name  { font-size: 14px; font-weight: 700; }
+
+    /* ── USE CASE (BEACHHEAD) ── */
+    .uc-wrap {
+      border: 1px solid rgba(245,166,35,0.2); border-radius: 18px; overflow: hidden;
+    }
+    .uc-head {
+      display: flex; align-items: flex-start; justify-content: space-between; gap: 24px;
+      padding: 28px 36px 24px; background: rgba(245,166,35,0.05);
+      border-bottom: 1px solid rgba(245,166,35,0.1);
+    }
+    .uc-head-left { flex: 1; }
+    .uc-tag {
+      font-size: 9px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--gold); background: rgba(245,166,35,0.12); padding: 3px 10px; border-radius: 5px;
+      display: inline-block; margin-bottom: 10px;
+    }
+    .uc-head h3 { font-size: 20px; font-weight: 800; margin-bottom: 8px; }
+    .uc-head p  { font-size: 13px; color: var(--muted); line-height: 1.65; max-width: 500px; }
+    .uc-kpi-block { display: flex; flex-direction: column; gap: 6px; flex-shrink: 0; text-align: right; }
+    .uc-kpi { }
+    .uc-kpi-val { font-size: 28px; font-weight: 800; color: var(--gold); letter-spacing: -0.02em; }
+    .uc-kpi-label { font-size: 11px; color: var(--muted); margin-top: 2px; }
+    .uc-body { padding: 28px 36px; }
+    .uc-sig-label {
+      font-size: 9px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--muted); margin-bottom: 10px;
+    }
+    .uc-signals { display: flex; flex-wrap: wrap; gap: 8px; }
+    .uc-sig {
+      font-size: 11px; font-weight: 600; padding: 5px 12px; border-radius: 20px;
+      background: rgba(245,166,35,0.08); border: 1px solid rgba(245,166,35,0.2); color: rgba(255,255,255,0.7);
+    }
+    .uc-ft { display: grid; grid-template-columns: 1fr 40px 1fr; align-items: stretch; }
+    .uc-from, .uc-to { padding: 18px 20px; border-radius: 10px; }
+    .uc-from { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07); }
+    .uc-arr  { display: flex; align-items: center; justify-content: center; color: rgba(245,166,35,0.4); font-size: 20px; }
+    .uc-to   { background: rgba(245,166,35,0.07); border: 1px solid rgba(245,166,35,0.2); }
+    .uc-badge { font-size: 8px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; padding: 2px 8px; border-radius: 4px; margin-bottom: 8px; display: inline-block; }
+    .uc-from .uc-badge { background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.3); }
+    .uc-to   .uc-badge { background: rgba(245,166,35,0.15); color: var(--gold); }
+    .uc-from h5, .uc-to h5 { font-size: 14px; font-weight: 700; margin-bottom: 6px; line-height: 1.35; }
+    .uc-from h5 { color: rgba(255,255,255,0.5); }
+    .uc-to   h5 { color: rgba(255,255,255,0.95); }
+    .uc-from p  { font-size: 13px; color: rgba(255,255,255,0.35); line-height: 1.65; }
+    .uc-to   p  { font-size: 13px; color: rgba(255,255,255,0.7); line-height: 1.65; }
+    .uc-to   p strong { color: var(--gold); }
+
+    /* ── POD ── */
+    .pod-wrap { border: 1px solid rgba(74,143,231,0.2); border-radius: 18px; overflow: hidden; }
+    .pod-head {
+      display: flex; align-items: flex-start; justify-content: space-between; gap: 24px;
+      padding: 28px 36px 24px; background: rgba(74,143,231,0.05);
+      border-bottom: 1px solid rgba(74,143,231,0.1);
+    }
+    .pod-head-left { flex: 1; }
+    .pod-tag {
+      font-size: 9px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--blue); background: rgba(74,143,231,0.12); padding: 3px 10px; border-radius: 5px;
+      display: inline-block; margin-bottom: 10px;
+    }
+    .pod-head h3 { font-size: 18px; font-weight: 800; margin-bottom: 8px; }
+    .pod-head p  { font-size: 13px; color: var(--muted); line-height: 1.65; max-width: 480px; }
+    .pod-principle { display: flex; flex-wrap: wrap; gap: 8px; align-items: flex-start; flex-shrink: 0; max-width: 220px; justify-content: flex-end; }
+    .pod-pill {
+      font-size: 10px; font-weight: 600; padding: 5px 12px; border-radius: 20px;
+      background: rgba(74,143,231,0.08); border: 1px solid rgba(74,143,231,0.2); color: rgba(255,255,255,0.6);
+    }
+    .pod-team { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; border-top: 1px solid var(--border); }
+    .pod-role {
+      padding: 24px 22px; border-right: 1px solid var(--border);
+    }
+    .pod-role:last-child { border-right: none; }
+    .pod-role-icon { font-size: 22px; margin-bottom: 10px; }
+    .pod-role-title { font-size: 13px; font-weight: 700; margin-bottom: 6px; }
+    .pod-role-focus { font-size: 12px; color: var(--muted); line-height: 1.6; }
+    .pod-kpi {
+      border-top: 1px solid var(--border); padding: 20px 36px;
+      display: flex; align-items: center; gap: 16px;
+      background: rgba(74,143,231,0.03);
+    }
+    .pod-kpi-label {
+      font-size: 9px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--blue); flex-shrink: 0;
+    }
+    .pod-kpi-divider { width: 1px; height: 32px; background: var(--border); flex-shrink: 0; }
+    .pod-kpi p { font-size: 13px; color: rgba(255,255,255,0.6); line-height: 1.6; }
+    .pod-kpi p strong { color: rgba(255,255,255,0.85); }
+
+    /* ── PHASE ROADMAP ── */
+    .phase-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 48px; }
+    .phase-card {
+      border: 1px solid var(--border); border-radius: 16px; overflow: hidden;
+      background: var(--card);
+    }
+    .phase-card.ph-1 { border-color: rgba(245,166,35,0.25); }
+    .phase-card.ph-2 { border-color: rgba(74,143,231,0.25); }
+    .phase-head {
+      padding: 16px 22px; display: flex; align-items: center; gap: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+    .ph-1 .phase-head { background: rgba(245,166,35,0.07); border-color: rgba(245,166,35,0.1); }
+    .ph-2 .phase-head { background: rgba(74,143,231,0.07); border-color: rgba(74,143,231,0.1); }
+    .phase-num {
+      width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center;
+      justify-content: center; font-size: 12px; font-weight: 800; flex-shrink: 0;
+    }
+    .ph-1 .phase-num { background: rgba(245,166,35,0.15); color: var(--gold); border: 1px solid rgba(245,166,35,0.3); }
+    .ph-2 .phase-num { background: rgba(74,143,231,0.15); color: var(--blue); border: 1px solid rgba(74,143,231,0.3); }
+    .phase-head-text h4 { font-size: 14px; font-weight: 700; margin-bottom: 2px; }
+    .phase-head-text p  { font-size: 11px; color: var(--muted); }
+    .phase-body { padding: 18px 22px; }
+    .phase-item { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 12px; }
+    .phase-item:last-child { margin-bottom: 0; }
+    .phase-tick { font-size: 12px; flex-shrink: 0; margin-top: 1px; }
+    .ph-1 .phase-tick { color: var(--gold); }
+    .ph-2 .phase-tick { color: var(--blue); }
+    .phase-item-text { font-size: 13px; color: rgba(255,255,255,0.65); line-height: 1.55; }
+    .phase-item-text strong { color: rgba(255,255,255,0.85); }
+
+    /* ── SCALE / DIGITAL LABOUR ── */
+    .scale-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 40px; margin-bottom: 40px; }
+    .scale-card {
+      background: var(--card); border: 1px solid var(--border); border-radius: 16px; overflow: hidden;
+    }
+    .sc-rep  { border-color: rgba(74,143,231,0.25); }
+    .sc-mkt  { border-color: rgba(245,166,35,0.25); }
+    .sc-head {
+      padding: 16px 22px; border-bottom: 1px solid var(--border);
+    }
+    .sc-rep .sc-head { background: rgba(74,143,231,0.07); border-color: rgba(74,143,231,0.1); }
+    .sc-mkt .sc-head { background: rgba(245,166,35,0.07); border-color: rgba(245,166,35,0.1); }
+    .sc-tag {
+      font-size: 9px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+      margin-bottom: 6px; display: inline-block; padding: 2px 8px; border-radius: 4px;
+    }
+    .sc-rep .sc-tag { background: rgba(74,143,231,0.12); color: var(--blue); }
+    .sc-mkt .sc-tag { background: rgba(245,166,35,0.12); color: var(--gold); }
+    .sc-head h4 { font-size: 14px; font-weight: 700; }
+    .sc-body { padding: 18px 22px; }
+    .sc-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+    .sc-list li { display: flex; align-items: flex-start; gap: 8px; font-size: 13px; color: rgba(255,255,255,0.65); line-height: 1.55; }
+    .sc-tick { flex-shrink: 0; font-size: 11px; margin-top: 1px; }
+    .sc-rep .sc-tick { color: var(--blue); }
+    .sc-mkt .sc-tick { color: var(--gold); }
+    .scale-closer {
+      background: rgba(255,255,255,0.03); border: 1px solid var(--border);
+      border-radius: 14px; padding: 24px 28px;
+    }
+    .scale-closer p { font-size: 14px; color: rgba(255,255,255,0.6); line-height: 1.75; text-align: center; max-width: 700px; margin: 0 auto; }
+    .scale-closer p em { color: rgba(255,255,255,0.85); font-style: italic; }
+
+    /* ── ENGINE ── */
+    .engine-wrap { width: 100%; max-width: 1100px; margin: 0 auto; padding: 96px 40px; }
+
+    .trigger-block { display: flex; align-items: center; gap: 16px; margin-bottom: 48px; }
+    .trigger-pill {
+      display: flex; align-items: center; gap: 10px;
+      background: rgba(245,166,35,0.07); border: 1px solid rgba(245,166,35,0.3);
+      border-radius: 12px; padding: 14px 20px; flex: 1; transition: border-color 0.2s;
+    }
+    .trigger-pill:hover { border-color: rgba(245,166,35,0.6); }
+    .trigger-icon { font-size: 18px; flex-shrink: 0; }
+    .trigger-label { font-size: 11px; font-weight: 700; color: var(--gold); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 2px; }
+    .trigger-desc { font-size: 12px; color: var(--muted); }
+
+    .event-node {
+      background: linear-gradient(135deg, #0a1428, #0f1e3a);
+      border: 1px solid rgba(74,143,231,0.4); border-radius: 14px;
+      padding: 18px 28px; text-align: center; margin-bottom: 12px;
+    }
+    .event-node .en-label { font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--blue); margin-bottom: 4px; }
+    .event-node .en-name { font-size: 16px; font-weight: 700; }
+    .event-node .en-sub { font-size: 12px; color: var(--muted); margin-top: 3px; }
+
+    .flow-connector { display: flex; flex-direction: column; align-items: center; gap: 0; margin-bottom: 12px; }
+    .flow-connector .fc-line { width: 2px; height: 28px; background: linear-gradient(to bottom, rgba(74,143,231,0.5), rgba(74,143,231,0.15)); }
+    .flow-connector .fc-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--blue); box-shadow: 0 0 8px var(--blue); }
+
+    .master-flow {
+      border: 1px solid rgba(74,143,231,0.25); border-radius: 18px;
+      overflow: hidden; margin-bottom: 12px;
+    }
+    .mf-header {
+      background: rgba(74,143,231,0.08); padding: 14px 24px;
+      border-bottom: 1px solid rgba(74,143,231,0.15);
+      display: flex; align-items: center; gap: 10px;
+    }
+    .mf-header .mf-label { font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--blue); }
+    .mf-header .mf-name { font-size: 14px; font-weight: 700; margin-left: 4px; }
+
+    .mf-step { display: grid; grid-template-columns: 120px 1fr; border-top: 1px solid rgba(255,255,255,0.05); }
+    .mf-step:first-of-type { border-top: none; }
+    .mf-step-num {
+      padding: 20px; display: flex; flex-direction: column; align-items: center; justify-content: flex-start;
+      border-right: 1px solid rgba(255,255,255,0.05); background: rgba(255,255,255,0.02);
+      gap: 6px; padding-top: 22px;
+    }
+    .step-badge {
+      width: 28px; height: 28px; border-radius: 50%; border: 1px solid rgba(74,143,231,0.4);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; font-weight: 800; color: var(--blue);
+    }
+    .step-verb { font-size: 9px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+    .mf-step-body { padding: 20px 24px; }
+    .mf-step-body h4 { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+    .mf-step-body p { font-size: 13px; color: var(--muted); line-height: 1.65; }
+    .mf-step-body .step-detail { font-size: 12px; color: rgba(255,255,255,0.35); margin-top: 6px; font-style: italic; }
+
+    .loop-block { border: 1px dashed rgba(74,143,231,0.25); border-radius: 12px; padding: 16px; margin-top: 10px; background: rgba(74,143,231,0.03); }
+    .loop-label { font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(74,143,231,0.5); margin-bottom: 10px; display: flex; align-items: center; gap: 6px; }
+    .loop-label::after { content: ''; flex: 1; height: 1px; background: rgba(74,143,231,0.15); }
+    .loop-steps { display: flex; gap: 8px; }
+    .loop-step { flex: 1; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 10px; padding: 14px; position: relative; }
+    .loop-step::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; border-radius: 10px 10px 0 0; }
+    .loop-step.ls-eligible::before { background: var(--gold); }
+    .loop-step.ls-score::before   { background: var(--blue); }
+    .loop-step.ls-gate::before    { background: #7c3aed; }
+    .loop-step h5 { font-size: 12px; font-weight: 700; margin-bottom: 5px; }
+    .loop-step p  { font-size: 11px; color: var(--muted); line-height: 1.55; }
+    .loop-step .ls-tag { display: inline-block; font-size: 9px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 2px 7px; border-radius: 5px; margin-bottom: 8px; }
+    .ls-eligible .ls-tag { background: rgba(245,166,35,0.12); color: var(--gold); }
+    .ls-score .ls-tag   { background: rgba(74,143,231,0.12); color: var(--blue); }
+    .ls-gate .ls-tag    { background: rgba(124,58,237,0.12); color: #a78bfa; }
+    .loop-arrow { display: flex; align-items: center; font-size: 14px; color: rgba(255,255,255,0.2); flex-shrink: 0; padding-top: 20px; }
+
+    .arb-exec { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 8px; }
+    .arb-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; padding: 18px 20px; position: relative; overflow: hidden; }
+    .arb-card.arb  { border-color: rgba(124,58,237,0.25); }
+    .arb-card.exec { border-color: rgba(245,166,35,0.25); }
+    .arb-card::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; }
+    .arb-card.arb::after  { background: linear-gradient(90deg, #7c3aed, transparent); }
+    .arb-card.exec::after { background: linear-gradient(90deg, var(--gold), transparent); }
+    .arb-card h4 { font-size: 13px; font-weight: 700; margin-bottom: 6px; }
+    .arb-card p  { font-size: 12px; color: var(--muted); line-height: 1.6; }
+    .arb-card .ac-tag { font-size: 9px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 2px 7px; border-radius: 5px; margin-bottom: 8px; display: inline-block; }
+    .arb-card.arb  .ac-tag { background: rgba(124,58,237,0.12); color: #a78bfa; }
+    .arb-card.exec .ac-tag { background: rgba(245,166,35,0.12); color: var(--gold); }
+
+    .key-insight { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 48px; }
+    .ki-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07); border-radius: 14px; padding: 24px; }
+    .ki-card .ki-label { font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; }
+    .ki-card h4 { font-size: 15px; font-weight: 700; margin-bottom: 8px; }
+    .ki-card p  { font-size: 13px; color: var(--muted); line-height: 1.7; }
+    .ki-card p strong { color: rgba(255,255,255,0.8); }
+
+    /* ── CLOSING ── */
+    .closing-wrap { padding: 0 56px 80px; max-width: 1100px; margin: 0 auto; }
+    .closing-card {
+      background: linear-gradient(140deg, rgba(74,143,231,0.08) 0%, rgba(245,166,35,0.06) 100%);
+      border: 1px solid rgba(245,166,35,0.2); border-radius: 22px;
+      padding: 64px 56px; text-align: center; position: relative; overflow: hidden;
+    }
+    .closing-card::after {
+      content: ''; position: absolute; bottom: -80px; right: -80px;
+      width: 280px; height: 280px;
+      background: radial-gradient(circle, rgba(245,166,35,0.08), transparent 70%);
+      pointer-events: none;
+    }
+    .closing-card h2 { font-size: clamp(24px, 3vw, 40px); font-weight: 800; line-height: 1.2; margin-bottom: 16px; letter-spacing: -0.025em; }
+    .closing-card h2 .grad {
+      background: linear-gradient(120deg, var(--gold), #FCBD00);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    }
+    .closing-card p { font-size: 15px; color: var(--muted); max-width: 520px; margin: 0 auto; line-height: 1.75; }
+    .closing-steps { display: flex; align-items: center; justify-content: center; gap: 0; margin-top: 40px; flex-wrap: wrap; }
+    .c-step { display: flex; flex-direction: column; align-items: center; gap: 6px; padding: 14px 24px; }
+    .c-step-num { width: 32px; height: 32px; border-radius: 50%; border: 1px solid rgba(245,166,35,0.4); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 800; color: var(--gold); }
+    .c-step-label { font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.6); text-align: center; }
+    .c-arrow { color: rgba(245,166,35,0.3); font-size: 18px; padding: 0 4px; }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center; padding: 32px 40px; font-size: 11px;
+      color: rgba(255,255,255,0.2); letter-spacing: 0.06em;
+      border-top: 1px solid rgba(255,255,255,0.05);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 0 20px; }
+      .nav-tag { display: none; }
+      .hero { padding: 100px 24px 60px; }
+      .hero h1 { font-size: 30px; }
+      .hero-sub { font-size: 15px; }
+      .hero-kpi { gap: 16px; }
+      .hero-kpi-divider { display: none; }
+      .hero-kpi-item { padding: 12px 20px; }
+      .wrap { padding: 56px 24px; }
+      .closing-wrap { padding: 0 24px 60px; }
+      .prob-grid { grid-template-columns: 1fr; }
+      .iq-body { grid-template-columns: 1fr; }
+      .iq-col-divider { display: none; }
+      .iq-col { padding: 0; margin-bottom: 20px; }
+      .ft-wrap { grid-template-columns: 1fr; }
+      .ft-arrow { transform: rotate(90deg); padding: 10px 0; justify-content: center; }
+      .ft-from { border-radius: 14px 14px 0 0; border-right: 1px solid rgba(255,255,255,0.07); border-bottom: none; }
+      .ft-to   { border-radius: 0 0 14px 14px; border-left: 1px solid rgba(245,166,35,0.2); border-top: none; }
+      .stack-layer { grid-template-columns: 40px 1fr; }
+      .sl-left { border-right: none; border-bottom: 1px solid var(--border); padding: 14px 16px; flex-direction: row; align-items: center; gap: 8px; }
+      .sl-right { padding: 14px 16px; }
+      .uc-head { flex-direction: column; }
+      .uc-kpi-block { align-items: flex-start; text-align: left; }
+      .uc-body { padding: 20px; }
+      .uc-ft { grid-template-columns: 1fr; }
+      .uc-arr { transform: rotate(90deg); padding: 8px 0; }
+      .pod-team { grid-template-columns: 1fr 1fr; }
+      .pod-head { flex-direction: column; padding: 20px; }
+      .pod-kpi { padding: 16px 20px; }
+      .pod-kpi-divider { display: none; }
+      .phase-grid { grid-template-columns: 1fr; }
+      .scale-grid { grid-template-columns: 1fr; }
+      .closing-card { padding: 40px 24px; }
+      .closing-steps { gap: 0; }
+      .c-arrow { display: none; }
+      .trigger-block { flex-direction: column; gap: 10px; }
+      .mf-step { grid-template-columns: 64px 1fr; }
+      .mf-step-num { padding: 16px 10px; }
+      .step-badge { width: 24px; height: 24px; font-size: 10px; }
+      .mf-step-body { padding: 16px; }
+      .loop-steps { flex-direction: column; }
+      .loop-arrow { transform: rotate(90deg); align-self: center; }
+      .arb-exec { grid-template-columns: 1fr; }
+      .key-insight { grid-template-columns: 1fr; }
+      .denodo-callout { flex-direction: column; gap: 12px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-brand">
+      <div class="nav-pip"></div>
+      Smart Selling
+      <span>/ Asahi Beverages</span>
+    </div>
+    <div class="nav-tag">Confidential · For Discussion</div>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-eyebrow">A Proposition for Asahi · Smart Selling Initiative · 2026</div>
+    <h1>Your reps are serving<br/>the <span class="grad">loudest customers.</span><br/>Not the most valuable ones.</h1>
+    <p class="hero-sub">Asahi's commercial data is richer than almost any beverage company in market — two ERPs, a unified portal, loyalty signals, trade spend, tap data, Perfect Store compliance. The opportunity is <em>connecting that intelligence to the rep before the visit, and to the customer at the moment they order</em> — automatically, at the right margin.</p>
+    <div class="hero-kpi">
+      <div class="hero-kpi-item">
+        <div class="hero-kpi-val">$13M</div>
+        <div class="hero-kpi-label">NSV commitment (ELT approved)</div>
+      </div>
+      <div class="hero-kpi-divider"></div>
+      <div class="hero-kpi-item">
+        <div class="hero-kpi-val">$6M</div>
+        <div class="hero-kpi-label">GSV tied to Smart Selling</div>
+      </div>
+      <div class="hero-kpi-divider"></div>
+      <div class="hero-kpi-item">
+        <div class="hero-kpi-val">$150</div>
+        <div class="hero-kpi-label">Cost per rep visit — without data value-add</div>
+      </div>
+      <div class="hero-kpi-divider"></div>
+      <div class="hero-kpi-item">
+        <div class="hero-kpi-val">2 hrs</div>
+        <div class="hero-kpi-label">Admin per rep per day</div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider" />
+
+  <!-- THE CHALLENGE -->
+  <div class="wrap">
+    <div class="eyebrow">The Gap</div>
+    <h2 class="section-h">Where the $13M commitment<br/><span class="grad">is at risk today</span></h2>
+    <p class="section-p">Smart Selling is now the vehicle for a budget Asahi has already committed to delivering. The original Portal project couldn't get there. These are the four gaps standing between today's model and that number.</p>
+
+    <div class="prob-grid">
+      <div class="prob-card pc-1">
+        <div class="prob-icon">📣</div>
+        <h4>Reps route to the loudest, not the highest-value</h4>
+        <p>Visit plans are built bottom-up by state managers, loaded manually each month, and driven by relationship and habit. A customer who calls frequently gets attention. A customer with a major distribution gap and high cross-category propensity does not.</p>
+        <div class="prob-quote">"Manual planning to know what accounts to visit and what product to push to each." <cite>— Stakeholder Interview</cite></div>
+      </div>
+
+      <div class="prob-card pc-2">
+        <div class="prob-icon">💸</div>
+        <h4>$150 per visit — with nothing to show for it</h4>
+        <p>It costs $150 to check a fridge or make a call. Without data behind the rep, that visit is a relationship maintenance exercise, not a revenue-generating action. Reps need facts, not assumptions, to justify the cost of being in the room.</p>
+        <div class="prob-quote">"Ground reps with facts, not assumptions." <cite>— Michael Ritoli, Head of Retail</cite></div>
+      </div>
+
+      <div class="prob-card pc-3">
+        <div class="prob-icon">🗂️</div>
+        <h4>2 hours a day on admin that could be automated</h4>
+        <p>Reps are spending roughly a quarter of their working day on admin — reconciling plans, logging calls, reading promos. That's time not spent with customers. And the insights those reps do have aren't getting back into a model that learns from them.</p>
+        <div class="prob-quote">"Reps spending ~2hrs/day on admin." <cite>— Smart Selling Brief</cite></div>
+      </div>
+
+      <div class="prob-card pc-4">
+        <div class="prob-icon">📦</div>
+        <h4>One Asahi — massive portfolio, no intelligent guidance</h4>
+        <p>The shift to One Asahi means reps now carry a portfolio spanning alcohol, non-alc, coffee, and RTD across every channel. Without category-specific recommendations per outlet — scored by margin, distribution gap, and local consumer mix — reps default to what they know.</p>
+        <div class="prob-quote">"His people are capable of doing more, if armed with the right info." <cite>— Michael Ritoli</cite></div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider" />
+
+  <!-- ASAHI IQ -->
+  <div class="wrap">
+    <div class="eyebrow">Smart Selling — What It Actually Means</div>
+    <h2 class="section-h">AsahiIQ.<br/><span class="grad">The commercial brain behind every rep visit.</span></h2>
+    <p class="section-p">Your own CX Roadmap names it: "Build AsahiIQ — a commercial analytics engine to convert data into actionable insights that unlock intelligent growth." The NBA engine is how that capability gets operationalised.</p>
+
+    <div class="iq-wrap">
+      <div class="iq-head">
+        <div class="iq-badge">AsahiIQ</div>
+        <div class="iq-name">Unified Customer Profile — scored before the visit</div>
+        <div class="iq-sub">Example: Away from Home · Pubs & Bars</div>
+      </div>
+      <div class="iq-body">
+        <div class="iq-col">
+          <div class="iq-col-label">Purchase &amp; Engagement Signals</div>
+          <div class="iq-sig-grid">
+            <div class="iq-sig">
+              <div class="iq-sig-icon">📈</div>
+              <div class="iq-sig-text">Beer category volume — rolling 12w vs. prior year</div>
+              <div class="iq-sig-score high">+18%</div>
+            </div>
+            <div class="iq-sig">
+              <div class="iq-sig-icon">🍹</div>
+              <div class="iq-sig-text">Non-alc distribution gap — 3 core SKUs not ranging</div>
+              <div class="iq-sig-score high">GAP</div>
+            </div>
+            <div class="iq-sig">
+              <div class="iq-sig-icon">🏆</div>
+              <div class="iq-sig-text">Perfect Store compliance score</div>
+              <div class="iq-sig-score med">72%</div>
+            </div>
+            <div class="iq-sig">
+              <div class="iq-sig-icon">📋</div>
+              <div class="iq-sig-text">Contract renewal — 47 days out</div>
+              <div class="iq-sig-score high">PROMPT</div>
+            </div>
+            <div class="iq-sig">
+              <div class="iq-sig-icon">🔁</div>
+              <div class="iq-sig-text">Days since last rep visit</div>
+              <div class="iq-sig-score low">34d</div>
+            </div>
+          </div>
+        </div>
+        <div class="iq-col-divider"></div>
+        <div class="iq-col">
+          <div class="iq-col-label">Next Best Actions — scored by propensity × margin</div>
+          <div class="iq-sig-grid">
+            <div class="iq-sig" style="border-color:rgba(245,166,35,0.3);background:rgba(245,166,35,0.05);">
+              <div class="iq-sig-icon">🥇</div>
+              <div class="iq-sig-text"><strong style="color:rgba(255,255,255,0.85);">Non-alc range introduction</strong> — Venues in this postcode +32% YoY on RTD non-alc</div>
+              <div class="iq-sig-score high">#1</div>
+            </div>
+            <div class="iq-sig" style="border-color:rgba(74,143,231,0.2);background:rgba(74,143,231,0.04);">
+              <div class="iq-sig-icon">🥈</div>
+              <div class="iq-sig-text"><strong style="color:rgba(255,255,255,0.75);">Contract renewal conversation</strong> — window opens in 47 days, competitor activity in area</div>
+              <div class="iq-sig-score med">#2</div>
+            </div>
+            <div class="iq-sig">
+              <div class="iq-sig-icon">🥉</div>
+              <div class="iq-sig-text">Tap optimisation review — current tap share below category benchmark for venue type</div>
+              <div class="iq-sig-score low">#3</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ft-wrap">
+      <div class="ft-from">
+        <div class="ft-badge">Today — rep arrives</div>
+        <h5>Gut feel, promo sheet, last visit notes</h5>
+        <p>Rep pulls up the account in Salesforce, sees the last call log, reads this month's promo brief. Visit agenda is shaped by relationship and what corporate told them to sell. Insights exist — in DataFizz, in Denodo, across two ERPs — but they're not surfaced at the moment they matter.</p>
+      </div>
+      <div class="ft-arrow">→</div>
+      <div class="ft-to">
+        <div class="ft-badge">With AsahiIQ + NBA engine</div>
+        <h5>Scored, ranked, ready — before the rep walks in</h5>
+        <p>Rep opens Salesforce to a pre-visit brief: top 3 ranked actions for this outlet, backed by signal. <strong>Non-alc gap to close. Contract window to open. Tap share to optimise.</strong> Each action scored by propensity and margin contribution. Rep shows up as a data-backed business partner, not a rep reading a promo sheet.</p>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider" />
+
+  <!-- DENODO / DATA STACK -->
+  <div class="wrap">
+    <div class="eyebrow">Your Existing Investment</div>
+    <h2 class="section-h">Denodo harmonised your data.<br/><span class="grad">Data Cloud activates it.</span></h2>
+    <p class="section-p">This is not about replacing what you've already built. Denodo is your data integration and governance layer — it remains the source of truth. What Data Cloud adds is the real-time unified profile and the segment engine that routes that data to an action.</p>
+
+    <div class="denodo-callout">
+      <div class="denodo-icon">🏗️</div>
+      <div>
+        <div class="denodo-label">The Honest Assessment</div>
+        <h4>Your data is harmonised. It's just not moving.</h4>
+        <p>Denodo has done the hard work of federating data across your two SAP ERPs, your commerce platform, and Salesforce. But Denodo delivers point-in-time query results — it's a data access layer, not a profile engine. <strong>The data exists. It's just not connected to a rep visit brief, a portal recommendation, or a propensity score at the moment the customer is active.</strong> Data Cloud adds the real-time event stream, the unified customer profile, and the segment engine that makes that data actionable. They're complementary — Denodo for integration governance, Data Cloud for activation.</p>
+      </div>
+    </div>
+
+    <div class="stack-wrap">
+      <div class="stack-header">
+        <div class="stack-header-label">The Connected Stack</div>
+        <div class="stack-header-name">How the layers work together to deliver Smart Selling</div>
+      </div>
+
+      <div class="stack-layer">
+        <div class="sl-num">01</div>
+        <div class="sl-left">
+          <div class="sl-product">Data Cloud</div>
+          <div class="sl-product-sub">Unified Customer Profile</div>
+        </div>
+        <div class="sl-right">
+          <p>Ingests your 2 SAP ERPs, SAP Commerce, Salesforce CRM, and Denodo feeds into a single real-time customer profile. Replaces the <strong>point-in-time DataFizz layer</strong> with live segment membership — customer enters a distribution-gap segment the moment the signal fires, not the next reporting cycle.</p>
+        </div>
+      </div>
+
+      <div class="stack-layer">
+        <div class="sl-num">02</div>
+        <div class="sl-left">
+          <div class="sl-product">Einstein Studio + Flow</div>
+          <div class="sl-product-sub">NBA Engine</div>
+        </div>
+        <div class="sl-right">
+          <p>Replaces DataFizz's ~60% accuracy propensity models with Einstein Studio, trained on your actual CRM, ERP, and commerce data. Scores each customer against each available NBA — cross-category upsell, contract renewal, tap optimisation, range expansion. <strong>Engine picks the winner. Rep gets the brief.</strong></p>
+        </div>
+      </div>
+
+      <div class="stack-layer">
+        <div class="sl-num">03</div>
+        <div class="sl-left">
+          <div class="sl-product">Salesforce Personalisation</div>
+          <div class="sl-product-sub">Rep CRM + Portal</div>
+        </div>
+        <div class="sl-right">
+          <p>Surfaces AsahiIQ visit briefs inside Salesforce for reps, and delivers <strong>real-time product recommendations in the SAP Commerce portal</strong> for customers. Consistent intelligence across both the human-led and digital channels. Requires only a JavaScript tag on the portal — no structural rebuild.</p>
+        </div>
+      </div>
+
+      <div class="stack-layer">
+        <div class="sl-num">04</div>
+        <div class="sl-left">
+          <div class="sl-product">Marketing Cloud</div>
+          <div class="sl-product-sub">Marketing on Core</div>
+        </div>
+        <div class="sl-right">
+          <p>Trigger-based promotional campaigns and segmented email journeys, fired by NBA signals. <strong>Contract approaching → targeted renewal offer. Distribution gap identified → rep prompt + customer email in parallel.</strong> Replaces scheduled batch campaigns with event-driven execution.</p>
+        </div>
+      </div>
+
+      <div class="stack-layer">
+        <div class="sl-num">05</div>
+        <div class="sl-left">
+          <div class="sl-product">Agentforce</div>
+          <div class="sl-product-sub">"Ask the Agent" — Phase 2</div>
+        </div>
+        <div class="sl-right">
+          <p>Phase 2 capability: reps ask the Agentforce agent directly — "What should I pitch to The Paddington Arms this week?" — and get back a ranked, signal-backed answer. <strong>Reduces the 2 hrs/day admin burden</strong> to minutes. Agent handles call prep, account summary, and post-visit logging.</p>
+        </div>
+      </div>
+
+      <div class="stack-layer">
+        <div class="sl-num">06</div>
+        <div class="sl-left">
+          <div class="sl-product">Feedback Loop</div>
+          <div class="sl-product-sub">Every action retrains the model</div>
+        </div>
+        <div class="sl-right">
+          <p>Rep accepts an NBA → outcome logged → positive training signal → Einstein Studio retrains. Customer orders a recommended product on portal → signal captured → model improves. <strong>The engine gets smarter every time a rep or customer acts on a recommendation.</strong></p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <hr class="divider" />
+
+  <!-- BEACHHEAD -->
+  <div class="wrap">
+    <div class="eyebrow">Start Here</div>
+    <h2 class="section-h">One channel. One use case.<br/><span class="grad">Prove the model. Then scale it.</span></h2>
+    <p class="section-p">Clara's instinct is right — start with a focused pilot, prove attribution, then expand. Michael Ritoli's recommendation is the right beachhead: AFH Liquor. It's where the insight gap is sharpest, the rep cost is highest, and the data is most mature.</p>
+
+    <div class="uc-wrap">
+      <div class="uc-head">
+        <div class="uc-head-left">
+          <div class="uc-tag">Recommended Beachhead — AFH Liquor</div>
+          <h3>Rep + Portal Smart Selling</h3>
+          <p>Deploy AsahiIQ visit briefs to AFH reps in Salesforce and personalised product recommendations in the SAP Commerce portal simultaneously — proving attribution across both the human-led and digital channels in one pilot.</p>
+        </div>
+        <div class="uc-kpi-block">
+          <div class="uc-kpi">
+            <div class="uc-kpi-val">Aug/Sep</div>
+            <div class="uc-kpi-label">SAP Commerce portal launch window</div>
+          </div>
+          <div class="uc-kpi" style="margin-top:8px;">
+            <div class="uc-kpi-val" style="font-size:20px;">"Most bang for buck"</div>
+            <div class="uc-kpi-label">Michael Ritoli on the liquor pilot</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="uc-body">
+        <div class="uc-sig-label">Signals feeding the model</div>
+        <div class="uc-signals" style="margin-bottom:24px;">
+          <span class="uc-sig">Purchase recency &amp; frequency</span>
+          <span class="uc-sig">Distribution gaps by SKU</span>
+          <span class="uc-sig">Perfect Store compliance score</span>
+          <span class="uc-sig">Contract window / renewal date</span>
+          <span class="uc-sig">Tap share vs. category benchmark</span>
+          <span class="uc-sig">Cross-category propensity (non-alc)</span>
+          <span class="uc-sig">Postcode consumer mix</span>
+          <span class="uc-sig">Promo responsiveness history</span>
+          <span class="uc-sig">Days since last visit</span>
+        </div>
+
+        <div class="uc-ft">
+          <div class="uc-from">
+            <div class="uc-badge">Today</div>
+            <h5>Manual planning. Static segments. Rep reads the room.</h5>
+            <p>State manager loads the monthly plan. Rep reads this month's promo. Visit order is habit and relationship. Portal is generic — same products shown to a licensed café and a 400-seat venue. No attribution between rep visit and portal order.</p>
+          </div>
+          <div class="uc-arr">→</div>
+          <div class="uc-to">
+            <div class="uc-badge">With the NBA engine</div>
+            <h5>Pre-visit brief. Personalised portal. Closed attribution loop.</h5>
+            <p>Rep receives ranked AsahiIQ actions before each visit — scored by opportunity and margin. Portal surfaces the same recommendations digitally. <strong>Rep visit + portal order = one closed loop. Revenue attributed back to the engine. Model retrains from the outcome.</strong></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider" />
+
+  <!-- SMART SELLING POD -->
+  <div class="wrap">
+    <div class="eyebrow">How to Deliver It</div>
+    <h2 class="section-h">The Smart Selling POD.<br/><span class="grad">Shielded. Focused. Fast.</span></h2>
+    <p class="section-p">The biggest implementation risk isn't the technology — it's the team being pulled back into the existing CRM rollout and BAU before the model is proven. The POD model solves for that.</p>
+
+    <div class="pod-wrap">
+      <div class="pod-head">
+        <div class="pod-head-left">
+          <div class="pod-tag">The POD Design Principle</div>
+          <h3>A small team with a clear mandate beats a large team with a broad one.</h3>
+          <p>Four people. One KPI. The AFH Liquor pilot to start. Shielded from the SAP Commerce implementation BAU and the broader CRM rollout for 90 days — long enough to prove the model on one channel, then earn the mandate to expand across On Premise, Grocery, and the portal.</p>
+        </div>
+        <div class="pod-principle">
+          <div class="pod-pill">Shielded from BAU</div>
+          <div class="pod-pill">90-day sprint</div>
+          <div class="pod-pill">One KPI. One channel.</div>
+          <div class="pod-pill">Expand on proof</div>
+          <div class="pod-pill">PwC as delivery partner</div>
+        </div>
+      </div>
+
+      <div class="pod-team">
+        <div class="pod-role">
+          <div class="pod-role-icon">🧠</div>
+          <div class="pod-role-title">Data Scientist</div>
+          <div class="pod-role-focus">Replaces DataFizz with Einstein Studio propensity models. Defines scoring logic for visit prioritisation, cross-category recommendations, and threshold gates. Owns the feedback loop instrumentation.</div>
+        </div>
+        <div class="pod-role">
+          <div class="pod-role-icon">⚙️</div>
+          <div class="pod-role-title">Data Engineer</div>
+          <div class="pod-role-focus">Connects SAP ERP signals and Denodo feeds to Data Cloud. Ensures segment freshness, real-time event pipelines from the portal, and outlet-level data quality for AsahiIQ scoring.</div>
+        </div>
+        <div class="pod-role">
+          <div class="pod-role-icon">🔧</div>
+          <div class="pod-role-title">Solution Architect</div>
+          <div class="pod-role-focus">Builds the NBA orchestration flows, surfaces AsahiIQ in Salesforce CRM, deploys the SP tag on SAP Commerce, and wires Marketing Cloud for trigger-based execution. Connects all six stack layers end-to-end.</div>
+        </div>
+        <div class="pod-role">
+          <div class="pod-role-icon">📋</div>
+          <div class="pod-role-title">Commercial Lead / Product Owner</div>
+          <div class="pod-role-focus">Owns the NBA catalogue. Defines which actions are live, at what margin threshold, for which outlet types. Owns the $13M NSV KPI and reports lift above control to ELT. Bridges commercial strategy and engine configuration.</div>
+        </div>
+      </div>
+
+      <div class="pod-kpi">
+        <div class="pod-kpi-label">POD KPI</div>
+        <div class="pod-kpi-divider"></div>
+        <p><strong>Measurable NSV lift from NBA-triggered rep actions in the AFH Liquor pilot within 90 days</strong> — measured against a held-out control group of matched outlets. Lift above control = proof of model. Proof of model = mandate to expand to On Premise, Grocery, and full portal personalisation.</p>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider" />
+
+  <!-- SCALE -->
+  <div class="wrap">
+    <div class="eyebrow">Once the Model is Proven</div>
+    <h2 class="section-h">From one channel<br/><span class="grad">to an always-on commercial engine.</span></h2>
+    <p class="section-p">The POD proves the model on AFH Liquor. The same engine then runs every NBA in the catalogue — simultaneously, for every outlet, across every channel and the portal.</p>
+
+    <!-- MANUAL OVERHEAD -->
+    <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.07); border-radius: 16px; padding: 32px 36px; margin-bottom: 40px;">
+      <div style="font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.3);margin-bottom:20px;">The Campaign Problem Today</div>
+      <div class="uc-ft">
+        <div class="uc-from">
+          <div class="uc-badge">Manual overhead</div>
+          <h5>Every promo requires a brief, a segment, a send, a report</h5>
+          <p>Promo designed for a broad cohort. Audience segmented by hand. Sent on a schedule. Results pulled manually. Rep told what to push — without context for why it makes sense for that specific outlet. Velocity is capped by team headcount.</p>
+          <ul style="margin-top:12px;padding-left:0;list-style:none;display:flex;flex-direction:column;gap:6px;">
+            <li style="font-size:12px;color:rgba(255,255,255,0.3);display:flex;gap:8px;align-items:flex-start;"><span style="color:rgba(255,100,100,0.5);flex-shrink:0;">×</span>One promo for many — not scored per outlet</li>
+            <li style="font-size:12px;color:rgba(255,255,255,0.3);display:flex;gap:8px;align-items:flex-start;"><span style="color:rgba(255,100,100,0.5);flex-shrink:0;">×</span>High-value moments expire before a rep can act</li>
+            <li style="font-size:12px;color:rgba(255,255,255,0.3);display:flex;gap:8px;align-items:flex-start;"><span style="color:rgba(255,100,100,0.5);flex-shrink:0;">×</span>No attribution between rep visit and portal order</li>
+          </ul>
+        </div>
+        <div class="uc-arr">→</div>
+        <div class="uc-to">
+          <div class="uc-badge">Always-on engine</div>
+          <h5>Commercial team manages the catalogue. Engine handles execution.</h5>
+          <p>The NBA catalogue defines which actions are live, for which outlet types, at what margin threshold. Engine scores every outlet continuously, fires the right action at the right moment, and closes the loop automatically.</p>
+          <ul style="margin-top:12px;padding-left:0;list-style:none;display:flex;flex-direction:column;gap:6px;">
+            <li style="font-size:12px;color:rgba(255,255,255,0.6);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--gold);flex-shrink:0;">✓</span><strong style="color:rgba(255,255,255,0.75);">Signal in → rep brief out</strong> — no brief required</li>
+            <li style="font-size:12px;color:rgba(255,255,255,0.6);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--gold);flex-shrink:0;">✓</span>Every outlet scored individually — not grouped into a cohort</li>
+            <li style="font-size:12px;color:rgba(255,255,255,0.6);display:flex;gap:8px;align-items:flex-start;"><span style="color:var(--gold);flex-shrink:0;">✓</span>Rep visit and portal recommendation work in concert — one attribution model</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="scale-grid">
+      <div class="scale-card sc-rep">
+        <div class="sc-head">
+          <div class="sc-tag">Field Reps — AFH &amp; On Premise</div>
+          <h4>Every visit backed by ranked intelligence</h4>
+        </div>
+        <div class="sc-body">
+          <ul class="sc-list">
+            <li><span class="sc-tick">✓</span><span><strong>Visit order driven by opportunity score</strong> — reps call on the highest-value accounts, not the loudest ones</span></li>
+            <li><span class="sc-tick">✓</span><span><strong>AsahiIQ pre-visit brief</strong> — ranked NBAs, distribution gaps, contract windows, margin opportunities surfaced in Salesforce</span></li>
+            <li><span class="sc-tick">✓</span><span><strong>Cross-category prompts</strong> — non-alc, coffee, and RTD opportunities scored per outlet type and postcode consumer mix</span></li>
+            <li><span class="sc-tick">✓</span><span>Phase 2: Agentforce agent answers <strong>"What should I pitch today?"</strong> — reducing 2 hrs/day admin to minutes</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="scale-card sc-mkt">
+        <div class="sc-head">
+          <div class="sc-tag">Portal + Digital Channel</div>
+          <h4>SAP Commerce becomes a personalised partner portal</h4>
+        </div>
+        <div class="sc-body">
+          <ul class="sc-list">
+            <li><span class="sc-tick">✓</span><span><strong>Real-time product recommendations</strong> — AI-powered, adjusted continuously by inventory, purchase history, and outlet profile</span></li>
+            <li><span class="sc-tick">✓</span><span><strong>Trigger-based promos</strong> via Marketing Cloud — contract approaching, distribution gap, seasonal pattern — fired at the right outlet at the right moment</span></li>
+            <li><span class="sc-tick">✓</span><span>One tag on the portal header — <strong>no structural changes to SAP Commerce</strong> required to activate personalisation</span></li>
+            <li><span class="sc-tick">✓</span><span><strong>Rep and portal working in concert</strong> — same NBA, two channels, one attribution model</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="scale-closer">
+      <p>The POD proves the model on AFH Liquor. <em>The catalogue grows to On Premise, Grocery, and Convenience. The portal serves personalised recs at scale. The engine learns from every rep visit and every digital order.</em> That's the connected commercial engine Asahi's CX roadmap describes — operationalised.</p>
+    </div>
+  </div>
+
+  <hr class="divider" />
+
+  <!-- ENGINE -->
+  <div class="engine-wrap" id="engine">
+    <div class="eyebrow">Technical Deep Dive</div>
+    <h2 class="section-h">How the NBA Engine<br/><span class="grad">Actually Runs</span></h2>
+    <p class="section-p">Not a chain of if/then rules. A data-driven loop — the NBA catalogue is the configuration, the flows are the machinery, and every rep action or portal order retrains the model.</p>
+
+    <div class="trigger-block">
+      <div class="trigger-pill">
+        <div class="trigger-icon">📉</div>
+        <div><div class="trigger-label">Purchase Signal</div><div class="trigger-desc">Volume drop, missed order cycle, frequency decline</div></div>
+      </div>
+      <div class="trigger-pill">
+        <div class="trigger-icon">📦</div>
+        <div><div class="trigger-label">Distribution Gap</div><div class="trigger-desc">Core SKU not ranging, Perfect Store score below threshold</div></div>
+      </div>
+      <div class="trigger-pill">
+        <div class="trigger-icon">📋</div>
+        <div><div class="trigger-label">Contract Event</div><div class="trigger-desc">Renewal approaching, compliance breach, new agreement signed</div></div>
+      </div>
+      <div class="trigger-pill">
+        <div class="trigger-icon">🧩</div>
+        <div><div class="trigger-label">Segment Change</div><div class="trigger-desc">Outlet enters cross-category propensity segment in Data Cloud</div></div>
+      </div>
+    </div>
+
+    <div class="flow-connector"><div class="fc-line"></div><div class="fc-dot"></div><div class="fc-line"></div></div>
+
+    <div class="event-node">
+      <div class="en-label">Platform Event fires</div>
+      <div class="en-name">NBA_Assessment_Request__e</div>
+      <div class="en-sub">Payload: Outlet ID + Event Type — triggered by Data Cloud segment change or CRM activity</div>
+    </div>
+
+    <div class="flow-connector"><div class="fc-line"></div><div class="fc-dot"></div><div class="fc-line"></div></div>
+
+    <div class="master-flow">
+      <div class="mf-header">
+        <div class="mf-label">Master Flow</div>
+        <div class="mf-name">NBA Orchestration Engine — Smart Selling</div>
+      </div>
+
+      <div class="mf-step">
+        <div class="mf-step-num">
+          <div class="step-badge">1</div>
+          <div class="step-verb">Load</div>
+        </div>
+        <div class="mf-step-body">
+          <h4>Query the Active NBA Catalogue</h4>
+          <p>Pull all active NBAs — cross-category upsell actions, contract renewal prompts, range gap closures, tap optimisation tasks — where today falls within the valid window. This is the candidate pool for this outlet, this run.</p>
+          <div class="step-detail">No hardcoded actions. A new NBA for Asahi non-alc push is a new record in the catalogue. Retire it by flipping Status to Inactive. Zero code change required.</div>
+        </div>
+      </div>
+
+      <div class="mf-step">
+        <div class="mf-step-num">
+          <div class="step-badge">2</div>
+          <div class="step-verb">Loop</div>
+        </div>
+        <div class="mf-step-body">
+          <h4>For each NBA — Eligibility → Score → Gate</h4>
+          <p>Three subflows run in sequence for every action in the catalogue. None of them know anything about specific NBAs — they process whatever record is passed in.</p>
+          <div class="loop-block">
+            <div class="loop-label">Subflow loop — runs per NBA</div>
+            <div class="loop-steps">
+              <div class="loop-step ls-eligible">
+                <div class="ls-tag">Subflow A</div>
+                <h5>Eligibility Check</h5>
+                <p>Is this outlet in the eligible Data Cloud segment? Has this action been shown recently (frequency cap)? Any active exclusions (contract dispute, account on hold)?</p>
+              </div>
+              <div class="loop-arrow">→</div>
+              <div class="loop-step ls-score">
+                <div class="ls-tag">Subflow B</div>
+                <h5>Score</h5>
+                <p>Call Einstein Studio — upgraded from DataFizz ~60% accuracy. Returns a propensity score for this outlet + action based on purchase history, distribution gaps, and postcode mix.</p>
+              </div>
+              <div class="loop-arrow">→</div>
+              <div class="loop-step ls-gate">
+                <div class="ls-tag">Subflow C</div>
+                <h5>Threshold Gate</h5>
+                <p>Score ≥ minimum propensity? Add to candidates weighted by score × margin value. Below threshold? Discard. Protects reps from low-confidence recommendations.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mf-step">
+        <div class="mf-step-num">
+          <div class="step-badge">3–4</div>
+          <div class="step-verb">Decide</div>
+        </div>
+        <div class="mf-step-body">
+          <h4>Arbitrate &amp; Execute</h4>
+          <p>Candidates sorted. Winner surfaced to the rep and/or portal.</p>
+          <div class="arb-exec">
+            <div class="arb-card arb">
+              <div class="ac-tag">Step 3 — Arbitrate</div>
+              <h4>Rank the candidates</h4>
+              <p>Sort by <strong style="color:rgba(255,255,255,0.7)">propensity × margin value</strong>. Apply channel rules (one action per channel per visit). Top 3 ranked actions win. Ties broken by commercial priority.</p>
+            </div>
+            <div class="arb-card exec">
+              <div class="ac-tag">Step 4 — Execute</div>
+              <h4>Surface the brief</h4>
+              <p>Push ranked NBAs to Salesforce as the AsahiIQ pre-visit card. Trigger portal recommendation update. Fire Marketing Cloud trigger if digital channel is the execution path. Log decision for attribution.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="flow-connector"><div class="fc-line"></div><div class="fc-dot"></div><div class="fc-line"></div></div>
+
+    <div class="event-node" style="border-color:rgba(245,166,35,0.4); background: linear-gradient(135deg, #0a0e1a, #1a1200);">
+      <div class="en-label" style="color:var(--gold);">Feedback Loop</div>
+      <div class="en-name">Rep Action + Portal Order → Data Cloud → Einstein Studio</div>
+      <div class="en-sub">Rep accepts NBA → outcome logged → model retrains → propensity improves → better visit briefs next run</div>
+    </div>
+
+    <div class="key-insight">
+      <div class="ki-card">
+        <div class="ki-label">On DataFizz vs. Einstein Studio</div>
+        <h4>~60% accuracy is a coin flip with extra steps</h4>
+        <p>DataFizz propensity models work from static data exports. Einstein Studio trains on <strong>live Data Cloud segments</strong> — updated as customers purchase, browse the portal, and respond to rep visits. The accuracy gap closes because the model sees the actual signal, not a monthly extract of it.</p>
+      </div>
+      <div class="ki-card">
+        <div class="ki-label">On the SAP Commerce integration</div>
+        <h4>The portal launch in Aug/Sep is the moment</h4>
+        <p>EY is implementing the SAP Commerce Cloud portal redesign. The personalisation layer requires <strong>one JavaScript tag in the site header</strong> — no structural changes to the SAP build. The right time to activate it is at portal launch, not after. Miss that window and you're retro-fitting.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- PHASES -->
+  <hr class="divider" />
+
+  <div class="wrap">
+    <div class="eyebrow">The Path Forward</div>
+    <h2 class="section-h">Two phases.<br/><span class="grad">Prove it, then scale it.</span></h2>
+    <p class="section-p">Clara's instinct to start focused is right. Phase 1 proves attribution on a single channel. Phase 2 expands the intelligence layer and adds the agent capability that eliminates admin overhead entirely.</p>
+
+    <div class="phase-grid">
+      <div class="phase-card ph-1">
+        <div class="phase-head">
+          <div class="phase-num">1</div>
+          <div class="phase-head-text">
+            <h4>Foundation + Proof of Value</h4>
+            <p>90 days · AFH Liquor pilot · Prove attribution</p>
+          </div>
+        </div>
+        <div class="phase-body">
+          <div class="phase-item"><div class="phase-tick">✓</div><div class="phase-item-text"><strong>Data Cloud Starter</strong> — unified customer profile from SAP ERPs + Commerce + CRM + Denodo feeds</div></div>
+          <div class="phase-item"><div class="phase-tick">✓</div><div class="phase-item-text"><strong>Einstein Studio</strong> — propensity models replacing DataFizz, trained on live Data Cloud segments</div></div>
+          <div class="phase-item"><div class="phase-tick">✓</div><div class="phase-item-text"><strong>Salesforce Personalisation</strong> — AsahiIQ visit briefs in CRM + product recs in SAP Commerce portal</div></div>
+          <div class="phase-item"><div class="phase-tick">✓</div><div class="phase-item-text"><strong>Marketing on Core</strong> — trigger-based promos and segmented SFMC campaigns fired by NBA signals</div></div>
+          <div class="phase-item"><div class="phase-tick">✓</div><div class="phase-item-text">Measure NSV lift vs. control group. Attribution model proven. ELT reporting in place.</div></div>
+        </div>
+      </div>
+
+      <div class="phase-card ph-2">
+        <div class="phase-head">
+          <div class="phase-num">2</div>
+          <div class="phase-head-text">
+            <h4>Scale + Agentforce</h4>
+            <p>Post-proof · All channels · Admin elimination</p>
+          </div>
+        </div>
+        <div class="phase-body">
+          <div class="phase-item"><div class="phase-tick">✓</div><div class="phase-item-text"><strong>Agentforce "Ask the Agent"</strong> — reps ask for visit prep, account summary, and post-visit logging in natural language. 2 hrs/day admin → minutes.</div></div>
+          <div class="phase-item"><div class="phase-tick">✓</div><div class="phase-item-text"><strong>Loyalty programme</strong> — customer-facing loyalty layer on top of the NBA engine, driving repeat purchase and contract compliance</div></div>
+          <div class="phase-item"><div class="phase-tick">✓</div><div class="phase-item-text"><strong>Expanded NBA catalogue</strong> — On Premise, Grocery, Convenience channels added. Full AsahiIQ coverage across all 4 management channels.</div></div>
+          <div class="phase-item"><div class="phase-tick">✓</div><div class="phase-item-text"><strong>Voice of Customer programme</strong> — systematically capturing and actioning feedback signals back into the model</div></div>
+          <div class="phase-item"><div class="phase-tick">✓</div><div class="phase-item-text">$13M NSV target becomes the floor, not the ceiling, as catalogue and channel coverage grows.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider" />
+
+  <!-- CLOSING -->
+  <div class="closing-wrap">
+    <div class="closing-card">
+      <div class="eyebrow" style="margin-bottom:16px;">The Path Forward</div>
+      <h2>Start with one channel.<br/><span class="grad">Build the engine that delivers the $13M.</span></h2>
+      <p>The data is there. Denodo has harmonised it. The platform is there — Salesforce CRM is live, SAP Commerce launches in August. The signals are firing. The question is whether Asahi builds the intelligence layer that connects them — or keeps relying on reps to find the opportunity themselves.</p>
+
+      <div class="closing-steps">
+        <div class="c-step">
+          <div class="c-step-num">1</div>
+          <div class="c-step-label">Form the<br/>Smart Selling POD</div>
+        </div>
+        <div class="c-arrow">→</div>
+        <div class="c-step">
+          <div class="c-step-num">2</div>
+          <div class="c-step-label">Prove AFH<br/>Liquor pilot</div>
+        </div>
+        <div class="c-arrow">→</div>
+        <div class="c-step">
+          <div class="c-step-num">3</div>
+          <div class="c-step-label">Activate portal<br/>at Aug/Sep launch</div>
+        </div>
+        <div class="c-arrow">→</div>
+        <div class="c-step">
+          <div class="c-step-num">4</div>
+          <div class="c-step-label">Expand catalogue<br/>across channels</div>
+        </div>
+        <div class="c-arrow">→</div>
+        <div class="c-step">
+          <div class="c-step-num">5</div>
+          <div class="c-step-label">Engine learns.<br/>$13M compounds.</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <footer>
+    Prepared by Stuart Dunlop, Strategic Solution Specialist · Salesforce &nbsp;·&nbsp; Confidential · For Discussion &nbsp;·&nbsp; 2026
+  </footer>
+
+</body>
+</html>
