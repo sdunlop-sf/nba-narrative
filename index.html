@@ -1332,111 +1332,125 @@
   <!-- ── COMPETITIVE USP ── -->
   <div class="comp-wrap" id="competitive">
     <div class="eyebrow">Competitive Landscape</div>
-    <h2 class="section-h">How We Win Against<br/><span class="grad">Pega, Adobe &amp; Braze</span></h2>
-    <p class="section-p">Each competitor does part of this well. None of them do all of it — and none of them do it connected to the CRM, the rep motion, and a two-way agentic execution layer.</p>
+    <h2 class="section-h">How We Win Against<br/><span class="grad">Pega, Microsoft, Google &amp; Sierra</span></h2>
+    <p class="section-p">Each player does one layer well. None of them close the full loop — from real-time signal, through intelligent decisioning, into CRM-native execution with a rep motion and a learning feedback cycle. That's our territory.</p>
 
-    <table class="comp-table">
+    <div style="overflow-x:auto; -webkit-overflow-scrolling:touch;">
+    <table class="comp-table" style="min-width:780px;">
       <thead>
         <tr>
-          <th></th>
+          <th style="min-width:140px;"></th>
           <th class="sf-col comp-sf-header">Salesforce</th>
           <th>Pega</th>
-          <th>Adobe</th>
-          <th>Braze</th>
+          <th>Microsoft</th>
+          <th>Google</th>
+          <th>Sierra</th>
         </tr>
       </thead>
       <tbody>
 
-        <tr class="comp-row-header"><td colspan="5">Decisioning</td></tr>
+        <tr class="comp-row-header"><td colspan="6">Decisioning</td></tr>
         <tr>
           <td>NBA / Decisioning Engine</td>
           <td class="sf-cell"><span class="tick">✓</span><strong>Propensity-scored, ML-driven, data-driven catalogue</strong></td>
-          <td class="comp-cell"><span class="tick">✓</span>Deep — CDH is best-in-class decisioning</td>
-          <td class="comp-cell"><span class="part">~</span>Segment-based rules, limited true propensity</td>
-          <td class="comp-cell"><span class="cross">✗</span>No decisioning — you tell it what to send</td>
+          <td class="comp-cell"><span class="tick">✓</span>CDH is best-in-class decisioning — but sits outside your CRM</td>
+          <td class="comp-cell"><span class="part">~</span>No native NBA engine — requires custom Copilot Studio build</td>
+          <td class="comp-cell"><span class="part">~</span>Vertex AI can score — no NBA orchestration layer around it</td>
+          <td class="comp-cell"><span class="cross">✗</span>No decisioning — conversational AI only, you define what it says</td>
         </tr>
         <tr>
           <td>Real-time signal trigger</td>
           <td class="sf-cell"><span class="tick">✓</span><strong>Data 360 fires the moment the signal appears</strong></td>
-          <td class="comp-cell"><span class="part">~</span>Real-time capable but requires separate data layer</td>
-          <td class="comp-cell"><span class="tick">✓</span>RTCDP is strong on real-time signals</td>
-          <td class="comp-cell"><span class="part">~</span>In-session behavioural, not relationship-level</td>
+          <td class="comp-cell"><span class="part">~</span>Real-time capable but requires a separate data infrastructure</td>
+          <td class="comp-cell"><span class="part">~</span>Fabric/Event Hubs can trigger — requires custom pipeline to action</td>
+          <td class="comp-cell"><span class="tick">✓</span>BigQuery + Pub/Sub is strong — but signal stops at the data layer</td>
+          <td class="comp-cell"><span class="cross">✗</span>Reacts to conversation context only — no proactive signal firing</td>
         </tr>
 
-        <tr class="comp-row-header"><td colspan="5">CRM & Rep Motion</td></tr>
+        <tr class="comp-row-header"><td colspan="6">CRM &amp; Rep Motion</td></tr>
         <tr>
           <td>Native CRM integration</td>
           <td class="sf-cell"><span class="tick">✓</span><strong>Lives inside Sales &amp; Service Cloud — rep sees it in their flow</strong></td>
-          <td class="comp-cell"><span class="cross">✗</span>Sits outside CRM — recommendation arrives via API, no context</td>
-          <td class="comp-cell"><span class="cross">✗</span>No CRM — marketing only, no sales or service rep motion</td>
-          <td class="comp-cell"><span class="cross">✗</span>No CRM — campaign tool only</td>
+          <td class="comp-cell"><span class="cross">✗</span>Sits outside CRM — recommendation arrives via API with no relationship context</td>
+          <td class="comp-cell"><span class="part">~</span>Dynamics 365 exists but NBA surfacing is not native — custom build required</td>
+          <td class="comp-cell"><span class="cross">✗</span>No CRM — CCAI is contact-centre only, no sales or service record</td>
+          <td class="comp-cell"><span class="cross">✗</span>No CRM — a conversation layer with no underlying relationship record</td>
         </tr>
         <tr>
           <td>Sales rep motion</td>
           <td class="sf-cell"><span class="tick">✓</span><strong>NBA surfaces on Opportunity &amp; Contact — one click to act</strong></td>
           <td class="comp-cell"><span class="cross">✗</span>No native sales rep surface</td>
-          <td class="comp-cell"><span class="cross">✗</span>Not applicable</td>
-          <td class="comp-cell"><span class="cross">✗</span>Not applicable</td>
+          <td class="comp-cell"><span class="part">~</span>Copilot for Sales exists — no NBA surfacing in the rep workflow</td>
+          <td class="comp-cell"><span class="cross">✗</span>Not applicable — no sales motion</td>
+          <td class="comp-cell"><span class="cross">✗</span>Not applicable — not built for reps</td>
         </tr>
         <tr>
           <td>Service → Revenue motion</td>
           <td class="sf-cell"><span class="tick">✓</span><strong>Resolved case triggers revenue action in the same platform</strong></td>
-          <td class="comp-cell"><span class="part">~</span>Possible but requires custom integration</td>
-          <td class="comp-cell"><span class="cross">✗</span>No service layer</td>
-          <td class="comp-cell"><span class="cross">✗</span>No service layer</td>
+          <td class="comp-cell"><span class="part">~</span>Possible but requires custom integration work</td>
+          <td class="comp-cell"><span class="part">~</span>Power Automate can wire it — no native trigger out of the box</td>
+          <td class="comp-cell"><span class="cross">✗</span>No service layer — cannot bridge service to revenue</td>
+          <td class="comp-cell"><span class="part">~</span>Service-focused but no upsell or revenue action layer</td>
         </tr>
 
-        <tr class="comp-row-header"><td colspan="5">Content & Execution</td></tr>
+        <tr class="comp-row-header"><td colspan="6">Content &amp; Execution</td></tr>
         <tr>
           <td>Promotions &amp; Offers layer</td>
-          <td class="sf-cell"><span class="tick">✓</span><strong>Native — Promotion defined once, Offer built per channel at runtime</strong></td>
+          <td class="sf-cell"><span class="tick">✓</span><strong>Native — Promotion defined once, Offer rendered per channel at runtime</strong></td>
           <td class="comp-cell"><span class="cross">✗</span>No native promotions catalogue</td>
-          <td class="comp-cell"><span class="tick">✓</span>Strong offer management in AJO</td>
-          <td class="comp-cell"><span class="cross">✗</span>Message templates only — no offer layer</td>
+          <td class="comp-cell"><span class="cross">✗</span>No offer management — content built separately in disconnected tools</td>
+          <td class="comp-cell"><span class="cross">✗</span>No offer layer — data and AI only, no content management</td>
+          <td class="comp-cell"><span class="cross">✗</span>Responses are not tied to formal promotions or offers</td>
         </tr>
         <tr>
           <td>Two-way agentic execution</td>
           <td class="sf-cell"><span class="tick">✓</span><strong>Agentforce Marketing — agent converses, handles replies, escalates to human</strong></td>
           <td class="comp-cell"><span class="cross">✗</span>Fires actions — no two-way conversation capability</td>
-          <td class="comp-cell"><span class="cross">✗</span>One-way campaign execution</td>
-          <td class="comp-cell"><span class="part">~</span>Basic reply handling — not agentic</td>
+          <td class="comp-cell"><span class="part">~</span>Copilot Studio can build agents — not wired to NBA decisioning</td>
+          <td class="comp-cell"><span class="tick">✓</span>Customer Engagement Suite is strong on conversation — no decisioning driving it</td>
+          <td class="comp-cell"><span class="tick">✓</span>Excellent conversational AI — but no intelligence deciding what offer to make</td>
         </tr>
         <tr>
           <td>Digital labour routing</td>
           <td class="sf-cell"><span class="tick">✓</span><strong>Engine decides: digital SDR or human rep — warm handoff either way</strong></td>
           <td class="comp-cell"><span class="cross">✗</span>No digital labour concept</td>
-          <td class="comp-cell"><span class="cross">✗</span>No digital labour concept</td>
-          <td class="comp-cell"><span class="cross">✗</span>No digital labour concept</td>
+          <td class="comp-cell"><span class="part">~</span>Copilot agents exist — not NBA-aware, no decisioning-based routing</td>
+          <td class="comp-cell"><span class="part">~</span>CCAI handles escalation — not connected to a propensity-based decision</td>
+          <td class="comp-cell"><span class="part">~</span>Handles human escalation well — routing not informed by NBA score</td>
         </tr>
 
-        <tr class="comp-row-header"><td colspan="5">Learning & Data</td></tr>
+        <tr class="comp-row-header"><td colspan="6">Learning &amp; Data</td></tr>
         <tr>
           <td>Unified data layer</td>
           <td class="sf-cell"><span class="tick">✓</span><strong>Data 360 — natively connected to CRM, Flow, Einstein and execution</strong></td>
           <td class="comp-cell"><span class="cross">✗</span>Bring your own data infrastructure</td>
-          <td class="comp-cell"><span class="tick">✓</span>RTCDP strong — but connected to Adobe channels only</td>
-          <td class="comp-cell"><span class="part">~</span>In-app behavioural data — not full customer profile</td>
+          <td class="comp-cell"><span class="part">~</span>Fabric is strong — but requires manual wiring to Dynamics + Copilot</td>
+          <td class="comp-cell"><span class="tick">✓</span>BigQuery + Vertex is world-class — connected to Google channels only</td>
+          <td class="comp-cell"><span class="cross">✗</span>Thin data layer — relies on integrations to pull context in</td>
         </tr>
         <tr>
           <td>Feedback loop &amp; model learning</td>
           <td class="sf-cell"><span class="tick">✓</span><strong>Every outcome retrains Einstein Studio — gets smarter with every run</strong></td>
-          <td class="comp-cell"><span class="tick">✓</span>Strong — model governance is mature</td>
-          <td class="comp-cell"><span class="part">~</span>Some ML capability but limited retraining loop</td>
-          <td class="comp-cell"><span class="cross">✗</span>No ML learning layer</td>
+          <td class="comp-cell"><span class="tick">✓</span>Strong — model governance and retraining is mature</td>
+          <td class="comp-cell"><span class="part">~</span>Azure ML capable — no closed feedback loop from execution back to model</td>
+          <td class="comp-cell"><span class="part">~</span>Vertex AutoML capable — feedback loop requires a custom engineering build</td>
+          <td class="comp-cell"><span class="cross">✗</span>No ML decisioning layer — conversation quality improves, propensity does not</td>
         </tr>
         <tr>
           <td>Marketer-operable</td>
           <td class="sf-cell"><span class="tick">✓</span><strong>Catalogue managed in UI — no code change to add or retire an NBA</strong></td>
           <td class="comp-cell"><span class="cross">✗</span>Requires specialist Pega consultants to operate and change</td>
-          <td class="comp-cell"><span class="tick">✓</span>Strong marketer UX in AJO</td>
-          <td class="comp-cell"><span class="tick">✓</span>Strong marketer UX</td>
+          <td class="comp-cell"><span class="cross">✗</span>Copilot Studio developer required to add or modify any action</td>
+          <td class="comp-cell"><span class="cross">✗</span>Data or ML engineer required to modify scoring logic or triggers</td>
+          <td class="comp-cell"><span class="part">~</span>Good conversational config UI — no NBA catalogue concept exists</td>
         </tr>
 
       </tbody>
     </table>
+    </div>
 
     <div class="comp-bottom">
-      <p>Pega decides but doesn't execute natively. Adobe executes but doesn't decide. Braze executes beautifully but has no intelligence layer. <em>None of them connect signal, decision, content, execution and the CRM relationship in one platform — with a rep motion, a digital labour layer, and a feedback loop that improves with every interaction.</em></p>
+      <p>Pega decides but can't execute natively and locks you into specialists. Microsoft has the pieces — Dynamics, Copilot, Fabric — but they don't come assembled. Google's AI and data are world-class but stop at the data layer with no CRM or rep motion. Sierra converses brilliantly but has no intelligence deciding what to say or who to prioritise. <em>None of them connect signal, decision, content, execution and the CRM relationship in one platform — with a rep motion, a digital labour layer, and a feedback loop that improves with every interaction.</em></p>
     </div>
   </div>
 
