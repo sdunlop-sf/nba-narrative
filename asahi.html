@@ -63,18 +63,34 @@
       font-size: 17px; color: var(--muted); max-width: 680px; margin: 0 auto; line-height: 1.75;
     }
     .hero-sub em { color: rgba(255,255,255,0.75); font-style: normal; }
+    .hero-quote {
+      max-width: 680px; margin: 0 auto 28px;
+      padding: 18px 24px 18px 20px;
+      border-left: 3px solid rgba(245,166,35,0.5);
+      background: rgba(245,166,35,0.05);
+      border-radius: 0 10px 10px 0;
+      text-align: left;
+    }
+    .hero-quote p {
+      font-size: 15px; color: rgba(255,255,255,0.7); line-height: 1.65; font-style: italic;
+    }
+    .hero-quote cite {
+      display: block; margin-top: 6px; font-size: 10px; font-style: normal;
+      font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+      color: rgba(245,166,35,0.6);
+    }
     .hero-kpi {
-      display: flex; align-items: center; justify-content: center; gap: 32px;
-      margin-top: 40px; flex-wrap: wrap;
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 12px; margin-top: 40px;
     }
     .hero-kpi-item {
-      display: flex; flex-direction: column; align-items: center; gap: 4px;
-      padding: 16px 28px; border-radius: 14px;
-      background: rgba(245,166,35,0.07); border: 1px solid rgba(245,166,35,0.2);
+      display: flex; flex-direction: column; align-items: center; gap: 6px;
+      padding: 20px 16px; border-radius: 14px;
+      background: rgba(245,166,35,0.06); border: 1px solid rgba(245,166,35,0.15);
     }
-    .hero-kpi-val { font-size: 28px; font-weight: 800; color: var(--gold); letter-spacing: -0.02em; }
-    .hero-kpi-label { font-size: 11px; color: var(--muted); letter-spacing: 0.06em; }
-    .hero-kpi-divider { width: 1px; height: 48px; background: var(--border); }
+    .hero-kpi-val { font-size: 30px; font-weight: 800; color: var(--gold); letter-spacing: -0.02em; line-height: 1; }
+    .hero-kpi-label { font-size: 11px; color: var(--muted); text-align: center; line-height: 1.4; }
+    .hero-kpi-divider { display: none; }
 
     /* ── SHARED ── */
     .wrap { width: 100%; max-width: 1100px; margin: 0 auto; padding: 96px 40px; }
@@ -488,6 +504,20 @@
       border-top: 1px solid rgba(255,255,255,0.05);
     }
 
+    /* ── STACK LAYER ACCENT COLOURS ── */
+    .sl-layer-01 { border-left: 4px solid #4f46e5; }
+    .sl-layer-01 .sl-num { color: #818cf8; }
+    .sl-layer-02 { border-left: 4px solid var(--blue); }
+    .sl-layer-02 .sl-num { color: var(--blue); }
+    .sl-layer-03 { border-left: 4px solid #ec4899; }
+    .sl-layer-03 .sl-num { color: #f472b6; }
+    .sl-layer-04 { border-left: 4px solid #f59e0b; }
+    .sl-layer-04 .sl-num { color: #fbbf24; }
+    .sl-layer-05 { border-left: 4px solid #06a59a; }
+    .sl-layer-05 .sl-num { color: #2dd4bf; }
+    .sl-layer-06 { border-left: 4px solid #10b981; }
+    .sl-layer-06 .sl-num { color: #34d399; }
+
     /* ── RESPONSIVE ── */
     @media (max-width: 768px) {
       nav { padding: 0 20px; }
@@ -553,24 +583,25 @@
   <!-- HERO -->
   <div class="hero">
     <div class="hero-eyebrow">A Proposition for Asahi · Smart Selling Initiative · 2026</div>
-    <h1>Your reps are serving<br/>the <span class="grad">loudest customers.</span><br/>Not the most valuable ones.</h1>
-    <p class="hero-sub">Asahi's commercial data is richer than almost any beverage company in market — two ERPs, a unified portal, loyalty signals, trade spend, tap data, Perfect Store compliance. The opportunity is <em>connecting that intelligence to the rep before the visit, and to the customer at the moment they order</em> — automatically, at the right margin.</p>
+    <div class="hero-quote">
+      <p>"Arm reps with better insights to add value to customers. Arm customers with better insights to drive incremental sales and improve margins."</p>
+      <cite>Smart Selling Initiative — Stated Goal</cite>
+    </div>
+    <h1>The $13M is committed.<br/>The data already exists.<br/><span class="grad">The engine to act on it doesn't.</span></h1>
+    <p class="hero-sub">Asahi's commercial data spans two ERPs, a unified portal, loyalty signals, trade spend, tap data, and Perfect Store compliance. <em>The opportunity is connecting that intelligence to the rep before the visit, and to the customer at the moment they order</em> — automatically, at the right margin.</p>
     <div class="hero-kpi">
       <div class="hero-kpi-item">
         <div class="hero-kpi-val">$13M</div>
-        <div class="hero-kpi-label">NSV commitment (ELT approved)</div>
+        <div class="hero-kpi-label">NSV commitment — ELT approved</div>
       </div>
-      <div class="hero-kpi-divider"></div>
       <div class="hero-kpi-item">
         <div class="hero-kpi-val">$6M</div>
         <div class="hero-kpi-label">GSV tied to Smart Selling</div>
       </div>
-      <div class="hero-kpi-divider"></div>
       <div class="hero-kpi-item">
         <div class="hero-kpi-val">$150</div>
-        <div class="hero-kpi-label">Cost per rep visit — without data value-add</div>
+        <div class="hero-kpi-label">Cost per rep visit without data value-add</div>
       </div>
-      <div class="hero-kpi-divider"></div>
       <div class="hero-kpi-item">
         <div class="hero-kpi-val">2 hrs</div>
         <div class="hero-kpi-label">Admin per rep per day</div>
@@ -724,7 +755,7 @@
         <div class="stack-header-name">How the layers work together to deliver Smart Selling</div>
       </div>
 
-      <div class="stack-layer">
+      <div class="stack-layer sl-layer-01">
         <div class="sl-num">01</div>
         <div class="sl-left">
           <div class="sl-product">Data Cloud</div>
@@ -735,7 +766,7 @@
         </div>
       </div>
 
-      <div class="stack-layer">
+      <div class="stack-layer sl-layer-02">
         <div class="sl-num">02</div>
         <div class="sl-left">
           <div class="sl-product">Einstein Studio + Flow</div>
@@ -746,7 +777,7 @@
         </div>
       </div>
 
-      <div class="stack-layer">
+      <div class="stack-layer sl-layer-03">
         <div class="sl-num">03</div>
         <div class="sl-left">
           <div class="sl-product">Salesforce Personalisation</div>
@@ -757,7 +788,7 @@
         </div>
       </div>
 
-      <div class="stack-layer">
+      <div class="stack-layer sl-layer-04">
         <div class="sl-num">04</div>
         <div class="sl-left">
           <div class="sl-product">Marketing Cloud</div>
@@ -768,7 +799,7 @@
         </div>
       </div>
 
-      <div class="stack-layer">
+      <div class="stack-layer sl-layer-05">
         <div class="sl-num">05</div>
         <div class="sl-left">
           <div class="sl-product">Agentforce</div>
@@ -779,7 +810,7 @@
         </div>
       </div>
 
-      <div class="stack-layer">
+      <div class="stack-layer sl-layer-06">
         <div class="sl-num">06</div>
         <div class="sl-left">
           <div class="sl-product">Feedback Loop</div>
