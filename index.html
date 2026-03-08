@@ -500,18 +500,21 @@
     .ol-line { font-size: 14px; font-weight: 600; color: rgba(255,255,255,0.8); line-height: 1.4; }
 
     /* ── COMPETITIVE ── */
-    .comp-wrap { width: 100%; max-width: 1100px; margin: 0 auto; padding: 96px 40px; }
+    .comp-wrap { width: 100%; max-width: 1100px; margin: 0 auto; padding: 96px 40px; scroll-margin-top: 60px; }
 
-    .comp-table { width: 100%; border-collapse: separate; border-spacing: 0; margin-bottom: 40px; }
+    /* Outer wrapper: no overflow on desktop so position:sticky works.
+       overflow-x:auto is applied only on mobile via media query below. */
+    .comp-table-outer { width: 100%; }
+
+    .comp-table { width: 100%; border-collapse: separate; border-spacing: 0; margin-bottom: 40px; min-width: 780px; }
     .comp-table th {
       padding: 14px 20px; font-size: 10px; font-weight: 700; letter-spacing: 0.12em;
       text-transform: uppercase; color: var(--muted); text-align: left;
-      /* sticky header — sits below the fixed nav (60px) */
+      /* sticky: works because no overflow ancestor exists on desktop */
       position: sticky; top: 60px; z-index: 20;
       background: rgba(8,15,30,0.97);
       backdrop-filter: blur(12px);
-      /* use box-shadow for border so it paints correctly under sticky */
-      box-shadow: inset 0 -1px 0 rgba(255,255,255,0.08), 0 4px 16px rgba(0,0,0,0.4);
+      box-shadow: inset 0 -1px 0 rgba(255,255,255,0.1);
     }
     .comp-table th.sf-col { color: var(--blue); }
     .comp-table td {
@@ -529,9 +532,9 @@
     .comp-table thead tr th:last-child { border-radius: 0 12px 0 0; }
 
     .comp-row-header td {
-      padding-top: 24px; padding-bottom: 8px;
-      font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
-      color: rgba(255,255,255,0.2); border-bottom: none; background: none;
+      padding-top: 28px; padding-bottom: 8px;
+      font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+      color: rgba(255,255,255,0.45); border-bottom: none; background: none;
     }
 
     .tick   { color: var(--blue);  font-size: 14px; margin-right: 6px; }
@@ -539,8 +542,8 @@
     .part   { color: #fbbf24;      font-size: 14px; margin-right: 6px; }
 
     .comp-sf-header {
-      background: rgba(0,0,20,0.95) !important;
-      box-shadow: inset 0 2px 0 var(--blue), inset 0 -1px 0 rgba(255,255,255,0.08), 0 1px 0 rgba(255,255,255,0.08);
+      background: rgba(4,10,28,0.98) !important;
+      box-shadow: inset 0 2px 0 var(--blue), inset 0 -1px 0 rgba(255,255,255,0.1);
     }
 
     .comp-bottom {
@@ -554,16 +557,27 @@
     }
     .comp-bottom p em { color: var(--blue); font-style: normal; font-weight: 700; }
 
+    @media (max-width: 860px) {
+      /* Apply horizontal scroll only at mobile — this is deliberately NOT on desktop
+         because overflow-x:auto creates a scroll container that breaks position:sticky */
+      .comp-table-outer { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+      /* Disable sticky on mobile (overflow-x parent breaks it — accept no sticky here) */
+      .comp-table th {
+        position: static;
+        backdrop-filter: none;
+        box-shadow: inset 0 -1px 0 rgba(255,255,255,0.1);
+      }
+      .comp-sf-header { box-shadow: inset 0 2px 0 var(--blue), inset 0 -1px 0 rgba(255,255,255,0.1); }
+    }
+
     @media (max-width: 768px) {
       .comp-wrap { padding: 60px 24px; }
       .comp-table td:first-child { width: 90px; font-size: 11px; }
-      /* row-header spans all cols — don't constrain its width */
-      .comp-row-header td:first-child { width: auto !important; white-space: nowrap; }
+      .comp-row-header td:first-child { width: auto !important; }
       .comp-table td { padding: 10px 8px; font-size: 11px; line-height: 1.5; }
-      .comp-table th { padding: 10px 8px; font-size: 8px; top: 56px; }
+      .comp-table th { padding: 10px 8px; font-size: 8px; }
       .comp-bottom { padding: 24px; }
       .comp-bottom p { font-size: 14px; }
-      /* stack section header text */
       .tick, .cross, .part { font-size: 12px; margin-right: 4px; }
     }
 
@@ -1304,8 +1318,8 @@
     <h2 class="section-h">How We Win Against<br/><span class="grad">Pega, Microsoft, Google &amp; Sierra</span></h2>
     <p class="section-p">Each player does one layer well. None of them close the full loop — from real-time signal, through intelligent decisioning, into CRM-native execution with a rep motion and a learning feedback cycle. That's our territory.</p>
 
-    <div style="overflow-x:auto; -webkit-overflow-scrolling:touch;">
-    <table class="comp-table" style="min-width:780px;">
+    <div class="comp-table-outer">
+    <table class="comp-table">
       <thead>
         <tr>
           <th style="min-width:140px;"></th>
