@@ -348,6 +348,120 @@
     .pull-quote p { font-size: 17px; font-weight: 500; line-height: 1.65; color: rgba(255,255,255,0.85); }
     .pull-quote p em { color: var(--blue); font-style: normal; font-weight: 700; }
 
+    /* ── ENGINE ── */
+    .engine-wrap { width: 100%; max-width: 1100px; margin: 0 auto; padding: 96px 40px; }
+
+    .trigger-block { display: flex; align-items: center; gap: 16px; margin-bottom: 48px; }
+    .trigger-pill {
+      display: flex; align-items: center; gap: 10px;
+      background: rgba(19,181,234,0.07); border: 1px solid rgba(19,181,234,0.3);
+      border-radius: 12px; padding: 14px 20px; flex: 1; transition: border-color 0.2s;
+    }
+    .trigger-pill:hover { border-color: rgba(19,181,234,0.6); }
+    .trigger-icon { font-size: 18px; flex-shrink: 0; }
+    .trigger-label { font-size: 11px; font-weight: 700; color: var(--blue); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 2px; }
+    .trigger-desc { font-size: 12px; color: var(--muted); }
+
+    .event-node {
+      background: linear-gradient(135deg, #071628, #0a2840);
+      border: 1px solid rgba(19,181,234,0.4); border-radius: 14px;
+      padding: 18px 28px; text-align: center; margin-bottom: 12px;
+    }
+    .event-node .en-label { font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--blue); margin-bottom: 4px; }
+    .event-node .en-name { font-size: 16px; font-weight: 700; }
+    .event-node .en-sub { font-size: 12px; color: var(--muted); margin-top: 3px; }
+
+    .flow-connector { display: flex; flex-direction: column; align-items: center; gap: 0; margin-bottom: 12px; }
+    .flow-connector .fc-line { width: 2px; height: 28px; background: linear-gradient(to bottom, rgba(19,181,234,0.5), rgba(19,181,234,0.15)); }
+    .flow-connector .fc-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--blue); box-shadow: 0 0 8px var(--blue); }
+
+    .master-flow {
+      border: 1px solid rgba(19,181,234,0.25); border-radius: 18px;
+      overflow: hidden; margin-bottom: 12px;
+    }
+    .mf-header {
+      background: rgba(19,181,234,0.08); padding: 14px 24px;
+      border-bottom: 1px solid rgba(19,181,234,0.15);
+      display: flex; align-items: center; gap: 10px;
+    }
+    .mf-header .mf-label { font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--blue); }
+    .mf-header .mf-name { font-size: 14px; font-weight: 700; margin-left: 4px; }
+
+    .mf-step { display: grid; grid-template-columns: 120px 1fr; border-top: 1px solid rgba(255,255,255,0.05); }
+    .mf-step:first-of-type { border-top: none; }
+    .mf-step-num {
+      padding: 20px; display: flex; flex-direction: column; align-items: center; justify-content: flex-start;
+      border-right: 1px solid rgba(255,255,255,0.05); background: rgba(255,255,255,0.02);
+      gap: 6px; padding-top: 22px;
+    }
+    .step-badge {
+      width: 28px; height: 28px; border-radius: 50%; border: 1px solid rgba(19,181,234,0.4);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; font-weight: 800; color: var(--blue);
+    }
+    .step-verb { font-size: 9px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+
+    .mf-step-body { padding: 20px 24px; }
+    .mf-step-body h4 { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+    .mf-step-body p { font-size: 13px; color: var(--muted); line-height: 1.65; }
+    .mf-step-body .step-detail { font-size: 12px; color: rgba(255,255,255,0.35); margin-top: 6px; font-style: italic; }
+
+    .loop-block {
+      border: 1px dashed rgba(19,181,234,0.25); border-radius: 12px;
+      padding: 16px; margin-top: 10px; background: rgba(19,181,234,0.03);
+    }
+    .loop-label {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+      color: rgba(19,181,234,0.5); margin-bottom: 10px;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .loop-label::after { content: ''; flex: 1; height: 1px; background: rgba(19,181,234,0.15); }
+    .loop-steps { display: flex; gap: 8px; }
+    .loop-step {
+      flex: 1; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 10px; padding: 14px; position: relative;
+    }
+    .loop-step::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; border-radius: 10px 10px 0 0;
+    }
+    .loop-step.ls-eligible::before { background: var(--teal); }
+    .loop-step.ls-score::before   { background: var(--blue); }
+    .loop-step.ls-gate::before    { background: #7c3aed; }
+    .loop-step h5 { font-size: 12px; font-weight: 700; margin-bottom: 5px; }
+    .loop-step p  { font-size: 11px; color: var(--muted); line-height: 1.55; }
+    .loop-step .ls-tag { display: inline-block; font-size: 9px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 2px 7px; border-radius: 5px; margin-bottom: 8px; }
+    .ls-eligible .ls-tag { background: rgba(11,138,125,0.12); color: var(--teal); }
+    .ls-score .ls-tag   { background: rgba(19,181,234,0.12); color: var(--blue); }
+    .ls-gate .ls-tag    { background: rgba(124,58,237,0.12); color: #a78bfa; }
+
+    .loop-arrow { display: flex; align-items: center; font-size: 14px; color: rgba(255,255,255,0.2); flex-shrink: 0; padding-top: 20px; }
+
+    .arb-exec { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 8px; }
+    .arb-card {
+      background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 12px; padding: 18px 20px; position: relative; overflow: hidden;
+    }
+    .arb-card.arb  { border-color: rgba(124,58,237,0.25); }
+    .arb-card.exec { border-color: rgba(11,138,125,0.25); }
+    .arb-card::after { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; }
+    .arb-card.arb::after  { background: linear-gradient(90deg, #7c3aed, transparent); }
+    .arb-card.exec::after { background: linear-gradient(90deg, var(--teal), transparent); }
+    .arb-card h4 { font-size: 13px; font-weight: 700; margin-bottom: 6px; }
+    .arb-card p  { font-size: 12px; color: var(--muted); line-height: 1.6; }
+    .arb-card .ac-tag { font-size: 9px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 2px 7px; border-radius: 5px; margin-bottom: 8px; display: inline-block; }
+    .arb-card.arb  .ac-tag { background: rgba(124,58,237,0.12); color: #a78bfa; }
+    .arb-card.exec .ac-tag { background: rgba(11,138,125,0.12); color: var(--teal); }
+
+    .key-insight { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 48px; }
+    .ki-card {
+      background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 14px; padding: 24px;
+    }
+    .ki-card .ki-label { font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--blue); margin-bottom: 10px; }
+    .ki-card h4 { font-size: 15px; font-weight: 700; margin-bottom: 8px; }
+    .ki-card p  { font-size: 13px; color: var(--muted); line-height: 1.7; }
+    .ki-card p strong { color: rgba(255,255,255,0.8); }
+
     /* ── CLOSING ── */
     .closing-wrap { padding: 0 56px 80px; max-width: 1100px; margin: 0 auto; }
     .closing-card {
@@ -422,6 +536,15 @@
       .pod-kpi { padding: 16px 20px; }
       .pod-kpi-divider { display: none; }
       .scale-grid { grid-template-columns: 1fr; }
+      .trigger-block { flex-direction: column; gap: 10px; }
+      .mf-step { grid-template-columns: 64px 1fr; }
+      .mf-step-num { padding: 16px 10px; }
+      .step-badge { width: 24px; height: 24px; font-size: 10px; }
+      .mf-step-body { padding: 16px; }
+      .loop-steps { flex-direction: column; }
+      .loop-arrow { transform: rotate(90deg); align-self: center; }
+      .arb-exec { grid-template-columns: 1fr; }
+      .key-insight { grid-template-columns: 1fr; }
       .closing-card { padding: 40px 24px; }
       .closing-steps { gap: 0; }
       .c-arrow { display: none; }
@@ -756,6 +879,150 @@
       <p>The POD starts small, proves the model, and earns the right to expand. <em>The catalogue grows. The engine learns. The returns compound.</em> That's the Xero always-on personalisation vision — operationalised.</p>
     </div>
   </div>
+
+  <hr class="divider" />
+
+  <!-- ── ENGINE ── -->
+  <div class="engine-wrap" id="engine">
+    <div class="eyebrow">Technical Deep Dive</div>
+    <h2 class="section-h">How the Decisioning<br/><span class="grad">Engine Actually Runs</span></h2>
+    <p class="section-p">Not a chain of if/then rules. A data-driven loop — the catalogue is the configuration, the flows are just the machinery.</p>
+
+    <!-- TRIGGERS -->
+    <div class="trigger-block">
+      <div class="trigger-pill">
+        <div class="trigger-icon">📉</div>
+        <div><div class="trigger-label">Churn Signal</div><div class="trigger-desc">Feature abandonment, support escalation, usage drop</div></div>
+      </div>
+      <div class="trigger-pill">
+        <div class="trigger-icon">📈</div>
+        <div><div class="trigger-label">Upsell Signal</div><div class="trigger-desc">Invoice limit hit, payroll seats added, multi-entity need detected</div></div>
+      </div>
+      <div class="trigger-pill">
+        <div class="trigger-icon">🔁</div>
+        <div><div class="trigger-label">Lifecycle Event</div><div class="trigger-desc">Renewal approaching, trial ending, subscription anniversary</div></div>
+      </div>
+      <div class="trigger-pill">
+        <div class="trigger-icon">🧩</div>
+        <div><div class="trigger-label">Segment Change</div><div class="trigger-desc">Customer enters or exits a high-propensity Data 360 segment</div></div>
+      </div>
+    </div>
+
+    <div class="flow-connector"><div class="fc-line"></div><div class="fc-dot"></div><div class="fc-line"></div></div>
+
+    <!-- PLATFORM EVENT -->
+    <div class="event-node">
+      <div class="en-label">Platform Event fires</div>
+      <div class="en-name">NBA_Assessment_Request__e</div>
+      <div class="en-sub">Payload: Customer ID + Event Type — any system can fire it</div>
+    </div>
+
+    <div class="flow-connector"><div class="fc-line"></div><div class="fc-dot"></div><div class="fc-line"></div></div>
+
+    <!-- MASTER FLOW -->
+    <div class="master-flow">
+      <div class="mf-header">
+        <div class="mf-label">Master Flow</div>
+        <div class="mf-name">NBA Orchestration Engine</div>
+      </div>
+
+      <!-- STEP 1 -->
+      <div class="mf-step">
+        <div class="mf-step-num">
+          <div class="step-badge">1</div>
+          <div class="step-verb">Load</div>
+        </div>
+        <div class="mf-step-body">
+          <h4>Query the Active NBA Catalogue</h4>
+          <p>Pull all <code style="background:rgba(255,255,255,0.08);padding:1px 6px;border-radius:4px;font-size:11px;">NBA__c</code> records where Status = Active and today falls within Valid_From / Valid_To. This is the candidate pool for this run.</p>
+          <div class="step-detail">No hardcoded actions — new NBAs are picked up automatically the moment they go Active.</div>
+        </div>
+      </div>
+
+      <!-- STEP 2: LOOP -->
+      <div class="mf-step">
+        <div class="mf-step-num">
+          <div class="step-badge">2</div>
+          <div class="step-verb">Loop</div>
+        </div>
+        <div class="mf-step-body">
+          <h4>For each NBA — Eligibility → Score → Gate</h4>
+          <p>Three reusable subflows, called in sequence for every action in the catalogue. None of them know anything about specific NBAs — they process whatever record is passed in.</p>
+          <div class="loop-block">
+            <div class="loop-label">Subflow loop — runs per NBA</div>
+            <div class="loop-steps">
+              <div class="loop-step ls-eligible">
+                <div class="ls-tag">Subflow A</div>
+                <h5>Eligibility Check</h5>
+                <p>Is this customer in the eligible Data 360 segment? Frequency cap hit? Any active exclusions (complaint, churned)?</p>
+              </div>
+              <div class="loop-arrow">→</div>
+              <div class="loop-step ls-score">
+                <div class="ls-tag">Subflow B</div>
+                <h5>Score</h5>
+                <p>Call Einstein Studio model at <code style="background:rgba(255,255,255,0.08);padding:1px 5px;border-radius:3px;font-size:10px;">NBA.Model_ID__c</code>. Get propensity score back for this customer + action.</p>
+              </div>
+              <div class="loop-arrow">→</div>
+              <div class="loop-step ls-gate">
+                <div class="ls-tag">Subflow C</div>
+                <h5>Threshold Gate</h5>
+                <p>Score ≥ <code style="background:rgba(255,255,255,0.08);padding:1px 5px;border-radius:3px;font-size:10px;">NBA.Min_Propensity__c</code>? Add to candidates with score × Business_Value. Below? Discard.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- STEPS 3 + 4 -->
+      <div class="mf-step">
+        <div class="mf-step-num">
+          <div class="step-badge">3–4</div>
+          <div class="step-verb">Decide</div>
+        </div>
+        <div class="mf-step-body">
+          <h4>Arbitrate &amp; Execute</h4>
+          <p>Candidates collection is sorted and the winner is executed.</p>
+          <div class="arb-exec">
+            <div class="arb-card arb">
+              <div class="ac-tag">Step 3 — Arbitrate</div>
+              <h4>Pick the winner</h4>
+              <p>Sort candidates by <strong style="color:rgba(255,255,255,0.7)">propensity × Business_Value</strong>. Apply channel rules (one action per channel max). Top-ranked action wins. Ties broken by Priority__c.</p>
+            </div>
+            <div class="arb-card exec">
+              <div class="ac-tag">Step 4 — Execute</div>
+              <h4>Fire the action</h4>
+              <p>Create CampaignMember against the NBA's Campaign. Surface to agent in-screen, trigger digital message, or queue for next interaction. Log decision for audit trail.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- end master-flow -->
+
+    <div class="flow-connector"><div class="fc-line"></div><div class="fc-dot"></div><div class="fc-line"></div></div>
+
+    <!-- FEEDBACK -->
+    <div class="event-node" style="border-color:rgba(11,138,125,0.4); background: linear-gradient(135deg, #071628, #05342e);">
+      <div class="en-label" style="color:var(--teal);">Feedback Loop</div>
+      <div class="en-name">CampaignMember Outcome → Data 360 → Einstein Studio</div>
+      <div class="en-sub">Customer responds → positive signal → model retrains → propensity improves → better decisions next run</div>
+    </div>
+
+    <!-- KEY INSIGHTS -->
+    <div class="key-insight">
+      <div class="ki-card">
+        <div class="ki-label">Why not if/then rules</div>
+        <h4>The catalogue is the configuration</h4>
+        <p>Every eligibility rule, threshold, and value weight lives on the <strong>NBA record</strong> — not in the flow. Add a new NBA = create a record. Retire one = flip Status to Inactive. <strong>Zero code change required.</strong></p>
+      </div>
+      <div class="ki-card">
+        <div class="ki-label">Scaling to production</div>
+        <h4>Flow today, Apex at scale</h4>
+        <p>The loop pattern works in Flow for moderate volumes. At scale, move the loop and scoring into <strong>Apex batch jobs</strong> — same architecture, same catalogue, just faster execution. Einstein Decision Management natively handles this at enterprise scale.</p>
+      </div>
+    </div>
+
+  </div><!-- end engine-wrap -->
 
   <hr class="divider" />
 
