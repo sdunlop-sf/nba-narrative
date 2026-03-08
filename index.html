@@ -455,6 +455,64 @@
     .ol-block:nth-child(4) .ol-cap { color: var(--teal); }
     .ol-line { font-size: 14px; font-weight: 600; color: rgba(255,255,255,0.8); line-height: 1.4; }
 
+    /* ── COMPETITIVE ── */
+    .comp-wrap { width: 100%; max-width: 1100px; margin: 0 auto; padding: 96px 40px; }
+
+    .comp-table { width: 100%; border-collapse: collapse; margin-bottom: 40px; }
+    .comp-table th {
+      padding: 14px 20px; font-size: 10px; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--muted); text-align: left;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .comp-table th.sf-col { color: var(--blue); }
+    .comp-table td {
+      padding: 16px 20px; font-size: 13px; line-height: 1.6;
+      border-bottom: 1px solid rgba(255,255,255,0.05); vertical-align: top;
+    }
+    .comp-table tr:last-child td { border-bottom: none; }
+    .comp-table td:first-child { color: rgba(255,255,255,0.5); font-weight: 600; width: 160px; }
+    .comp-table td.comp-cell { color: rgba(255,255,255,0.4); }
+    .comp-table td.sf-cell {
+      color: rgba(255,255,255,0.85);
+      background: rgba(0,161,224,0.04);
+    }
+    .comp-table td.sf-cell strong { color: var(--blue); }
+    .comp-table thead tr th:last-child { border-radius: 0 12px 0 0; }
+
+    .comp-row-header td {
+      padding-top: 24px; padding-bottom: 8px;
+      font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+      color: rgba(255,255,255,0.2); border-bottom: none; background: none;
+    }
+
+    .tick   { color: var(--blue);  font-size: 14px; margin-right: 6px; }
+    .cross  { color: #f87171;      font-size: 14px; margin-right: 6px; }
+    .part   { color: #fbbf24;      font-size: 14px; margin-right: 6px; }
+
+    .comp-sf-header {
+      background: rgba(0,161,224,0.06); border-top: 2px solid var(--blue);
+    }
+
+    .comp-bottom {
+      background: linear-gradient(135deg, rgba(3,45,96,0.6), rgba(0,161,224,0.05));
+      border: 1px solid rgba(0,161,224,0.2); border-radius: 16px;
+      padding: 32px 40px; text-align: center;
+    }
+    .comp-bottom p {
+      font-size: 17px; font-weight: 500; line-height: 1.7;
+      color: rgba(255,255,255,0.85); max-width: 700px; margin: 0 auto;
+    }
+    .comp-bottom p em { color: var(--blue); font-style: normal; font-weight: 700; }
+
+    @media (max-width: 768px) {
+      .comp-wrap { padding: 60px 24px; }
+      .comp-table td:first-child { width: 100px; font-size: 11px; }
+      .comp-table td { padding: 12px 10px; font-size: 12px; }
+      .comp-table th { padding: 10px; font-size: 9px; }
+      .comp-bottom { padding: 24px; }
+      .comp-bottom p { font-size: 14px; }
+    }
+
     /* ── CLOSING ── */
     .closing-wrap { padding: 0 40px 96px; max-width: 1100px; margin: 0 auto; }
     .closing-card {
@@ -817,6 +875,7 @@
       <a href="#digital-labour">Digital Labour</a>
       <a href="#crm-cycle">CRM Add-In</a>
       <a href="#engine">Engine</a>
+      <a href="#competitive">vs. Competition</a>
     </div>
   </nav>
 
@@ -1412,6 +1471,119 @@
     </div>
 
   </div><!-- end engine-wrap -->
+
+  <hr class="divider" />
+
+  <!-- ── COMPETITIVE USP ── -->
+  <div class="comp-wrap" id="competitive">
+    <div class="eyebrow">Competitive Landscape</div>
+    <h2 class="section-h">How We Win Against<br/><span class="grad">Pega, Adobe &amp; Braze</span></h2>
+    <p class="section-p">Each competitor does part of this well. None of them do all of it — and none of them do it connected to the CRM, the rep motion, and a two-way agentic execution layer.</p>
+
+    <table class="comp-table">
+      <thead>
+        <tr>
+          <th></th>
+          <th class="sf-col comp-sf-header">Salesforce</th>
+          <th>Pega</th>
+          <th>Adobe</th>
+          <th>Braze</th>
+        </tr>
+      </thead>
+      <tbody>
+
+        <tr class="comp-row-header"><td colspan="5">Decisioning</td></tr>
+        <tr>
+          <td>NBA / Decisioning Engine</td>
+          <td class="sf-cell"><span class="tick">✓</span><strong>Propensity-scored, ML-driven, data-driven catalogue</strong></td>
+          <td class="comp-cell"><span class="tick">✓</span>Deep — CDH is best-in-class decisioning</td>
+          <td class="comp-cell"><span class="part">~</span>Segment-based rules, limited true propensity</td>
+          <td class="comp-cell"><span class="cross">✗</span>No decisioning — you tell it what to send</td>
+        </tr>
+        <tr>
+          <td>Real-time signal trigger</td>
+          <td class="sf-cell"><span class="tick">✓</span><strong>Data 360 fires the moment the signal appears</strong></td>
+          <td class="comp-cell"><span class="part">~</span>Real-time capable but requires separate data layer</td>
+          <td class="comp-cell"><span class="tick">✓</span>RTCDP is strong on real-time signals</td>
+          <td class="comp-cell"><span class="part">~</span>In-session behavioural, not relationship-level</td>
+        </tr>
+
+        <tr class="comp-row-header"><td colspan="5">CRM & Rep Motion</td></tr>
+        <tr>
+          <td>Native CRM integration</td>
+          <td class="sf-cell"><span class="tick">✓</span><strong>Lives inside Sales &amp; Service Cloud — rep sees it in their flow</strong></td>
+          <td class="comp-cell"><span class="cross">✗</span>Sits outside CRM — recommendation arrives via API, no context</td>
+          <td class="comp-cell"><span class="cross">✗</span>No CRM — marketing only, no sales or service rep motion</td>
+          <td class="comp-cell"><span class="cross">✗</span>No CRM — campaign tool only</td>
+        </tr>
+        <tr>
+          <td>Sales rep motion</td>
+          <td class="sf-cell"><span class="tick">✓</span><strong>NBA surfaces on Opportunity &amp; Contact — one click to act</strong></td>
+          <td class="comp-cell"><span class="cross">✗</span>No native sales rep surface</td>
+          <td class="comp-cell"><span class="cross">✗</span>Not applicable</td>
+          <td class="comp-cell"><span class="cross">✗</span>Not applicable</td>
+        </tr>
+        <tr>
+          <td>Service → Revenue motion</td>
+          <td class="sf-cell"><span class="tick">✓</span><strong>Resolved case triggers revenue action in the same platform</strong></td>
+          <td class="comp-cell"><span class="part">~</span>Possible but requires custom integration</td>
+          <td class="comp-cell"><span class="cross">✗</span>No service layer</td>
+          <td class="comp-cell"><span class="cross">✗</span>No service layer</td>
+        </tr>
+
+        <tr class="comp-row-header"><td colspan="5">Content & Execution</td></tr>
+        <tr>
+          <td>Promotions &amp; Offers layer</td>
+          <td class="sf-cell"><span class="tick">✓</span><strong>Native — Promotion defined once, Offer built per channel at runtime</strong></td>
+          <td class="comp-cell"><span class="cross">✗</span>No native promotions catalogue</td>
+          <td class="comp-cell"><span class="tick">✓</span>Strong offer management in AJO</td>
+          <td class="comp-cell"><span class="cross">✗</span>Message templates only — no offer layer</td>
+        </tr>
+        <tr>
+          <td>Two-way agentic execution</td>
+          <td class="sf-cell"><span class="tick">✓</span><strong>Agentforce Marketing — agent converses, handles replies, escalates to human</strong></td>
+          <td class="comp-cell"><span class="cross">✗</span>Fires actions — no two-way conversation capability</td>
+          <td class="comp-cell"><span class="cross">✗</span>One-way campaign execution</td>
+          <td class="comp-cell"><span class="part">~</span>Basic reply handling — not agentic</td>
+        </tr>
+        <tr>
+          <td>Digital labour routing</td>
+          <td class="sf-cell"><span class="tick">✓</span><strong>Engine decides: digital SDR or human rep — warm handoff either way</strong></td>
+          <td class="comp-cell"><span class="cross">✗</span>No digital labour concept</td>
+          <td class="comp-cell"><span class="cross">✗</span>No digital labour concept</td>
+          <td class="comp-cell"><span class="cross">✗</span>No digital labour concept</td>
+        </tr>
+
+        <tr class="comp-row-header"><td colspan="5">Learning & Data</td></tr>
+        <tr>
+          <td>Unified data layer</td>
+          <td class="sf-cell"><span class="tick">✓</span><strong>Data 360 — natively connected to CRM, Flow, Einstein and execution</strong></td>
+          <td class="comp-cell"><span class="cross">✗</span>Bring your own data infrastructure</td>
+          <td class="comp-cell"><span class="tick">✓</span>RTCDP strong — but connected to Adobe channels only</td>
+          <td class="comp-cell"><span class="part">~</span>In-app behavioural data — not full customer profile</td>
+        </tr>
+        <tr>
+          <td>Feedback loop &amp; model learning</td>
+          <td class="sf-cell"><span class="tick">✓</span><strong>Every outcome retrains Einstein Studio — gets smarter with every run</strong></td>
+          <td class="comp-cell"><span class="tick">✓</span>Strong — model governance is mature</td>
+          <td class="comp-cell"><span class="part">~</span>Some ML capability but limited retraining loop</td>
+          <td class="comp-cell"><span class="cross">✗</span>No ML learning layer</td>
+        </tr>
+        <tr>
+          <td>Marketer-operable</td>
+          <td class="sf-cell"><span class="tick">✓</span><strong>Catalogue managed in UI — no code change to add or retire an NBA</strong></td>
+          <td class="comp-cell"><span class="cross">✗</span>Requires specialist Pega consultants to operate and change</td>
+          <td class="comp-cell"><span class="tick">✓</span>Strong marketer UX in AJO</td>
+          <td class="comp-cell"><span class="tick">✓</span>Strong marketer UX</td>
+        </tr>
+
+      </tbody>
+    </table>
+
+    <div class="comp-bottom">
+      <p>Pega decides but doesn't execute natively. Adobe executes but doesn't decide. Braze executes beautifully but has no intelligence layer. <em>None of them connect signal, decision, content, execution and the CRM relationship in one platform — with a rep motion, a digital labour layer, and a feedback loop that improves with every interaction.</em></p>
+    </div>
+  </div>
 
   <!-- CLOSING -->
   <div class="closing-wrap">
