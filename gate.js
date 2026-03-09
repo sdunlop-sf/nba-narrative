@@ -17,7 +17,7 @@
   /* ── CONFIG ─────────────────────────────────────────────────── */
   var C = {
     password:     'SFNBA2026!',
-    trackingUrl:  'REPLACE_WITH_APPS_SCRIPT_URL',
+    trackingUrl:  'https://script.google.com/macros/s/AKfycbxthv7-PIJ6rK4yPvtXmPx3flZ9X33PveWPb6TcCN4N44XB1BCSJnJsYiKg2J3BIIXgqw/exec',
     web3Key:      'ec698e10-6e6a-4c3a-974e-54a7cd7d4343',
     storeKey:     'nba_visitor_v2',
     authKey:      'nba_auth_v2'
