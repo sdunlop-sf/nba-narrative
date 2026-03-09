@@ -1,0 +1,1316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Salesforce × IAG · Intelligent Decisioning</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      /* Salesforce */
+      --sf-navy:   #032D60;
+      --sf-blue:   #0176D3;
+      --sf-blue-l: #0D9DDA;
+      /* IAG */
+      --iag-purple:  #6B2D8B;
+      --iag-purple-l:#9D4EDD;
+      /* Neutrals */
+      --white:     #FFFFFF;
+      --off-white: #F5F8FA;
+      --gray-100:  #EEF2F7;
+      --gray-200:  #D8E0EA;
+      --gray-500:  #7A8A9A;
+      --gray-700:  #3E4D5C;
+      --text:      #032D60;
+      --body:      #3E4D5C;
+      --muted:     #7A8A9A;
+      --green:     #2E7D32;
+      --amber:     #E65100;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--white);
+      color: var(--body);
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      height: 60px;
+      background: var(--white);
+      border-bottom: 1px solid var(--gray-200);
+      display: flex; align-items: center;
+      padding: 0 48px;
+    }
+    .nav-inner {
+      width: 100%; max-width: 1200px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-lockup {
+      display: flex; align-items: center; gap: 16px;
+    }
+    .nav-logo-sf {
+      height: 28px; width: auto; display: block;
+    }
+    .nav-divider {
+      width: 1px; height: 28px; background: var(--gray-200);
+    }
+    .nav-logo-iag {
+      height: 36px; width: auto; display: block;
+    }
+    .nav-title {
+      font-size: 13px; font-weight: 600; color: var(--text);
+      margin-left: 8px;
+    }
+    .nav-tag {
+      font-size: 11px; color: var(--muted); letter-spacing: 0.04em;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      background: var(--sf-navy);
+      padding: 120px 48px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::after {
+      content: '';
+      position: absolute; bottom: -2px; left: 0; right: 0;
+      height: 60px;
+      background: var(--white);
+      clip-path: ellipse(55% 100% at 50% 100%);
+    }
+    .hero-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+    }
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--sf-blue-l); margin-bottom: 20px;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      width: 20px; height: 2px; background: var(--iag-purple);
+      border-radius: 2px;
+    }
+    .hero h1 {
+      font-size: clamp(32px, 3.5vw, 48px);
+      font-weight: 800; line-height: 1.1; letter-spacing: -0.025em;
+      color: var(--white); margin-bottom: 20px;
+    }
+    .hero h1 em {
+      font-style: normal;
+      color: var(--sf-blue-l);
+    }
+    .hero-sub {
+      font-size: 16px; color: rgba(255,255,255,0.65);
+      line-height: 1.7; margin-bottom: 36px;
+    }
+    .hero-quote {
+      border-left: 3px solid var(--iag-purple);
+      padding: 12px 16px;
+      background: rgba(255,255,255,0.05);
+      border-radius: 0 8px 8px 0;
+    }
+    .hero-quote p {
+      font-size: 13px; color: rgba(255,255,255,0.7); font-style: italic; line-height: 1.6;
+    }
+    .hero-quote cite {
+      font-size: 11px; color: rgba(255,255,255,0.4); margin-top: 6px; display: block;
+      font-style: normal; letter-spacing: 0.03em;
+    }
+    .hero-kpi {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+    }
+    .hero-kpi-card {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 12px; padding: 20px;
+    }
+    .hkc-val {
+      font-size: 28px; font-weight: 800; color: var(--white);
+      line-height: 1; margin-bottom: 6px; letter-spacing: -0.02em;
+    }
+    .hkc-val span { color: var(--sf-blue-l); }
+    .hkc-label { font-size: 12px; color: rgba(255,255,255,0.5); line-height: 1.4; }
+
+    /* ── SECTION WRAPPER ── */
+    .section {
+      max-width: 1200px; margin: 0 auto;
+      padding: 80px 48px;
+    }
+    .section-bg { background: var(--off-white); }
+    .section-navy { background: var(--sf-navy); }
+
+    .eyebrow {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--sf-blue); margin-bottom: 10px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .eyebrow-purple { color: var(--iag-purple); }
+    .section-title {
+      font-size: clamp(26px, 3vw, 38px);
+      font-weight: 800; color: var(--text);
+      letter-spacing: -0.025em; line-height: 1.15;
+      margin-bottom: 12px;
+    }
+    .section-title-white { color: var(--white); }
+    .section-sub {
+      font-size: 16px; color: var(--muted);
+      max-width: 600px; line-height: 1.7; margin-bottom: 48px;
+    }
+    .section-sub-white { color: rgba(255,255,255,0.6); }
+
+    hr.divider { border: none; border-top: 1px solid var(--gray-200); }
+
+    /* ── CARDS ── */
+    .card-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .card-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .card-grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+
+    .card {
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: 16px;
+      padding: 28px;
+      transition: box-shadow 0.2s;
+    }
+    .card:hover { box-shadow: 0 4px 24px rgba(3,45,96,0.08); }
+    .card-bg { background: var(--off-white); }
+    .card-icon { font-size: 28px; margin-bottom: 14px; }
+    .card-title { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+    .card-body { font-size: 13px; color: var(--muted); line-height: 1.7; }
+    .card-body strong { color: var(--body); }
+    .card-accent-purple { border-top: 3px solid var(--iag-purple); }
+    .card-accent-blue { border-top: 3px solid var(--sf-blue); }
+
+    /* ── COMPARISON TABLE ── */
+    .compare-wrap {
+      border: 1px solid var(--gray-200);
+      border-radius: 16px;
+      overflow: hidden;
+      background: var(--white);
+    }
+    .compare-head {
+      display: grid; grid-template-columns: 1fr 1fr;
+    }
+    .compare-head-col {
+      padding: 14px 24px;
+      font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+      border-bottom: 1px solid var(--gray-200);
+    }
+    .compare-head-col.today {
+      background: var(--gray-100); color: var(--muted);
+      border-right: 1px solid var(--gray-200);
+    }
+    .compare-head-col.tomorrow {
+      background: rgba(1,118,211,0.06); color: var(--sf-blue);
+    }
+    .compare-row {
+      display: grid; grid-template-columns: 1fr 1fr;
+      border-bottom: 1px solid var(--gray-100);
+    }
+    .compare-row:last-child { border-bottom: none; }
+    .compare-cell {
+      padding: 18px 24px;
+      font-size: 13px; line-height: 1.6;
+    }
+    .compare-cell.today {
+      color: var(--muted);
+      background: var(--off-white);
+      border-right: 1px solid var(--gray-200);
+    }
+    .compare-cell.today strong { color: var(--gray-700); }
+    .compare-cell.tomorrow {
+      color: var(--body);
+      background: rgba(1,118,211,0.02);
+    }
+    .compare-cell.tomorrow strong { color: var(--sf-navy); }
+
+    /* ── POINT SOLUTIONS COST ── */
+    .cost-wrap {
+      display: grid; grid-template-columns: 1fr auto 1fr; gap: 32px; align-items: center;
+    }
+    .cost-col {
+      border: 1px solid var(--gray-200);
+      border-radius: 16px;
+      overflow: hidden;
+      background: var(--white);
+    }
+    .cost-col-head {
+      padding: 16px 24px;
+      border-bottom: 1px solid var(--gray-200);
+      font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+    }
+    .cost-col-head.bad { background: #FFF8F7; color: #C62828; border-top: 3px solid #EF5350; }
+    .cost-col-head.good { background: rgba(1,118,211,0.05); color: var(--sf-blue); border-top: 3px solid var(--sf-blue); }
+    .cost-item {
+      padding: 14px 24px;
+      border-bottom: 1px solid var(--gray-100);
+      font-size: 13px;
+      display: flex; align-items: flex-start; gap: 10px;
+    }
+    .cost-item:last-child { border-bottom: none; }
+    .cost-item-icon { font-size: 16px; flex-shrink: 0; margin-top: 2px; }
+    .cost-item-text { line-height: 1.5; }
+    .cost-item-text strong { display: block; color: var(--text); margin-bottom: 2px; font-size: 13px; }
+    .cost-item-text span { color: var(--muted); font-size: 12px; }
+    .cost-vs {
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      color: var(--muted); font-weight: 700; font-size: 13px;
+    }
+    .cost-vs-arrow { font-size: 24px; color: var(--gray-200); }
+
+    /* ── STACK ── */
+    .stack-wrap {
+      border: 1px solid var(--gray-200);
+      border-radius: 16px;
+      overflow: hidden;
+      background: var(--white);
+    }
+    .stack-header {
+      background: var(--sf-navy);
+      padding: 18px 28px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .stack-header-label {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+    }
+    .stack-header-title { font-size: 15px; font-weight: 700; color: var(--white); }
+    .stack-layer {
+      display: grid; grid-template-columns: 200px 1fr;
+      border-bottom: 1px solid var(--gray-100);
+    }
+    .stack-layer:last-child { border-bottom: none; }
+    .sl-left {
+      padding: 20px 24px;
+      border-right: 1px solid var(--gray-200);
+      display: flex; flex-direction: column; justify-content: center; gap: 3px;
+      background: var(--off-white);
+    }
+    .sl-num {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.08em;
+      margin-bottom: 4px;
+    }
+    .sl-product { font-size: 13px; font-weight: 700; color: var(--text); }
+    .sl-product-sub { font-size: 11px; color: var(--muted); }
+    .sl-right { padding: 20px 28px; font-size: 13px; color: var(--body); line-height: 1.7; }
+    .sl-right strong { color: var(--text); }
+
+    .sl-layer-01 { border-left: 4px solid #4f46e5; } .sl-layer-01 .sl-num { color: #4f46e5; }
+    .sl-layer-02 { border-left: 4px solid var(--sf-blue); } .sl-layer-02 .sl-num { color: var(--sf-blue); }
+    .sl-layer-03 { border-left: 4px solid var(--iag-purple); } .sl-layer-03 .sl-num { color: var(--iag-purple); }
+    .sl-layer-04 { border-left: 4px solid #ec4899; } .sl-layer-04 .sl-num { color: #ec4899; }
+    .sl-layer-05 { border-left: 4px solid #E65100; } .sl-layer-05 .sl-num { color: #E65100; }
+    .sl-layer-06 { border-left: 4px solid var(--sf-blue-l); } .sl-layer-06 .sl-num { color: var(--sf-blue-l); }
+    .sl-layer-07 { border-left: 4px solid #2E7D32; } .sl-layer-07 .sl-num { color: #2E7D32; }
+
+    /* ── DECISIONING FLOW ── */
+    .flow-strip {
+      display: flex; align-items: stretch; gap: 0;
+      border: 1px solid var(--gray-200);
+      border-radius: 16px;
+      overflow: hidden;
+      margin-bottom: 40px;
+    }
+    .flow-step {
+      flex: 1;
+      padding: 24px 20px;
+      border-right: 1px solid var(--gray-200);
+      background: var(--white);
+    }
+    .flow-step:last-child { border-right: none; }
+    .flow-step-num {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--sf-blue); margin-bottom: 8px;
+    }
+    .flow-step-title {
+      font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 6px;
+    }
+    .flow-step-body { font-size: 12px; color: var(--muted); line-height: 1.6; }
+    .flow-step.highlight { background: rgba(1,118,211,0.04); }
+    .flow-detail-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+    }
+    .flow-detail-card {
+      background: var(--off-white);
+      border: 1px solid var(--gray-200);
+      border-radius: 12px;
+      padding: 20px;
+    }
+    .fdc-label {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--iag-purple); margin-bottom: 8px;
+    }
+    .fdc-title { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+    .fdc-body { font-size: 12px; color: var(--muted); line-height: 1.6; }
+
+    /* ── BEACHHEAD ── */
+    .beach-card {
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    .bc-head {
+      padding: 24px 28px;
+      border-bottom: 1px solid var(--gray-200);
+      display: flex; align-items: center; gap: 16px;
+    }
+    .bc-icon {
+      width: 48px; height: 48px; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px; flex-shrink: 0;
+    }
+    .bc-meta { flex: 1; }
+    .bc-title { font-size: 17px; font-weight: 800; color: var(--text); margin-bottom: 3px; }
+    .bc-sub { font-size: 12px; color: var(--muted); }
+    .bc-badge {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 4px 10px; border-radius: 20px; white-space: nowrap;
+    }
+    .bc-body { padding: 0; }
+    .bc-use-case {
+      display: flex; gap: 16px;
+      padding: 18px 28px;
+      border-bottom: 1px solid var(--gray-100);
+    }
+    .bc-use-case:last-child { border-bottom: none; }
+    .bc-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      flex-shrink: 0; margin-top: 6px;
+    }
+    .bc-uc-title { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 3px; }
+    .bc-uc-desc { font-size: 12px; color: var(--muted); line-height: 1.6; }
+
+    /* ── DIGITAL LABOUR ── */
+    .agent-card {
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: 16px;
+      padding: 28px;
+    }
+    .ac-header {
+      display: flex; align-items: center; gap: 14px; margin-bottom: 20px;
+    }
+    .ac-icon {
+      width: 44px; height: 44px; border-radius: 12px;
+      display: flex; align-items: center; justify-content: center; font-size: 20px;
+      background: rgba(107,45,139,0.08); flex-shrink: 0;
+    }
+    .ac-title { font-size: 15px; font-weight: 800; color: var(--text); }
+    .ac-role { font-size: 12px; color: var(--muted); margin-top: 2px; }
+    .ac-actions { display: flex; flex-direction: column; gap: 8px; }
+    .ac-action {
+      display: flex; align-items: flex-start; gap: 10px;
+      padding: 10px 14px;
+      background: var(--off-white);
+      border-radius: 8px;
+      font-size: 12px; color: var(--body); line-height: 1.5;
+    }
+    .ac-action-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--iag-purple);
+      flex-shrink: 0; margin-top: 5px;
+    }
+
+    /* ── PROOF ── */
+    .proof-wrap {
+      background: var(--sf-navy);
+      border-radius: 20px;
+      padding: 48px;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start;
+    }
+    .proof-eyebrow {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--sf-blue-l); margin-bottom: 12px;
+    }
+    .proof-quote {
+      font-size: 20px; font-weight: 700; color: var(--white);
+      line-height: 1.4; letter-spacing: -0.01em; margin-bottom: 14px;
+    }
+    .proof-desc { font-size: 13px; color: rgba(255,255,255,0.6); line-height: 1.7; }
+    .proof-desc strong { color: rgba(255,255,255,0.85); }
+    .proof-source { font-size: 11px; color: rgba(255,255,255,0.35); margin-top: 12px; }
+    .proof-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .proof-stat {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 12px; padding: 20px; text-align: center;
+    }
+    .proof-stat-val {
+      font-size: 32px; font-weight: 800; color: var(--white);
+      line-height: 1; margin-bottom: 6px; letter-spacing: -0.02em;
+    }
+    .proof-stat-val span { color: var(--sf-blue-l); }
+    .proof-stat-label { font-size: 12px; color: rgba(255,255,255,0.5); line-height: 1.4; }
+
+    /* ── SCALE CARDS ── */
+    .scale-card {
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: 16px;
+      padding: 28px;
+    }
+    .sc-num {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.08em;
+      color: var(--iag-purple); margin-bottom: 10px;
+    }
+    .sc-title { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+    .sc-body { font-size: 13px; color: var(--muted); line-height: 1.7; }
+
+    /* ── STRATEGY ALIGNMENT ── */
+    .strategy-card {
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: 16px;
+      padding: 28px;
+      border-top: 3px solid var(--iag-purple);
+    }
+    .strat-pillar {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--iag-purple); margin-bottom: 8px;
+    }
+    .strat-title { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 10px; }
+    .strat-body { font-size: 13px; color: var(--muted); line-height: 1.7; }
+    .strat-body strong { color: var(--body); }
+
+    /* ── PHASE ── */
+    .phase-card {
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    .phase-head {
+      padding: 20px 24px;
+      border-bottom: 1px solid var(--gray-200);
+      display: flex; align-items: center; gap: 12px;
+    }
+    .phase-badge {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.08em;
+      text-transform: uppercase; padding: 4px 10px; border-radius: 20px;
+    }
+    .phase-title { font-size: 16px; font-weight: 800; color: var(--text); }
+    .phase-timeline { font-size: 11px; color: var(--muted); margin-top: 2px; }
+    .phase-body { padding: 8px 0; }
+    .phase-item {
+      display: flex; align-items: flex-start; gap: 12px;
+      padding: 12px 24px;
+      border-bottom: 1px solid var(--gray-100);
+      font-size: 13px; line-height: 1.5;
+    }
+    .phase-item:last-child { border-bottom: none; }
+    .phase-item-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      flex-shrink: 0; margin-top: 6px;
+    }
+    .phase-item-title { font-weight: 600; color: var(--text); margin-bottom: 2px; }
+    .phase-item-desc { color: var(--muted); }
+
+    /* ── EVENTS ── */
+    .event-card {
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: 14px;
+      padding: 24px;
+      display: flex; gap: 20px; align-items: flex-start;
+    }
+    .event-date {
+      background: var(--sf-navy);
+      color: var(--white);
+      border-radius: 10px;
+      padding: 10px 14px;
+      text-align: center;
+      flex-shrink: 0;
+      min-width: 56px;
+    }
+    .ev-month { font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--sf-blue-l); }
+    .ev-day { font-size: 22px; font-weight: 800; line-height: 1; margin-top: 2px; }
+    .event-body {}
+    .event-title { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 4px; }
+    .event-desc { font-size: 12px; color: var(--muted); line-height: 1.6; }
+    .event-tag {
+      display: inline-block; margin-top: 8px;
+      font-size: 10px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
+      padding: 3px 8px; border-radius: 20px;
+      background: rgba(107,45,139,0.08); color: var(--iag-purple);
+      border: 1px solid rgba(107,45,139,0.15);
+    }
+
+    /* ── CLOSING ── */
+    .closing-inner {
+      background: linear-gradient(135deg, var(--sf-navy) 0%, #0B4A8C 100%);
+      border-radius: 20px;
+      padding: 64px 60px;
+      text-align: center;
+      position: relative; overflow: hidden;
+    }
+    .closing-inner::before {
+      content: '';
+      position: absolute; top: -80px; right: -80px;
+      width: 320px; height: 320px; border-radius: 50%;
+      background: rgba(107,45,139,0.1);
+    }
+    .closing-inner h2 {
+      font-size: clamp(24px, 3vw, 36px);
+      font-weight: 800; color: var(--white);
+      letter-spacing: -0.025em; line-height: 1.2;
+      margin-bottom: 14px; position: relative;
+    }
+    .closing-inner p {
+      font-size: 16px; color: rgba(255,255,255,0.6);
+      max-width: 520px; margin: 0 auto 40px;
+      line-height: 1.7; position: relative;
+    }
+    .closing-steps {
+      display: flex; align-items: center; justify-content: center;
+      gap: 12px; flex-wrap: wrap; position: relative;
+    }
+    .c-step {
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 10px; padding: 12px 20px;
+      font-size: 13px; color: var(--white); font-weight: 600;
+    }
+    .c-arrow { color: rgba(255,255,255,0.3); font-size: 16px; }
+    .c-step.primary {
+      background: var(--iag-purple); border-color: var(--iag-purple);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      nav { padding: 0 24px; }
+      .nav-title { display: none; }
+      .hero { padding: 100px 24px 80px; }
+      .hero-inner { grid-template-columns: 1fr; gap: 40px; }
+      .hero-kpi { grid-template-columns: 1fr 1fr; }
+      .section { padding: 60px 24px; }
+      .card-grid-2 { grid-template-columns: 1fr; }
+      .card-grid-3 { grid-template-columns: 1fr; }
+      .card-grid-4 { grid-template-columns: 1fr 1fr; }
+      .compare-head { grid-template-columns: 1fr; }
+      .compare-head-col.today { display: none; }
+      .compare-row { grid-template-columns: 1fr; }
+      .compare-cell.today { display: none; }
+      .cost-wrap { grid-template-columns: 1fr; }
+      .cost-vs { display: none; }
+      .stack-layer { grid-template-columns: 1fr; }
+      .sl-left { border-right: none; border-bottom: 1px solid var(--gray-200); flex-direction: row; align-items: center; gap: 10px; }
+      .sl-num { display: none; }
+      .sl-product-sub { display: none; }
+      .flow-strip { flex-direction: column; }
+      .flow-step { border-right: none; border-bottom: 1px solid var(--gray-200); }
+      .flow-step:last-child { border-bottom: none; }
+      .flow-detail-grid { grid-template-columns: 1fr; }
+      .beach-card + .beach-card { margin-top: 20px; }
+      .proof-wrap { grid-template-columns: 1fr; gap: 32px; padding: 32px 24px; }
+      .closing-inner { padding: 40px 24px; }
+      .closing-steps { flex-direction: column; }
+      .c-arrow { transform: rotate(90deg); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-inner">
+      <div class="nav-lockup">
+        <img src="sf-logo.jpeg" class="nav-logo-sf" alt="Salesforce" />
+        <div class="nav-divider"></div>
+        <img src="iag-logo.png" class="nav-logo-iag" alt="IAG" />
+        <div class="nav-title">Intelligent Decisioning · Strategic Proposition</div>
+      </div>
+      <div class="nav-tag">Confidential · For Discussion · 2026</div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-inner">
+      <div>
+        <div class="hero-eyebrow">Decisioning · Digital Labour · Agentic AI</div>
+        <h1>Intelligent decisioning.<br/><em>Unlimited digital labour.</em></h1>
+        <p class="hero-sub">The decisions that used to require a human can now be made in milliseconds — and acted on by agents, across every broker relationship, every customer touchpoint, at scale. IAG's "customer obsessed, data-led" vision starts with the intelligence layer.</p>
+        <div class="hero-quote">
+          <p>"We commenced a significant technology transformation in our intermediated businesses — one that will fundamentally change how we underwrite and distribute insurance."</p>
+          <cite>IAG FY2025 Results — Intermediated Insurance Australia Division</cite>
+        </div>
+      </div>
+      <div class="hero-kpi">
+        <div class="hero-kpi-card">
+          <div class="hkc-val"><span>2,000%</span></div>
+          <div class="hkc-label">ROI from Data Cloud NBA — FedEx dormant account reactivation</div>
+        </div>
+        <div class="hero-kpi-card">
+          <div class="hkc-val">1<span style="font-size:16px;color:rgba(255,255,255,0.5);"> month</span></div>
+          <div class="hkc-label">Saved per banker per year — ANZ Agentforce 360 deployment</div>
+        </div>
+        <div class="hero-kpi-card">
+          <div class="hkc-val">5<span style="font-size:16px;color:rgba(255,255,255,0.5);">M</span></div>
+          <div class="hkc-label">Policies on IAG's Enterprise Platform — the data foundation is ready</div>
+        </div>
+        <div class="hero-kpi-card">
+          <div class="hkc-val" style="font-size:20px;">"Rollin"</div>
+          <div class="hkc-label">Agentforce PoC already delivered to IAG's IIA division</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WHY NOW -->
+  <div class="section" style="padding-top:100px;">
+    <div class="eyebrow">Why Now</div>
+    <div class="section-title">The conditions have never<br/>been better aligned at IAG</div>
+    <div class="section-sub">A transformation already in motion. A strategy explicitly built around data. A proof of concept already in hand. The platform decision is next.</div>
+    <div class="card-grid-2">
+      <div class="card card-accent-blue">
+        <div class="card-icon">🔄</div>
+        <div class="card-title">IIA transformation already underway</div>
+        <div class="card-body">IAG has commenced the technology transformation of its Intermediated Insurance Australia division — <strong>fundamentally changing how it underwrites and distributes insurance.</strong> Decisioning is the intelligence layer that makes that transformation compounding.</div>
+      </div>
+      <div class="card card-accent-purple">
+        <div class="card-icon">📈</div>
+        <div class="card-title">RACQ adds $3B GWP — new scale demands intelligence</div>
+        <div class="card-body">IAG's 25-year RACQ alliance adds ~$3 billion in gross written premiums and expands the broker and customer base significantly. <strong>That scale cannot be managed without a unified decisioning engine.</strong> Relationship-led engagement doesn't scale to $3B.</div>
+      </div>
+      <div class="card card-accent-purple">
+        <div class="card-icon">🤖</div>
+        <div class="card-title">Agentforce PoC "Rollin" already delivered</div>
+        <div class="card-body">Karli Lopez delivered the Rollin PoC to IAG's IIA division — the organisation has already seen Agentforce in action. <strong>The conversation is no longer "what is this?" — it is "what can we build next?"</strong></div>
+      </div>
+      <div class="card card-accent-blue">
+        <div class="card-icon">🎯</div>
+        <div class="card-title">"Customer obsessed, data-led" — the strategy is set</div>
+        <div class="card-body">IAG's 5-year IIA vision — articulated through the Catalyst AI Business Consulting engagement — is explicitly built around data-led decisions. <strong>CBA's Customer Engagement Engine is IAG's stated benchmark.</strong> The path there runs through this platform.</div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider" />
+
+  <!-- THE GAP -->
+  <div class="section-bg">
+    <div class="section">
+      <div class="eyebrow eyebrow-purple">The Gap</div>
+      <div class="section-title">The data exists across IAG.<br/>There is no engine connecting it.</div>
+      <div class="section-sub">Policy systems, claims platforms, broker portals, and digital channels each hold a piece of the picture. Without a unified decisioning layer, that data never translates into the right action at the right moment.</div>
+
+      <div class="compare-wrap">
+        <div class="compare-head">
+          <div class="compare-head-col today">Today — fragmented, reactive</div>
+          <div class="compare-head-col tomorrow">With a unified decisioning layer</div>
+        </div>
+        <div class="compare-row">
+          <div class="compare-cell today"><strong>Policy systems and claims platforms</strong> are siloed. A customer's claim history, renewal date, and product holdings live in separate systems with no single view. Brokers and relationship managers work from incomplete information.</div>
+          <div class="compare-cell tomorrow"><strong>Data Cloud unifies every signal</strong> — policy holdings, claims history, broker interactions, digital behaviour — into a single real-time profile. Every decision is made with the full picture, not a fragment of it.</div>
+        </div>
+        <div class="compare-row">
+          <div class="compare-cell today"><strong>Broker engagement is relationship-led.</strong> Broker managers rely on personal knowledge, call schedules, and instinct to prioritise their portfolio. High-value broker relationships are under-served; at-risk ones are spotted too late.</div>
+          <div class="compare-cell tomorrow"><strong>NBA engine scores every broker relationship daily.</strong> Broker managers start the morning with a ranked list — who to call, what to discuss, which renewal is at risk, which cross-sell opportunity just opened. Data-led, not gut-led.</div>
+        </div>
+        <div class="compare-row">
+          <div class="compare-cell today"><strong>Customer engagement is campaign-driven.</strong> Marketing sends batch communications on schedules. Renewal outreach goes out weeks before expiry to entire segments — high volume, low relevance, reactive rather than predictive.</div>
+          <div class="compare-cell tomorrow"><strong>Real-time trigger-based engagement.</strong> Customer's renewal enters a Data Cloud segment 90 days out. Einstein scores the right offer. Marketing Cloud fires a personalised journey. The customer hears from IAG before they shop around.</div>
+        </div>
+        <div class="compare-row">
+          <div class="compare-cell today"><strong>No Next Best Action capability.</strong> There is no system that looks across policy data, claims history, digital signals, and broker activity and determines the single best action for a customer or broker relationship right now.</div>
+          <div class="compare-cell tomorrow"><strong>One decisioning brain governs all channels.</strong> Whether the output is a broker manager's daily brief, a customer app notification, or an agent-led conversation — the same engine, the same logic, the same measurable outcome.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider" />
+
+  <!-- COST OF POINT SOLUTIONS -->
+  <div class="section">
+    <div class="eyebrow">The Hidden Cost</div>
+    <div class="section-title">Point solutions look cheap.<br/>Until you count all of them.</div>
+    <div class="section-sub">Insurers that solve each decisioning problem individually end up with a patchwork of vendors — each with its own licensing cost, integration overhead, and data lag. And still no single source of truth.</div>
+
+    <div class="cost-wrap">
+      <div class="cost-col">
+        <div class="cost-col-head bad">The Point Solution Patchwork</div>
+        <div class="cost-item">
+          <div class="cost-item-icon">📊</div>
+          <div class="cost-item-text">
+            <strong>Standalone analytics / propensity tool</strong>
+            <span>Separate vendor, separate data contract, 48-hour batch latency, no CRM integration</span>
+          </div>
+        </div>
+        <div class="cost-item">
+          <div class="cost-item-icon">💬</div>
+          <div class="cost-item-text">
+            <strong>Broker engagement platform</strong>
+            <span>Siloed from policy data, manual list uploads, no real-time signals, separate login</span>
+          </div>
+        </div>
+        <div class="cost-item">
+          <div class="cost-item-icon">✉️</div>
+          <div class="cost-item-text">
+            <strong>Email / campaign automation tool</strong>
+            <span>Disconnected from CRM outcomes, batch-only, no NBA feedback loop</span>
+          </div>
+        </div>
+        <div class="cost-item">
+          <div class="cost-item-icon">🤖</div>
+          <div class="cost-item-text">
+            <strong>Chatbot / virtual agent (point solution)</strong>
+            <span>No access to unified customer profile, scripted responses, cannot take actions</span>
+          </div>
+        </div>
+        <div class="cost-item">
+          <div class="cost-item-icon">🔗</div>
+          <div class="cost-item-text">
+            <strong>Integration overhead (MuleSoft / custom)</strong>
+            <span>Each new tool requires a new integration — cost compounds with every vendor added</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="cost-vs">
+        <div class="cost-vs-arrow">→</div>
+        <div style="font-size:11px;color:var(--muted);text-align:center;max-width:60px;">One platform replaces all of this</div>
+        <div class="cost-vs-arrow">→</div>
+      </div>
+
+      <div class="cost-col">
+        <div class="cost-col-head good">The Salesforce Platform</div>
+        <div class="cost-item">
+          <div class="cost-item-icon">🧠</div>
+          <div class="cost-item-text">
+            <strong>Einstein Studio — built into Data Cloud</strong>
+            <span>Propensity scoring, NBA ranking, and model retraining on one platform — no separate vendor</span>
+          </div>
+        </div>
+        <div class="cost-item">
+          <div class="cost-item-icon">🤝</div>
+          <div class="cost-item-text">
+            <strong>Financial Services Cloud — broker CRM surface</strong>
+            <span>NBA briefs, broker portfolio scoring, and relationship management in one tool brokers already use</span>
+          </div>
+        </div>
+        <div class="cost-item">
+          <div class="cost-item-icon">📱</div>
+          <div class="cost-item-text">
+            <strong>Marketing Cloud — event-driven journeys</strong>
+            <span>Real-time trigger-based outreach from Data Cloud segments — replaces batch campaign tooling</span>
+          </div>
+        </div>
+        <div class="cost-item">
+          <div class="cost-item-icon">⚡</div>
+          <div class="cost-item-text">
+            <strong>Agentforce — agentic digital labour</strong>
+            <span>Broker agent, customer agent, claims triage agent — built on unified profile, able to take real actions</span>
+          </div>
+        </div>
+        <div class="cost-item">
+          <div class="cost-item-icon">🔌</div>
+          <div class="cost-item-text">
+            <strong>MuleSoft already active at IAG</strong>
+            <span>API migration squads underway — the integration infrastructure is already being invested in</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider" />
+
+  <!-- STACK -->
+  <div class="section-bg">
+    <div class="section">
+      <div class="eyebrow">The Connected Stack</div>
+      <div class="section-title">Seven layers. One decisioning engine.<br/>Built on infrastructure IAG already owns.</div>
+      <div class="section-sub">No new vendors. No greenfield build. Every layer amplifies the Salesforce investment already in place — and the Enterprise Platform data foundation already created.</div>
+
+      <div class="stack-wrap">
+        <div class="stack-header">
+          <div class="stack-header-label">Seven layers</div>
+          <div class="stack-header-title">One decisioning engine across broker, direct, and digital channels</div>
+        </div>
+        <div class="stack-layer sl-layer-01">
+          <div class="sl-left">
+            <div class="sl-num">01</div>
+            <div class="sl-product">Data Cloud</div>
+            <div class="sl-product-sub">Unified Customer + Broker Profile</div>
+          </div>
+          <div class="sl-right">Ingests policy systems, claims history, broker portal activity, digital behaviour, and renewal data into a single real-time profile per customer and per broker. <strong>Every signal — a policy lapse, a claims spike, a broker going quiet, a digital renewal comparison — updates the profile the moment it fires.</strong> This is the foundation the decisioning engine reads at runtime.</div>
+        </div>
+        <div class="stack-layer sl-layer-02">
+          <div class="sl-left">
+            <div class="sl-num">02</div>
+            <div class="sl-product">Einstein Studio + Flow</div>
+            <div class="sl-product-sub">NBA Scoring Engine</div>
+          </div>
+          <div class="sl-right">Trains on historical outcomes — which broker conversations converted, which renewal offers retained customers, which cross-sell signals led to policy upgrades. Scores each available NBA against the live profile and <strong>returns a ranked shortlist with probability scores.</strong> Flow orchestrates the eligibility → score → arbitrate → execute loop without requiring custom code.</div>
+        </div>
+        <div class="stack-layer sl-layer-03">
+          <div class="sl-left">
+            <div class="sl-num">03</div>
+            <div class="sl-product">Promotions &amp; Offers</div>
+            <div class="sl-product-sub">Policy &amp; Product Offer Engine</div>
+          </div>
+          <div class="sl-right">Defines the commercial rules — eligible products, pricing bands, renewal incentives, broker commissions, campaign mechanics, and expiry limits. <strong>Every offer surfaced to a broker manager or customer is backed by a live, governed promotion</strong> — not a manually authored one-off with no audit trail. Consistent across NRMA, CGU, SGIO, and SGIC brands.</div>
+        </div>
+        <div class="stack-layer sl-layer-04">
+          <div class="sl-left">
+            <div class="sl-num">04</div>
+            <div class="sl-product">Financial Services Cloud</div>
+            <div class="sl-product-sub">Broker &amp; Relationship Manager Surface</div>
+          </div>
+          <div class="sl-right">The NBA brief surfaces inside the broker manager's existing CRM view — no new tool, no new login. <strong>Before calling a broker: the scored NBA, the rationale, the broker's portfolio trend, the renewal pipeline, the at-risk flags.</strong> The IIA relationship management team works from the same intelligence engine.</div>
+        </div>
+        <div class="stack-layer sl-layer-05">
+          <div class="sl-left">
+            <div class="sl-num">05</div>
+            <div class="sl-product">Marketing Cloud</div>
+            <div class="sl-product-sub">Event-Driven Customer Journeys</div>
+          </div>
+          <div class="sl-right">Trigger-based renewal journeys, cross-sell nudges, and retention outreach — fired by real-time Data Cloud segments, not scheduled batch campaigns. <strong>Renewal date approaching + price comparison behaviour detected → personalised retention offer fires within minutes.</strong> Replaces the campaign calendar with event-driven intelligence across NRMA, CGU, WFI, and SGIO.</div>
+        </div>
+        <div class="stack-layer sl-layer-06">
+          <div class="sl-left">
+            <div class="sl-num">06</div>
+            <div class="sl-product">Agentforce</div>
+            <div class="sl-product-sub">Digital Labour — Broker, Customer &amp; Claims</div>
+          </div>
+          <div class="sl-right">The "Rollin" PoC extended into production-grade agentic capability. A broker agent surfaces renewal recommendations and portfolio gaps to broker managers autonomously. A customer agent handles renewal conversations, answers coverage queries, and escalates with full context. A claims agent triages, updates, and routes — <strong>reducing cost-to-serve without reducing the quality of the customer experience.</strong></div>
+        </div>
+        <div class="stack-layer sl-layer-07">
+          <div class="sl-left">
+            <div class="sl-num">07</div>
+            <div class="sl-product">Feedback Loop</div>
+            <div class="sl-product-sub">Model retrains on every outcome</div>
+          </div>
+          <div class="sl-right">Broker acts on an NBA → outcome logged → positive training signal → Einstein retrains. Customer accepts a renewal offer → signal captured → model improves on IAG's actual conversion patterns. <strong>After 3–4 months of live operation, the scores reflect IAG's real broker and customer behaviour</strong> — not generic insurance proxies. CBA's engine took years to reach this state; IAG can compress that timeline.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider" />
+
+  <!-- HOW DECISIONING WORKS -->
+  <div class="section">
+    <div class="eyebrow">How It Works</div>
+    <div class="section-title">From signal to action<br/>in milliseconds — not days.</div>
+    <div class="section-sub">Every NBA follows the same five-step loop. It runs at runtime, for every customer and every broker relationship, continuously.</div>
+
+    <div class="flow-strip">
+      <div class="flow-step">
+        <div class="flow-step-num">Step 01</div>
+        <div class="flow-step-title">Signal fires</div>
+        <div class="flow-step-body">Renewal date threshold, broker inactivity, claim completed, digital price comparison, policy lapse risk. Data Cloud segment membership updates in real time.</div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-step-num">Step 02</div>
+        <div class="flow-step-title">Profile read</div>
+        <div class="flow-step-body">Full unified profile is fetched — policy holdings, claims history, broker relationship score, digital behaviour, suppression flags, consent status.</div>
+      </div>
+      <div class="flow-step highlight">
+        <div class="flow-step-num">Step 03</div>
+        <div class="flow-step-title">NBAs scored</div>
+        <div class="flow-step-body">Einstein Studio runs propensity models against the available NBA catalogue. Each action gets an eligibility check and a probability score. The ranked shortlist is returned.</div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-step-num">Step 04</div>
+        <div class="flow-step-title">Best action arbitrated</div>
+        <div class="flow-step-body">Business rules apply — frequency caps, offer eligibility, channel preference, commercial priority. The winning NBA is selected. One decision. Governed.</div>
+      </div>
+      <div class="flow-step">
+        <div class="flow-step-num">Step 05</div>
+        <div class="flow-step-title">Executed + fed back</div>
+        <div class="flow-step-body">Broker brief created in FSC. Customer email triggered in Marketing Cloud. Agent takes action autonomously. Outcome is logged → Einstein retrains.</div>
+      </div>
+    </div>
+
+    <div class="flow-detail-grid">
+      <div class="flow-detail-card">
+        <div class="fdc-label">Broker Channel</div>
+        <div class="fdc-title">Broker manager's morning brief</div>
+        <div class="fdc-body">Ranked broker portfolio by NBA score. Top priority: renewal at risk. Second: cross-sell opportunity just opened. Talking points and linked offer pre-loaded in FSC before the first call.</div>
+      </div>
+      <div class="flow-detail-card">
+        <div class="fdc-label">Direct Channel</div>
+        <div class="fdc-title">Customer renewal journey</div>
+        <div class="fdc-body">90 days before renewal, Data Cloud segment fires. Einstein scores retention vs cross-sell vs upgrade NBA. Marketing Cloud sends a personalised offer. Agentforce handles the conversation if the customer responds digitally.</div>
+      </div>
+      <div class="flow-detail-card">
+        <div class="fdc-label">Agentic Layer</div>
+        <div class="fdc-title">Agentforce takes action autonomously</div>
+        <div class="fdc-body">Claim submitted. Agentforce triages, updates the record, notifies the customer, flags anomalies, and routes complex cases — without a human in the loop. Every action is logged with full audit trail.</div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider" />
+
+  <!-- BEACHHEADS -->
+  <div class="section-bg">
+    <div class="section">
+      <div class="eyebrow">Start Here</div>
+      <div class="section-title">Two beachheads.<br/>Clear ROI. Expandable group-wide.</div>
+      <div class="section-sub">The right place to start is where the transformation conversation is already open and the commercial mandate is explicit — IIA broker channel and NRMA/CGU direct.</div>
+
+      <div class="card-grid-2">
+        <div class="beach-card">
+          <div class="bc-head">
+            <div class="bc-icon" style="background:rgba(1,118,211,0.08);">🤝</div>
+            <div class="bc-meta">
+              <div class="bc-title">IIA Broker Channel</div>
+              <div class="bc-sub">Transformation underway — decisioning is the natural next layer</div>
+            </div>
+            <div class="bc-badge" style="background:rgba(1,118,211,0.08);color:var(--sf-blue);border:1px solid rgba(1,118,211,0.15);">Phase 1</div>
+          </div>
+          <div class="bc-body">
+            <div class="bc-use-case">
+              <div class="bc-dot" style="background:var(--sf-blue);"></div>
+              <div>
+                <div class="bc-uc-title">Daily broker portfolio intelligence brief</div>
+                <div class="bc-uc-desc">Broker manager opens FSC each morning to a ranked list of their broker portfolio — highest NBA score at the top. Which broker to call first, what to discuss, which renewal is 30 days away and at risk.</div>
+              </div>
+            </div>
+            <div class="bc-use-case">
+              <div class="bc-dot" style="background:var(--sf-blue);"></div>
+              <div>
+                <div class="bc-uc-title">Broker at-risk detection</div>
+                <div class="bc-uc-desc">Broker activity declining. GWP through channel dropping. Data Cloud fires a signal before the relationship breaks down. Manager gets an alert and a retention NBA before the broker moves GWP to a competitor.</div>
+              </div>
+            </div>
+            <div class="bc-use-case">
+              <div class="bc-dot" style="background:var(--sf-blue);"></div>
+              <div>
+                <div class="bc-uc-title">Cross-product and new product launch</div>
+                <div class="bc-uc-desc">New product eligibility change. NBA engine identifies which brokers have customers who qualify. Manager gets a targeted outreach list — not a broadcast email blast. Relevant, not noisy.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="beach-card">
+          <div class="bc-head">
+            <div class="bc-icon" style="background:rgba(107,45,139,0.08);">🏠</div>
+            <div class="bc-meta">
+              <div class="bc-title">Direct Customer Channel</div>
+              <div class="bc-sub">NRMA · CGU · SGIO · SGIC — 5M policies on Enterprise Platform</div>
+            </div>
+            <div class="bc-badge" style="background:rgba(107,45,139,0.08);color:var(--iag-purple);border:1px solid rgba(107,45,139,0.15);">Phase 1</div>
+          </div>
+          <div class="bc-body">
+            <div class="bc-use-case">
+              <div class="bc-dot" style="background:var(--iag-purple);"></div>
+              <div>
+                <div class="bc-uc-title">Personalised renewal retention</div>
+                <div class="bc-uc-desc">90 days before renewal, Einstein scores the right retention action per customer — price match, excess reduction, loyalty add-on, or bundling offer. Marketing Cloud fires the personalised journey before the customer compares.</div>
+              </div>
+            </div>
+            <div class="bc-use-case">
+              <div class="bc-dot" style="background:var(--iag-purple);"></div>
+              <div>
+                <div class="bc-uc-title">Cross-sell — home + motor bundling</div>
+                <div class="bc-uc-desc">Customer holds motor policy but no home insurance, and just changed address. Data Cloud detects the signal. NBA engine scores a bundling offer. Targeted outreach is triggered — relevant, timely, and commercially prioritised.</div>
+              </div>
+            </div>
+            <div class="bc-use-case">
+              <div class="bc-dot" style="background:var(--iag-purple);"></div>
+              <div>
+                <div class="bc-uc-title">Post-claims engagement and retention</div>
+                <div class="bc-uc-desc">Claim resolved. Satisfaction signal captured. NBA engine determines the right follow-up action — a check-in, an excess review, or an upgrade conversation. Agentforce handles it autonomously at scale.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider" />
+
+  <!-- DIGITAL LABOUR -->
+  <div class="section">
+    <div class="eyebrow">Digital Labour</div>
+    <div class="section-title">Sales and marketing agents<br/>that never stop working.</div>
+    <div class="section-sub">Agentforce agents are not chatbots. They read the unified customer profile, understand the NBA context, take real actions in Salesforce, and hand off to humans when complexity demands it.</div>
+
+    <div class="card-grid-3">
+      <div class="agent-card">
+        <div class="ac-header">
+          <div class="ac-icon">🤝</div>
+          <div>
+            <div class="ac-title">Broker Intelligence Agent</div>
+            <div class="ac-role">Surfaces NBA briefs to broker managers</div>
+          </div>
+        </div>
+        <div class="ac-actions">
+          <div class="ac-action"><div class="ac-action-dot"></div>Ranks broker portfolio by NBA score each morning — highest commercial opportunity at the top</div>
+          <div class="ac-action"><div class="ac-action-dot"></div>Alerts manager when broker shows at-risk signals — GWP declining, activity dropping, renewals not being placed</div>
+          <div class="ac-action"><div class="ac-action-dot"></div>Generates pre-call briefing notes with renewal pipeline, key risks, and suggested talking points</div>
+          <div class="ac-action"><div class="ac-action-dot"></div>Logs outcomes and feeds results back to Einstein for model improvement</div>
+        </div>
+      </div>
+
+      <div class="agent-card">
+        <div class="ac-header">
+          <div class="ac-icon">👤</div>
+          <div>
+            <div class="ac-title">Customer Renewal Agent</div>
+            <div class="ac-role">Personalised retention and cross-sell at scale</div>
+          </div>
+        </div>
+        <div class="ac-actions">
+          <div class="ac-action"><div class="ac-action-dot"></div>Initiates personalised renewal conversations 90 days before expiry — price, product, and channel aligned to the customer's profile</div>
+          <div class="ac-action"><div class="ac-action-dot"></div>Answers coverage questions, explains offer details, and handles objections — without a service agent in the loop</div>
+          <div class="ac-action"><div class="ac-action-dot"></div>Identifies cross-sell opportunities in conversation — home + motor bundling, excess adjustments, add-on products</div>
+          <div class="ac-action"><div class="ac-action-dot"></div>Escalates complex cases to human agents with full conversation context pre-loaded</div>
+        </div>
+      </div>
+
+      <div class="agent-card">
+        <div class="ac-header">
+          <div class="ac-icon">⚡</div>
+          <div>
+            <div class="ac-title">Claims Triage Agent</div>
+            <div class="ac-role">Faster resolution, lower handling cost</div>
+          </div>
+        </div>
+        <div class="ac-actions">
+          <div class="ac-action"><div class="ac-action-dot"></div>Triages inbound claims — categorises type, severity, and channel — and routes to the right handler with full context pre-loaded</div>
+          <div class="ac-action"><div class="ac-action-dot"></div>Provides real-time status updates to customers throughout the claims journey — reducing inbound service calls</div>
+          <div class="ac-action"><div class="ac-action-dot"></div>Flags anomalies and potential fraud signals to the review team — surfaced from unified data, not rules-based triggers alone</div>
+          <div class="ac-action"><div class="ac-action-dot"></div>Triggers post-claim NBA — retention conversation, excess review, or product upgrade — once resolution is confirmed</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider" />
+
+  <!-- PROOF POINTS -->
+  <div class="section-bg">
+    <div class="section">
+      <div class="eyebrow">Platform Proof at Scale</div>
+      <div class="section-title" style="margin-bottom:32px;">IAG's benchmark peers are already<br/>running this on the same platform.</div>
+      <div class="proof-wrap">
+        <div>
+          <div class="proof-eyebrow">CBA · Customer Engagement Engine</div>
+          <div class="proof-quote">"Australia's benchmark for personalised, real-time next best action across all customer touchpoints."</div>
+          <p class="proof-desc">IAG has explicitly referenced CBA's Customer Engagement Engine as the benchmark it is building toward. CBA's engine processes millions of customer interactions daily — surfacing the right NBA across digital, branch, and contact centre simultaneously. <strong>The Salesforce platform is what makes CBA's decisioning velocity possible. IAG already has the platform.</strong></p>
+          <div class="proof-source">Source: CBA Annual Report; IAG Catalyst AI Engagement</div>
+
+          <div class="proof-eyebrow" style="margin-top:28px;">FedEx · Data Cloud NBA — 2,000% ROI</div>
+          <p class="proof-desc" style="margin-top:8px;">FedEx used Salesforce Data Cloud to identify dormant accounts showing reactivation signals and trigger real-time NBAs — achieving a <strong>2,000% return on investment</strong> from dormant account reactivation alone. The direct analogy for IAG: brokers with declining GWP showing engagement signals, or lapsed customers re-entering digital channels.</p>
+          <div class="proof-source">Source: Salesforce Customer Stories — FedEx & Data Cloud</div>
+
+          <div class="proof-eyebrow" style="margin-top:28px;">ANZ · Agentforce 360 for Business Banking</div>
+          <p class="proof-desc" style="margin-top:8px;">ANZ became the first APAC bank to deploy Agentforce 360 at scale for business banking NBA. Bankers are saving approximately <strong>one working month per year in productivity gains</strong> — time previously spent on manual research, prep, and reporting now handled by the agent. The same productivity multiplier applies to IAG's broker relationship managers.</p>
+          <div class="proof-source">Source: Salesforce APAC — ANZ Agentforce 360 Deployment</div>
+        </div>
+        <div class="proof-stats">
+          <div class="proof-stat">
+            <div class="proof-stat-val"><span>2,000%</span></div>
+            <div class="proof-stat-label">ROI — FedEx Data Cloud dormant account reactivation</div>
+          </div>
+          <div class="proof-stat">
+            <div class="proof-stat-val">1<span style="font-size:18px;">mo</span></div>
+            <div class="proof-stat-label">Saved per banker per year — ANZ Agentforce 360</div>
+          </div>
+          <div class="proof-stat">
+            <div class="proof-stat-val" style="font-size:18px;">Benchmark</div>
+            <div class="proof-stat-label">CBA's Customer Engagement Engine — IAG's stated target</div>
+          </div>
+          <div class="proof-stat">
+            <div class="proof-stat-val">$16.9<span style="font-size:18px;">M</span></div>
+            <div class="proof-stat-label">TCV early renewal — Australian Unity agentic transformation</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider" />
+
+  <!-- STRATEGY ALIGNMENT -->
+  <div class="section">
+    <div class="eyebrow">Strategic Fit</div>
+    <div class="section-title">One decisioning layer across<br/>IAG's four strategic pillars.</div>
+    <div class="section-sub">The NBA platform doesn't sit alongside IAG's "customer obsessed, data-led, agile, and efficient" transformation — it is the mechanism that makes each pillar measurable.</div>
+
+    <div class="card-grid-4">
+      <div class="strategy-card">
+        <div class="strat-pillar">Pillar 1</div>
+        <div class="strat-title">Customer Obsessed</div>
+        <div class="strat-body">A unified profile and real-time NBA engine means every customer interaction — renewal, claim, cross-sell — is <strong>personal, timely, and relevant.</strong> Not segmented. Not scheduled. Individual.</div>
+      </div>
+      <div class="strategy-card">
+        <div class="strat-pillar">Pillar 2</div>
+        <div class="strat-title">Data-Led</div>
+        <div class="strat-body">Every broker call, every renewal offer, every agent action is <strong>determined by data</strong> — propensity scores, real-time signals, historical conversion patterns. Instinct and relationship-led decisions are augmented, not replaced.</div>
+      </div>
+      <div class="strategy-card">
+        <div class="strat-pillar">Pillar 3</div>
+        <div class="strat-title">Agile</div>
+        <div class="strat-body">The NBA catalogue is configurable — new use cases added without engineering cycles. New brand (RACQ) brought onto the same engine <strong>without rebuilding the logic.</strong> One platform scales across the group.</div>
+      </div>
+      <div class="strategy-card">
+        <div class="strat-pillar">Pillar 4</div>
+        <div class="strat-title">Efficient</div>
+        <div class="strat-body">Agents handle broker briefings, renewal conversations, and claims triage autonomously. <strong>Cost-to-serve per interaction falls.</strong> Broker managers spend more time on complex relationships, less on manual portfolio preparation.</div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider" />
+
+  <!-- ROADMAP -->
+  <div class="section-bg">
+    <div class="section">
+      <div class="eyebrow">The Path Forward</div>
+      <div class="section-title">90 days to first broker NBA.<br/>12 months to group-wide scale.</div>
+      <div class="section-sub">Phase 1 delivers measurable outcomes in the IIA broker channel and NRMA/CGU direct. Phase 2 extends across all brands including RACQ.</div>
+      <div class="card-grid-2">
+        <div class="phase-card">
+          <div class="phase-head">
+            <div class="phase-badge" style="background:rgba(1,118,211,0.1);color:var(--sf-blue);border:1px solid rgba(1,118,211,0.2);">Phase 1 · 0–90 days</div>
+            <div>
+              <div class="phase-title">Broker Intelligence + Direct NBA</div>
+              <div class="phase-timeline">IIA Broker Channel + NRMA / CGU Direct</div>
+            </div>
+          </div>
+          <div class="phase-body">
+            <div class="phase-item">
+              <div class="phase-item-dot" style="background:var(--sf-blue);"></div>
+              <div><div class="phase-item-title">Data Cloud unified profile</div><div class="phase-item-desc">Ingest policy, claims, broker portal, and digital channel data into a single real-time profile</div></div>
+            </div>
+            <div class="phase-item">
+              <div class="phase-item-dot" style="background:var(--sf-blue);"></div>
+              <div><div class="phase-item-title">NBA catalogue — IIA broker use cases</div><div class="phase-item-desc">Define 5–8 broker engagement use cases with Kerrie Dyson's team as commercial owners</div></div>
+            </div>
+            <div class="phase-item">
+              <div class="phase-item-dot" style="background:var(--sf-blue);"></div>
+              <div><div class="phase-item-title">Einstein Studio model</div><div class="phase-item-desc">Train on historical broker GWP outcomes and customer renewal/lapse data</div></div>
+            </div>
+            <div class="phase-item">
+              <div class="phase-item-dot" style="background:var(--sf-blue);"></div>
+              <div><div class="phase-item-title">FSC integration — broker brief</div><div class="phase-item-desc">NBA brief surfaces inside broker manager's existing CRM — no new tool</div></div>
+            </div>
+            <div class="phase-item">
+              <div class="phase-item-dot" style="background:var(--sf-blue);"></div>
+              <div><div class="phase-item-title">Agentforce — extend "Rollin"</div><div class="phase-item-desc">Build on the existing PoC — broker intelligence agent into production</div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="phase-card">
+          <div class="phase-head">
+            <div class="phase-badge" style="background:rgba(107,45,139,0.08);color:var(--iag-purple);border:1px solid rgba(107,45,139,0.15);">Phase 2 · 90 days – 12 months</div>
+            <div>
+              <div class="phase-title">Group-Wide Scale + RACQ</div>
+              <div class="phase-timeline">All Brands · Consumer at Scale · Claims</div>
+            </div>
+          </div>
+          <div class="phase-body">
+            <div class="phase-item">
+              <div class="phase-item-dot" style="background:var(--iag-purple);"></div>
+              <div><div class="phase-item-title">SGIO, SGIC, WFI on same engine</div><div class="phase-item-desc">Extend unified profile and NBA catalogue across all IAG brands — no rebuild required</div></div>
+            </div>
+            <div class="phase-item">
+              <div class="phase-item-dot" style="background:var(--iag-purple);"></div>
+              <div><div class="phase-item-title">Marketing Cloud event-driven journeys</div><div class="phase-item-desc">Replace batch renewal campaigns with real-time trigger-based personalised outreach</div></div>
+            </div>
+            <div class="phase-item">
+              <div class="phase-item-dot" style="background:var(--iag-purple);"></div>
+              <div><div class="phase-item-title">Claims triage agent</div><div class="phase-item-desc">Agentforce handles inbound claim triage, status updates, and post-claim NBA autonomously</div></div>
+            </div>
+            <div class="phase-item">
+              <div class="phase-item-dot" style="background:var(--iag-purple);"></div>
+              <div><div class="phase-item-title">RACQ onboarding</div><div class="phase-item-desc">$3B GWP alliance brought onto the same decisioning engine — broker and direct channels</div></div>
+            </div>
+            <div class="phase-item">
+              <div class="phase-item-dot" style="background:var(--iag-purple);"></div>
+              <div><div class="phase-item-title">CBA benchmark metrics</div><div class="phase-item-desc">NBA-influenced GWP, broker retention rate, renewal conversion, and cost-per-interaction tracked and reported</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider" />
+
+  <!-- EVENTS -->
+  <div class="section">
+    <div class="eyebrow">Upcoming Engagement</div>
+    <div class="section-title">Three opportunities to build<br/>momentum in the next 90 days.</div>
+    <div class="section-sub">Each event is designed to move the conversation from strategy to proof — hands-on platform experience for technical stakeholders, executive connection for decision-makers.</div>
+    <div class="card-grid-3">
+      <div class="event-card">
+        <div class="event-date">
+          <div class="ev-month">Apr</div>
+          <div class="ev-day">26</div>
+        </div>
+        <div class="event-body">
+          <div class="event-title">Agentforce + Data 360 Hands-On Workshop</div>
+          <div class="event-desc">Melbourne, Brisbane, and Sydney. Practical platform experience for IAG's technical and architecture stakeholders — building decisioning flows, Data Cloud profiles, and Agentforce agents directly.</div>
+          <div class="event-tag">Ideal for IIA technical team</div>
+        </div>
+      </div>
+      <div class="event-card">
+        <div class="event-date">
+          <div class="ev-month">May</div>
+          <div class="ev-day">27</div>
+        </div>
+        <div class="event-body">
+          <div class="event-title">Financial Services Summit — Sydney</div>
+          <div class="event-desc">Priority executive engagement event for financial services leaders in 2026. The right forum to connect IAG's leadership team — Nick Hawkins, Jarrod Hill, Kerrie Dyson — with the decisioning conversation at the industry level.</div>
+          <div class="event-tag">Executive priority</div>
+        </div>
+      </div>
+      <div class="event-card">
+        <div class="event-date">
+          <div class="ev-month">Jun</div>
+          <div class="ev-day">17</div>
+        </div>
+        <div class="event-body">
+          <div class="event-title">Agentforce World Tour — Melbourne</div>
+          <div class="event-desc">Salesforce's flagship 2026 agentic AI event in Australia. Full platform showcase including insurance-specific use cases. Ideal for IAG stakeholders who saw the Rollin PoC and want to see what production scale looks like.</div>
+          <div class="event-tag">Platform showcase</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider" />
+
+  <!-- CLOSING -->
+  <div class="section">
+    <div class="closing-inner">
+      <h2>The strategy is defined.<br/>The platform is in place.<br/>The PoC is already delivered.</h2>
+      <p>IAG has everything it needs to move from Agentforce proof of concept to production-grade intelligent decisioning — across broker, direct, and digital channels.</p>
+      <div class="closing-steps">
+        <div class="c-step">Discovery workshop</div>
+        <div class="c-arrow">→</div>
+        <div class="c-step">IIA use case definition</div>
+        <div class="c-arrow">→</div>
+        <div class="c-step">Data Cloud blueprint</div>
+        <div class="c-arrow">→</div>
+        <div class="c-step primary">First broker NBA live in 90 days</div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
