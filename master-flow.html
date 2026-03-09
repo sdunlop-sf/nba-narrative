@@ -436,6 +436,39 @@
 </head>
 <body>
 
+  <!-- PASSWORD GATE -->
+  <div id="pw-gate" style="display:none;position:fixed;inset:0;z-index:9999;
+    background:rgba(6,14,26,0.97);backdrop-filter:blur(8px);
+    align-items:center;justify-content:center;">
+    <div style="background:#0D1B2E;border:1px solid rgba(255,255,255,0.08);
+      border-radius:20px;padding:48px 40px;width:100%;max-width:380px;text-align:center;">
+      <div style="width:44px;height:44px;border-radius:50%;background:rgba(0,161,224,0.1);
+        border:1px solid rgba(0,161,224,0.3);display:flex;align-items:center;
+        justify-content:center;margin:0 auto 20px;font-size:18px;">🔒</div>
+      <div style="font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;
+        color:#00A1E0;margin-bottom:10px;">Protected Resource</div>
+      <h2 style="font-size:20px;font-weight:800;color:#fff;margin-bottom:6px;">NBA Master Flow</h2>
+      <p style="font-size:13px;color:rgba(255,255,255,0.45);margin-bottom:28px;line-height:1.6;">
+        Stuart Dunlop · Strategic Solution Specialist
+      </p>
+      <input id="pw-input" type="password" placeholder="Enter password"
+        style="width:100%;padding:12px 16px;border-radius:10px;border:1px solid rgba(255,255,255,0.12);
+        background:rgba(255,255,255,0.06);color:#fff;font-size:14px;outline:none;
+        font-family:inherit;margin-bottom:10px;box-sizing:border-box;"
+        onkeydown="if(event.key==='Enter')checkPw()"
+      />
+      <div id="pw-error" style="font-size:12px;color:#f87171;margin-bottom:10px;min-height:16px;"></div>
+      <button onclick="checkPw()" style="
+        width:100%;padding:13px;border-radius:10px;border:none;cursor:pointer;
+        background:linear-gradient(135deg,#00A1E0,#0077a8);color:#fff;
+        font-size:14px;font-weight:700;font-family:inherit;
+        transition:opacity 0.2s;
+      " onmouseover="this.style.opacity=0.85" onmouseout="this.style.opacity=1">
+        Continue
+      </button>
+    </div>
+  </div>
+
   <!-- NAV -->
   <nav>
     <div class="nav-brand">
@@ -838,6 +871,73 @@
       </div>
     </div>
   </div>
+
+
+  <script>
+    (function() {
+      var gate = document.getElementById('pw-gate');
+      if (sessionStorage.getItem('nba_auth') === '1') return;
+      gate.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+    })();
+
+    function checkPw() {
+      var val = document.getElementById('pw-input').value;
+      var err = document.getElementById('pw-error');
+      if (val === 'SFNBA2026!') {
+        sessionStorage.setItem('nba_auth', '1');
+        document.getElementById('pw-gate').style.display = 'none';
+        document.body.style.overflow = '';
+        notifyAccess();
+      } else {
+        err.textContent = 'Incorrect password. Please try again.';
+        document.getElementById('pw-input').value = '';
+        document.getElementById('pw-input').focus();
+      }
+    }
+
+    function notifyAccess() {
+      var device = navigator.userAgent;
+      var time   = new Date().toUTCString();
+      var page   = window.location.href;
+
+      fetch('https://ipapi.co/json/')
+        .then(function(r) { return r.json(); })
+        .then(function(ip) {
+          var location = [ip.city, ip.region, ip.country_name].filter(Boolean).join(', ');
+          var message  =
+            'Someone just accessed the NBA Master Flow page.\n\n' +
+            'Time:     ' + time + '\n' +
+            'IP:       ' + ip.ip + '\n' +
+            'Location: ' + location + '\n' +
+            'Device:   ' + device + '\n' +
+            'Page:     ' + page;
+
+          fetch('https://api.web3forms.com/submit', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              access_key: 'ec698e10-6e6a-4c3a-974e-54a7cd7d4343',
+              subject:    'NBA Master Flow accessed — ' + location,
+              message:    message,
+              from_name:  'NBA Narrative Alert'
+            })
+          });
+        })
+        .catch(function() {
+          fetch('https://api.web3forms.com/submit', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              access_key: 'ec698e10-6e6a-4c3a-974e-54a7cd7d4343',
+              subject:    'NBA Master Flow accessed',
+              message:    'Time: ' + time + '\nDevice: ' + device + '\nPage: ' + page + '\nLocation: unavailable',
+              from_name:  'NBA Narrative Alert'
+            })
+          });
+        });
+    }
+  </script>
 
 </body>
 </html>
