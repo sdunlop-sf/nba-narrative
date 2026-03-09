@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>NBA Narrative · Engagement Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --navy:   #032D60;
+      --blue:   #0176D3;
+      --blue-l: #0D9DDA;
+      --white:  #FFFFFF;
+      --bg:     #F5F8FA;
+      --gray-1: #EEF2F7;
+      --gray-2: #D8E0EA;
+      --gray-5: #7A8A9A;
+      --gray-7: #3E4D5C;
+      --text:   #032D60;
+      --body:   #3E4D5C;
+      --green:  #1A7E3E;
+      --green-bg: #E8F5EE;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--body);
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── GATE ── */
+    #dash-gate {
+      display: none; position: fixed; inset: 0; z-index: 99999;
+      background: rgba(3,12,32,0.97); backdrop-filter: blur(12px);
+      align-items: center; justify-content: center;
+      font-family: 'Inter', sans-serif;
+    }
+    .gate-panel {
+      background: #0D1B2E; border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 20px; padding: 48px 40px; width: 100%; max-width: 380px;
+      text-align: center; box-shadow: 0 32px 80px rgba(0,0,0,0.5); margin: 0 20px;
+    }
+    .gate-icon {
+      width: 48px; height: 48px; border-radius: 50%;
+      background: rgba(1,118,211,0.15); border: 1px solid rgba(1,118,211,0.35);
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 20px; font-size: 20px;
+    }
+    .gate-eyebrow { font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #0D9DDA; margin-bottom: 10px; }
+    .gate-title { font-size: 22px; font-weight: 800; color: #fff; margin-bottom: 8px; letter-spacing: -0.02em; }
+    .gate-sub { font-size: 13px; color: rgba(255,255,255,0.4); margin-bottom: 28px; line-height: 1.6; }
+    .gate-input {
+      width: 100%; padding: 11px 14px; border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.06);
+      color: #fff; font-size: 13px; outline: none; font-family: inherit;
+      box-sizing: border-box; margin-bottom: 10px;
+    }
+    .gate-error { font-size: 12px; color: #f87171; margin-bottom: 8px; min-height: 16px; text-align: left; }
+    .gate-btn {
+      width: 100%; padding: 13px; border-radius: 10px; border: none; cursor: pointer;
+      background: linear-gradient(135deg,#0176D3,#0060a8); color: #fff;
+      font-size: 14px; font-weight: 700; font-family: inherit; transition: opacity 0.2s;
+    }
+    .gate-btn:hover { opacity: 0.85; }
+
+    /* ── NAV ── */
+    nav {
+      background: var(--navy); padding: 0 48px; height: 60px;
+      display: flex; align-items: center; justify-content: space-between;
+      position: sticky; top: 0; z-index: 50;
+    }
+    .nav-left { display: flex; align-items: center; gap: 16px; }
+    .nav-logo { height: 28px; width: auto; }
+    .nav-divider { width: 1px; height: 24px; background: rgba(255,255,255,0.15); }
+    .nav-title { font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.8); }
+    .nav-right { display: flex; align-items: center; gap: 16px; }
+    .nav-refresh {
+      font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.5);
+      cursor: pointer; padding: 6px 12px; border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.1); background: none;
+      transition: all 0.2s; font-family: inherit;
+    }
+    .nav-refresh:hover { color: #fff; border-color: rgba(255,255,255,0.25); }
+    .nav-tag { font-size: 11px; color: rgba(255,255,255,0.3); }
+
+    /* ── LAYOUT ── */
+    .dash-inner { max-width: 1200px; margin: 0 auto; padding: 40px 48px; }
+
+    /* ── SETUP BANNER ── */
+    .setup-banner {
+      background: #FFF8E1; border: 1px solid #FFD54F; border-radius: 12px;
+      padding: 20px 24px; margin-bottom: 32px;
+      display: flex; align-items: flex-start; gap: 14px;
+    }
+    .setup-banner-icon { font-size: 20px; flex-shrink: 0; margin-top: 2px; }
+    .setup-banner-title { font-size: 14px; font-weight: 700; color: #6D4C00; margin-bottom: 4px; }
+    .setup-banner-body { font-size: 13px; color: #8D6600; line-height: 1.6; }
+    .setup-banner-body code {
+      background: rgba(0,0,0,0.08); padding: 2px 6px; border-radius: 4px;
+      font-family: monospace; font-size: 12px;
+    }
+
+    /* ── SECTION HEADER ── */
+    .section-header { margin-bottom: 20px; }
+    .section-label {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--blue); margin-bottom: 4px;
+    }
+    .section-title { font-size: 20px; font-weight: 800; color: var(--text); letter-spacing: -0.02em; }
+
+    /* ── SUMMARY STATS ── */
+    .stats-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 40px; }
+    .stat-card {
+      background: var(--white); border: 1px solid var(--gray-2);
+      border-radius: 14px; padding: 24px 20px;
+    }
+    .stat-val {
+      font-size: 36px; font-weight: 800; color: var(--text);
+      letter-spacing: -0.03em; line-height: 1; margin-bottom: 6px;
+    }
+    .stat-val span { color: var(--blue); }
+    .stat-label { font-size: 12px; color: var(--gray-5); line-height: 1.4; }
+
+    /* ── PAGE BREAKDOWN ── */
+    .breakdown-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 40px; }
+    .breakdown-card {
+      background: var(--white); border: 1px solid var(--gray-2);
+      border-radius: 14px; padding: 20px 24px;
+    }
+    .bc-page-name { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 14px; }
+    .bc-metrics { display: flex; gap: 24px; margin-bottom: 14px; }
+    .bc-metric-val { font-size: 28px; font-weight: 800; color: var(--text); letter-spacing: -0.02em; line-height: 1; }
+    .bc-metric-val span { color: var(--blue); }
+    .bc-metric-label { font-size: 11px; color: var(--gray-5); margin-top: 3px; }
+    .bc-bar-wrap { background: var(--gray-1); border-radius: 4px; height: 6px; overflow: hidden; }
+    .bc-bar { height: 100%; background: var(--blue); border-radius: 4px; transition: width 0.6s ease; }
+    .bc-last { font-size: 11px; color: var(--gray-5); margin-top: 10px; }
+
+    /* ── ACCESS LOG ── */
+    .log-header {
+      display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px;
+    }
+    .log-search {
+      padding: 9px 14px; border-radius: 10px; border: 1px solid var(--gray-2);
+      background: var(--white); font-size: 13px; font-family: inherit;
+      outline: none; width: 240px; color: var(--body);
+    }
+    .log-search:focus { border-color: var(--blue); }
+    .log-table-wrap {
+      background: var(--white); border: 1px solid var(--gray-2);
+      border-radius: 14px; overflow: hidden;
+    }
+    table { width: 100%; border-collapse: collapse; }
+    thead th {
+      padding: 12px 16px; text-align: left;
+      font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--gray-5); background: var(--bg);
+      border-bottom: 1px solid var(--gray-2);
+    }
+    tbody tr { border-bottom: 1px solid var(--gray-1); transition: background 0.1s; }
+    tbody tr:last-child { border-bottom: none; }
+    tbody tr:hover { background: var(--bg); }
+    tbody td { padding: 12px 16px; font-size: 13px; color: var(--body); vertical-align: top; }
+    .td-name { font-weight: 600; color: var(--text); }
+    .td-page {
+      display: inline-block; padding: 2px 8px; border-radius: 6px;
+      font-size: 11px; font-weight: 600;
+      background: rgba(1,118,211,0.08); color: var(--blue);
+    }
+    .td-return {
+      display: inline-block; padding: 2px 8px; border-radius: 6px;
+      font-size: 11px; font-weight: 600;
+      background: var(--green-bg); color: var(--green);
+    }
+    .empty-state {
+      text-align: center; padding: 60px 20px;
+      color: var(--gray-5); font-size: 14px;
+    }
+    .empty-state .es-icon { font-size: 32px; margin-bottom: 12px; }
+    .empty-state .es-title { font-size: 16px; font-weight: 700; color: var(--gray-7); margin-bottom: 6px; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      nav { padding: 0 20px; }
+      .dash-inner { padding: 24px 20px; }
+      .stats-row { grid-template-columns: 1fr 1fr; }
+      .breakdown-grid { grid-template-columns: 1fr; }
+      .log-search { width: 100%; }
+      .log-header { flex-direction: column; gap: 12px; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ADMIN GATE -->
+  <div id="dash-gate">
+    <div class="gate-panel">
+      <div class="gate-icon">📊</div>
+      <div class="gate-eyebrow">Salesforce · NBA Narrative</div>
+      <h2 class="gate-title">Engagement Dashboard</h2>
+      <p class="gate-sub">Enter the access password to view<br/>opens, visitor details, and page analytics.</p>
+      <input id="dash-pw" type="password" class="gate-input" placeholder="Password"
+        onkeydown="if(event.key==='Enter')dashAuth()" />
+      <div id="dash-error" class="gate-error"></div>
+      <button class="gate-btn" onclick="dashAuth()">View Dashboard</button>
+    </div>
+  </div>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-left">
+      <img src="sf-logo.jpeg" class="nav-logo" alt="Salesforce" />
+      <div class="nav-divider"></div>
+      <div class="nav-title">NBA Narrative · Engagement Dashboard</div>
+    </div>
+    <div class="nav-right">
+      <button class="nav-refresh" onclick="loadData()">Refresh</button>
+      <div class="nav-tag" id="last-updated">—</div>
+    </div>
+  </nav>
+
+  <!-- DASHBOARD CONTENT -->
+  <div class="dash-inner" id="dash-content" style="display:none;">
+
+    <!-- Setup banner (shown until Apps Script URL is configured) -->
+    <div class="setup-banner" id="setup-banner" style="display:none;">
+      <div class="setup-banner-icon">⚙️</div>
+      <div>
+        <div class="setup-banner-title">Google Apps Script not connected — email alerts are active</div>
+        <div class="setup-banner-body">
+          To enable full tracking, open <code>gate.js</code> and <code>dashboard.html</code>,
+          replace <code>REPLACE_WITH_APPS_SCRIPT_URL</code> with your deployed script URL.
+          See <code>apps-script.gs</code> for setup instructions (takes ~3 minutes).
+        </div>
+      </div>
+    </div>
+
+    <!-- Summary stats -->
+    <div style="margin-bottom:32px;">
+      <div class="section-header">
+        <div class="section-label">Overview</div>
+        <div class="section-title">Engagement Summary</div>
+      </div>
+      <div class="stats-row">
+        <div class="stat-card">
+          <div class="stat-val" id="s-total"><span>—</span></div>
+          <div class="stat-label">Total opens across all pages</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-val" id="s-unique"><span>—</span></div>
+          <div class="stat-label">Unique visitors (by name)</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-val" id="s-top" style="font-size:18px;padding-top:6px;">—</div>
+          <div class="stat-label">Most viewed page</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-val" id="s-last" style="font-size:18px;padding-top:6px;">—</div>
+          <div class="stat-label">Last access</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Per-page breakdown -->
+    <div style="margin-bottom:40px;">
+      <div class="section-header">
+        <div class="section-label">By Page</div>
+        <div class="section-title">Opens per Page</div>
+      </div>
+      <div class="breakdown-grid" id="breakdown-grid">
+        <!-- populated by JS -->
+      </div>
+    </div>
+
+    <!-- Access log -->
+    <div>
+      <div class="log-header">
+        <div>
+          <div class="section-label">Access Log</div>
+          <div class="section-title">Full Visitor History</div>
+        </div>
+        <input type="text" class="log-search" id="log-search" placeholder="Search by name, company, page…"
+          oninput="filterLog()" />
+      </div>
+      <div class="log-table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Time</th>
+              <th>Name</th>
+              <th>Company</th>
+              <th>Position</th>
+              <th>Page</th>
+              <th>Location</th>
+              <th>Type</th>
+            </tr>
+          </thead>
+          <tbody id="log-body">
+            <tr><td colspan="7" class="empty-state">
+              <div class="es-icon">📋</div>
+              <div class="es-title">No data yet</div>
+              Loading…
+            </td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    var TRACKING_URL = 'REPLACE_WITH_APPS_SCRIPT_URL';
+    var PASS         = 'SFNBA2026!';
+    var allRows      = [];
+
+    /* ── ADMIN AUTH ── */
+    (function () {
+      var gate = document.getElementById('dash-gate');
+      if (sessionStorage.getItem('dash_auth') === '1') {
+        gate.style.display = 'none';
+        init();
+        return;
+      }
+      gate.style.display = 'flex';
+      document.body.style.overflow = 'hidden';
+    })();
+
+    function dashAuth() {
+      var val = document.getElementById('dash-pw').value;
+      var err = document.getElementById('dash-error');
+      if (val === PASS) {
+        sessionStorage.setItem('dash_auth', '1');
+        document.getElementById('dash-gate').style.display = 'none';
+        document.body.style.overflow = '';
+        init();
+      } else {
+        err.textContent = 'Incorrect password.';
+        document.getElementById('dash-pw').value = '';
+        document.getElementById('dash-pw').focus();
+      }
+    }
+
+    /* ── INIT ── */
+    function init() {
+      document.getElementById('dash-content').style.display = 'block';
+      if (!TRACKING_URL || TRACKING_URL.indexOf('REPLACE') !== -1) {
+        document.getElementById('setup-banner').style.display = 'flex';
+        renderEmpty();
+        return;
+      }
+      loadData();
+    }
+
+    /* ── LOAD DATA ── */
+    function loadData() {
+      if (!TRACKING_URL || TRACKING_URL.indexOf('REPLACE') !== -1) return;
+      document.getElementById('last-updated').textContent = 'Loading…';
+      fetch(TRACKING_URL)
+        .then(function (r) { return r.json(); })
+        .then(function (data) {
+          allRows = data.reverse(); // newest first
+          renderAll();
+          document.getElementById('last-updated').textContent =
+            'Updated ' + new Date().toLocaleTimeString();
+        })
+        .catch(function () {
+          document.getElementById('last-updated').textContent = 'Failed to load';
+          renderEmpty();
+        });
+    }
+
+    /* ── RENDER SUMMARY ── */
+    function renderAll() {
+      if (!allRows.length) { renderEmpty(); return; }
+
+      var total   = allRows.length;
+      var unique  = new Set(allRows.map(function (r) { return (r.Name || '').toLowerCase().trim(); })).size;
+      var pageCounts = {};
+      allRows.forEach(function (r) {
+        var p = r.Page || 'Unknown';
+        pageCounts[p] = (pageCounts[p] || 0) + 1;
+      });
+      var topPage = Object.keys(pageCounts).sort(function (a,b) { return pageCounts[b]-pageCounts[a]; })[0] || '—';
+      var last = allRows[0] ? formatTime(allRows[0].Timestamp) : '—';
+
+      document.getElementById('s-total').innerHTML  = '<span>' + total + '</span>';
+      document.getElementById('s-unique').innerHTML = '<span>' + unique + '</span>';
+      document.getElementById('s-top').textContent  = topPage.replace(' Narrative','').replace('NBA ','');
+      document.getElementById('s-last').textContent = last;
+
+      renderBreakdown(pageCounts, total);
+      renderLog(allRows);
+    }
+
+    /* ── RENDER BREAKDOWN ── */
+    function renderBreakdown(pageCounts, total) {
+      var grid = document.getElementById('breakdown-grid');
+      var pages = Object.keys(pageCounts).sort(function (a,b) { return pageCounts[b]-pageCounts[a]; });
+      if (!pages.length) { grid.innerHTML = '<div style="color:var(--gray-5);font-size:13px;">No data yet.</div>'; return; }
+
+      grid.innerHTML = pages.map(function (page) {
+        var count   = pageCounts[page];
+        var pct     = Math.round((count / total) * 100);
+        // get last visit time for this page
+        var lastRow = allRows.find(function (r) { return r.Page === page; });
+        var lastStr = lastRow ? formatTime(lastRow.Timestamp) : '—';
+        return [
+          '<div class="breakdown-card">',
+            '<div class="bc-page-name">' + escHtml(page) + '</div>',
+            '<div class="bc-metrics">',
+              '<div><div class="bc-metric-val"><span>' + count + '</span></div><div class="bc-metric-label">Opens</div></div>',
+              '<div><div class="bc-metric-val"><span>' + pct + '</span><span style="font-size:16px;color:var(--gray-5);">%</span></div><div class="bc-metric-label">Share</div></div>',
+            '</div>',
+            '<div class="bc-bar-wrap"><div class="bc-bar" style="width:' + pct + '%"></div></div>',
+            '<div class="bc-last">Last opened: ' + lastStr + '</div>',
+          '</div>'
+        ].join('');
+      }).join('');
+    }
+
+    /* ── RENDER LOG ── */
+    function renderLog(rows) {
+      var tbody = document.getElementById('log-body');
+      if (!rows.length) {
+        tbody.innerHTML = '<tr><td colspan="7"><div class="empty-state"><div class="es-icon">📋</div><div class="es-title">No access records yet</div>Once visitors open a page the log will appear here.</div></td></tr>';
+        return;
+      }
+      tbody.innerHTML = rows.map(function (r) {
+        return [
+          '<tr>',
+            '<td style="white-space:nowrap;color:var(--gray-5);font-size:12px;">' + escHtml(formatTime(r.Timestamp)) + '</td>',
+            '<td class="td-name">'    + escHtml(r.Name     || '—') + '</td>',
+            '<td>'                    + escHtml(r.Company  || '—') + '</td>',
+            '<td style="color:var(--gray-5);">' + escHtml(r.Position || '—') + '</td>',
+            '<td><span class="td-page">' + escHtml((r.Page || '—').replace(' Narrative','')) + '</span></td>',
+            '<td style="color:var(--gray-5);font-size:12px;">' + escHtml(r.Location || '—') + '</td>',
+            '<td>' + ((r.Returning === 'yes') ? '<span class="td-return">Return</span>' : '') + '</td>',
+          '</tr>'
+        ].join('');
+      }).join('');
+    }
+
+    function renderEmpty() {
+      document.getElementById('s-total').innerHTML  = '<span>—</span>';
+      document.getElementById('s-unique').innerHTML = '<span>—</span>';
+      document.getElementById('s-top').textContent  = '—';
+      document.getElementById('s-last').textContent = '—';
+      document.getElementById('breakdown-grid').innerHTML = '<div style="color:var(--gray-5);font-size:13px;grid-column:1/-1;">No tracking data available. Connect Google Apps Script to enable the dashboard.</div>';
+      document.getElementById('log-body').innerHTML = '<tr><td colspan="7"><div class="empty-state"><div class="es-icon">📋</div><div class="es-title">No data yet</div>Email notifications are active. Connect Apps Script for full analytics.</div></td></tr>';
+    }
+
+    /* ── FILTER LOG ── */
+    function filterLog() {
+      var q = document.getElementById('log-search').value.toLowerCase();
+      if (!q) { renderLog(allRows); return; }
+      var filtered = allRows.filter(function (r) {
+        return (r.Name     || '').toLowerCase().includes(q) ||
+               (r.Company  || '').toLowerCase().includes(q) ||
+               (r.Position || '').toLowerCase().includes(q) ||
+               (r.Page     || '').toLowerCase().includes(q) ||
+               (r.Location || '').toLowerCase().includes(q);
+      });
+      renderLog(filtered);
+    }
+
+    /* ── HELPERS ── */
+    function formatTime(ts) {
+      if (!ts) return '—';
+      try {
+        var d = new Date(ts);
+        return d.toLocaleDateString('en-AU', { day:'numeric', month:'short', year:'numeric' }) +
+               ' · ' + d.toLocaleTimeString('en-AU', { hour:'2-digit', minute:'2-digit' });
+      } catch (e) { return ts; }
+    }
+
+    function escHtml(str) {
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+  </script>
+
+</body>
+</html>
