@@ -61,32 +61,45 @@ function doPost(e) {
 }
 
 // ── Return all rows as JSON (for dashboard) ───────────────────────
+// Supports JSONP via ?callback=fnName to bypass CORS
 function doGet(e) {
   try {
     var ss    = SpreadsheetApp.getActiveSpreadsheet();
     var sheet = ss.getSheetByName(SHEET_NAME);
+    var data  = [];
 
-    if (!sheet || sheet.getLastRow() <= 1) {
-      return ContentService
-        .createTextOutput(JSON.stringify([]))
-        .setMimeType(ContentService.MimeType.JSON);
+    if (sheet && sheet.getLastRow() > 1) {
+      var rows    = sheet.getDataRange().getValues();
+      var headers = rows[0];
+      data = rows.slice(1).map(function (row) {
+        var obj = {};
+        headers.forEach(function (h, i) { obj[h] = row[i]; });
+        return obj;
+      });
     }
 
-    var rows    = sheet.getDataRange().getValues();
-    var headers = rows[0];
-    var data    = rows.slice(1).map(function (row) {
-      var obj = {};
-      headers.forEach(function (h, i) { obj[h] = row[i]; });
-      return obj;
-    });
+    var json     = JSON.stringify(data);
+    var callback = e && e.parameter && e.parameter.callback;
+
+    if (callback) {
+      return ContentService
+        .createTextOutput(callback + '(' + json + ')')
+        .setMimeType(ContentService.MimeType.JAVASCRIPT);
+    }
 
     return ContentService
-      .createTextOutput(JSON.stringify(data))
+      .createTextOutput(json)
       .setMimeType(ContentService.MimeType.JSON);
 
   } catch (err) {
+    var callback = e && e.parameter && e.parameter.callback;
+    if (callback) {
+      return ContentService
+        .createTextOutput(callback + '([])')
+        .setMimeType(ContentService.MimeType.JAVASCRIPT);
+    }
     return ContentService
-      .createTextOutput(JSON.stringify([]))
+      .createTextOutput('[]')
       .setMimeType(ContentService.MimeType.JSON);
   }
 }

@@ -356,22 +356,32 @@
       loadData();
     }
 
-    /* ── LOAD DATA ── */
+    /* ── LOAD DATA (JSONP to bypass CORS) ── */
     function loadData() {
       if (!TRACKING_URL || TRACKING_URL.indexOf('REPLACE') !== -1) return;
       document.getElementById('last-updated').textContent = 'Loading…';
-      fetch(TRACKING_URL)
-        .then(function (r) { return r.json(); })
-        .then(function (data) {
-          allRows = data.reverse(); // newest first
-          renderAll();
-          document.getElementById('last-updated').textContent =
-            'Updated ' + new Date().toLocaleTimeString();
-        })
-        .catch(function () {
-          document.getElementById('last-updated').textContent = 'Failed to load';
-          renderEmpty();
-        });
+
+      var cbName = 'nba_dash_cb_' + Date.now();
+      var script = document.createElement('script');
+      var timer  = setTimeout(function () {
+        document.getElementById('last-updated').textContent = 'Failed to load';
+        delete window[cbName];
+        if (script.parentNode) script.parentNode.removeChild(script);
+        renderEmpty();
+      }, 10000);
+
+      window[cbName] = function (data) {
+        clearTimeout(timer);
+        delete window[cbName];
+        if (script.parentNode) script.parentNode.removeChild(script);
+        allRows = data.reverse();
+        renderAll();
+        document.getElementById('last-updated').textContent =
+          'Updated ' + new Date().toLocaleTimeString();
+      };
+
+      script.src = TRACKING_URL + '?callback=' + cbName;
+      document.head.appendChild(script);
     }
 
     /* ── RENDER SUMMARY ── */
