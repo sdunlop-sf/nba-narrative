@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Westpac · Next Best Action · Salesforce</title>
+  <title>Salesforce × Westpac · Next Best Action</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
@@ -11,24 +11,31 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --red:    #DA1710;
-      --red-lt: #FF4A3D;
-      --gold:   #F5A623;
-      --teal:   #06B6D4;
-      --green:  #10B981;
-      --purple: #8B5CF6;
-      --bg:     #07090E;
-      --bg2:    #0C0F18;
-      --bg3:    #111520;
-      --border: rgba(255,255,255,0.07);
-      --text:   #E2E8F0;
-      --muted:  #64748B;
+      /* Salesforce */
+      --sf-navy:   #032D60;
+      --sf-blue:   #0176D3;
+      --sf-blue-l: #0D9DDA;
+      /* Westpac */
+      --wp-red:    #DA1710;
+      --wp-red-l:  #FF4A3D;
+      /* Neutrals */
+      --white:     #FFFFFF;
+      --off-white: #F5F8FA;
+      --gray-100:  #EEF2F7;
+      --gray-200:  #D8E0EA;
+      --gray-500:  #7A8A9A;
+      --gray-700:  #3E4D5C;
+      --text:      #032D60;
+      --body:      #3E4D5C;
+      --muted:     #7A8A9A;
+      --green:     #2E7D32;
+      --amber:     #E65100;
     }
 
     html { scroll-behavior: smooth; }
     body {
-      background: var(--bg);
-      color: var(--text);
+      background: var(--white);
+      color: var(--body);
       font-family: 'Inter', sans-serif;
       font-size: 15px;
       line-height: 1.7;
@@ -38,360 +45,430 @@
     /* ── NAV ── */
     nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      height: 56px;
+      height: 60px;
+      background: var(--white);
+      border-bottom: 1px solid var(--gray-200);
+      display: flex; align-items: center;
+      padding: 0 48px;
+    }
+    .nav-inner {
+      width: 100%; max-width: 1200px; margin: 0 auto;
       display: flex; align-items: center; justify-content: space-between;
-      padding: 0 40px;
-      background: rgba(7,9,14,0.85);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border);
     }
-    .nav-brand {
-      display: flex; align-items: center; gap: 12px;
-      font-size: 13px; font-weight: 600; color: var(--text); letter-spacing: 0.01em;
+    .nav-lockup {
+      display: flex; align-items: center; gap: 16px;
     }
-    .nav-brand span { color: var(--muted); font-weight: 400; }
-    .nav-tag { font-size: 11px; color: var(--muted); letter-spacing: 0.04em; }
+    .nav-logo-sf {
+      background: var(--sf-blue);
+      color: white;
+      font-size: 11px; font-weight: 700; letter-spacing: 0.06em;
+      padding: 5px 12px; border-radius: 6px;
+    }
+    .nav-divider {
+      width: 1px; height: 22px; background: var(--gray-200);
+    }
+    .nav-logo-wp {
+      background: var(--wp-red);
+      color: white;
+      font-size: 11px; font-weight: 700; letter-spacing: 0.06em;
+      padding: 5px 12px; border-radius: 6px;
+    }
+    .nav-title {
+      font-size: 13px; font-weight: 600; color: var(--text);
+      margin-left: 8px;
+    }
+    .nav-tag {
+      font-size: 11px; color: var(--muted); letter-spacing: 0.04em;
+    }
 
     /* ── HERO ── */
     .hero {
-      min-height: 100vh;
-      display: flex; flex-direction: column; justify-content: center;
-      padding: 120px 40px 80px;
-      max-width: 1000px;
-      margin: 0 auto;
-    }
-    .hero-eyebrow {
-      font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
-      color: var(--red); margin-bottom: 24px;
-    }
-    .hero-quote {
-      border-left: 3px solid rgba(218,23,16,0.4);
-      padding: 14px 20px;
-      margin-bottom: 32px;
-      background: rgba(218,23,16,0.04);
-      border-radius: 0 10px 10px 0;
-      max-width: 680px;
-    }
-    .hero-quote p { font-size: 14px; color: var(--muted); line-height: 1.6; font-style: italic; }
-    .hero-quote cite { font-size: 11px; color: #475569; margin-top: 6px; display: block; font-style: normal; letter-spacing: 0.04em; }
-    .hero h1 {
-      font-size: clamp(36px, 5.5vw, 60px);
-      font-weight: 900; line-height: 1.08; letter-spacing: -0.03em;
-      color: #fff; margin-bottom: 24px;
-    }
-    .hero h1 .grad {
-      background: linear-gradient(135deg, var(--red-lt), var(--gold));
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-    }
-    .hero-sub { font-size: 18px; color: var(--muted); max-width: 600px; margin-bottom: 48px; line-height: 1.6; }
-
-    .hero-kpi {
-      display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;
-      max-width: 720px;
-    }
-    .hero-kpi-item {
-      display: flex; flex-direction: column; align-items: center; gap: 6px;
-      padding: 20px 16px; border-radius: 14px;
-      background: rgba(218,23,16,0.05);
-      border: 1px solid rgba(218,23,16,0.12);
-      text-align: center;
-    }
-    .hero-kpi-val { font-size: 28px; font-weight: 800; color: var(--red-lt); letter-spacing: -0.02em; line-height: 1; }
-    .hero-kpi-label { font-size: 11px; color: var(--muted); line-height: 1.4; }
-
-    /* ── WRAP ── */
-    .wrap { max-width: 1100px; margin: 0 auto; padding: 80px 40px; }
-    .wrap-sm { max-width: 1100px; margin: 0 auto; padding: 60px 40px; }
-    .eyebrow {
-      font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
-      color: var(--red); margin-bottom: 12px;
-    }
-    .section-title {
-      font-size: clamp(26px, 3.5vw, 36px);
-      font-weight: 800; color: #fff; letter-spacing: -0.02em; line-height: 1.15;
-      margin-bottom: 12px;
-    }
-    .section-sub { font-size: 16px; color: var(--muted); max-width: 640px; margin-bottom: 48px; }
-    hr.divider { border: none; border-top: 1px solid var(--border); }
-
-    /* ── MOMENT CARDS ── */
-    .moment-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
-    .moment-card {
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      border-radius: 18px;
-      padding: 28px;
-    }
-    .mc-icon { font-size: 28px; margin-bottom: 14px; }
-    .mc-title { font-size: 16px; font-weight: 700; color: #fff; margin-bottom: 8px; }
-    .mc-body { font-size: 13px; color: var(--muted); line-height: 1.7; }
-    .mc-body strong { color: var(--text); }
-
-    /* ── MISSING LAYER ── */
-    .gap-wrap {
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      border-radius: 20px;
+      background: var(--sf-navy);
+      padding: 120px 48px 80px;
+      position: relative;
       overflow: hidden;
     }
-    .gap-header {
-      display: grid; grid-template-columns: 1fr 48px 1fr;
-      align-items: stretch;
-      border-bottom: 1px solid var(--border);
+    .hero::after {
+      content: '';
+      position: absolute; bottom: -2px; left: 0; right: 0;
+      height: 60px;
+      background: var(--white);
+      clip-path: ellipse(55% 100% at 50% 100%);
     }
-    .gap-col-label {
+    .hero-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+    }
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--sf-blue-l); margin-bottom: 20px;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      width: 20px; height: 2px; background: var(--wp-red);
+      border-radius: 2px;
+    }
+    .hero h1 {
+      font-size: clamp(32px, 3.5vw, 48px);
+      font-weight: 800; line-height: 1.1; letter-spacing: -0.025em;
+      color: var(--white); margin-bottom: 20px;
+    }
+    .hero h1 em {
+      font-style: normal;
+      color: var(--sf-blue-l);
+    }
+    .hero-sub {
+      font-size: 16px; color: rgba(255,255,255,0.65);
+      line-height: 1.7; margin-bottom: 36px;
+    }
+    .hero-quote {
+      border-left: 3px solid var(--wp-red);
+      padding: 12px 16px;
+      background: rgba(255,255,255,0.05);
+      border-radius: 0 8px 8px 0;
+    }
+    .hero-quote p {
+      font-size: 13px; color: rgba(255,255,255,0.7); font-style: italic; line-height: 1.6;
+    }
+    .hero-quote cite {
+      font-size: 11px; color: rgba(255,255,255,0.4); margin-top: 6px; display: block;
+      font-style: normal; letter-spacing: 0.03em;
+    }
+    .hero-kpi {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+    }
+    .hero-kpi-card {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 12px; padding: 20px;
+    }
+    .hkc-val {
+      font-size: 32px; font-weight: 800; color: var(--white);
+      line-height: 1; margin-bottom: 6px; letter-spacing: -0.02em;
+    }
+    .hkc-val span { color: var(--sf-blue-l); }
+    .hkc-label { font-size: 12px; color: rgba(255,255,255,0.5); line-height: 1.4; }
+
+    /* ── SECTION WRAPPER ── */
+    .section {
+      max-width: 1200px; margin: 0 auto;
+      padding: 80px 48px;
+    }
+    .section-bg { background: var(--off-white); }
+    .section-navy { background: var(--sf-navy); }
+
+    .eyebrow {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--sf-blue); margin-bottom: 10px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .eyebrow-red { color: var(--wp-red); }
+    .section-title {
+      font-size: clamp(26px, 3vw, 38px);
+      font-weight: 800; color: var(--text);
+      letter-spacing: -0.025em; line-height: 1.15;
+      margin-bottom: 12px;
+    }
+    .section-title-white { color: var(--white); }
+    .section-sub {
+      font-size: 16px; color: var(--muted);
+      max-width: 600px; line-height: 1.7; margin-bottom: 48px;
+    }
+    .section-sub-white { color: rgba(255,255,255,0.6); }
+
+    hr.divider { border: none; border-top: 1px solid var(--gray-200); }
+    hr.divider-navy { border: none; border-top: 1px solid rgba(255,255,255,0.1); }
+
+    /* ── MOMENT CARDS ── */
+    .card-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .card-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .card-grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+
+    .card {
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: 16px;
+      padding: 28px;
+      transition: box-shadow 0.2s;
+    }
+    .card:hover { box-shadow: 0 4px 24px rgba(3,45,96,0.08); }
+    .card-bg { background: var(--off-white); }
+    .card-icon { font-size: 28px; margin-bottom: 14px; }
+    .card-title { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+    .card-body { font-size: 13px; color: var(--muted); line-height: 1.7; }
+    .card-body strong { color: var(--body); }
+    .card-accent-red { border-top: 3px solid var(--wp-red); }
+    .card-accent-blue { border-top: 3px solid var(--sf-blue); }
+
+    /* ── COMPARISON TABLE ── */
+    .compare-wrap {
+      border: 1px solid var(--gray-200);
+      border-radius: 16px;
+      overflow: hidden;
+      background: var(--white);
+    }
+    .compare-head {
+      display: grid; grid-template-columns: 1fr 1fr;
+    }
+    .compare-head-col {
       padding: 14px 24px;
-      font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+      font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+      border-bottom: 1px solid var(--gray-200);
     }
-    .gap-col-label.today { color: var(--muted); }
-    .gap-col-label.tomorrow { color: var(--red-lt); }
-    .gap-arrow-head {
-      display: flex; align-items: center; justify-content: center;
-      border-left: 1px solid var(--border); border-right: 1px solid var(--border);
-      color: var(--muted); font-size: 14px;
-      background: rgba(255,255,255,0.02);
+    .compare-head-col.today {
+      background: var(--gray-100); color: var(--muted);
+      border-right: 1px solid var(--gray-200);
     }
-    .gap-rows { display: grid; grid-template-columns: 1fr 48px 1fr; }
-    .gap-item {
-      padding: 16px 24px;
-      border-bottom: 1px solid rgba(255,255,255,0.04);
-      font-size: 13px; color: var(--muted); line-height: 1.5;
+    .compare-head-col.tomorrow {
+      background: rgba(1,118,211,0.06); color: var(--sf-blue);
     }
-    .gap-item:last-child { border-bottom: none; }
-    .gap-item strong { color: var(--text); }
-    .gap-item.highlight { color: var(--text); background: rgba(218,23,16,0.04); }
-    .gap-item.highlight strong { color: #fff; }
-    .gap-divider-cell {
-      border-left: 1px solid var(--border); border-right: 1px solid var(--border);
-      background: rgba(255,255,255,0.02);
-      border-bottom: 1px solid rgba(255,255,255,0.04);
+    .compare-row {
+      display: grid; grid-template-columns: 1fr 1fr;
+      border-bottom: 1px solid var(--gray-100);
     }
-    .gap-divider-cell:last-child { border-bottom: none; }
+    .compare-row:last-child { border-bottom: none; }
+    .compare-cell {
+      padding: 18px 24px;
+      font-size: 13px; line-height: 1.6;
+    }
+    .compare-cell.today {
+      color: var(--muted);
+      background: var(--off-white);
+      border-right: 1px solid var(--gray-200);
+    }
+    .compare-cell.today strong { color: var(--gray-700); }
+    .compare-cell.tomorrow {
+      color: var(--body);
+      background: rgba(1,118,211,0.02);
+    }
+    .compare-cell.tomorrow strong { color: var(--sf-navy); }
 
     /* ── STACK ── */
     .stack-wrap {
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      border-radius: 20px;
+      border: 1px solid var(--gray-200);
+      border-radius: 16px;
       overflow: hidden;
+      background: var(--white);
     }
     .stack-header {
-      padding: 20px 28px;
-      border-bottom: 1px solid var(--border);
+      background: var(--sf-navy);
+      padding: 18px 28px;
       display: flex; align-items: center; justify-content: space-between;
     }
     .stack-header-label {
-      font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
-      color: var(--muted);
+      font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
     }
-    .stack-header-name { font-size: 15px; font-weight: 700; color: #fff; }
+    .stack-header-title { font-size: 15px; font-weight: 700; color: var(--white); }
     .stack-layer {
-      display: grid; grid-template-columns: 56px 220px 1fr;
-      align-items: stretch;
-      border-bottom: 1px solid rgba(255,255,255,0.05);
+      display: grid; grid-template-columns: 200px 1fr;
+      border-bottom: 1px solid var(--gray-100);
     }
     .stack-layer:last-child { border-bottom: none; }
-    .sl-num {
-      display: flex; align-items: center; justify-content: center;
-      font-size: 11px; font-weight: 700;
-      border-right: 1px solid rgba(255,255,255,0.05);
-    }
     .sl-left {
       padding: 20px 24px;
-      border-right: 1px solid rgba(255,255,255,0.05);
-      display: flex; flex-direction: column; justify-content: center; gap: 4px;
+      border-right: 1px solid var(--gray-200);
+      display: flex; flex-direction: column; justify-content: center; gap: 3px;
+      background: var(--off-white);
     }
-    .sl-product { font-size: 14px; font-weight: 700; color: #fff; }
+    .sl-num {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.08em;
+      margin-bottom: 4px;
+    }
+    .sl-product { font-size: 13px; font-weight: 700; color: var(--text); }
     .sl-product-sub { font-size: 11px; color: var(--muted); }
-    .sl-right { padding: 20px 28px; font-size: 13px; color: var(--muted); line-height: 1.7; }
-    .sl-right p strong { color: var(--text); }
+    .sl-right { padding: 20px 28px; font-size: 13px; color: var(--body); line-height: 1.7; }
+    .sl-right strong { color: var(--text); }
 
-    .sl-layer-01 { border-left: 4px solid #4f46e5; } .sl-layer-01 .sl-num { color: #818cf8; }
-    .sl-layer-02 { border-left: 4px solid #0070D2; } .sl-layer-02 .sl-num { color: #4da6ff; }
-    .sl-layer-03 { border-left: 4px solid var(--red); } .sl-layer-03 .sl-num { color: var(--red-lt); }
-    .sl-layer-04 { border-left: 4px solid #ec4899; } .sl-layer-04 .sl-num { color: #f472b6; }
-    .sl-layer-05 { border-left: 4px solid var(--gold); } .sl-layer-05 .sl-num { color: #fbbf24; }
-    .sl-layer-06 { border-left: 4px solid #06b6d4; } .sl-layer-06 .sl-num { color: #22d3ee; }
-    .sl-layer-07 { border-left: 4px solid var(--green); } .sl-layer-07 .sl-num { color: #34d399; }
+    .sl-layer-01 { border-left: 4px solid #4f46e5; } .sl-layer-01 .sl-num { color: #4f46e5; }
+    .sl-layer-02 { border-left: 4px solid var(--sf-blue); } .sl-layer-02 .sl-num { color: var(--sf-blue); }
+    .sl-layer-03 { border-left: 4px solid var(--wp-red); } .sl-layer-03 .sl-num { color: var(--wp-red); }
+    .sl-layer-04 { border-left: 4px solid #ec4899; } .sl-layer-04 .sl-num { color: #ec4899; }
+    .sl-layer-05 { border-left: 4px solid #E65100; } .sl-layer-05 .sl-num { color: #E65100; }
+    .sl-layer-06 { border-left: 4px solid var(--sf-blue-l); } .sl-layer-06 .sl-num { color: var(--sf-blue-l); }
+    .sl-layer-07 { border-left: 4px solid #2E7D32; } .sl-layer-07 .sl-num { color: #2E7D32; }
 
     /* ── BEACHHEAD ── */
-    .beach-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
     .beach-card {
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      border-radius: 18px;
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: 16px;
       overflow: hidden;
     }
     .bc-head {
       padding: 24px 28px;
-      border-bottom: 1px solid var(--border);
-      display: flex; align-items: flex-start; gap: 16px;
+      border-bottom: 1px solid var(--gray-200);
+      display: flex; align-items: center; gap: 16px;
     }
     .bc-icon {
-      width: 44px; height: 44px; border-radius: 12px;
+      width: 48px; height: 48px; border-radius: 12px;
       display: flex; align-items: center; justify-content: center;
-      font-size: 20px; flex-shrink: 0;
+      font-size: 22px; flex-shrink: 0;
     }
-    .bc-kpi { margin-left: auto; text-align: right; }
-    .bc-kpi-val { font-size: 24px; font-weight: 800; color: var(--red-lt); line-height: 1; }
-    .bc-kpi-label { font-size: 10px; color: var(--muted); margin-top: 2px; }
-    .bc-title { font-size: 17px; font-weight: 800; color: #fff; margin-bottom: 4px; }
+    .bc-meta { flex: 1; }
+    .bc-title { font-size: 17px; font-weight: 800; color: var(--text); margin-bottom: 3px; }
     .bc-sub { font-size: 12px; color: var(--muted); }
-    .bc-body { padding: 24px 28px; }
+    .bc-badge {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 4px 10px; border-radius: 20px; white-space: nowrap;
+    }
+    .bc-body { padding: 0; }
     .bc-use-case {
-      display: flex; align-items: flex-start; gap: 12px;
-      padding: 12px 0;
-      border-bottom: 1px solid rgba(255,255,255,0.05);
-      font-size: 13px;
+      display: flex; gap: 16px;
+      padding: 18px 28px;
+      border-bottom: 1px solid var(--gray-100);
     }
     .bc-use-case:last-child { border-bottom: none; }
-    .bc-uc-dot {
-      width: 6px; height: 6px; border-radius: 50%;
+    .bc-dot {
+      width: 8px; height: 8px; border-radius: 50%;
       flex-shrink: 0; margin-top: 6px;
     }
-    .bc-uc-title { font-weight: 600; color: var(--text); margin-bottom: 2px; }
-    .bc-uc-desc { color: var(--muted); line-height: 1.5; }
+    .bc-uc-title { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 3px; }
+    .bc-uc-desc { font-size: 12px; color: var(--muted); line-height: 1.6; }
 
     /* ── NZ PROOF ── */
-    .nz-wrap {
-      background: linear-gradient(135deg, rgba(218,23,16,0.07), rgba(245,166,35,0.04));
-      border: 1px solid rgba(218,23,16,0.2);
+    .proof-wrap {
+      background: var(--sf-navy);
       border-radius: 20px;
-      padding: 40px;
+      padding: 48px;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center;
     }
-    .nz-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
-    .nz-label {
+    .proof-eyebrow {
       font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
-      color: var(--red-lt); margin-bottom: 14px;
+      color: var(--sf-blue-l); margin-bottom: 12px;
     }
-    .nz-quote {
-      font-size: 20px; font-weight: 700; color: #fff; line-height: 1.4;
-      letter-spacing: -0.01em; margin-bottom: 14px;
+    .proof-quote {
+      font-size: 22px; font-weight: 700; color: var(--white);
+      line-height: 1.4; letter-spacing: -0.01em; margin-bottom: 14px;
     }
-    .nz-source { font-size: 12px; color: var(--muted); }
-    .nz-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-    .nz-stat {
-      background: rgba(0,0,0,0.2);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 14px;
-      padding: 20px;
-      text-align: center;
+    .proof-desc { font-size: 13px; color: rgba(255,255,255,0.6); line-height: 1.7; }
+    .proof-desc strong { color: rgba(255,255,255,0.85); }
+    .proof-source { font-size: 11px; color: rgba(255,255,255,0.35); margin-top: 12px; }
+    .proof-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .proof-stat {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 12px; padding: 20px; text-align: center;
     }
-    .nz-stat-val { font-size: 32px; font-weight: 800; color: var(--red-lt); line-height: 1; margin-bottom: 6px; }
-    .nz-stat-label { font-size: 12px; color: var(--muted); line-height: 1.4; }
+    .proof-stat-val {
+      font-size: 36px; font-weight: 800; color: var(--white);
+      line-height: 1; margin-bottom: 6px; letter-spacing: -0.02em;
+    }
+    .proof-stat-val span { color: var(--sf-blue-l); }
+    .proof-stat-label { font-size: 12px; color: rgba(255,255,255,0.5); line-height: 1.4; }
 
-    /* ── UNITE ALIGNMENT ── */
-    .unite-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-    .unite-card {
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 24px 20px;
-    }
-    .uc-icon { font-size: 24px; margin-bottom: 12px; }
-    .uc-title { font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 8px; }
-    .uc-body { font-size: 12px; color: var(--muted); line-height: 1.6; }
-    .uc-body strong { color: var(--text); }
-
-    /* ── SCALE ── */
-    .scale-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    /* ── SCALE CARDS ── */
     .scale-card {
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 24px;
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: 16px;
+      padding: 28px;
     }
-    .sc-num { font-size: 36px; font-weight: 800; color: var(--red-lt); line-height: 1; margin-bottom: 8px; }
-    .sc-title { font-size: 14px; font-weight: 700; color: #fff; margin-bottom: 6px; }
-    .sc-body { font-size: 12px; color: var(--muted); line-height: 1.6; }
+    .sc-num {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.08em;
+      color: var(--sf-blue); margin-bottom: 10px;
+    }
+    .sc-title { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+    .sc-body { font-size: 13px; color: var(--muted); line-height: 1.7; }
 
-    /* ── ROADMAP ── */
-    .phase-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    /* ── PHASE ── */
     .phase-card {
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      border-radius: 18px;
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: 16px;
       overflow: hidden;
     }
     .phase-head {
       padding: 20px 24px;
-      border-bottom: 1px solid var(--border);
-      display: flex; align-items: center; gap: 14px;
+      border-bottom: 1px solid var(--gray-200);
+      display: flex; align-items: center; gap: 12px;
     }
     .phase-badge {
-      font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
-      padding: 4px 10px; border-radius: 20px;
+      font-size: 10px; font-weight: 700; letter-spacing: 0.08em;
+      text-transform: uppercase; padding: 4px 10px; border-radius: 20px;
     }
-    .phase-title { font-size: 16px; font-weight: 700; color: #fff; }
+    .phase-title { font-size: 16px; font-weight: 800; color: var(--text); }
     .phase-timeline { font-size: 11px; color: var(--muted); margin-top: 2px; }
-    .phase-body { padding: 24px; }
+    .phase-body { padding: 8px 0; }
     .phase-item {
-      display: flex; gap: 12px;
-      font-size: 13px; color: var(--muted);
-      padding: 8px 0;
-      border-bottom: 1px solid rgba(255,255,255,0.04);
-      line-height: 1.5;
+      display: flex; align-items: flex-start; gap: 12px;
+      padding: 12px 24px;
+      border-bottom: 1px solid var(--gray-100);
+      font-size: 13px; line-height: 1.5;
     }
     .phase-item:last-child { border-bottom: none; }
-    .phase-item::before { content: '→'; color: var(--red); flex-shrink: 0; }
-    .phase-item strong { color: var(--text); }
+    .phase-item-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      flex-shrink: 0; margin-top: 6px;
+    }
+    .phase-item-title { font-weight: 600; color: var(--text); margin-bottom: 2px; }
+    .phase-item-desc { color: var(--muted); }
 
     /* ── CLOSING ── */
-    .closing-wrap { padding: 0 40px 80px; max-width: 1100px; margin: 0 auto; }
-    .closing-card {
-      background: linear-gradient(135deg, rgba(218,23,16,0.08), rgba(245,166,35,0.04));
-      border: 1px solid rgba(218,23,16,0.2);
+    .closing-inner {
+      background: linear-gradient(135deg, var(--sf-navy) 0%, #0B4A8C 100%);
       border-radius: 20px;
-      padding: 56px 60px;
+      padding: 64px 60px;
       text-align: center;
+      position: relative; overflow: hidden;
     }
-    .closing-card h2 {
-      font-size: clamp(24px, 3.5vw, 36px);
-      font-weight: 800; color: #fff; letter-spacing: -0.02em;
-      margin-bottom: 14px;
+    .closing-inner::before {
+      content: '';
+      position: absolute; top: -80px; right: -80px;
+      width: 320px; height: 320px; border-radius: 50%;
+      background: rgba(218,23,16,0.08);
     }
-    .closing-card p { font-size: 16px; color: var(--muted); max-width: 560px; margin: 0 auto 40px; }
+    .closing-inner h2 {
+      font-size: clamp(24px, 3vw, 36px);
+      font-weight: 800; color: var(--white);
+      letter-spacing: -0.025em; line-height: 1.2;
+      margin-bottom: 14px; position: relative;
+    }
+    .closing-inner p {
+      font-size: 16px; color: rgba(255,255,255,0.6);
+      max-width: 520px; margin: 0 auto 40px;
+      line-height: 1.7; position: relative;
+    }
     .closing-steps {
-      display: flex; align-items: center; justify-content: center; gap: 16px;
-      flex-wrap: wrap;
+      display: flex; align-items: center; justify-content: center;
+      gap: 12px; flex-wrap: wrap; position: relative;
     }
     .c-step {
-      background: var(--bg2);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 14px 20px;
-      font-size: 13px; color: var(--text); font-weight: 600;
-      white-space: nowrap;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 10px; padding: 12px 20px;
+      font-size: 13px; color: var(--white); font-weight: 600;
     }
-    .c-arrow { color: var(--muted); font-size: 16px; }
+    .c-arrow { color: rgba(255,255,255,0.3); font-size: 16px; }
+    .c-step.primary {
+      background: var(--wp-red); border-color: var(--wp-red);
+    }
 
     /* ── RESPONSIVE ── */
-    @media (max-width: 768px) {
-      nav { padding: 0 20px; }
-      .nav-tag { display: none; }
-      .hero { padding: 100px 24px 60px; }
-      .hero h1 { font-size: 30px; }
+    @media (max-width: 900px) {
+      nav { padding: 0 24px; }
+      .nav-title { display: none; }
+      .hero { padding: 100px 24px 80px; }
+      .hero-inner { grid-template-columns: 1fr; gap: 40px; }
       .hero-kpi { grid-template-columns: 1fr 1fr; }
-      .wrap, .wrap-sm { padding: 56px 24px; }
-      .closing-wrap { padding: 0 24px 60px; }
-      .moment-grid { grid-template-columns: 1fr; }
-      .gap-header { grid-template-columns: 1fr; }
-      .gap-arrow-head { display: none; }
-      .gap-rows { grid-template-columns: 1fr; }
-      .gap-divider-cell { display: none; }
+      .section { padding: 60px 24px; }
+      .card-grid-2 { grid-template-columns: 1fr; }
+      .card-grid-3 { grid-template-columns: 1fr; }
+      .card-grid-4 { grid-template-columns: 1fr 1fr; }
+      .compare-head { grid-template-columns: 1fr; }
+      .compare-head-col.today { display: none; }
+      .compare-row { grid-template-columns: 1fr; }
+      .compare-cell.today { display: none; }
       .stack-layer { grid-template-columns: 1fr; }
+      .sl-left { border-right: none; border-bottom: 1px solid var(--gray-200); flex-direction: row; align-items: center; gap: 10px; }
       .sl-num { display: none; }
-      .sl-left { border-right: none; border-bottom: 1px solid var(--border); padding: 14px 20px; flex-direction: row; align-items: center; gap: 10px; }
       .sl-product-sub { display: none; }
-      .sl-right { padding: 16px 20px; }
-      .beach-grid { grid-template-columns: 1fr; }
-      .nz-inner { grid-template-columns: 1fr; }
-      .unite-grid { grid-template-columns: 1fr; }
-      .scale-grid { grid-template-columns: 1fr; }
-      .phase-grid { grid-template-columns: 1fr; }
-      .closing-card { padding: 40px 24px; }
-      .closing-steps { gap: 8px; }
-      .c-arrow { display: none; }
+      .beach-card + .beach-card { margin-top: 20px; }
+      .proof-wrap { grid-template-columns: 1fr; gap: 32px; padding: 32px 24px; }
+      .closing-inner { padding: 40px 24px; }
+      .closing-steps { flex-direction: column; }
+      .c-arrow { transform: rotate(90deg); }
     }
   </style>
 </head>
@@ -399,107 +476,108 @@
 
   <!-- NAV -->
   <nav>
-    <div class="nav-brand">
-      Westpac Group
-      <span>/ Next Best Action · Salesforce</span>
+    <div class="nav-inner">
+      <div class="nav-lockup">
+        <div class="nav-logo-sf">Salesforce</div>
+        <div class="nav-divider"></div>
+        <div class="nav-logo-wp">Westpac</div>
+        <div class="nav-title">Next Best Action · Strategic Proposition</div>
+      </div>
+      <div class="nav-tag">Confidential · For Discussion · 2026</div>
     </div>
-    <div class="nav-tag">Confidential · For Discussion</div>
   </nav>
 
   <!-- HERO -->
-  <div style="background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(218,23,16,0.12) 0%, transparent 70%);">
-    <div class="hero">
-      <div class="hero-eyebrow">A Proposition for Westpac Group · 2026</div>
-      <div class="hero-quote">
-        <p>"We are exploring multiple applications for these agents across products, customer service, fraud prevention, and more."</p>
-        <cite>Pieter Vorster, GM Data Platforms — Westpac Group</cite>
+  <div class="hero">
+    <div class="hero-inner">
+      <div>
+        <div class="hero-eyebrow">A Salesforce × Westpac Proposition</div>
+        <h1>CRM tells you what happened.<br/><em>This tells you what to do next.</em></h1>
+        <p class="hero-sub">Proven decisioning platform. Deployed on infrastructure Westpac already owns. Banker intelligence live in 90 days.</p>
+        <div class="hero-quote">
+          <p>"We are exploring multiple applications for these agents across products, customer service, fraud prevention, and more."</p>
+          <cite>Pieter Vorster, GM Data Platforms — Westpac Group</cite>
+        </div>
       </div>
-      <h1>CRM tells you what happened.<br/><span class="grad">This tells you what to do next.</span></h1>
-      <p class="hero-sub">Proven decisioning platform. Deployed on infrastructure you already own. Value in 90 days — not years.</p>
       <div class="hero-kpi">
-        <div class="hero-kpi-item">
-          <div class="hero-kpi-val">25%</div>
-          <div class="hero-kpi-label">Increase in customer engagement — Westpac NZ</div>
+        <div class="hero-kpi-card">
+          <div class="hkc-val"><span>25%</span></div>
+          <div class="hkc-label">Increase in customer engagement — Westpac NZ, 2024</div>
         </div>
-        <div class="hero-kpi-item">
-          <div class="hero-kpi-val">40%</div>
-          <div class="hero-kpi-label">Reduction in operational costs — Westpac NZ</div>
+        <div class="hero-kpi-card">
+          <div class="hkc-val"><span>40%</span></div>
+          <div class="hkc-label">Reduction in operational costs — Westpac NZ, 2024</div>
         </div>
-        <div class="hero-kpi-item">
-          <div class="hero-kpi-val">350</div>
-          <div class="hero-kpi-label">Business bankers being hired — AI productivity is the multiplier</div>
+        <div class="hero-kpi-card">
+          <div class="hkc-val">350</div>
+          <div class="hkc-label">Business bankers being hired — NBA is the productivity multiplier</div>
         </div>
-        <div class="hero-kpi-item">
-          <div class="hero-kpi-val">180→60</div>
-          <div class="hero-kpi-label">Platform consolidation target under UNITE — one decisioning layer replaces many</div>
+        <div class="hero-kpi-card">
+          <div class="hkc-val">90<span style="font-size:18px;color:rgba(255,255,255,0.5);"> days</span></div>
+          <div class="hkc-label">To first live banker NBA brief</div>
         </div>
       </div>
     </div>
   </div>
 
-  <hr class="divider" />
-
-  <!-- THE MOMENT -->
-  <div class="wrap">
+  <!-- WHY NOW -->
+  <div class="section" style="padding-top:100px;">
     <div class="eyebrow">Why Now</div>
-    <div class="section-title">The conditions are right across<br/>every line of business</div>
-    <div class="section-sub">New leadership. A clear AI mandate. A technology programme built for consolidation. The moment to move is now.</div>
-
-    <div class="moment-grid">
-      <div class="moment-card">
-        <div class="mc-icon">🧠</div>
-        <div class="mc-title">New AI leadership with a clear mandate</div>
-        <div class="mc-body">Andrew McMullan joined as Chief Data, Digital and AI Officer in 2025. His brief is explicit: build enterprise-grade AI decisioning capability at scale. The strategy is set. <strong>The platform decision is next.</strong></div>
+    <div class="section-title">The conditions are right<br/>across every line of business</div>
+    <div class="section-sub">New leadership. A clear AI mandate. A technology programme built for consolidation. The infrastructure is already in place.</div>
+    <div class="card-grid-2">
+      <div class="card card-accent-blue">
+        <div class="card-icon">🧠</div>
+        <div class="card-title">New AI leadership with a clear mandate</div>
+        <div class="card-body">Andrew McMullan joined as Chief Data, Digital and AI Officer in 2025. His brief: build enterprise-grade AI decisioning at scale. <strong>The strategy is set. The platform decision is next.</strong></div>
       </div>
-      <div class="moment-card">
-        <div class="mc-icon">🏦</div>
-        <div class="mc-title">Institutional Banking CRM is already in motion</div>
-        <div class="mc-body">Salesforce CRM is being deployed across institutional banking relationship teams. <strong>NBA decisioning is the natural next layer</strong> — it multiplies the value of every CRM record already being created.</div>
+      <div class="card card-accent-red">
+        <div class="card-icon">🏦</div>
+        <div class="card-title">Institutional Banking CRM is already in motion</div>
+        <div class="card-body">Salesforce CRM is being deployed across institutional relationship teams. <strong>NBA decisioning is the natural next layer</strong> — it multiplies the value of every CRM record already being created.</div>
       </div>
-      <div class="moment-card">
-        <div class="mc-icon">👥</div>
-        <div class="mc-title">350 business bankers being hired by FY27</div>
-        <div class="mc-body">Paul Fowler's Business and Wealth division is scaling aggressively. <strong>Each banker needs to be significantly more productive</strong> than the last. AI-surfaced call briefs and next best actions are the productivity multiplier.</div>
+      <div class="card card-accent-blue">
+        <div class="card-icon">👥</div>
+        <div class="card-title">350 business bankers being hired by FY27</div>
+        <div class="card-body">Paul Fowler's Business and Wealth division is scaling aggressively. <strong>Each banker needs to be significantly more productive.</strong> AI-surfaced call briefs and next best actions are the multiplier.</div>
       </div>
-      <div class="moment-card">
-        <div class="mc-icon">⚙️</div>
-        <div class="mc-title">UNITE is the mandate for consolidation</div>
-        <div class="mc-body">$660m in FY25. 180 platforms to 60. Peter Herbert's UNITE programme creates a governance framework that <strong>actively favours platforms that consolidate capability</strong> — not point solutions that add complexity.</div>
+      <div class="card card-accent-red">
+        <div class="card-icon">⚙️</div>
+        <div class="card-title">UNITE is the mandate for consolidation</div>
+        <div class="card-body">$660m in FY25. 180 platforms reducing to 60. UNITE creates a governance framework that <strong>actively favours platforms that consolidate capability</strong> — not point solutions that add complexity.</div>
       </div>
     </div>
   </div>
 
   <hr class="divider" />
 
-  <!-- THE MISSING LAYER -->
-  <div style="background: var(--bg2);">
-    <div class="wrap">
-      <div class="eyebrow">The Gap</div>
+  <!-- THE GAP -->
+  <div class="section-bg">
+    <div class="section">
+      <div class="eyebrow eyebrow-red">The Gap</div>
       <div class="section-title">The data is there. The channels are there.<br/>The decisioning layer is missing.</div>
-      <div class="section-sub">Westpac has invested heavily in data infrastructure and channel technology. What's absent is the engine that connects them — that looks at every signal and determines the right action, for the right customer, at the right moment.</div>
+      <div class="section-sub">Westpac has invested heavily in data infrastructure and channel technology. What's absent is the engine that connects them — that looks at every signal and determines the right action.</div>
 
-      <div class="gap-wrap">
-        <div class="gap-header">
-          <div class="gap-col-label today">Today — the stack without a brain</div>
-          <div class="gap-arrow-head">→</div>
-          <div class="gap-col-label tomorrow">With NBA decisioning layer</div>
+      <div class="compare-wrap">
+        <div class="compare-head">
+          <div class="compare-head-col today">Today — without a decisioning layer</div>
+          <div class="compare-head-col tomorrow">With NBA decisioning layer</div>
         </div>
-        <div class="gap-rows">
-          <div class="gap-item"><strong>Adobe AEP + AJO</strong> — journey orchestration and content delivery. Excellent execution layer. Does not adjudicate which action is best.</div>
-          <div class="gap-divider-cell"></div>
-          <div class="gap-item highlight"><strong>Einstein Studio scores every NBA</strong> in real time against the unified profile. AJO executes the winning action. The two work together — one as brain, one as channel.</div>
-
-          <div class="gap-item"><strong>Salesforce CRM</strong> — relationship history, activity logging, opportunity pipeline. Tells bankers what happened. Does not tell them what to do next.</div>
-          <div class="gap-divider-cell"></div>
-          <div class="gap-item highlight"><strong>NBA engine surfaces a ranked brief</strong> inside CRM before every client call — scored propensity, suggested offer, relevant signal, linked promotion. The rep calls with context, not just history.</div>
-
-          <div class="gap-item"><strong>Batch segments</strong> — customers grouped by static attributes and contacted on a schedule. High volume, low relevance. The same offer goes to thousands.</div>
-          <div class="gap-divider-cell"></div>
-          <div class="gap-item highlight"><strong>Real-time segment membership</strong> in Data Cloud. Customer enters a segment the moment the signal fires — triggers an immediate, personalised action across the relevant channel.</div>
-
-          <div class="gap-item"><strong>Multiple point solutions</strong> — each channel has its own logic, its own data view, its own decisioning. No single source of truth for what the next best action is.</div>
-          <div class="gap-divider-cell"></div>
-          <div class="gap-item highlight"><strong>One decisioning layer</strong> governs all channels — rep brief, in-app nudge, email journey, portal recommendation. One engine. Consistent, governed, measurable.</div>
+        <div class="compare-row">
+          <div class="compare-cell today"><strong>Adobe AEP + AJO</strong> — excellent journey execution and content delivery. Does not adjudicate which action is best for each customer.</div>
+          <div class="compare-cell tomorrow"><strong>Einstein Studio scores every NBA</strong> in real time. AJO executes the winning action. One provides the brain, the other the channel. They work together.</div>
+        </div>
+        <div class="compare-row">
+          <div class="compare-cell today"><strong>Salesforce CRM</strong> — relationship history, activity logging, opportunity pipeline. Tells bankers what happened. Does not tell them what to do next.</div>
+          <div class="compare-cell tomorrow"><strong>NBA brief surfaces inside CRM</strong> before every client call — scored propensity, suggested offer, relevant signal, linked promotion. Context, not just history.</div>
+        </div>
+        <div class="compare-row">
+          <div class="compare-cell today"><strong>Batch segments</strong> — customers grouped by static attributes and contacted on a schedule. High volume, low relevance. The same offer goes to thousands.</div>
+          <div class="compare-cell tomorrow"><strong>Real-time segment membership</strong> in Data Cloud. Customer enters a segment the moment the signal fires — triggering an immediate, personalised action.</div>
+        </div>
+        <div class="compare-row">
+          <div class="compare-cell today"><strong>Fragmented channel logic</strong> — each channel has its own decisioning, its own data view. No single source of truth for the next best action across the bank.</div>
+          <div class="compare-cell tomorrow"><strong>One decisioning layer</strong> governs all channels — banker brief, in-app nudge, email journey, portal recommendation. Consistent, governed, measurable.</div>
         </div>
       </div>
     </div>
@@ -508,92 +586,71 @@
   <hr class="divider" />
 
   <!-- STACK -->
-  <div class="wrap">
+  <div class="section">
     <div class="eyebrow">The Connected Stack</div>
-    <div class="section-title">How the layers work together</div>
-    <div class="section-sub">Built on infrastructure Westpac already owns or is actively deploying. No greenfield build. No new vendors to onboard.</div>
+    <div class="section-title">Built on infrastructure<br/>Westpac already owns</div>
+    <div class="section-sub">No new vendors. No greenfield build. Seven layers that activate the investment already being made in Salesforce, Data Cloud, and Adobe.</div>
 
     <div class="stack-wrap">
       <div class="stack-header">
-        <div class="stack-header-label">The Connected Stack</div>
-        <div class="stack-header-name">Seven layers. One decisioning engine.</div>
+        <div class="stack-header-label">Seven layers</div>
+        <div class="stack-header-title">One decisioning engine across institutional, business and consumer banking</div>
       </div>
-
       <div class="stack-layer sl-layer-01">
-        <div class="sl-num">01</div>
         <div class="sl-left">
+          <div class="sl-num">01</div>
           <div class="sl-product">Data Cloud</div>
           <div class="sl-product-sub">Unified Customer Profile</div>
         </div>
-        <div class="sl-right">
-          <p>Ingests CRM data, transaction history, Adobe AEP behavioural data, and product holdings into a single real-time customer profile. <strong>Every signal — a missed payment, a balance threshold crossed, a mortgage inquiry, a product click — updates the profile the moment it happens.</strong> This is what the decisioning engine reads at runtime.</p>
-        </div>
+        <div class="sl-right">Ingests CRM, transaction history, Adobe AEP behavioural data, and product holdings into a single real-time profile. <strong>Every signal — a missed payment, a balance threshold, a mortgage enquiry — updates the profile the moment it happens.</strong> This is what the decisioning engine reads at runtime.</div>
       </div>
-
       <div class="stack-layer sl-layer-02">
-        <div class="sl-num">02</div>
         <div class="sl-left">
+          <div class="sl-num">02</div>
           <div class="sl-product">Einstein Studio + Flow</div>
           <div class="sl-product-sub">NBA Scoring Engine</div>
         </div>
-        <div class="sl-right">
-          <p>Trains on historical CRM outcomes — which offers converted, which calls progressed, which customers churned. Scores each available NBA against the live customer profile and <strong>returns a ranked shortlist with probability scores.</strong> Flow orchestrates the full eligibility → score → arbitrate → execute loop without engineering involvement once configured.</p>
-        </div>
+        <div class="sl-right">Trains on historical CRM outcomes — which offers converted, which calls progressed. Scores each available NBA against the live customer profile and <strong>returns a ranked shortlist with probability scores.</strong> Flow orchestrates the eligibility → score → arbitrate → execute loop.</div>
       </div>
-
       <div class="stack-layer sl-layer-03">
-        <div class="sl-num">03</div>
         <div class="sl-left">
+          <div class="sl-num">03</div>
           <div class="sl-product">Promotions &amp; Offers</div>
           <div class="sl-product-sub">Offer Eligibility Engine</div>
         </div>
-        <div class="sl-right">
-          <p>Promotions define the commercial rules — eligibility criteria, offer mechanics, rate thresholds, expiry, and redemption limits. When the NBA engine fires, it checks which promotions the customer qualifies for. <strong>The offer surfaced to the banker or the customer is always backed by a live, governed promotion</strong> — not a manually authored one-off that sits outside any audit trail.</p>
-        </div>
+        <div class="sl-right">Defines the commercial rules — eligibility criteria, offer mechanics, rate thresholds, expiry, redemption limits. <strong>The offer surfaced to a banker or customer is always backed by a live, governed promotion</strong> — not a manually authored one-off outside any audit trail.</div>
       </div>
-
       <div class="stack-layer sl-layer-04">
-        <div class="sl-num">04</div>
         <div class="sl-left">
+          <div class="sl-num">04</div>
           <div class="sl-product">Financial Services Cloud</div>
           <div class="sl-product-sub">Banker CRM Surface</div>
         </div>
-        <div class="sl-right">
-          <p>The NBA brief surfaces inside the banker's existing CRM view — no new tool, no new login, no change management friction. <strong>Before a client call, the banker sees: the scored NBA, the rationale, the talking points, and the linked offer.</strong> Institutional relationship managers and business bankers work from the same engine with role-appropriate views.</p>
-        </div>
+        <div class="sl-right">The NBA brief surfaces inside the banker's existing CRM view — no new tool, no new login. <strong>Before a client call: the scored NBA, the rationale, the talking points, the linked offer.</strong> Institutional relationship managers and business bankers work from the same engine.</div>
       </div>
-
       <div class="stack-layer sl-layer-05">
-        <div class="sl-num">05</div>
         <div class="sl-left">
+          <div class="sl-num">05</div>
           <div class="sl-product">Salesforce Personalisation</div>
           <div class="sl-product-sub">Digital Channel Surface</div>
         </div>
-        <div class="sl-right">
-          <p>Renders NBA decisions in digital touchpoints — the Westpac One app, internet banking, and the business banking portal. <strong>Real-time product recommendations and contextual prompts triggered by live Data Cloud segments.</strong> Complements the Atomic.io in-app notification layer already deployed — adds intelligence to the trigger logic.</p>
-        </div>
+        <div class="sl-right">Renders NBA decisions in digital touchpoints — the Westpac One app, internet banking, business portal. <strong>Real-time recommendations triggered by live Data Cloud segments.</strong> Complements Atomic.io already deployed — adds intelligence to the trigger logic.</div>
       </div>
-
       <div class="stack-layer sl-layer-06">
-        <div class="sl-num">06</div>
         <div class="sl-left">
+          <div class="sl-num">06</div>
           <div class="sl-product">Marketing Cloud</div>
           <div class="sl-product-sub">Journey Execution</div>
         </div>
-        <div class="sl-right">
-          <p>Trigger-based email and SMS journeys fired by NBA signals from Data Cloud. <strong>Mortgage renewal approaching → personalised rate offer. Business loan facility underutilised → targeted product prompt. Cross-sell signal detected → rep notification + customer email in parallel.</strong> Replaces scheduled batch campaigns with event-driven execution tied to real customer signals.</p>
-        </div>
+        <div class="sl-right">Trigger-based email and SMS journeys fired by NBA signals. <strong>Mortgage renewal approaching → personalised rate offer. Business loan underutilised → targeted prompt. Cross-sell signal detected → banker notification + customer email in parallel.</strong> Event-driven, not batch.</div>
       </div>
-
       <div class="stack-layer sl-layer-07">
-        <div class="sl-num">07</div>
         <div class="sl-left">
+          <div class="sl-num">07</div>
           <div class="sl-product">Feedback Loop</div>
-          <div class="sl-product-sub">Every action retrains the model</div>
+          <div class="sl-product-sub">Model retrains on every outcome</div>
         </div>
-        <div class="sl-right">
-          <p>Banker acts on an NBA → outcome logged → positive training signal → Einstein retrains. Customer accepts an offer → signal captured → model improves. <strong>The engine gets progressively more accurate with every interaction across every channel.</strong> After 3–4 months of live operation the scores reflect Westpac's actual conversion patterns, not just historical proxies.</p>
-        </div>
+        <div class="sl-right">Banker acts on an NBA → outcome logged → positive training signal → Einstein retrains. Customer accepts an offer → signal captured → model improves. <strong>After 3–4 months of live operation, scores reflect Westpac's actual conversion patterns</strong> — not historical proxies.</div>
       </div>
     </div>
   </div>
@@ -601,45 +658,42 @@
   <hr class="divider" />
 
   <!-- BEACHHEAD -->
-  <div style="background: var(--bg2);">
-    <div class="wrap">
+  <div class="section-bg">
+    <div class="section">
       <div class="eyebrow">Start Here</div>
-      <div class="section-title">Two beachheads. Clear ROI.<br/>Expandable across the group.</div>
-      <div class="section-sub">The right place to start is where Salesforce is already in motion and where the commercial mandate is explicit.</div>
+      <div class="section-title">Two beachheads.<br/>Clear ROI. Expandable group-wide.</div>
+      <div class="section-sub">The right place to start is where Salesforce is already in motion and the commercial mandate is explicit.</div>
 
-      <div class="beach-grid">
+      <div class="card-grid-2">
         <div class="beach-card">
           <div class="bc-head">
-            <div class="bc-icon" style="background:rgba(218,23,16,0.1);">🏛️</div>
-            <div>
+            <div class="bc-icon" style="background:rgba(1,118,211,0.08);">🏛️</div>
+            <div class="bc-meta">
               <div class="bc-title">Institutional Banking</div>
-              <div class="bc-sub">CRM already being deployed — NBA is the natural next layer</div>
+              <div class="bc-sub">CRM already in motion — NBA is the natural next layer</div>
             </div>
-            <div class="bc-kpi">
-              <div class="bc-kpi-val">Phase 1</div>
-              <div class="bc-kpi-label">90-day wedge</div>
-            </div>
+            <div class="bc-badge" style="background:rgba(1,118,211,0.08);color:var(--sf-blue);border:1px solid rgba(1,118,211,0.15);">Phase 1</div>
           </div>
           <div class="bc-body">
             <div class="bc-use-case">
-              <div class="bc-uc-dot" style="background:var(--red);"></div>
+              <div class="bc-dot" style="background:var(--sf-blue);"></div>
               <div>
                 <div class="bc-uc-title">Pre-call intelligence brief</div>
                 <div class="bc-uc-desc">Relationship manager opens CRM before a client meeting. NBA engine surfaces the highest-scored action — refinancing signal, FX exposure, facility review — with rationale and linked offer.</div>
               </div>
             </div>
             <div class="bc-use-case">
-              <div class="bc-uc-dot" style="background:var(--red);"></div>
+              <div class="bc-dot" style="background:var(--sf-blue);"></div>
               <div>
                 <div class="bc-uc-title">Cross-product signal detection</div>
-                <div class="bc-uc-desc">Client's transaction volume crosses a threshold. Data Cloud fires a segment event. Flow creates a Task on the RM's account — prompted conversation before the client calls a competitor.</div>
+                <div class="bc-uc-desc">Client transaction volume crosses a threshold. Data Cloud fires a segment event. Flow creates a Task on the RM's account before the client calls a competitor.</div>
               </div>
             </div>
             <div class="bc-use-case">
-              <div class="bc-uc-dot" style="background:var(--red);"></div>
+              <div class="bc-dot" style="background:var(--sf-blue);"></div>
               <div>
                 <div class="bc-uc-title">Renewal and repricing triggers</div>
-                <div class="bc-uc-desc">Facility renewal approaching. Einstein scores which offer structure is most likely to convert for this client. RM gets a brief. Marketing Cloud sends a parallel digital nudge.</div>
+                <div class="bc-uc-desc">Facility renewal approaching. Einstein scores which offer structure is most likely to convert. RM gets a brief. Marketing Cloud sends a parallel digital nudge.</div>
               </div>
             </div>
           </div>
@@ -647,36 +701,33 @@
 
         <div class="beach-card">
           <div class="bc-head">
-            <div class="bc-icon" style="background:rgba(245,166,35,0.1);">💼</div>
-            <div>
+            <div class="bc-icon" style="background:rgba(218,23,16,0.08);">💼</div>
+            <div class="bc-meta">
               <div class="bc-title">Business Banking</div>
-              <div class="bc-sub">350 bankers being hired — AI productivity is the commercial multiplier</div>
+              <div class="bc-sub">350 bankers being hired — AI productivity is the multiplier</div>
             </div>
-            <div class="bc-kpi">
-              <div class="bc-kpi-val">Phase 1</div>
-              <div class="bc-kpi-label">Parallel track</div>
-            </div>
+            <div class="bc-badge" style="background:rgba(218,23,16,0.08);color:var(--wp-red);border:1px solid rgba(218,23,16,0.15);">Phase 1</div>
           </div>
           <div class="bc-body">
             <div class="bc-use-case">
-              <div class="bc-uc-dot" style="background:var(--gold);"></div>
+              <div class="bc-dot" style="background:var(--wp-red);"></div>
               <div>
                 <div class="bc-uc-title">SME next best product</div>
                 <div class="bc-uc-desc">Business customer holds a transaction account but no working capital facility. Cash flow pattern signals a funding need. Banker gets a prompt before the SME goes to a broker.</div>
               </div>
             </div>
             <div class="bc-use-case">
-              <div class="bc-uc-dot" style="background:var(--gold);"></div>
+              <div class="bc-dot" style="background:var(--wp-red);"></div>
               <div>
                 <div class="bc-uc-title">Churn prevention — at-risk signals</div>
                 <div class="bc-uc-desc">Inbound transfers increasing. Product usage declining. Data Cloud segment fires. Banker receives a retention NBA with a linked offer before the account exits.</div>
               </div>
             </div>
             <div class="bc-use-case">
-              <div class="bc-uc-dot" style="background:var(--gold);"></div>
+              <div class="bc-dot" style="background:var(--wp-red);"></div>
               <div>
-                <div class="bc-uc-title">Banker territory prioritisation</div>
-                <div class="bc-uc-desc">Each morning, the banker's CRM view shows a ranked list of their portfolio — highest NBA score at the top. No manual prep. No gut-feel prioritisation. <strong>Call the right client first.</strong></div>
+                <div class="bc-uc-title">Territory prioritisation — every morning</div>
+                <div class="bc-uc-desc">Banker's CRM view shows a ranked list of their portfolio — highest NBA score at the top. No manual prep. No gut-feel. <strong>Call the right client first.</strong></div>
               </div>
             </div>
           </div>
@@ -688,26 +739,25 @@
   <hr class="divider" />
 
   <!-- CONSUMER -->
-  <div class="wrap">
+  <div class="section">
     <div class="eyebrow">The Scale Story</div>
     <div class="section-title">Consumer Banking — Phase 2</div>
-    <div class="section-sub">Once the decisioning engine is live in institutional and business banking, the same platform extends to consumer at scale — real-time NBAs across 13 million retail customers.</div>
-
-    <div class="scale-grid">
+    <div class="section-sub">Once live in institutional and business banking, the same platform extends to consumer — real-time NBAs across 13 million retail customers.</div>
+    <div class="card-grid-3">
       <div class="scale-card">
-        <div class="sc-num">01</div>
+        <div class="sc-num">USE CASE 01</div>
         <div class="sc-title">Mortgage cross-sell and retention</div>
-        <div class="sc-body">Fixed rate expiry approaching. Customer browsing home loan pages. Competitor rate comparison detected. NBA engine scores the right offer — rate match, offset product, cashback promotion — and fires it through the right channel.</div>
+        <div class="sc-body">Fixed rate expiring. Customer browsing home loan pages. NBA engine scores the right offer — rate match, offset product, cashback promotion — and fires it through the right channel at the right moment.</div>
       </div>
       <div class="scale-card">
-        <div class="sc-num">02</div>
+        <div class="sc-num">USE CASE 02</div>
         <div class="sc-title">In-app personalised prompts</div>
-        <div class="sc-body">Westpac One app already has Atomic.io notification capability. NBA decisioning adds the intelligence layer — real-time segment membership drives what the customer sees in the app, not static campaign scheduling.</div>
+        <div class="sc-body">Westpac One already has Atomic.io notification capability. NBA decisioning adds the intelligence layer — real-time segment membership drives what the customer sees, not static campaign scheduling.</div>
       </div>
       <div class="scale-card">
-        <div class="sc-num">03</div>
-        <div class="sc-title">Next best product — deposits, wealth</div>
-        <div class="sc-body">Customer holds a savings account with a growing balance but no investment product. Life event signal detected (salary increase, large inflow). NBA scores the wealth referral opportunity and routes it to the right team.</div>
+        <div class="sc-num">USE CASE 03</div>
+        <div class="sc-title">Wealth and deposits cross-sell</div>
+        <div class="sc-body">Customer holds a savings account with a growing balance but no investment product. Salary increase detected. NBA scores the wealth referral and routes it to the right team at the right moment.</div>
       </div>
     </div>
   </div>
@@ -715,34 +765,33 @@
   <hr class="divider" />
 
   <!-- NZ PROOF -->
-  <div style="background: var(--bg2);">
-    <div class="wrap">
+  <div class="section-bg">
+    <div class="section">
       <div class="eyebrow">Proof Inside the Group</div>
-      <div class="nz-wrap">
-        <div class="nz-inner">
-          <div>
-            <div class="nz-label">Westpac New Zealand · 2024 FICO Decisions Pioneer Award</div>
-            <div class="nz-quote">"Hyper-personalisation using AI-driven decisioning — proven inside the Westpac Group."</div>
-            <p style="font-size:13px;color:var(--muted);line-height:1.7;">Westpac NZ implemented an AI-powered decisioning platform and was recognised with a global award for hyper-personalisation outcomes. The proof of concept that the model works is <strong style="color:var(--text);">already inside your group</strong>. This is not a theoretical case study from another bank — it is Westpac.</p>
-            <div class="nz-source" style="margin-top:12px;">Source: FICO Decisions Pioneer Award 2024 — Westpac New Zealand</div>
+      <div class="section-title" style="margin-bottom:32px;">Already proven at Westpac —<br/>inside your own group.</div>
+      <div class="proof-wrap">
+        <div>
+          <div class="proof-eyebrow">Westpac New Zealand · 2024 FICO Decisions Pioneer Award</div>
+          <div class="proof-quote">"Hyper-personalisation using AI-driven decisioning — proven inside the Westpac Group."</div>
+          <p class="proof-desc">Westpac NZ implemented an AI-powered decisioning platform and was recognised with a global award for hyper-personalisation outcomes. This is not a case study from another institution — <strong>it is Westpac, already live, already measured.</strong></p>
+          <div class="proof-source">Source: FICO Decisions Pioneer Award 2024 — Westpac New Zealand</div>
+        </div>
+        <div class="proof-stats">
+          <div class="proof-stat">
+            <div class="proof-stat-val"><span>25%</span></div>
+            <div class="proof-stat-label">Increase in customer engagement</div>
           </div>
-          <div class="nz-stats">
-            <div class="nz-stat">
-              <div class="nz-stat-val">25%</div>
-              <div class="nz-stat-label">Increase in customer engagement</div>
-            </div>
-            <div class="nz-stat">
-              <div class="nz-stat-val">40%</div>
-              <div class="nz-stat-label">Reduction in operational costs</div>
-            </div>
-            <div class="nz-stat">
-              <div class="nz-stat-val">Same</div>
-              <div class="nz-stat-label">Group. Proven model. De-risked delivery.</div>
-            </div>
-            <div class="nz-stat">
-              <div class="nz-stat-val">2024</div>
-              <div class="nz-stat-label">Live and operational — not a pilot</div>
-            </div>
+          <div class="proof-stat">
+            <div class="proof-stat-val"><span>40%</span></div>
+            <div class="proof-stat-label">Reduction in operational costs</div>
+          </div>
+          <div class="proof-stat">
+            <div class="proof-stat-val">Same</div>
+            <div class="proof-stat-label">Group. De-risked delivery.</div>
+          </div>
+          <div class="proof-stat">
+            <div class="proof-stat-val">Live</div>
+            <div class="proof-stat-label">Operational in 2024 — not a pilot</div>
           </div>
         </div>
       </div>
@@ -752,26 +801,25 @@
   <hr class="divider" />
 
   <!-- UNITE -->
-  <div class="wrap">
+  <div class="section">
     <div class="eyebrow">UNITE Alignment</div>
     <div class="section-title">One decisioning layer.<br/>Not another point solution.</div>
     <div class="section-sub">The NBA platform directly supports UNITE's consolidation mandate — fewer platforms, lower cost-to-income, governed AI at scale.</div>
-
-    <div class="unite-grid">
-      <div class="unite-card">
-        <div class="uc-icon">🧩</div>
-        <div class="uc-title">Platform consolidation</div>
-        <div class="uc-body">One decisioning engine governs NBA logic across institutional, business, and consumer channels. <strong>Replaces fragmented channel-level decisioning</strong> built into individual tools — consistent with cutting from 180 to 60 platforms.</div>
+    <div class="card-grid-3">
+      <div class="card">
+        <div class="card-icon">🧩</div>
+        <div class="card-title">Platform consolidation</div>
+        <div class="card-body">One decisioning engine governs NBA logic across institutional, business, and consumer. <strong>Replaces fragmented channel-level decisioning</strong> built into individual tools — consistent with cutting from 180 to 60 platforms.</div>
       </div>
-      <div class="unite-card">
-        <div class="uc-icon">⚡</div>
-        <div class="uc-title">Amplifies existing investment</div>
-        <div class="uc-body">Sits on top of Data Cloud, CRM, and Adobe AJO that Westpac already owns or is deploying. <strong>Not a greenfield build.</strong> The decisioning layer activates infrastructure already being paid for.</div>
+      <div class="card">
+        <div class="card-icon">⚡</div>
+        <div class="card-title">Amplifies existing investment</div>
+        <div class="card-body">Sits on top of Data Cloud, Financial Services Cloud, and Adobe AJO that Westpac already owns or is deploying. <strong>Not a greenfield build.</strong> Activates infrastructure already being paid for.</div>
       </div>
-      <div class="unite-card">
-        <div class="uc-icon">📊</div>
-        <div class="uc-title">Measurable cost-to-income impact</div>
-        <div class="uc-body">350 bankers who are more productive generate more revenue per FTE. NBA-driven retention reduces acquisition cost. <strong>OPEX/income ratio improves</strong> without headcount reduction — higher yield from the same base.</div>
+      <div class="card">
+        <div class="card-icon">📊</div>
+        <div class="card-title">Measurable cost-to-income impact</div>
+        <div class="card-body">350 bankers who are more productive generate more revenue per FTE. NBA-driven retention reduces acquisition cost. <strong>OPEX/income ratio improves</strong> without headcount reduction.</div>
       </div>
     </div>
   </div>
@@ -779,46 +827,73 @@
   <hr class="divider" />
 
   <!-- ROADMAP -->
-  <div style="background: var(--bg2);">
-    <div class="wrap">
+  <div class="section-bg">
+    <div class="section">
       <div class="eyebrow">The Path Forward</div>
       <div class="section-title">90 days to first value.<br/>12 months to group-wide scale.</div>
-      <div class="section-sub">Phase 1 delivers measurable outcomes in institutional and business banking before Phase 2 extends the same engine to consumer.</div>
-
-      <div class="phase-grid">
+      <div class="section-sub">Phase 1 delivers measurable outcomes in institutional and business banking. Phase 2 extends the same engine to consumer and digital channels.</div>
+      <div class="card-grid-2">
         <div class="phase-card">
           <div class="phase-head">
-            <div class="phase-badge" style="background:rgba(218,23,16,0.12);color:var(--red-lt);border:1px solid rgba(218,23,16,0.2);">Phase 1</div>
+            <div class="phase-badge" style="background:rgba(1,118,211,0.1);color:var(--sf-blue);border:1px solid rgba(1,118,211,0.2);">Phase 1 · 0–90 days</div>
             <div>
               <div class="phase-title">Banker Intelligence</div>
-              <div class="phase-timeline">0–90 days · Institutional + Business Banking</div>
+              <div class="phase-timeline">Institutional + Business Banking</div>
             </div>
           </div>
           <div class="phase-body">
-            <div class="phase-item"><strong>Data Cloud unified profile</strong> — ingest CRM, transaction, and product holding data</div>
-            <div class="phase-item"><strong>NBA catalogue</strong> — define 5–10 institutional and SME use cases with commercial owners</div>
-            <div class="phase-item"><strong>Einstein Studio model</strong> — train on historical CRM win/loss outcomes</div>
-            <div class="phase-item"><strong>CRM integration</strong> — NBA brief surfaces in FSC banker view</div>
-            <div class="phase-item"><strong>Promotions & Offers</strong> — configure offer eligibility rules for Phase 1 NBAs</div>
-            <div class="phase-item"><strong>Attribution model</strong> — measure NBA-influenced revenue from day one</div>
+            <div class="phase-item">
+              <div class="phase-item-dot" style="background:var(--sf-blue);"></div>
+              <div><div class="phase-item-title">Data Cloud unified profile</div><div class="phase-item-desc">Ingest CRM, transaction, and product holding data into a real-time customer profile</div></div>
+            </div>
+            <div class="phase-item">
+              <div class="phase-item-dot" style="background:var(--sf-blue);"></div>
+              <div><div class="phase-item-title">NBA catalogue</div><div class="phase-item-desc">Define 5–10 institutional and SME use cases with commercial owners</div></div>
+            </div>
+            <div class="phase-item">
+              <div class="phase-item-dot" style="background:var(--sf-blue);"></div>
+              <div><div class="phase-item-title">Einstein Studio model</div><div class="phase-item-desc">Train on historical CRM win/loss outcomes — scores live from day one</div></div>
+            </div>
+            <div class="phase-item">
+              <div class="phase-item-dot" style="background:var(--sf-blue);"></div>
+              <div><div class="phase-item-title">FSC integration</div><div class="phase-item-desc">NBA brief surfaces inside the banker's existing CRM view — no new tool</div></div>
+            </div>
+            <div class="phase-item">
+              <div class="phase-item-dot" style="background:var(--sf-blue);"></div>
+              <div><div class="phase-item-title">Attribution model</div><div class="phase-item-desc">Measure NBA-influenced revenue from day one</div></div>
+            </div>
           </div>
         </div>
 
         <div class="phase-card">
           <div class="phase-head">
-            <div class="phase-badge" style="background:rgba(245,166,35,0.1);color:var(--gold);border:1px solid rgba(245,166,35,0.2);">Phase 2</div>
+            <div class="phase-badge" style="background:rgba(218,23,16,0.08);color:var(--wp-red);border:1px solid rgba(218,23,16,0.15);">Phase 2 · 90 days – 12 months</div>
             <div>
               <div class="phase-title">Consumer at Scale + Agentforce</div>
-              <div class="phase-timeline">90 days–12 months · Consumer + Digital</div>
+              <div class="phase-timeline">Consumer + Digital Channels</div>
             </div>
           </div>
           <div class="phase-body">
-            <div class="phase-item"><strong>Consumer NBA catalogue</strong> — mortgage, deposits, wealth referral, churn prevention</div>
-            <div class="phase-item"><strong>Westpac One app integration</strong> — real-time NBA prompts via Salesforce Personalisation + Atomic.io</div>
-            <div class="phase-item"><strong>Marketing Cloud triggers</strong> — replace batch campaigns with event-driven NBA journeys</div>
-            <div class="phase-item"><strong>Agentforce</strong> — "ask the agent" capability for bankers; agentic NBA delivery for digital channels</div>
-            <div class="phase-item"><strong>Cross-brand extension</strong> — St. George, Bank of Melbourne, BankSA on same decisioning engine</div>
-            <div class="phase-item"><strong>Model retrain cycle</strong> — weekly Einstein retrain on live outcome data from Phase 1</div>
+            <div class="phase-item">
+              <div class="phase-item-dot" style="background:var(--wp-red);"></div>
+              <div><div class="phase-item-title">Consumer NBA catalogue</div><div class="phase-item-desc">Mortgage, deposits, wealth referral, churn prevention use cases</div></div>
+            </div>
+            <div class="phase-item">
+              <div class="phase-item-dot" style="background:var(--wp-red);"></div>
+              <div><div class="phase-item-title">Westpac One app integration</div><div class="phase-item-desc">Real-time NBA prompts via Salesforce Personalisation + Atomic.io</div></div>
+            </div>
+            <div class="phase-item">
+              <div class="phase-item-dot" style="background:var(--wp-red);"></div>
+              <div><div class="phase-item-title">Marketing Cloud triggers</div><div class="phase-item-desc">Replace batch campaigns with event-driven NBA journeys</div></div>
+            </div>
+            <div class="phase-item">
+              <div class="phase-item-dot" style="background:var(--wp-red);"></div>
+              <div><div class="phase-item-title">Agentforce</div><div class="phase-item-desc">"Ask the agent" for bankers — agentic NBA delivery for digital channels</div></div>
+            </div>
+            <div class="phase-item">
+              <div class="phase-item-dot" style="background:var(--wp-red);"></div>
+              <div><div class="phase-item-title">Cross-brand extension</div><div class="phase-item-desc">St. George, Bank of Melbourne, BankSA on the same decisioning engine</div></div>
+            </div>
           </div>
         </div>
       </div>
@@ -828,20 +903,18 @@
   <hr class="divider" />
 
   <!-- CLOSING -->
-  <div class="wrap">
-    <div class="closing-wrap" style="padding: 0;">
-      <div class="closing-card">
-        <h2>The platform is proven.<br/>The data is already there.<br/>The path to value is 90 days.</h2>
-        <p>Westpac NZ showed what the engine delivers inside your own group. The infrastructure is already in place. The conversation starts here.</p>
-        <div class="closing-steps">
-          <div class="c-step">Discovery workshop</div>
-          <div class="c-arrow">→</div>
-          <div class="c-step">Implementation blueprint</div>
-          <div class="c-arrow">→</div>
-          <div class="c-step">Phase 1 kickoff</div>
-          <div class="c-arrow">→</div>
-          <div class="c-step">First NBA live in 90 days</div>
-        </div>
+  <div class="section">
+    <div class="closing-inner">
+      <h2>The platform is proven.<br/>The data is already there.<br/>90 days to first live NBA.</h2>
+      <p>Westpac NZ showed what the engine delivers inside your own group. The infrastructure is in place. The conversation starts here.</p>
+      <div class="closing-steps">
+        <div class="c-step">Discovery workshop</div>
+        <div class="c-arrow">→</div>
+        <div class="c-step">Implementation blueprint</div>
+        <div class="c-arrow">→</div>
+        <div class="c-step">Phase 1 kickoff</div>
+        <div class="c-arrow">→</div>
+        <div class="c-step primary">First NBA live in 90 days</div>
       </div>
     </div>
   </div>
