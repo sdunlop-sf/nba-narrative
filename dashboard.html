@@ -351,13 +351,19 @@
       loadData();
     }
 
+    /* ── FILTER OUT INTERNAL (STUART DUNLOP / SDunlop) ── */
+    function isInternal(r) {
+      var name = (r.name || '').toLowerCase().trim();
+      return name === 'stuart dunlop' || name === 'stu';
+    }
+
     /* ── LOAD DATA ── */
     function loadData() {
       document.getElementById('last-updated').textContent = 'Loading…';
       fetch(TRACKING_URL + '?t=' + Date.now())
         .then(function (r) { return r.ok ? r.json() : []; })
         .then(function (data) {
-          allRows = data.slice().reverse();
+          allRows = data.filter(function (r) { return !isInternal(r); }).slice().reverse();
           renderAll();
           document.getElementById('last-updated').textContent =
             'Updated ' + new Date().toLocaleTimeString();
