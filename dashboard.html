@@ -373,14 +373,14 @@
       if (!allRows.length) { renderEmpty(); return; }
 
       var total   = allRows.length;
-      var unique  = new Set(allRows.map(function (r) { return (r.Name || '').toLowerCase().trim(); })).size;
+      var unique  = new Set(allRows.map(function (r) { return (r.name || '').toLowerCase().trim(); })).size;
       var pageCounts = {};
       allRows.forEach(function (r) {
-        var p = r.Page || 'Unknown';
+        var p = r.page || 'Unknown';
         pageCounts[p] = (pageCounts[p] || 0) + 1;
       });
       var topPage = Object.keys(pageCounts).sort(function (a,b) { return pageCounts[b]-pageCounts[a]; })[0] || '—';
-      var last = allRows[0] ? formatTime(allRows[0].Timestamp) : '—';
+      var last = allRows[0] ? formatTime(allRows[0].timestamp) : '—';
 
       document.getElementById('s-total').innerHTML  = '<span>' + total + '</span>';
       document.getElementById('s-unique').innerHTML = '<span>' + unique + '</span>';
@@ -401,8 +401,8 @@
         var count   = pageCounts[page];
         var pct     = Math.round((count / total) * 100);
         // get last visit time for this page
-        var lastRow = allRows.find(function (r) { return r.Page === page; });
-        var lastStr = lastRow ? formatTime(lastRow.Timestamp) : '—';
+        var lastRow = allRows.find(function (r) { return r.page === page; });
+        var lastStr = lastRow ? formatTime(lastRow.timestamp) : '—';
         return [
           '<div class="breakdown-card">',
             '<div class="bc-page-name">' + escHtml(page) + '</div>',
@@ -427,13 +427,13 @@
       tbody.innerHTML = rows.map(function (r) {
         return [
           '<tr>',
-            '<td style="white-space:nowrap;color:var(--gray-5);font-size:12px;">' + escHtml(formatTime(r.Timestamp)) + '</td>',
-            '<td class="td-name">'    + escHtml(r.Name     || '—') + '</td>',
-            '<td>'                    + escHtml(r.Company  || '—') + '</td>',
-            '<td style="color:var(--gray-5);">' + escHtml(r.Position || '—') + '</td>',
-            '<td><span class="td-page">' + escHtml((r.Page || '—').replace(' Narrative','')) + '</span></td>',
-            '<td style="color:var(--gray-5);font-size:12px;">' + escHtml(r.Location || '—') + '</td>',
-            '<td>' + ((r.Returning === 'yes') ? '<span class="td-return">Return</span>' : '') + '</td>',
+            '<td style="white-space:nowrap;color:var(--gray-5);font-size:12px;">' + escHtml(formatTime(r.timestamp)) + '</td>',
+            '<td class="td-name">'    + escHtml(r.name     || '—') + '</td>',
+            '<td>'                    + escHtml(r.company  || '—') + '</td>',
+            '<td style="color:var(--gray-5);">' + escHtml(r.position || '—') + '</td>',
+            '<td><span class="td-page">' + escHtml((r.page || '—').replace(' Narrative','')) + '</span></td>',
+            '<td style="color:var(--gray-5);font-size:12px;">' + escHtml(r.location || '—') + '</td>',
+            '<td>' + ((r.returning === 'yes') ? '<span class="td-return">Return</span>' : '') + '</td>',
           '</tr>'
         ].join('');
       }).join('');
@@ -453,11 +453,11 @@
       var q = document.getElementById('log-search').value.toLowerCase();
       if (!q) { renderLog(allRows); return; }
       var filtered = allRows.filter(function (r) {
-        return (r.Name     || '').toLowerCase().includes(q) ||
-               (r.Company  || '').toLowerCase().includes(q) ||
-               (r.Position || '').toLowerCase().includes(q) ||
-               (r.Page     || '').toLowerCase().includes(q) ||
-               (r.Location || '').toLowerCase().includes(q);
+        return (r.name     || '').toLowerCase().includes(q) ||
+               (r.company  || '').toLowerCase().includes(q) ||
+               (r.position || '').toLowerCase().includes(q) ||
+               (r.page     || '').toLowerCase().includes(q) ||
+               (r.location || '').toLowerCase().includes(q);
       });
       renderLog(filtered);
     }
