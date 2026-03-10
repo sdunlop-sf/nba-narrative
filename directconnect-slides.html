@@ -1,0 +1,1164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Salesforce × Direct Connect · Intelligent Decisioning</title>
+    <style>
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --navy:   #032D60;
+            --navy2:  #021845;
+            --blue:   #00B3FF;
+            --blue2:  #1AB9FF;
+            --royal:  #022AC0;
+            --teal:   #04E1CB;
+            --lblue:  #90D0FE;
+            --gold:   #FCC003;
+            --white:  #FFFFFF;
+            --dc:     #F05028;
+            --dc-l:   #FF7048;
+            --card:   rgba(2, 39, 117, 0.22);
+            --card-h: rgba(2, 39, 117, 0.38);
+            --border: rgba(0, 179, 255, 0.14);
+            --muted:  rgba(255, 255, 255, 0.78);
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: var(--navy);
+            color: var(--white);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .bg-base {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            background: radial-gradient(ellipse 90% 70% at 100% 0%, rgba(2, 42, 192, 0.28) 0%, transparent 55%),
+                        radial-gradient(ellipse 60% 50% at 0% 100%, rgba(240, 80, 40, 0.05) 0%, transparent 50%),
+                        linear-gradient(170deg, #032D60 0%, #021340 60%, #032D60 100%);
+        }
+
+        .bg-noise {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0.025;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+            background-repeat: repeat;
+            background-size: 200px 200px;
+        }
+
+        .deck {
+            width: 100%;
+            height: 100vh;
+            position: relative;
+            z-index: 1;
+        }
+
+        .slide {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 64px 108px 88px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.45s cubic-bezier(0.4, 0, 0.2, 1), transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateY(22px);
+        }
+
+        .slide.active {
+            opacity: 1;
+            pointer-events: all;
+            transform: translateY(0);
+        }
+
+        .slide.exit {
+            opacity: 0;
+            transform: translateY(-18px);
+            transition: opacity 0.26s ease, transform 0.26s ease;
+        }
+
+        /* ── NAV BAR ── */
+        .nav-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            height: 56px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 40px;
+            background: rgba(3, 22, 55, 0.96);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(0, 179, 255, 0.1);
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .nav-sf-logo {
+            height: 24px;
+            width: auto;
+        }
+
+        .nav-divider {
+            width: 1px;
+            height: 18px;
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        .nav-dc {
+            font-size: 12px;
+            font-weight: 800;
+            letter-spacing: 0.04em;
+            color: var(--dc-l);
+        }
+
+        .nav-controls {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .nav-btn {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: 1px solid rgba(0, 179, 255, 0.35);
+            background: none;
+            color: rgba(255, 255, 255, 0.78);
+            font-size: 15px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .nav-btn:hover {
+            border-color: var(--blue2);
+            color: var(--blue2);
+            background: rgba(0, 179, 255, 0.08);
+        }
+
+        .nav-btn:focus-visible {
+            outline: 2px solid var(--blue2);
+            outline-offset: 3px;
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.28;
+            cursor: default;
+        }
+
+        .nav-counter {
+            font-size: 11px;
+            color: var(--muted);
+            min-width: 32px;
+            text-align: center;
+            letter-spacing: 0.04em;
+        }
+
+        .nav-dots {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .dot {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.22);
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            padding: 0;
+            flex-shrink: 0;
+        }
+
+        .dot:focus-visible {
+            outline: 2px solid var(--blue2);
+            outline-offset: 3px;
+            border-radius: 4px;
+        }
+
+        .dot.active {
+            background: var(--dc-l);
+            width: 16px;
+            border-radius: 3px;
+        }
+
+        .key-hint {
+            position: fixed;
+            bottom: 66px;
+            right: 36px;
+            font-size: 9px;
+            color: rgba(255, 255, 255, 0.14);
+            letter-spacing: 0.06em;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .key {
+            padding: 2px 5px;
+            border-radius: 3px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 8px;
+        }
+
+        /* ── TYPOGRAPHY ── */
+        .eyebrow {
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--blue2);
+            margin-bottom: 14px;
+        }
+
+        .big {
+            font-size: clamp(32px, 4vw, 58px);
+            font-weight: 900;
+            line-height: 1.05;
+            letter-spacing: -0.03em;
+            margin-bottom: 20px;
+        }
+
+        .sub {
+            font-size: clamp(15px, 1.4vw, 18px);
+            color: var(--muted);
+            line-height: 1.8;
+            max-width: 540px;
+        }
+
+        .hl      { color: var(--blue2); }
+        .hl-dc   { color: var(--dc-l); }
+        .hl-teal { color: var(--teal); }
+        .hl-gold { color: var(--gold); }
+
+        .accent-line {
+            width: 40px;
+            height: 3px;
+            border-radius: 2px;
+            margin-bottom: 20px;
+            background: linear-gradient(90deg, var(--dc), var(--dc-l));
+        }
+
+        .accent-line-blue {
+            width: 40px;
+            height: 3px;
+            border-radius: 2px;
+            margin-bottom: 20px;
+            background: linear-gradient(90deg, var(--blue2), var(--teal));
+        }
+
+        /* ── 2-COLUMN ── */
+        .two-col {
+            display: flex;
+            gap: 72px;
+            align-items: center;
+            max-width: 980px;
+        }
+
+        .two-col .col { flex: 1; }
+
+        /* ── STAT GRID ── */
+        .stat-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            width: 100%;
+            max-width: 880px;
+        }
+
+        .stat-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 26px 22px;
+            border-left: 3px solid var(--blue2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, var(--blue2), transparent);
+            opacity: 0.5;
+        }
+
+        .stat-card.teal  { border-left-color: var(--teal); }
+        .stat-card.teal::before  { background: linear-gradient(90deg, var(--teal), transparent); }
+        .stat-card.gold  { border-left-color: var(--gold); }
+        .stat-card.gold::before  { background: linear-gradient(90deg, var(--gold), transparent); }
+        .stat-card.dc    { border-left-color: var(--dc); }
+        .stat-card.dc::before    { background: linear-gradient(90deg, var(--dc), transparent); }
+
+        .stat-val {
+            font-size: clamp(32px, 3.8vw, 50px);
+            font-weight: 900;
+            letter-spacing: -0.03em;
+            line-height: 1;
+            margin-bottom: 9px;
+        }
+
+        .stat-val.c-blue { color: var(--blue2); }
+        .stat-val.c-teal { color: var(--teal); }
+        .stat-val.c-gold { color: var(--gold); }
+        .stat-val.c-dc   { color: var(--dc-l); }
+
+        .stat-label { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+        .stat-desc  { font-size: 13px; color: var(--muted); line-height: 1.65; }
+
+        /* ── VS GRID ── */
+        .vs-grid {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 20px;
+            align-items: start;
+            width: 100%;
+            max-width: 940px;
+        }
+
+        .vs-col {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px 22px;
+        }
+
+        .vs-col.good {
+            border-color: rgba(0, 179, 255, 0.3);
+            background: rgba(2, 39, 117, 0.3);
+        }
+
+        .vs-col.good .vs-col-header { color: var(--blue2); }
+
+        .vs-divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .vs-badge {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 900;
+            color: var(--muted);
+        }
+
+        .vs-col-header {
+            font-size: 13px;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 18px;
+        }
+
+        .vs-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 15px;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .vs-item:last-child { margin-bottom: 0; }
+
+        .vs-icon {
+            flex-shrink: 0;
+            font-size: 15px;
+            margin-top: 2px;
+        }
+
+        .vs-item-text { color: var(--muted); }
+        .vs-item-text strong { color: var(--white); font-weight: 600; }
+
+        /* ── FLOW ── */
+        .flow {
+            display: flex;
+            align-items: flex-start;
+            width: 100%;
+            max-width: 1020px;
+        }
+
+        .flow-step {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .flow-icon {
+            width: 64px;
+            height: 64px;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 179, 255, 0.08);
+            border: 1px solid rgba(0, 179, 255, 0.18);
+            border-radius: 18px;
+        }
+
+        .flow-icon img { width: 38px; height: 38px; object-fit: contain; }
+
+        .flow-step-num {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--blue2);
+            margin-bottom: 5px;
+        }
+
+        .flow-step-title { font-size: 16px; font-weight: 700; margin-bottom: 6px; }
+        .flow-step-desc  { font-size: 13px; color: var(--muted); line-height: 1.6; max-width: 130px; }
+
+        .flow-arrow {
+            flex-shrink: 0;
+            align-self: center;
+            padding-bottom: 48px;
+            color: rgba(0, 179, 255, 0.3);
+            font-size: 20px;
+            margin: 0 2px;
+        }
+
+        /* ── PLATFORM GRID ── */
+        .platform-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 11px;
+            width: 100%;
+            max-width: 880px;
+        }
+
+        .platform-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 16px 14px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            transition: background 0.2s, border-color 0.2s;
+        }
+
+        .platform-card:hover {
+            background: var(--card-h);
+            border-color: rgba(0, 179, 255, 0.3);
+        }
+
+        .platform-icon img { width: 34px; height: 34px; object-fit: contain; flex-shrink: 0; }
+        .platform-num  { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--blue2); margin-bottom: 3px; }
+        .platform-name { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+        .platform-desc { font-size: 13px; color: var(--muted); line-height: 1.55; }
+
+        /* ── ROADMAP ── */
+        .roadmap-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+            width: 100%;
+            max-width: 940px;
+        }
+
+        .roadmap-col {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 22px 20px;
+            border-top: 3px solid var(--blue2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .roadmap-col::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(0, 179, 255, 0.04) 0%, transparent 40%);
+        }
+
+        .roadmap-col.walk  { border-top-color: var(--teal); }
+        .roadmap-col.walk::after  { background: linear-gradient(180deg, rgba(4, 225, 203, 0.04) 0%, transparent 40%); }
+        .roadmap-col.run   { border-top-color: var(--dc); }
+        .roadmap-col.run::after   { background: linear-gradient(180deg, rgba(240, 80, 40, 0.04) 0%, transparent 40%); }
+
+        .roadmap-phase {
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--blue2);
+            margin-bottom: 4px;
+            position: relative;
+        }
+
+        .roadmap-col.walk .roadmap-phase { color: var(--teal); }
+        .roadmap-col.run  .roadmap-phase { color: var(--dc-l); }
+
+        .roadmap-title {
+            font-size: 17px;
+            font-weight: 800;
+            margin-bottom: 4px;
+            position: relative;
+        }
+
+        .roadmap-timeline {
+            font-size: 11px;
+            color: rgba(255,255,255,0.4);
+            margin-bottom: 16px;
+            position: relative;
+        }
+
+        .roadmap-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            margin-bottom: 10px;
+            font-size: 13px;
+            line-height: 1.55;
+            color: var(--muted);
+            position: relative;
+        }
+
+        .roadmap-item:last-child { margin-bottom: 0; }
+
+        .roadmap-dot {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: var(--blue2);
+            flex-shrink: 0;
+            margin-top: 6px;
+        }
+
+        .roadmap-col.walk .roadmap-dot { background: var(--teal); }
+        .roadmap-col.run  .roadmap-dot { background: var(--dc-l); }
+
+        /* ── VALUE GRID ── */
+        .value-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 13px;
+            width: 100%;
+            max-width: 860px;
+        }
+
+        .vcard {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 22px;
+            display: flex;
+            gap: 14px;
+            align-items: flex-start;
+            transition: background 0.2s;
+        }
+
+        .vcard:hover { background: var(--card-h); }
+
+        .vcard-dot {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            flex-shrink: 0;
+            margin-top: 7px;
+        }
+
+        .vcard-title { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+
+        .vcard-roi {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            padding: 3px 10px;
+            border-radius: 20px;
+            margin-bottom: 8px;
+        }
+
+        .vcard-desc { font-size: 13px; color: var(--muted); line-height: 1.65; }
+
+        /* ── CTA ── */
+        .cta-wrap {
+            border: 1px solid rgba(240, 80, 40, 0.25);
+            border-radius: 28px;
+            padding: 50px 60px;
+            text-align: center;
+            max-width: 640px;
+            background: linear-gradient(145deg, rgba(240, 80, 40, 0.08), rgba(3, 22, 55, 0.7));
+            backdrop-filter: blur(12px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-wrap::before {
+            content: '';
+            position: absolute;
+            top: -1px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--dc-l), transparent);
+        }
+
+        .cta-steps { display: flex; gap: 32px; justify-content: center; margin-top: 36px; }
+
+        .cta-step-num {
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            margin: 0 auto 8px;
+            background: rgba(240, 80, 40, 0.12);
+            border: 1px solid rgba(240, 80, 40, 0.35);
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--dc-l);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .cta-step-label { font-size: 15px; color: rgba(255, 255, 255, 0.82); font-weight: 600; }
+
+        /* ── DECORATIONS ── */
+        .star-deco {
+            position: absolute;
+            pointer-events: none;
+            user-select: none;
+            z-index: 2;
+        }
+
+        .star-deco img {
+            display: block;
+            width: 28px;
+            height: 28px;
+            opacity: 0.35;
+        }
+
+        .char {
+            position: absolute;
+            pointer-events: none;
+            user-select: none;
+            z-index: 2;
+        }
+
+        .char img {
+            display: block;
+            height: 180px;
+            width: auto;
+        }
+
+        /* ── MOBILE ── */
+        @media (max-width: 900px) {
+            .slide { padding: 48px 64px 80px; }
+        }
+
+        @media (max-width: 768px) {
+            html, body { overflow-y: auto; height: auto; }
+            .deck { height: auto; min-height: 100vh; }
+            .slide {
+                position: relative;
+                opacity: 1 !important;
+                transform: none !important;
+                pointer-events: all;
+                padding: 28px 20px 20px;
+                flex-direction: column;
+                gap: 20px;
+                display: none;
+            }
+            .slide.active { display: flex; }
+            .two-col { flex-direction: column; gap: 20px; }
+            .big { font-size: clamp(28px, 7vw, 42px); }
+            .sub { font-size: 15px; }
+            .stat-grid, .value-grid, .platform-grid, .roadmap-grid { grid-template-columns: 1fr; }
+            .vs-grid { grid-template-columns: 1fr; gap: 12px; }
+            .vs-divider { display: none; }
+            .flow { flex-wrap: wrap; gap: 16px; justify-content: center; }
+            .flow-arrow { display: none; }
+            .flow-step { width: 44%; }
+            .key-hint, .star-deco, .char { display: none; }
+            .nav-bar { padding: 0 16px; }
+            .nav-dots { display: none; }
+            .cta-steps { flex-direction: column; gap: 12px; }
+            .cta-wrap { padding: 32px 24px; border-radius: 20px; }
+        }
+
+        @media (max-width: 480px) {
+            .slide { padding: 20px 16px 16px; }
+            .big { font-size: 26px; }
+            .stat-val { font-size: 32px !important; }
+            .flow-step { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-base"></div>
+    <div class="bg-noise"></div>
+
+    <div id="deck" class="deck">
+
+        <!-- Slide 1: Title -->
+        <section class="slide">
+            <div style="text-align: center; max-width: 820px;">
+                <div class="accent-line" style="margin: 0 auto 20px;"></div>
+                <div class="eyebrow">Salesforce × Direct Connect · Intelligent Decisioning</div>
+                <h1 class="big">Win the mover.<br><span class="hl-dc">In the first 48 hours.</span></h1>
+                <p class="sub" style="margin: 0 auto;">The decisioning engine that replaces rules-based routing with real-time, intent-driven NBA across the entire mover journey.</p>
+            </div>
+            <div class="star-deco" style="top: 110px; right: 100px;"><img src="sf-star-gold.png" alt=""></div>
+            <div class="star-deco" style="top: 150px; right: 65px;"><img src="sf-star-gold.png" style="width: 16px; height: 16px; opacity: 1;" alt=""></div>
+            <div class="char" style="bottom: 56px; right: 80px;"><img src="char-agent-astro-2.png" alt=""></div>
+        </section>
+
+        <!-- Slide 2: The Broken Journey -->
+        <section class="slide">
+            <div class="two-col">
+                <div class="col">
+                    <div class="accent-line"></div>
+                    <div class="eyebrow">The Business Reality</div>
+                    <h2 class="big">The lead arrives.<br><span class="hl-dc">The journey breaks.</span></h2>
+                    <p class="sub">A mover's decision window is 48 hours. Right now, you're filling it with a rules-based redirect to a website.</p>
+                </div>
+                <div class="col" style="display: flex; flex-direction: column; gap: 16px;">
+                    <div style="background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 18px 20px;">
+                        <div style="font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--dc-l); margin-bottom: 8px;">The journey today</div>
+                        <div style="display: flex; flex-direction: column; gap: 10px;">
+                            <div style="display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--muted);">
+                                <span style="font-size: 18px;">🏠</span> Real estate agent submits lead
+                            </div>
+                            <div style="font-size: 11px; color: rgba(255,255,255,0.25); padding-left: 28px;">↓</div>
+                            <div style="display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--muted);">
+                                <span style="font-size: 18px;">📋</span> Hits Salesforce CRM — rules run
+                            </div>
+                            <div style="font-size: 11px; color: rgba(255,255,255,0.25); padding-left: 28px;">↓</div>
+                            <div style="display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--muted);">
+                                <span style="font-size: 18px;">🌐</span> Redirected to website — generic
+                            </div>
+                            <div style="font-size: 11px; color: rgba(255,255,255,0.25); padding-left: 28px;">↓</div>
+                            <div style="display: flex; align-items: center; gap: 10px; font-size: 14px; color: rgba(240,80,40,0.9);">
+                                <span style="font-size: 18px;">❌</span> <strong style="color: var(--dc-l);">Drop. The window closes.</strong>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="sub" style="max-width: 100%; font-size: 14px; color: rgba(255,255,255,0.45);">No personalisation. No intent signal. No next best action. Just a rules engine that doesn't know the customer has already moved on.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 3: Where Direct Connect Is Today -->
+        <section class="slide">
+            <div style="max-width: 900px;">
+                <div class="accent-line-blue" style="margin: 0 auto 14px;"></div>
+                <div class="eyebrow" style="text-align: center; margin-bottom: 36px;">Where Direct Connect Is Today</div>
+                <div class="stat-grid">
+                    <div class="stat-card">
+                        <div class="stat-val c-blue" style="font-size: clamp(24px, 2.8vw, 38px);">Rules only</div>
+                        <div class="stat-label">No predictive scoring. No NBA.</div>
+                        <div class="stat-desc">Address. Geo. Credit risk. Three variables to decide the right next action for a mover. The customer has already made their decision before the rule finishes running.</div>
+                    </div>
+                    <div class="stat-card dc">
+                        <div class="stat-val c-dc">48 hrs</div>
+                        <div class="stat-label">The conversion window — and it's closing</div>
+                        <div class="stat-desc">The first 48 hours determine the relationship. Miss it with a generic experience and you're competing with whoever contacts them next.</div>
+                    </div>
+                    <div class="stat-card teal">
+                        <div class="stat-val c-teal">42%</div>
+                        <div class="stat-label">Of market are renters — high-churn by nature</div>
+                        <div class="stat-desc">No nudge capability, no churn early-warning, no way to intercept the exit. Segmentation attempts have failed — financial modelling excluded entirely.</div>
+                    </div>
+                    <div class="stat-card gold">
+                        <div class="stat-val c-gold" style="font-size: clamp(24px, 2.8vw, 38px);">Mailchimp</div>
+                        <div class="stat-label">Doing the comms work</div>
+                        <div class="stat-desc">Disconnected from Salesforce data. No real-time trigger. No personalisation. Batch and blast — while the mover's window closes in real time.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 4: The North Star — Optus -->
+        <section class="slide">
+            <div style="max-width: 960px;">
+                <div class="accent-line"></div>
+                <div class="eyebrow" style="margin-bottom: 6px;">The North Star · Lessons from Optus</div>
+                <h2 class="big" style="font-size: clamp(26px, 3vw, 44px); margin-bottom: 36px;">Too many systems.<br><span class="hl">Zero moments.</span></h2>
+                <div class="vs-grid">
+                    <div class="vs-col">
+                        <div class="vs-col-header">Channel-Led · Where most businesses are stuck</div>
+                        <div class="vs-item">
+                            <div class="vs-icon">✗</div>
+                            <div class="vs-item-text"><strong>Separate systems for every channel</strong> — SMS platform, email platform, call centre, app push. Each with its own rules and calendar.</div>
+                        </div>
+                        <div class="vs-item">
+                            <div class="vs-icon">✗</div>
+                            <div class="vs-item-text"><strong>4–8 week campaign cycles</strong> — by the time it launches, the customer has already connected with a competitor.</div>
+                        </div>
+                        <div class="vs-item">
+                            <div class="vs-icon">✗</div>
+                            <div class="vs-item-text"><strong>Misaligned KPIs per channel</strong> — not per customer outcome. Email team wins. Customer churns anyway.</div>
+                        </div>
+                        <div class="vs-item">
+                            <div class="vs-icon">✗</div>
+                            <div class="vs-item-text"><strong>No signal awareness</strong> — the system doesn't know the customer just did something important. It just waits for the next campaign.</div>
+                        </div>
+                    </div>
+                    <div class="vs-divider">
+                        <div class="vs-badge">→</div>
+                    </div>
+                    <div class="vs-col good">
+                        <div class="vs-col-header">Signal-Led · The Moments That Matter</div>
+                        <div class="vs-item">
+                            <div class="vs-icon">✓</div>
+                            <div class="vs-item-text"><strong>One unified decisioning layer</strong> — listens to every signal across CRM, billing, web, and service. One brain. Every channel.</div>
+                        </div>
+                        <div class="vs-item">
+                            <div class="vs-icon">✓</div>
+                            <div class="vs-item-text"><strong>Sub-second triggers</strong> — the next best action fires when the moment happens, not when the campaign calendar says it should.</div>
+                        </div>
+                        <div class="vs-item">
+                            <div class="vs-icon">✓</div>
+                            <div class="vs-item-text"><strong>One winning action per customer, per moment</strong> — AI-scored, context-aware, and delivered through the right channel.</div>
+                        </div>
+                        <div class="vs-item">
+                            <div class="vs-icon">✓</div>
+                            <div class="vs-item-text"><strong>Every outcome trains the model</strong> — accept, decline, or ignore. The engine gets smarter with every mover interaction.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 5: The Anatomy of Modern Decisioning -->
+        <section class="slide">
+            <div style="max-width: 1020px;">
+                <div class="accent-line-blue" style="margin: 0 auto 14px;"></div>
+                <div class="eyebrow" style="text-align: center; margin-bottom: 36px;">The Anatomy of Modern Decisioning · A Direct Connect Mover</div>
+                <div class="flow">
+                    <div class="flow-step">
+                        <div class="flow-icon"><img src="icon-data360.png" alt="Signal"></div>
+                        <div class="flow-step-num">01</div>
+                        <div class="flow-step-title">Signal</div>
+                        <div class="flow-step-desc">Lead arrives from agent. Mover opens welcome email. Visits pricing page.</div>
+                    </div>
+                    <div class="flow-arrow">›</div>
+                    <div class="flow-step">
+                        <div class="flow-icon"><img src="icon-platform.png" alt="Score"></div>
+                        <div class="flow-step-num">02</div>
+                        <div class="flow-step-title">Score</div>
+                        <div class="flow-step-desc">Einstein ranks: retention offer, broadband bundle, removals upsell</div>
+                    </div>
+                    <div class="flow-arrow">›</div>
+                    <div class="flow-step">
+                        <div class="flow-icon"><img src="icon-salesrevenue.png" alt="Select"></div>
+                        <div class="flow-step-num">03</div>
+                        <div class="flow-step-title">Select</div>
+                        <div class="flow-step-desc">One winning NBA per mover — broadband bundle wins this moment</div>
+                    </div>
+                    <div class="flow-arrow">›</div>
+                    <div class="flow-step">
+                        <div class="flow-icon"><img src="icon-agentforce.png" alt="Act"></div>
+                        <div class="flow-step-num">04</div>
+                        <div class="flow-step-title">Act</div>
+                        <div class="flow-step-desc">Lead Agent reaches out within the hour. Web Agent surfaces the offer.</div>
+                    </div>
+                    <div class="flow-arrow">›</div>
+                    <div class="flow-step">
+                        <div class="flow-icon"><img src="icon-marketing.png" alt="Learn"></div>
+                        <div class="flow-step-num">05</div>
+                        <div class="flow-step-title">Learn</div>
+                        <div class="flow-step-desc">Mover converts → model improves for the next 40,000 movers</div>
+                    </div>
+                </div>
+                <p class="sub" style="text-align: center; max-width: 580px; margin: 32px auto 0;">Continuously. Across every lead. Every signal. Every 48-hour window.</p>
+            </div>
+        </section>
+
+        <!-- Slide 6: The Platform -->
+        <section class="slide">
+            <div style="max-width: 900px;">
+                <div class="accent-line" style="margin: 0 auto 14px;"></div>
+                <div class="eyebrow" style="text-align: center; margin-bottom: 8px;">The Platform</div>
+                <h2 class="big" style="text-align: center; font-size: clamp(26px, 3vw, 44px); margin-bottom: 32px;">Four layers. One decisioning engine.</h2>
+                <div class="platform-grid">
+                    <div class="platform-card">
+                        <div class="platform-icon"><img src="icon-data360.png" alt="Data Cloud"></div>
+                        <div>
+                            <div class="platform-num">01</div>
+                            <div class="platform-name">Data Cloud</div>
+                            <div class="platform-desc">Unified mover profile — CRM, billing, BigQuery, and behavioural data in one identity</div>
+                        </div>
+                    </div>
+                    <div class="platform-card">
+                        <div class="platform-icon"><img src="icon-platform.png" alt="Einstein Studio"></div>
+                        <div>
+                            <div class="platform-num">02</div>
+                            <div class="platform-name">Einstein Studio</div>
+                            <div class="platform-desc">NBA scoring model trained on Direct Connect's own conversion and churn data</div>
+                        </div>
+                    </div>
+                    <div class="platform-card">
+                        <div class="platform-icon"><img src="icon-marketing.png" alt="MC Personalisation"></div>
+                        <div>
+                            <div class="platform-num">03</div>
+                            <div class="platform-name">MC Personalisation</div>
+                            <div class="platform-desc">Real-time decisioning engine — replaces Mailchimp and rules-based routing</div>
+                        </div>
+                    </div>
+                    <div class="platform-card">
+                        <div class="platform-icon"><img src="icon-agentforce.png" alt="Lead Agent"></div>
+                        <div>
+                            <div class="platform-num">04</div>
+                            <div class="platform-name">Lead Engagement Agent</div>
+                            <div class="platform-desc">Agentforce agent that works the 48-hour conversion window — personalised, contextual, at scale</div>
+                        </div>
+                    </div>
+                    <div class="platform-card">
+                        <div class="platform-icon"><img src="icon-agentforce.png" alt="Web Agent"></div>
+                        <div>
+                            <div class="platform-num">05</div>
+                            <div class="platform-name">Web Engagement Agent</div>
+                            <div class="platform-desc">Intent-driven web experience — right offer, right moment, right mover</div>
+                        </div>
+                    </div>
+                    <div class="platform-card">
+                        <div class="platform-icon"><img src="icon-data360.png" alt="Feedback Loop"></div>
+                        <div>
+                            <div class="platform-num">06</div>
+                            <div class="platform-name">Feedback Loop</div>
+                            <div class="platform-desc">Every conversion, churn, and deflection trains the model — a proprietary asset that compounds</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="star-deco" style="bottom: 90px; left: 90px;"><img src="sf-star-gold.png" alt=""></div>
+        </section>
+
+        <!-- Slide 7: Crawl / Walk / Run -->
+        <section class="slide">
+            <div style="max-width: 960px;">
+                <div class="accent-line" style="margin: 0 auto 14px;"></div>
+                <div class="eyebrow" style="text-align: center; margin-bottom: 36px;">The Use Case Roadmap · Crawl · Walk · Run</div>
+                <div class="roadmap-grid">
+                    <div class="roadmap-col">
+                        <div class="roadmap-phase">Crawl</div>
+                        <div class="roadmap-title">Data Foundation</div>
+                        <div class="roadmap-timeline">Now → 3 months</div>
+                        <div class="roadmap-item"><div class="roadmap-dot"></div><span>Unified mover profile in Data Cloud — CRM + billing + BigQuery</span></div>
+                        <div class="roadmap-item"><div class="roadmap-dot"></div><span>Event tracking across web, email, and service</span></div>
+                        <div class="roadmap-item"><div class="roadmap-dot"></div><span>Real-time segments: intent stage, churn risk, tenure</span></div>
+                        <div class="roadmap-item"><div class="roadmap-dot"></div><span>MC connected — Mailchimp retired</span></div>
+                    </div>
+                    <div class="roadmap-col walk">
+                        <div class="roadmap-phase">Walk</div>
+                        <div class="roadmap-title">Personalisation Engine</div>
+                        <div class="roadmap-timeline">3–6 months</div>
+                        <div class="roadmap-item"><div class="roadmap-dot"></div><span>48-hour conversion journey — personalised from first touch</span></div>
+                        <div class="roadmap-item"><div class="roadmap-dot"></div><span>Bundle cross-sell: utilities + broadband + removals</span></div>
+                        <div class="roadmap-item"><div class="roadmap-dot"></div><span>Churn early-warning triggers — intercept before exit intent</span></div>
+                        <div class="roadmap-item"><div class="roadmap-dot"></div><span>Proactive bill shock deflection</span></div>
+                    </div>
+                    <div class="roadmap-col run">
+                        <div class="roadmap-phase">Run</div>
+                        <div class="roadmap-title">Agentic Delivery</div>
+                        <div class="roadmap-timeline">6–12 months</div>
+                        <div class="roadmap-item"><div class="roadmap-dot"></div><span>Lead Engagement Agent — works the 48hr window autonomously</span></div>
+                        <div class="roadmap-item"><div class="roadmap-dot"></div><span>Web Engagement Agent — intent-driven site personalisation</span></div>
+                        <div class="roadmap-item"><div class="roadmap-dot"></div><span>Service Cloud Voice — NBA surfaced in every call</span></div>
+                        <div class="roadmap-item"><div class="roadmap-dot"></div><span>Self-improving model — proprietary and defensible</span></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 8: The 4 Priority Use Cases -->
+        <section class="slide">
+            <div style="max-width: 900px;">
+                <div class="accent-line-blue" style="margin: 0 auto 14px;"></div>
+                <div class="eyebrow" style="text-align: center; margin-bottom: 36px;">The 4 Priority Use Cases</div>
+                <div class="value-grid">
+                    <div class="vcard">
+                        <div class="vcard-dot" style="background: var(--dc-l);"></div>
+                        <div>
+                            <div class="vcard-title">Predictive Churn Retention</div>
+                            <div class="vcard-roi" style="background: rgba(240,80,40,0.1); color: var(--dc-l);">10–15% churn reduction</div>
+                            <div class="vcard-desc">Detect exit intent before the mover calls to cancel. Surface a retention offer or service intervention at the exact right moment — not a week after they've already switched.</div>
+                        </div>
+                    </div>
+                    <div class="vcard">
+                        <div class="vcard-dot" style="background: var(--blue2);"></div>
+                        <div>
+                            <div class="vcard-title">Top of Funnel Lead Conversion</div>
+                            <div class="vcard-roi" style="background: rgba(0,179,255,0.1); color: var(--blue2);">20–30% conversion lift</div>
+                            <div class="vcard-desc">Personalise the first 48-hour journey from the moment the lead arrives. Right offer, right channel, right timing — driven by the mover's actual intent signals, not a generic email sequence.</div>
+                        </div>
+                    </div>
+                    <div class="vcard">
+                        <div class="vcard-dot" style="background: var(--teal);"></div>
+                        <div>
+                            <div class="vcard-title">Bundle Cross-Sell</div>
+                            <div class="vcard-roi" style="background: rgba(4,225,203,0.1); color: var(--teal);">15–20% CLV increase</div>
+                            <div class="vcard-desc">Utilities + broadband + removals — the natural bundle for every mover. NBA identifies the highest-propensity next product and surfaces it at the moment the mover is most receptive.</div>
+                        </div>
+                    </div>
+                    <div class="vcard">
+                        <div class="vcard-dot" style="background: var(--gold);"></div>
+                        <div>
+                            <div class="vcard-title">Bill Shock · Proactive Service</div>
+                            <div class="vcard-roi" style="background: rgba(252,192,3,0.1); color: var(--gold);">$5–10 per deflected call</div>
+                            <div class="vcard-desc">Detect bill anomalies before the customer calls to complain. Proactive outreach via agent or SMS — deflecting contact centre volume and turning a friction moment into a trust signal.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="star-deco" style="top: 100px; right: 80px;"><img src="sf-star-gold.png" alt=""></div>
+        </section>
+
+        <!-- Slide 9: Next Steps -->
+        <section class="slide">
+            <div class="cta-wrap">
+                <div class="eyebrow" style="color: var(--dc-l);">The Next Step</div>
+                <h2 class="big" style="font-size: clamp(28px, 3.5vw, 48px);">First NBA.<br><span class="hl-dc">Live in 90 days.</span></h2>
+                <p class="sub" style="margin: 16px auto 0; font-size: 15px; max-width: 480px;">The 48-hour window is the forcing function. The platform is already in the room. The decision is which moment to win first.</p>
+                <div class="cta-steps">
+                    <div>
+                        <div class="cta-step-num">1</div>
+                        <div class="cta-step-label">Align on 3 Moments</div>
+                    </div>
+                    <div>
+                        <div class="cta-step-num">2</div>
+                        <div class="cta-step-label">Data Cloud scoping</div>
+                    </div>
+                    <div>
+                        <div class="cta-step-num">3</div>
+                        <div class="cta-step-label">Lead Agent pilot</div>
+                    </div>
+                </div>
+            </div>
+            <div class="star-deco" style="top: 90px; left: 120px;"><img src="sf-star-gold.png" alt=""></div>
+            <div class="char" style="bottom: 56px; right: 80px;"><img src="char-agent-einstein-1.png" alt=""></div>
+        </section>
+
+    </div>
+
+    <!-- Navigation -->
+    <nav class="nav-bar" role="navigation" aria-label="Slide navigation">
+        <div class="nav-brand">
+            <img class="nav-sf-logo" src="sf-logo-cloud.png" alt="Salesforce">
+            <div class="nav-divider"></div>
+            <span class="nav-dc">Direct Connect</span>
+        </div>
+        <div class="nav-dots" role="tablist" id="progress"></div>
+        <div class="nav-controls">
+            <button class="nav-btn" id="btn-prev" aria-label="Previous slide">‹</button>
+            <span class="nav-counter" id="counter">1 / 9</span>
+            <button class="nav-btn" id="btn-next" aria-label="Next slide">›</button>
+        </div>
+    </nav>
+
+    <div class="key-hint">
+        <span class="key">←→</span> navigate <span class="key">Space</span> advance
+    </div>
+
+    <script>
+        var slides  = document.querySelectorAll('#deck > .slide');
+        var total   = slides.length;
+        var current = 0;
+        var busy    = false;
+        var prog    = document.getElementById('progress');
+
+        for (var i = 0; i < total; i++) {
+            var dot = document.createElement('button');
+            dot.className = 'dot' + (i === 0 ? ' active' : '');
+            dot.setAttribute('role', 'tab');
+            dot.setAttribute('aria-label', 'Slide ' + (i + 1));
+            dot.setAttribute('aria-selected', i === 0 ? 'true' : 'false');
+            dot.addEventListener('click', (function(idx) {
+                return function() { goTo(idx); };
+            })(i));
+            prog.appendChild(dot);
+        }
+
+        function goTo(idx) {
+            if (busy || idx === current || idx < 0 || idx >= total) return;
+            busy = true;
+            slides[current].classList.add('exit');
+            var prev = current;
+            current = idx;
+            setTimeout(function() {
+                slides[prev].classList.remove('active', 'exit');
+                slides[current].classList.add('active');
+                updateUI();
+                setTimeout(function() { busy = false; }, 450);
+            }, 260);
+        }
+
+        function navigate(dir) { goTo(current + dir); }
+
+        function updateUI() {
+            document.getElementById('counter').textContent = (current + 1) + ' / ' + total;
+            document.getElementById('btn-prev').disabled = current === 0;
+            document.getElementById('btn-next').disabled = current === total - 1;
+            document.getElementById('btn-prev').setAttribute('aria-label', 'Previous slide (slide ' + current + ' of ' + total + ')');
+            document.getElementById('btn-next').setAttribute('aria-label', 'Next slide (slide ' + (current + 2) + ' of ' + total + ')');
+            document.querySelectorAll('.dot').forEach(function(d, i) {
+                d.classList.toggle('active', i === current);
+                d.setAttribute('aria-selected', i === current ? 'true' : 'false');
+            });
+        }
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') { e.preventDefault(); navigate(1); }
+            if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')                    { e.preventDefault(); navigate(-1); }
+        });
+
+        var tx = null;
+        document.addEventListener('touchstart', function(e) { tx = e.touches[0].clientX; });
+        document.addEventListener('touchend',   function(e) {
+            if (tx === null) return;
+            if (Math.abs(e.changedTouches[0].clientX - tx) > 50) navigate(e.changedTouches[0].clientX - tx < 0 ? 1 : -1);
+            tx = null;
+        });
+
+        slides[0].classList.add('active');
+        updateUI();
+    </script>
+</body>
+</html>
