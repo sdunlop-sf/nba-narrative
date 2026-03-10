@@ -4,207 +4,205 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Next Best Action — Salesforce</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --blue:  #00A1E0;
-      --blue2: #7FD4F5;
-      --dark:  #032D60;
-      --bg:    #080F1E;
-      --muted: rgba(255,255,255,0.45);
-      --border: rgba(255,255,255,0.08);
+      /* Salesforce 2026 Brand */
+      --navy:    #001E5B;
+      --blue:    #00B3FF;
+      --royal:   #022AC0;
+      --teal:    #04E1CB;
+      --lblue:   #90D0FE;
+      --gold:    #FCC003;
+      --white:   #FFFFFF;
+      --bg-card: rgba(255,255,255,0.06);
+      --border:  rgba(255,255,255,0.1);
+      --muted:   rgba(255,255,255,0.5);
     }
 
     html, body {
       width: 100%; height: 100%; overflow: hidden;
-      font-family: 'Inter', sans-serif;
-      background: var(--bg); color: #fff;
+      font-family: Arial, sans-serif;
+      background: var(--navy); color: var(--white);
       -webkit-font-smoothing: antialiased;
     }
 
-    /* ── DECK CONTAINER ── */
-    .deck {
-      width: 100%; height: 100vh;
-      position: relative;
-    }
+    /* ── DECK ── */
+    .deck { width: 100%; height: 100vh; position: relative; }
 
     /* ── SLIDES ── */
     .slide {
       position: absolute; inset: 0;
       display: flex; align-items: center; justify-content: center;
-      padding: 80px 120px;
+      padding: 72px 120px 96px;
       opacity: 0; pointer-events: none;
-      transition: opacity 0.45s ease, transform 0.45s ease;
-      transform: translateY(24px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+      transform: translateY(20px);
     }
-    .slide.active {
-      opacity: 1; pointer-events: all;
-      transform: translateY(0);
-    }
-    .slide.exit {
-      opacity: 0;
-      transform: translateY(-24px);
-      transition: opacity 0.3s ease, transform 0.3s ease;
-    }
+    .slide.active  { opacity: 1; pointer-events: all; transform: translateY(0); }
+    .slide.exit    { opacity: 0; transform: translateY(-20px); transition: opacity 0.25s ease, transform 0.25s ease; }
 
-    /* ── GLOBAL GLOW ── */
-    .glow {
-      position: fixed; top: -10%; left: 50%; transform: translateX(-50%);
-      width: 1000px; height: 700px;
-      background: radial-gradient(ellipse, rgba(0,161,224,0.08) 0%, transparent 65%);
-      pointer-events: none;
+    /* ── BACKGROUND DECORATION ── */
+    .bg-orb {
+      position: fixed; border-radius: 50%; pointer-events: none;
+      filter: blur(120px);
     }
+    .bg-orb-1 { width: 600px; height: 600px; top: -200px; right: -100px; background: rgba(0,179,255,0.07); }
+    .bg-orb-2 { width: 400px; height: 400px; bottom: -100px; left: -80px;  background: rgba(2,42,192,0.12); }
 
-    /* ── NAV ── */
+    /* ── NAV BAR ── */
     .nav-bar {
       position: fixed; bottom: 0; left: 0; right: 0; z-index: 100;
-      height: 64px; display: flex; align-items: center; justify-content: space-between;
+      height: 60px; display: flex; align-items: center; justify-content: space-between;
       padding: 0 48px;
+      background: rgba(0,30,91,0.95); backdrop-filter: blur(16px);
       border-top: 1px solid var(--border);
-      background: rgba(8,15,30,0.9); backdrop-filter: blur(16px);
     }
-    .nav-brand {
-      font-size: 12px; font-weight: 600; color: var(--muted); letter-spacing: 0.05em;
-    }
-    .nav-brand strong { color: var(--blue); font-weight: 700; }
-    .nav-controls { display: flex; align-items: center; gap: 20px; }
+    .nav-brand { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+    .nav-brand strong { color: var(--blue); }
+    .nav-controls { display: flex; align-items: center; gap: 16px; }
     .nav-btn {
-      width: 36px; height: 36px; border-radius: 50%;
-      border: 1px solid var(--border); background: rgba(255,255,255,0.04);
-      color: rgba(255,255,255,0.6); font-size: 16px; cursor: pointer;
+      width: 32px; height: 32px; border-radius: 50%;
+      border: 1px solid var(--border); background: none;
+      color: var(--muted); font-size: 15px; cursor: pointer;
       display: flex; align-items: center; justify-content: center;
-      transition: all 0.2s;
+      transition: all 0.2s; font-family: Arial, sans-serif;
     }
-    .nav-btn:hover { background: rgba(0,161,224,0.12); border-color: rgba(0,161,224,0.4); color: var(--blue); }
-    .nav-btn:disabled { opacity: 0.25; cursor: default; }
-    .nav-counter {
-      font-size: 12px; color: var(--muted); min-width: 40px; text-align: center;
-      font-variant-numeric: tabular-nums;
-    }
-    .nav-progress {
-      display: flex; align-items: center; gap: 6px;
-    }
+    .nav-btn:hover { border-color: var(--blue); color: var(--blue); background: rgba(0,179,255,0.1); }
+    .nav-btn:disabled { opacity: 0.2; cursor: default; }
+    .nav-counter { font-size: 12px; color: var(--muted); min-width: 36px; text-align: center; }
+    .nav-progress { display: flex; align-items: center; gap: 6px; }
     .progress-dot {
       width: 6px; height: 6px; border-radius: 50%;
-      background: rgba(255,255,255,0.15); cursor: pointer; transition: all 0.2s;
+      background: rgba(255,255,255,0.15); cursor: pointer; transition: all 0.25s;
     }
-    .progress-dot.active { background: var(--blue); width: 20px; border-radius: 3px; }
+    .progress-dot.active { background: var(--blue); width: 18px; border-radius: 3px; }
 
-    /* ── TYPOGRAPHY ── */
+    .key-hint {
+      position: fixed; bottom: 70px; right: 40px;
+      font-size: 10px; color: rgba(255,255,255,0.18); letter-spacing: 0.05em;
+      display: flex; align-items: center; gap: 5px;
+    }
+    .key { padding: 2px 6px; border-radius: 3px; border: 1px solid rgba(255,255,255,0.12); font-size: 9px; }
+
+    /* ── SHARED TYPOGRAPHY ── */
     .eyebrow {
-      font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
-      color: var(--blue); margin-bottom: 20px;
+      font-size: 10px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--teal); margin-bottom: 18px;
     }
-    .big-headline {
-      font-size: clamp(36px, 4.5vw, 64px); font-weight: 900;
-      line-height: 1.05; letter-spacing: -0.03em; margin-bottom: 28px;
+    .big { font-size: clamp(34px, 4.2vw, 60px); font-weight: 900; line-height: 1.06; letter-spacing: -0.02em; margin-bottom: 24px; }
+    .hl  { color: var(--blue); }
+    .sub { font-size: clamp(14px, 1.3vw, 17px); color: var(--muted); line-height: 1.75; max-width: 540px; }
+
+    /* ── SLIDE 1: TITLE ── */
+    .s-title { flex-direction: column; text-align: center; }
+    .s-title .big { max-width: 780px; }
+    .s-title .sub { margin: 0 auto; }
+    .title-rule { width: 48px; height: 3px; background: var(--teal); border-radius: 2px; margin: 0 auto 28px; }
+
+    /* ── SLIDE 2: PROBLEM ── */
+    .s-2col { gap: 80px; align-items: center; }
+    .s-2col .col { flex: 1; }
+
+    /* ── SLIDE 3: STATS ── */
+    .stat-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
+      width: 100%; max-width: 880px;
     }
-    .grad {
-      background: linear-gradient(120deg, var(--blue) 0%, var(--blue2) 100%);
-      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-    }
-    .sub {
-      font-size: clamp(15px, 1.4vw, 18px); color: var(--muted); line-height: 1.75; max-width: 560px;
-    }
-    em { font-style: italic; color: rgba(255,255,255,0.9); }
-
-    /* ── BADGE ── */
-    .badge {
-      display: inline-flex; align-items: center; gap: 7px;
-      padding: 5px 14px; border-radius: 20px; margin-bottom: 32px;
-      border: 1px solid rgba(0,161,224,0.3); background: rgba(0,161,224,0.07);
-      font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--blue);
-    }
-    .badge-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--blue); animation: pulse 2s infinite; }
-    @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
-
-    /* ── SLIDE LAYOUTS ── */
-
-    /* Title */
-    .slide-title { text-align: center; flex-direction: column; }
-    .slide-title .big-headline { max-width: 720px; }
-
-    /* 2 column */
-    .slide-2col { gap: 80px; align-items: center; }
-    .slide-2col .col-left { flex: 1; }
-    .slide-2col .col-right { flex: 1; }
-
-    /* Stat grid */
-    .stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; width: 100%; max-width: 900px; }
     .stat-card {
-      background: rgba(255,255,255,0.04); border: 1px solid var(--border);
-      border-radius: 16px; padding: 32px 28px;
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px;
+      padding: 32px 28px; border-left: 3px solid var(--blue);
     }
-    .stat-val { font-size: clamp(40px, 5vw, 64px); font-weight: 900; color: var(--blue); letter-spacing: -0.03em; line-height: 1; margin-bottom: 10px; }
-    .stat-label { font-size: 15px; font-weight: 600; color: rgba(255,255,255,0.8); margin-bottom: 6px; }
-    .stat-desc { font-size: 13px; color: var(--muted); line-height: 1.6; }
+    .stat-card.teal   { border-left-color: var(--teal); }
+    .stat-card.gold   { border-left-color: var(--gold); }
+    .stat-card.lblue  { border-left-color: var(--lblue); }
+    .stat-val { font-size: clamp(40px, 5vw, 60px); font-weight: 900; color: var(--white); letter-spacing: -0.03em; line-height: 1; margin-bottom: 10px; }
+    .stat-val.c-blue  { color: var(--blue);  }
+    .stat-val.c-teal  { color: var(--teal);  }
+    .stat-val.c-gold  { color: var(--gold);  }
+    .stat-val.c-lblue { color: var(--lblue); }
+    .stat-label { font-size: 14px; font-weight: 700; color: var(--white); margin-bottom: 6px; }
+    .stat-desc  { font-size: 13px; color: var(--muted); line-height: 1.6; }
 
-    /* Step flow */
-    .flow { display: flex; align-items: center; gap: 0; width: 100%; max-width: 1000px; flex-wrap: wrap; justify-content: center; }
+    /* ── SLIDE 5: FLOW ── */
+    .flow { display: flex; align-items: flex-start; width: 100%; max-width: 1050px; gap: 0; }
     .flow-step {
-      display: flex; flex-direction: column; align-items: center; text-align: center;
-      flex: 1; min-width: 140px;
+      flex: 1; display: flex; flex-direction: column; align-items: center; text-align: center;
     }
     .flow-icon {
-      width: 56px; height: 56px; border-radius: 16px; margin-bottom: 14px;
+      width: 72px; height: 72px; margin-bottom: 14px;
       display: flex; align-items: center; justify-content: center;
-      font-size: 22px; background: rgba(0,161,224,0.1); border: 1px solid rgba(0,161,224,0.25);
     }
-    .flow-step-label { font-size: 13px; font-weight: 700; color: rgba(255,255,255,0.9); margin-bottom: 6px; }
-    .flow-step-desc { font-size: 12px; color: var(--muted); line-height: 1.5; max-width: 130px; }
-    .flow-arrow { color: rgba(0,161,224,0.4); font-size: 20px; flex-shrink: 0; margin: 0 4px; align-self: center; padding-bottom: 36px; }
-
-    /* Proof cards */
-    .proof-row { display: flex; gap: 20px; width: 100%; max-width: 1000px; }
-    .proof-card {
-      flex: 1; background: rgba(255,255,255,0.04); border: 1px solid var(--border);
-      border-radius: 16px; padding: 28px 24px;
+    .flow-icon img { width: 64px; height: 64px; object-fit: contain; }
+    .flow-step-num { font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--teal); margin-bottom: 6px; }
+    .flow-step-title { font-size: 14px; font-weight: 700; color: var(--white); margin-bottom: 6px; }
+    .flow-step-desc { font-size: 12px; color: var(--muted); line-height: 1.55; max-width: 130px; }
+    .flow-arrow {
+      flex-shrink: 0; align-self: center; padding-bottom: 56px;
+      color: rgba(0,179,255,0.35); font-size: 22px; margin: 0 2px;
     }
-    .proof-metric { font-size: 36px; font-weight: 900; color: var(--blue); letter-spacing: -0.02em; line-height: 1; margin-bottom: 4px; }
-    .proof-co { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 12px; }
-    .proof-text { font-size: 13px; color: rgba(255,255,255,0.65); line-height: 1.65; }
-    .proof-text strong { color: rgba(255,255,255,0.9); }
 
-    /* Outcome pills */
+    /* ── SLIDE 6: PLATFORM ── */
+    .platform-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;
+      width: 100%; max-width: 920px;
+    }
+    .platform-card {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px;
+      padding: 22px 20px; display: flex; align-items: flex-start; gap: 14px;
+    }
+    .platform-icon img { width: 40px; height: 40px; object-fit: contain; flex-shrink: 0; }
+    .platform-num { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--teal); margin-bottom: 4px; }
+    .platform-name { font-size: 13px; font-weight: 700; color: var(--white); margin-bottom: 4px; }
+    .platform-desc { font-size: 12px; color: var(--muted); line-height: 1.5; }
+
+    /* ── SLIDE 7: OUTCOMES ── */
     .outcome-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; width: 100%; max-width: 860px; }
     .outcome-card {
-      background: rgba(255,255,255,0.04); border: 1px solid var(--border);
-      border-radius: 14px; padding: 24px;
-      display: flex; align-items: flex-start; gap: 14px;
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px;
+      padding: 26px; display: flex; gap: 16px; align-items: flex-start;
     }
-    .outcome-icon { font-size: 24px; flex-shrink: 0; }
-    .outcome-title { font-size: 14px; font-weight: 700; color: rgba(255,255,255,0.9); margin-bottom: 4px; }
-    .outcome-desc { font-size: 13px; color: var(--muted); line-height: 1.55; }
+    .outcome-bullet {
+      width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; margin-top: 5px;
+    }
+    .outcome-title { font-size: 14px; font-weight: 700; color: var(--white); margin-bottom: 6px; }
+    .outcome-desc  { font-size: 13px; color: var(--muted); line-height: 1.6; }
 
-    /* CTA slide */
+    /* ── SLIDE 8: PROOF ── */
+    .proof-row { display: flex; gap: 18px; width: 100%; max-width: 1000px; }
+    .proof-card {
+      flex: 1; background: var(--bg-card); border: 1px solid var(--border); border-radius: 16px;
+      padding: 28px 24px; border-top: 3px solid var(--blue);
+    }
+    .proof-card.teal { border-top-color: var(--teal); }
+    .proof-card.gold { border-top-color: var(--gold); }
+    .proof-metric { font-size: 40px; font-weight: 900; color: var(--white); letter-spacing: -0.03em; line-height: 1; margin-bottom: 4px; }
+    .proof-co { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 12px; }
+    .proof-text { font-size: 13px; color: rgba(255,255,255,0.65); line-height: 1.65; }
+    .proof-text strong { color: var(--white); }
+
+    /* ── SLIDE 9: CTA ── */
     .cta-box {
-      background: linear-gradient(135deg, rgba(0,161,224,0.12), rgba(0,161,224,0.04));
-      border: 1px solid rgba(0,161,224,0.25); border-radius: 24px;
-      padding: 56px 64px; text-align: center; max-width: 700px;
+      border: 1px solid rgba(0,179,255,0.2); border-radius: 24px;
+      padding: 56px 72px; text-align: center; max-width: 680px;
+      background: linear-gradient(145deg, rgba(2,42,192,0.2), rgba(0,30,91,0.4));
     }
-    .cta-box .big-headline { font-size: clamp(28px, 3.5vw, 48px); }
-    .cta-steps { display: flex; gap: 32px; margin-top: 40px; justify-content: center; }
-    .cta-step { text-align: center; }
-    .cta-step-num { width: 32px; height: 32px; border-radius: 50%; background: rgba(0,161,224,0.15); border: 1px solid rgba(0,161,224,0.3); font-size: 13px; font-weight: 700; color: var(--blue); display: flex; align-items: center; justify-content: center; margin: 0 auto 10px; }
-    .cta-step-label { font-size: 13px; color: rgba(255,255,255,0.7); font-weight: 500; }
-
-    /* Keyboard hint */
-    .key-hint {
-      position: fixed; bottom: 80px; right: 48px;
-      font-size: 11px; color: rgba(255,255,255,0.2); letter-spacing: 0.05em;
-      display: flex; align-items: center; gap: 6px;
+    .cta-steps { display: flex; gap: 40px; justify-content: center; margin-top: 40px; }
+    .cta-step-num {
+      width: 28px; height: 28px; border-radius: 50%; margin: 0 auto 10px;
+      background: rgba(0,179,255,0.12); border: 1px solid rgba(0,179,255,0.3);
+      font-size: 12px; font-weight: 700; color: var(--blue);
+      display: flex; align-items: center; justify-content: center;
     }
-    .key { display: inline-block; padding: 2px 7px; border-radius: 4px; border: 1px solid rgba(255,255,255,0.12); font-size: 10px; }
+    .cta-step-label { font-size: 13px; color: rgba(255,255,255,0.7); font-weight: 600; }
 
     @media (max-width: 768px) {
-      .slide { padding: 40px 32px 80px; }
-      .slide-2col { flex-direction: column; gap: 32px; }
-      .stat-grid { grid-template-columns: 1fr; }
+      .slide { padding: 40px 28px 80px; }
+      .s-2col { flex-direction: column; gap: 28px; }
+      .stat-grid, .outcome-grid, .platform-grid { grid-template-columns: 1fr; }
       .proof-row { flex-direction: column; }
-      .outcome-grid { grid-template-columns: 1fr; }
-      .flow { gap: 12px; }
+      .flow { flex-wrap: wrap; gap: 20px; justify-content: center; }
       .flow-arrow { display: none; }
       .cta-steps { flex-direction: column; gap: 16px; }
       .key-hint { display: none; }
@@ -213,169 +211,182 @@
 </head>
 <body>
 
-<div class="glow"></div>
+<div class="bg-orb bg-orb-1"></div>
+<div class="bg-orb bg-orb-2"></div>
 
 <div class="deck" id="deck">
 
-  <!-- ── SLIDE 1: TITLE ── -->
-  <div class="slide slide-title active" data-slide="0">
+  <!-- ── 1: TITLE ── -->
+  <div class="slide s-title active" data-slide="0">
     <div>
-      <div class="badge"><div class="badge-dot"></div>Salesforce · Next Best Action</div>
-      <div class="big-headline">Stop guessing.<br/><span class="grad">Start deciding.</span></div>
-      <p class="sub" style="margin: 0 auto;">The engine that tells you the right action for every customer — and acts on it automatically, at scale.</p>
+      <div class="title-rule"></div>
+      <div class="eyebrow">Salesforce · Next Best Action</div>
+      <div class="big">Stop guessing.<br/><span class="hl">Start deciding.</span></div>
+      <p class="sub">The engine that determines the right action for every customer — and acts on it automatically, at scale.</p>
     </div>
   </div>
 
-  <!-- ── SLIDE 2: THE PROBLEM ── -->
-  <div class="slide" data-slide="1">
-    <div style="width:100%;max-width:900px;">
+  <!-- ── 2: THE PROBLEM ── -->
+  <div class="slide s-2col" data-slide="1">
+    <div class="col">
       <div class="eyebrow">The Business Reality</div>
-      <div class="big-headline" style="margin-bottom:40px;">Your customers are telling<br/>you everything.<br/><em>You're not listening.</em></div>
-      <p class="sub">Not because the data isn't there. It is. The problem is the gap between <strong style="color:#fff;">knowing</strong> and <strong style="color:#fff;">doing</strong>.</p>
+      <div class="big">Your customers are telling you everything.<br/><span class="hl">You're not listening.</span></div>
+    </div>
+    <div class="col">
+      <p class="sub" style="max-width:100%;margin-bottom:24px;">Not because the data isn't there. It is.</p>
+      <p class="sub" style="max-width:100%;margin-bottom:24px;">The problem is the gap between <strong style="color:#fff;">knowing</strong> and <strong style="color:#fff;">doing</strong> — and it's costing more than most businesses realise.</p>
+      <p class="sub" style="max-width:100%;color:rgba(255,255,255,0.35);">Every signal that fires without an action is a missed moment. And they add up.</p>
     </div>
   </div>
 
-  <!-- ── SLIDE 3: THE STATS ── -->
-  <div class="slide" style="flex-direction:column;" data-slide="2">
-    <div class="eyebrow" style="text-align:center;margin-bottom:32px;">The Cost of Inaction</div>
+  <!-- ── 3: STATS ── -->
+  <div class="slide" style="flex-direction:column;gap:32px;" data-slide="2">
+    <div class="eyebrow" style="text-align:center;">The Cost of Inaction</div>
     <div class="stat-grid">
       <div class="stat-card">
-        <div class="stat-val">&lt;1%</div>
+        <div class="stat-val c-blue">&lt;1%</div>
         <div class="stat-label">Of customer data ever drives a decision</div>
         <div class="stat-desc">The rest sits in systems, unread, while the customer moves on.</div>
       </div>
-      <div class="stat-card">
-        <div class="stat-val">5</div>
+      <div class="stat-card teal">
+        <div class="stat-val c-teal">5</div>
         <div class="stat-label">Meaningful conversations a rep can have per day</div>
         <div class="stat-desc">Most customers get a generic email — or nothing at all.</div>
       </div>
-      <div class="stat-card">
-        <div class="stat-val">76%</div>
+      <div class="stat-card gold">
+        <div class="stat-val c-gold">76%</div>
         <div class="stat-label">Of customers expect personalisation</div>
         <div class="stat-desc">Generic outreach doesn't just underperform — it signals you don't know them.</div>
       </div>
-      <div class="stat-card">
-        <div class="stat-val grad" style="-webkit-text-fill-color:transparent;">Too late</div>
+      <div class="stat-card lblue">
+        <div class="stat-val c-lblue" style="font-size:clamp(28px,3.5vw,44px);">Too late</div>
         <div class="stat-label">When most businesses act on churn signals</div>
         <div class="stat-desc">By the time they call to cancel, the decision is usually already made.</div>
       </div>
     </div>
   </div>
 
-  <!-- ── SLIDE 4: WHAT IS NBA ── -->
-  <div class="slide slide-2col" data-slide="3">
-    <div class="col-left">
+  <!-- ── 4: WHAT IS NBA ── -->
+  <div class="slide s-2col" data-slide="3">
+    <div class="col">
       <div class="eyebrow">The Answer</div>
-      <div class="big-headline">The engine that<br/><span class="grad">connects signal<br/>to action.</span></div>
+      <div class="big">The engine that<br/><span class="hl">connects signal<br/>to action.</span></div>
     </div>
-    <div class="col-right">
-      <p class="sub" style="margin-bottom:28px;">Next Best Action continuously monitors every customer — their signals, their history, their intent — and determines the single best thing to do next. Then does it.</p>
-      <p class="sub">Not for one customer. <strong style="color:#fff;">For all of them. At the same time.</strong></p>
+    <div class="col" style="display:flex;flex-direction:column;gap:20px;">
+      <p class="sub" style="max-width:100%;">Next Best Action continuously monitors every customer — their signals, their history, their intent — and determines the single best thing to do next.</p>
+      <p class="sub" style="max-width:100%;">Then does it. <strong style="color:#fff;">Not for one customer. For all of them. At the same time.</strong></p>
+      <div style="display:flex;gap:12px;margin-top:8px;flex-wrap:wrap;">
+        <div style="padding:6px 14px;border-radius:20px;background:rgba(0,179,255,0.1);border:1px solid rgba(0,179,255,0.25);font-size:11px;font-weight:700;color:var(--blue);letter-spacing:0.05em;">Real-time</div>
+        <div style="padding:6px 14px;border-radius:20px;background:rgba(4,225,203,0.1);border:1px solid rgba(4,225,203,0.25);font-size:11px;font-weight:700;color:var(--teal);letter-spacing:0.05em;">AI-scored</div>
+        <div style="padding:6px 14px;border-radius:20px;background:rgba(144,208,254,0.1);border:1px solid rgba(144,208,254,0.25);font-size:11px;font-weight:700;color:var(--lblue);letter-spacing:0.05em;">Self-improving</div>
+        <div style="padding:6px 14px;border-radius:20px;background:rgba(252,192,3,0.1);border:1px solid rgba(252,192,3,0.25);font-size:11px;font-weight:700;color:var(--gold);letter-spacing:0.05em;">Every customer</div>
+      </div>
     </div>
   </div>
 
-  <!-- ── SLIDE 5: HOW IT WORKS ── -->
-  <div class="slide" style="flex-direction:column;" data-slide="4">
-    <div class="eyebrow" style="text-align:center;margin-bottom:40px;">How It Works</div>
+  <!-- ── 5: HOW IT WORKS ── -->
+  <div class="slide" style="flex-direction:column;gap:36px;" data-slide="4">
+    <div class="eyebrow" style="text-align:center;">How It Works</div>
     <div class="flow">
       <div class="flow-step">
-        <div class="flow-icon">📡</div>
-        <div class="flow-step-label">Signal</div>
+        <div class="flow-icon"><img src="icon-data360.png" alt="Data 360"/></div>
+        <div class="flow-step-num">01</div>
+        <div class="flow-step-title">Signal</div>
         <div class="flow-step-desc">Customer data unified in real time</div>
       </div>
       <div class="flow-arrow">›</div>
       <div class="flow-step">
-        <div class="flow-icon">🧠</div>
-        <div class="flow-step-label">Decide</div>
-        <div class="flow-step-desc">AI scores and ranks every possible action</div>
+        <div class="flow-icon"><img src="icon-platform.png" alt="Platform"/></div>
+        <div class="flow-step-num">02</div>
+        <div class="flow-step-title">Decide</div>
+        <div class="flow-step-desc">AI scores every possible action</div>
       </div>
       <div class="flow-arrow">›</div>
       <div class="flow-step">
-        <div class="flow-icon">🎯</div>
-        <div class="flow-step-label">Select</div>
+        <div class="flow-icon"><img src="icon-salesrevenue.png" alt="Select"/></div>
+        <div class="flow-step-num">03</div>
+        <div class="flow-step-title">Select</div>
         <div class="flow-step-desc">One winning action per customer</div>
       </div>
       <div class="flow-arrow">›</div>
       <div class="flow-step">
-        <div class="flow-icon">💬</div>
-        <div class="flow-step-label">Act</div>
-        <div class="flow-step-desc">Delivered via agent or channel automatically</div>
+        <div class="flow-icon"><img src="icon-marketing.png" alt="Marketing"/></div>
+        <div class="flow-step-num">04</div>
+        <div class="flow-step-title">Act</div>
+        <div class="flow-step-desc">Delivered via agent or channel</div>
       </div>
       <div class="flow-arrow">›</div>
       <div class="flow-step">
-        <div class="flow-icon">🔄</div>
-        <div class="flow-step-label">Learn</div>
-        <div class="flow-step-desc">Outcome feeds back — model gets smarter</div>
+        <div class="flow-icon"><img src="icon-agentforce.png" alt="Agentforce"/></div>
+        <div class="flow-step-num">05</div>
+        <div class="flow-step-title">Learn</div>
+        <div class="flow-step-desc">Outcome feeds back — model improves</div>
       </div>
     </div>
-    <p class="sub" style="margin-top:40px;text-align:center;max-width:600px;">Running continuously. Across every customer. Every signal. Every channel.</p>
+    <p class="sub" style="text-align:center;max-width:560px;">Continuously. Across every customer. Every signal. Every channel.</p>
   </div>
 
-  <!-- ── SLIDE 6: THE STACK ── -->
-  <div class="slide" style="flex-direction:column;" data-slide="5">
-    <div class="eyebrow" style="text-align:center;margin-bottom:32px;">The Platform</div>
-    <div class="big-headline" style="text-align:center;font-size:clamp(28px,3.5vw,48px);margin-bottom:36px;">Six layers. One connected system.</div>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;width:100%;max-width:920px;">
-      <div class="stat-card" style="padding:20px 22px;">
-        <div style="font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--blue);margin-bottom:6px;">01</div>
-        <div style="font-size:14px;font-weight:700;color:#fff;margin-bottom:4px;">Data Cloud</div>
-        <div style="font-size:12px;color:var(--muted);">The signal — unified customer profile, real time</div>
+  <!-- ── 6: THE PLATFORM ── -->
+  <div class="slide" style="flex-direction:column;gap:28px;" data-slide="5">
+    <div style="text-align:center;">
+      <div class="eyebrow">The Platform</div>
+      <div class="big" style="font-size:clamp(26px,3vw,44px);">Six layers. One connected system.</div>
+    </div>
+    <div class="platform-grid">
+      <div class="platform-card">
+        <div class="platform-icon"><img src="icon-data360.png" alt="Data Cloud"/></div>
+        <div><div class="platform-num">01</div><div class="platform-name">Data Cloud</div><div class="platform-desc">The signal — unified customer profile, real time</div></div>
       </div>
-      <div class="stat-card" style="padding:20px 22px;">
-        <div style="font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--blue);margin-bottom:6px;">02</div>
-        <div style="font-size:14px;font-weight:700;color:#fff;margin-bottom:4px;">Einstein Studio + Flow</div>
-        <div style="font-size:12px;color:var(--muted);">The brain — scores and selects the best action</div>
+      <div class="platform-card">
+        <div class="platform-icon"><img src="icon-platform.png" alt="Einstein"/></div>
+        <div><div class="platform-num">02</div><div class="platform-name">Einstein Studio + Flow</div><div class="platform-desc">The brain — scores and selects the best action</div></div>
       </div>
-      <div class="stat-card" style="padding:20px 22px;">
-        <div style="font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--blue);margin-bottom:6px;">03</div>
-        <div style="font-size:14px;font-weight:700;color:#fff;margin-bottom:4px;">Promotions &amp; Offers</div>
-        <div style="font-size:12px;color:var(--muted);">The content — what the customer receives</div>
+      <div class="platform-card">
+        <div class="platform-icon"><img src="icon-salesrevenue.png" alt="Promotions"/></div>
+        <div><div class="platform-num">03</div><div class="platform-name">Promotions &amp; Offers</div><div class="platform-desc">The content — what the customer receives</div></div>
       </div>
-      <div class="stat-card" style="padding:20px 22px;">
-        <div style="font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--blue);margin-bottom:6px;">04</div>
-        <div style="font-size:14px;font-weight:700;color:#fff;margin-bottom:4px;">Personalization</div>
-        <div style="font-size:12px;color:var(--muted);">The timing — right moment on digital surfaces</div>
+      <div class="platform-card">
+        <div class="platform-icon"><img src="icon-marketing.png" alt="Personalization"/></div>
+        <div><div class="platform-num">04</div><div class="platform-name">Personalization</div><div class="platform-desc">The timing — right moment on digital surfaces</div></div>
       </div>
-      <div class="stat-card" style="padding:20px 22px;">
-        <div style="font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--blue);margin-bottom:6px;">05</div>
-        <div style="font-size:14px;font-weight:700;color:#fff;margin-bottom:4px;">Agentforce</div>
-        <div style="font-size:12px;color:var(--muted);">The conversation — two-way, every channel, at scale</div>
+      <div class="platform-card">
+        <div class="platform-icon"><img src="icon-marketing.png" alt="Agentforce Marketing"/></div>
+        <div><div class="platform-num">05</div><div class="platform-name">Agentforce Marketing</div><div class="platform-desc">The conversation — two-way, every channel, at scale</div></div>
       </div>
-      <div class="stat-card" style="padding:20px 22px;">
-        <div style="font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--blue);margin-bottom:6px;">06</div>
-        <div style="font-size:14px;font-weight:700;color:#fff;margin-bottom:4px;">Feedback Loop</div>
-        <div style="font-size:12px;color:var(--muted);">The learning — every outcome improves the model</div>
+      <div class="platform-card">
+        <div class="platform-icon"><img src="icon-agentforce.png" alt="Agentforce"/></div>
+        <div><div class="platform-num">06</div><div class="platform-name">Feedback Loop</div><div class="platform-desc">The learning — every outcome improves the model</div></div>
       </div>
     </div>
   </div>
 
-  <!-- ── SLIDE 7: WHAT IT DELIVERS ── -->
-  <div class="slide" style="flex-direction:column;" data-slide="6">
-    <div class="eyebrow" style="text-align:center;margin-bottom:32px;">What It Delivers</div>
+  <!-- ── 7: WHAT IT DELIVERS ── -->
+  <div class="slide" style="flex-direction:column;gap:28px;" data-slide="6">
+    <div class="eyebrow" style="text-align:center;">What It Delivers</div>
     <div class="outcome-grid">
       <div class="outcome-card">
-        <div class="outcome-icon">⚡</div>
+        <div class="outcome-bullet" style="background:var(--blue);"></div>
         <div>
           <div class="outcome-title">From weeks to seconds</div>
           <div class="outcome-desc">Campaign time-to-market drops from 6 weeks to sub-second. The trigger determines timing — not the campaign calendar.</div>
         </div>
       </div>
       <div class="outcome-card">
-        <div class="outcome-icon">🎯</div>
+        <div class="outcome-bullet" style="background:var(--teal);"></div>
         <div>
           <div class="outcome-title">Every customer, not just the squeaky wheel</div>
           <div class="outcome-desc">The engine works across your entire book simultaneously. No customer falls through the cracks.</div>
         </div>
       </div>
       <div class="outcome-card">
-        <div class="outcome-icon">🤖</div>
+        <div class="outcome-bullet" style="background:var(--gold);"></div>
         <div>
           <div class="outcome-title">Digital labour handles the volume</div>
           <div class="outcome-desc">Agents qualify at scale. Humans close the relationships that matter. Reps spend time where it counts.</div>
         </div>
       </div>
       <div class="outcome-card">
-        <div class="outcome-icon">📈</div>
+        <div class="outcome-bullet" style="background:var(--lblue);"></div>
         <div>
           <div class="outcome-title">Gets smarter with every interaction</div>
           <div class="outcome-desc">Every accept, decline, and ignore trains the model. After 3–4 months it reflects your actual customers — proprietary and defensible.</div>
@@ -384,66 +395,57 @@
     </div>
   </div>
 
-  <!-- ── SLIDE 8: PROOF ── -->
-  <div class="slide" style="flex-direction:column;" data-slide="7">
-    <div class="eyebrow" style="text-align:center;margin-bottom:32px;">Proof at Scale</div>
+  <!-- ── 8: PROOF ── -->
+  <div class="slide" style="flex-direction:column;gap:28px;" data-slide="7">
+    <div class="eyebrow" style="text-align:center;">Proof at Scale</div>
     <div class="proof-row">
       <div class="proof-card">
         <div class="proof-co">ANZ Bank</div>
         <div class="proof-metric">1 month</div>
         <p class="proof-text">Saved per banker per year. <strong>NBA surfaces the right conversation at the right time</strong> — eliminating manual research and prioritisation.</p>
       </div>
-      <div class="proof-card">
+      <div class="proof-card teal">
         <div class="proof-co">FedEx</div>
-        <div class="proof-metric">2000%</div>
+        <div class="proof-metric">2,000%</div>
         <p class="proof-text">ROI on NBA investment. <strong>Personalised outreach at scale</strong> across millions of business customers — each interaction driven by real-time signal.</p>
       </div>
-      <div class="proof-card">
+      <div class="proof-card gold">
         <div class="proof-co">Casey's</div>
         <div class="proof-metric">600M</div>
-        <p class="proof-text">Personalised messages from a unified profile. <strong>12M+ customer records</strong> consolidated into one identity layer — every message driven by a single view.</p>
+        <p class="proof-text">Personalised messages from a unified profile. <strong>12M+ customer records</strong> into one identity layer — every message driven by a single view.</p>
       </div>
     </div>
   </div>
 
-  <!-- ── SLIDE 9: CTA ── -->
-  <div class="slide slide-title" data-slide="8">
+  <!-- ── 9: CTA ── -->
+  <div class="slide" style="flex-direction:column;align-items:center;" data-slide="8">
     <div class="cta-box">
-      <div class="eyebrow" style="margin-bottom:24px;">The Next Step</div>
-      <div class="big-headline">See it running<br/><span class="grad">in your business.</span></div>
-      <p class="sub" style="margin: 20px auto 0;font-size:15px;">The best way to understand NBA is to see it scored against your actual customers, with your actual signals.</p>
+      <div class="eyebrow">The Next Step</div>
+      <div class="big" style="font-size:clamp(28px,3.5vw,48px);">See it running<br/><span class="hl">in your business.</span></div>
+      <p class="sub" style="margin: 16px auto 0;font-size:14px;max-width:480px;">The best way to understand NBA is to see it scored against your actual customers, with your actual signals.</p>
       <div class="cta-steps">
-        <div class="cta-step">
-          <div class="cta-step-num">1</div>
-          <div class="cta-step-label">Map your signals</div>
-        </div>
-        <div class="cta-step">
-          <div class="cta-step-num">2</div>
-          <div class="cta-step-label">Define 3 NBAs</div>
-        </div>
-        <div class="cta-step">
-          <div class="cta-step-num">3</div>
-          <div class="cta-step-label">Run a live demo</div>
-        </div>
+        <div class="cta-step"><div class="cta-step-num">1</div><div class="cta-step-label">Map your signals</div></div>
+        <div class="cta-step"><div class="cta-step-num">2</div><div class="cta-step-label">Define 3 NBAs</div></div>
+        <div class="cta-step"><div class="cta-step-num">3</div><div class="cta-step-label">Run a live demo</div></div>
       </div>
     </div>
   </div>
 
-</div><!-- end deck -->
+</div>
 
-<!-- BOTTOM NAV -->
+<!-- NAV BAR -->
 <nav class="nav-bar">
   <div class="nav-brand"><strong>Salesforce</strong> &nbsp;·&nbsp; Next Best Action</div>
   <div class="nav-controls">
-    <button class="nav-btn" id="btn-prev" onclick="navigate(-1)" disabled>‹</button>
+    <button class="nav-btn" id="btn-prev" onclick="navigate(-1)" disabled>&#8249;</button>
     <div class="nav-counter" id="counter">1 / 9</div>
-    <button class="nav-btn" id="btn-next" onclick="navigate(1)">›</button>
+    <button class="nav-btn" id="btn-next" onclick="navigate(1)">&#8250;</button>
   </div>
   <div class="nav-progress" id="progress"></div>
 </nav>
 
 <div class="key-hint">
-  <span class="key">←</span><span class="key">→</span> navigate &nbsp; <span class="key">Space</span> advance
+  <span class="key">&#8592;</span><span class="key">&#8594;</span> navigate &nbsp;<span class="key">Space</span> advance
 </div>
 
 <script src="gate.js" data-page="NBA Narrative · Slides"></script>
@@ -452,32 +454,28 @@
   var slides   = document.querySelectorAll('.slide');
   var total    = slides.length;
   var current  = 0;
-  var animating = false;
+  var busy     = false;
 
-  /* Build progress dots */
   var prog = document.getElementById('progress');
   for (var i = 0; i < total; i++) {
     var dot = document.createElement('div');
     dot.className = 'progress-dot' + (i === 0 ? ' active' : '');
-    dot.dataset.index = i;
     dot.addEventListener('click', (function(idx){ return function(){ goTo(idx); }; })(i));
     prog.appendChild(dot);
   }
 
   function goTo(idx) {
-    if (animating || idx === current || idx < 0 || idx >= total) return;
-    animating = true;
-
+    if (busy || idx === current || idx < 0 || idx >= total) return;
+    busy = true;
     slides[current].classList.add('exit');
     var prev = current;
-    current = idx;
-
+    current  = idx;
     setTimeout(function() {
       slides[prev].classList.remove('active', 'exit');
       slides[current].classList.add('active');
       updateUI();
-      setTimeout(function() { animating = false; }, 450);
-    }, 280);
+      setTimeout(function() { busy = false; }, 400);
+    }, 240);
   }
 
   function navigate(dir) { goTo(current + dir); }
@@ -493,17 +491,15 @@
 
   document.addEventListener('keydown', function(e) {
     if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') { e.preventDefault(); navigate(1); }
-    if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')  { e.preventDefault(); navigate(-1); }
+    if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')                    { e.preventDefault(); navigate(-1); }
   });
 
-  /* Swipe support */
-  var touchX = null;
-  document.addEventListener('touchstart', function(e) { touchX = e.touches[0].clientX; });
+  var tx = null;
+  document.addEventListener('touchstart', function(e) { tx = e.touches[0].clientX; });
   document.addEventListener('touchend',   function(e) {
-    if (touchX === null) return;
-    var dx = e.changedTouches[0].clientX - touchX;
-    if (Math.abs(dx) > 50) navigate(dx < 0 ? 1 : -1);
-    touchX = null;
+    if (tx === null) return;
+    if (Math.abs(e.changedTouches[0].clientX - tx) > 50) navigate(e.changedTouches[0].clientX - tx < 0 ? 1 : -1);
+    tx = null;
   });
 
   updateUI();
