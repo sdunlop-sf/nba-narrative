@@ -542,6 +542,31 @@
             width: auto;
         }
 
+        /* ── MOMENTS THAT MATTER SLIDE ── */
+        .mtm-slide {
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: flex-start;
+            padding-top: 52px;
+            gap: 16px;
+        }
+
+        .mtm-diagram {
+            width: calc(100% + 0px);
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 0;
+        }
+
+        .mtm-diagram img {
+            max-height: calc(100vh - 280px);
+            max-width: 100%;
+            border-radius: 14px;
+            box-shadow: 0 6px 40px rgba(0, 0, 0, 0.45);
+        }
+
         /* ── MOBILE ── */
         @media (max-width: 900px) {
             .slide { padding: 48px 64px 80px; }
@@ -732,6 +757,19 @@
                     <p class="sub" style="max-width: 100%;">The problem is the gap between <strong style="color: #fff;">knowing</strong> and <strong style="color: #fff;">doing</strong> — and it's costing more than most businesses realise.</p>
                     <p class="sub" style="max-width: 100%;">Every signal that fires without an action is a missed moment. And they add up.</p>
                 </div>
+            </div>
+        </section>
+
+        <!-- Slide 3: Moments That Matter -->
+        <section class="slide mtm-slide">
+            <div style="max-width: 820px;">
+                <div class="accent-line" style="margin-bottom: 16px;"></div>
+                <div class="eyebrow">The Moments That Matter</div>
+                <h2 class="big" style="margin-bottom: 10px;">Every touchpoint fires a signal.<br><span class="hl">Most go unanswered.</span></h2>
+                <p class="sub" style="max-width: 700px;">Across sales, service and marketing your customers are constantly telling you what they need. Agentic Decisioning activates those signals at the exact moment they matter most.</p>
+            </div>
+            <div class="mtm-diagram">
+                <img src="moments.svg" alt="Moments That Matter — signals across Sales, Service and Marketing">
             </div>
         </section>
 
