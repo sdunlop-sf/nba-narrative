@@ -522,7 +522,25 @@
             z-index: 2;
         }
 
-        .star-deco img { display: block; }
+        .star-deco img {
+            display: block;
+            width: 28px;
+            height: 28px;
+            opacity: 0.35;
+        }
+
+        .char {
+            position: absolute;
+            pointer-events: none;
+            user-select: none;
+            z-index: 2;
+        }
+
+        .char img {
+            display: block;
+            height: 180px;
+            width: auto;
+        }
 
         /* ── MOBILE ── */
         @media (max-width: 900px) {
@@ -553,7 +571,7 @@
             .flow { flex-wrap: wrap; gap: 16px; justify-content: center; }
             .flow-arrow { display: none; }
             .flow-step { width: 44%; }
-            .key-hint, .star-deco { display: none; }
+            .key-hint, .star-deco, .char { display: none; }
             .nav-bar { padding: 0 16px; }
             .nav-dots { display: none; }
         }
@@ -580,9 +598,9 @@
                 <h1 class="big">Stop guessing.<br><span class="hl">Start deciding.</span></h1>
                 <p class="sub" style="margin: 0 auto;">The engine that determines the right action for every customer — and acts on it automatically, at scale.</p>
             </div>
-            <div class="star-deco" style="top: 120px; right: 80px;"><img src="sf-star-gold.png" alt=""></div>
-            <div class="star-deco" style="bottom: 160px; right: 120px;"><img src="sf-star-gold.png" alt=""></div>
-            <div class="star-deco" style="bottom: 180px; left: 100px;"><img src="sf-star-gold.png" alt=""></div>
+            <div class="star-deco" style="top: 100px; right: 120px;"><img src="sf-star-gold.png" alt=""></div>
+            <div class="star-deco" style="top: 140px; right: 80px; opacity: 0.2;"><img src="sf-star-gold.png" style="width:16px;height:16px;opacity:1;"></div>
+            <div class="char" style="bottom: 56px; left: 80px;"><img src="char-agent-astro-2.png" alt=""></div>
         </section>
 
         <!-- Slide 2: The Problem -->
@@ -753,7 +771,6 @@
                     </div>
                 </div>
             </div>
-            <div class="star-deco" style="bottom: 80px; right: 100px;"><img src="sf-star-gold.png" alt=""></div>
         </section>
 
         <!-- Slide 7: What It Delivers -->
@@ -817,7 +834,6 @@
                     </div>
                 </div>
             </div>
-            <div class="star-deco" style="top: 100px; left: 80px;"><img src="sf-star-gold.png" alt=""></div>
         </section>
 
         <!-- Slide 9: CTA -->
@@ -841,8 +857,8 @@
                     </div>
                 </div>
             </div>
-            <div class="star-deco" style="top: 80px; left: 120px;"><img src="sf-star-gold.png" alt=""></div>
-            <div class="star-deco" style="bottom: 80px; right: 100px;"><img src="sf-star-gold.png" alt=""></div>
+            <div class="star-deco" style="top: 100px; left: 140px;"><img src="sf-star-gold.png" alt=""></div>
+            <div class="char" style="bottom: 56px; right: 80px;"><img src="char-agent-einstein-1.png" alt=""></div>
         </section>
 
     </div>
