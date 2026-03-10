@@ -249,18 +249,19 @@
       background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12);
       border-radius: 16px; padding: 28px 24px; display: flex; flex-direction: column;
     }
-    .proof-card-company { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.45); margin-bottom: 6px; }
-    .proof-card-tag { font-size: 11px; color: rgba(255,255,255,0.35); margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .proof-card-company { font-size: 13px; font-weight: 800; color: var(--white); margin-bottom: 6px; letter-spacing: -0.01em; }
+    .proof-card-tag { display: inline-block; font-size: 10px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--white); background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.18); border-radius: 20px; padding: 3px 10px; margin-bottom: 16px; }
+    .proof-card-divider { height: 1px; background: rgba(255,255,255,0.08); margin-bottom: 16px; }
     .proof-card-metric { font-size: 36px; font-weight: 800; color: var(--white); letter-spacing: -0.03em; line-height: 1; margin-bottom: 4px; }
-    .proof-card-metric span { font-size: 16px; font-weight: 600; color: rgba(255,255,255,0.5); }
-    .proof-card-metric-label { font-size: 11px; color: rgba(255,255,255,0.4); margin-bottom: 16px; }
+    .proof-card-metric span { font-size: 16px; font-weight: 600; color: rgba(255,255,255,0.6); }
+    .proof-card-metric-label { font-size: 11px; color: rgba(255,255,255,0.5); margin-bottom: 16px; }
     .proof-card-body { font-size: 13px; color: rgba(255,255,255,0.65); line-height: 1.7; flex: 1; }
     .proof-card-body strong { color: rgba(255,255,255,0.9); }
     .proof-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
     .proof-stat { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 20px; text-align: center; }
     .proof-stat-val { font-size: 30px; font-weight: 800; color: var(--white); line-height: 1; margin-bottom: 6px; letter-spacing: -0.02em; }
-    .proof-stat-val span { color: rgba(255,255,255,0.55); }
-    .proof-stat-label { font-size: 11px; color: rgba(255,255,255,0.45); line-height: 1.5; }
+    .proof-stat-val span { color: var(--white); }
+    .proof-stat-label { font-size: 11px; color: rgba(255,255,255,0.6); line-height: 1.5; }
 
     /* ── STRATEGY ── */
     .strategy-card { background: var(--white); border: 1px solid var(--gray-200); border-radius: 16px; padding: 28px; border-top: 3px solid var(--bn-teal); }
@@ -716,7 +717,7 @@
 
         <div class="proof-card">
           <div class="proof-card-company">Williams-Sonoma</div>
-          <div class="proof-card-tag">Salesforce Data Cloud + Einstein</div>
+          <div class="proof-card-tag" style="display:inline-block;margin-bottom:12px;">Salesforce Data Cloud + Einstein</div>
           <div class="proof-card-metric">High-LTV<span> customers</span></div>
           <div class="proof-card-metric-label">Identified via purchase pattern mirroring</div>
           <p class="proof-card-body">Automated replenishment triggers and project-based loyalty recommendations — scoring the next most likely product in the home improvement journey. <strong>The exact motion Bunnings needs: purchase → project inference → replenishment NBA → loyalty mission → repeat.</strong></p>
@@ -724,7 +725,7 @@
 
         <div class="proof-card">
           <div class="proof-card-company">Casey's</div>
-          <div class="proof-card-tag">Data Cloud — 12M+ Profiles Unified</div>
+          <div class="proof-card-tag" style="display:inline-block;margin-bottom:12px;">Data Cloud — 12M+ Profiles Unified</div>
           <div class="proof-card-metric">600M<span> messages</span></div>
           <div class="proof-card-metric-label">Delivered from a single unified profile</div>
           <p class="proof-card-body">Consolidated 12M+ customer profiles into one Data Cloud identity layer — directly comparable to Bunnings' fragmented B2C + PowerPass + in-store challenge. <strong>Real-time segment-triggered NBA across digital and in-store channels.</strong></p>
@@ -732,7 +733,7 @@
 
         <div class="proof-card">
           <div class="proof-card-company">Home Depot</div>
-          <div class="proof-card-tag">Agentforce — Project-Based AI Guidance</div>
+          <div class="proof-card-tag" style="display:inline-block;margin-bottom:12px;">Agentforce — Project-Based AI Guidance</div>
           <div class="proof-card-metric">22M<span> calls/yr</span></div>
           <div class="proof-card-metric-label">Same contact centre scale as Bunnings</div>
           <p class="proof-card-body">Context-aware AI guidance across customer service and in-store support. <strong>Project-based resolution, cross-sell surfaced in call context</strong> — exactly the Contact Centre + NBA play Bunnings is scoping.</p>
