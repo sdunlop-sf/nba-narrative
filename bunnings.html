@@ -45,10 +45,9 @@
 
     /* ── NAV ── */
     nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
       height: 60px;
-      background: var(--bn-teal);
-      border-bottom: 1px solid rgba(255,255,255,0.12);
+      background: var(--white);
+      border-bottom: 1px solid var(--gray-200);
       display: flex; align-items: center;
       padding: 0 48px;
     }
@@ -58,15 +57,15 @@
     }
     .nav-lockup { display: flex; align-items: center; gap: 16px; }
     .nav-logo-sf  { height: 28px; width: auto; display: block; }
-    .nav-divider  { width: 1px; height: 28px; background: rgba(255,255,255,0.25); }
-    .nav-logo-bn  { height: 32px; width: auto; display: block; background: #fff; border-radius: 6px; padding: 3px 8px; }
-    .nav-title    { font-size: 13px; font-weight: 600; color: rgba(255,255,255,0.9); margin-left: 8px; }
-    .nav-tag      { font-size: 11px; color: rgba(255,255,255,0.55); letter-spacing: 0.04em; }
+    .nav-divider  { width: 1px; height: 28px; background: var(--gray-200); }
+    .nav-logo-bn  { height: 32px; width: auto; display: block; }
+    .nav-title    { font-size: 13px; font-weight: 600; color: var(--text); margin-left: 8px; }
+    .nav-tag      { font-size: 11px; color: var(--muted); letter-spacing: 0.04em; }
 
     /* ── HERO ── */
     .hero {
       background: var(--bn-teal);
-      padding: 120px 48px 80px;
+      padding: 60px 48px 80px;
       position: relative; overflow: hidden;
     }
     .hero::after {
