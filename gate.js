@@ -14,7 +14,7 @@
   /* ── CONFIG ─────────────────────────────────────────────────── */
   var C = {
     password:   'SFNBA2026!',
-    workerUrl:  'REPLACE_WITH_WORKER_URL',
+    workerUrl:  'https://summer-mountain-4569.sdunlop.workers.dev',
     web3Key:    'ec698e10-6e6a-4c3a-974e-54a7cd7d4343',
     storeKey:   'nba_visitor_v2',
     authKey:    'nba_auth_v2'
