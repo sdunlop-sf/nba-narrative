@@ -243,21 +243,24 @@
     .ac-action-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--bn-teal); flex-shrink: 0; margin-top: 5px; }
 
     /* ── PROOF ── */
-    .proof-wrap {
-      background: var(--bn-teal);
-      border-radius: 20px; padding: 48px;
-      display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start;
+    .proof-section-wrap { background: var(--bn-teal); border-radius: 20px; padding: 48px; }
+    .proof-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 24px; }
+    .proof-card {
+      background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 16px; padding: 28px 24px; display: flex; flex-direction: column;
     }
-    .proof-eyebrow { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-bottom: 12px; }
-    .proof-quote { font-size: 20px; font-weight: 700; color: var(--white); line-height: 1.4; letter-spacing: -0.01em; margin-bottom: 14px; }
-    .proof-desc { font-size: 13px; color: rgba(255,255,255,0.65); line-height: 1.7; }
-    .proof-desc strong { color: rgba(255,255,255,0.9); }
-    .proof-source { font-size: 11px; color: rgba(255,255,255,0.35); margin-top: 12px; }
-    .proof-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-    .proof-stat { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); border-radius: 12px; padding: 20px; text-align: center; }
-    .proof-stat-val { font-size: 32px; font-weight: 800; color: var(--white); line-height: 1; margin-bottom: 6px; letter-spacing: -0.02em; }
-    .proof-stat-val span { color: rgba(255,255,255,0.6); }
-    .proof-stat-label { font-size: 12px; color: rgba(255,255,255,0.5); line-height: 1.4; }
+    .proof-card-company { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.45); margin-bottom: 6px; }
+    .proof-card-tag { font-size: 11px; color: rgba(255,255,255,0.35); margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .proof-card-metric { font-size: 36px; font-weight: 800; color: var(--white); letter-spacing: -0.03em; line-height: 1; margin-bottom: 4px; }
+    .proof-card-metric span { font-size: 16px; font-weight: 600; color: rgba(255,255,255,0.5); }
+    .proof-card-metric-label { font-size: 11px; color: rgba(255,255,255,0.4); margin-bottom: 16px; }
+    .proof-card-body { font-size: 13px; color: rgba(255,255,255,0.65); line-height: 1.7; flex: 1; }
+    .proof-card-body strong { color: rgba(255,255,255,0.9); }
+    .proof-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+    .proof-stat { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 20px; text-align: center; }
+    .proof-stat-val { font-size: 30px; font-weight: 800; color: var(--white); line-height: 1; margin-bottom: 6px; letter-spacing: -0.02em; }
+    .proof-stat-val span { color: rgba(255,255,255,0.55); }
+    .proof-stat-label { font-size: 11px; color: rgba(255,255,255,0.45); line-height: 1.5; }
 
     /* ── STRATEGY ── */
     .strategy-card { background: var(--white); border: 1px solid var(--gray-200); border-radius: 16px; padding: 28px; border-top: 3px solid var(--bn-teal); }
@@ -322,7 +325,9 @@
       .flow-step { border-right: none; border-bottom: 1px solid var(--gray-200); }
       .flow-step:last-child { border-bottom: none; }
       .flow-detail-grid { grid-template-columns: 1fr; }
-      .proof-wrap { grid-template-columns: 1fr; gap: 32px; padding: 32px 24px; }
+      .proof-section-wrap { padding: 32px 24px; }
+      .proof-cards { grid-template-columns: 1fr; }
+      .proof-stats { grid-template-columns: 1fr 1fr; }
       .closing-inner { padding: 40px 24px; }
       .closing-steps { flex-direction: column; }
       .c-arrow { transform: rotate(90deg); }
@@ -706,20 +711,33 @@
   <div class="section">
     <div class="eyebrow">Platform Proof at Scale</div>
     <div class="section-title" style="margin-bottom:32px;">Retailers running this exact play<br/>on the same platform.</div>
-    <div class="proof-wrap">
-      <div>
-        <div class="proof-eyebrow">Williams-Sonoma · Salesforce Data Cloud + Einstein</div>
-        <div class="proof-quote">"Automated project-based loyalty and high-frequency replenishment triggers — the direct analogue for Bunnings' DIY customer cycle."</div>
-        <p class="proof-desc">Williams-Sonoma uses Salesforce to drive automated replenishment triggers and project-based loyalty recommendations — identifying high-LTV customers through purchase pattern mirroring and scoring the next most likely product in their home improvement journey. <strong>The exact motion Bunnings needs for its 12M customer base: purchase → project inference → replenishment NBA → loyalty mission → repeat.</strong></p>
-        <div class="proof-source">Source: Salesforce Retail Customer Stories — Williams-Sonoma</div>
+    <div class="proof-section-wrap">
+      <div class="proof-cards">
 
-        <div class="proof-eyebrow" style="margin-top:28px;">Casey's · Data Cloud — 12M+ Profiles Unified</div>
-        <p class="proof-desc" style="margin-top:8px;">Casey's consolidated 12M+ customer profiles into a single Data Cloud identity layer — directly comparable to Bunnings' fragmented B2C + PowerPass + in-store profile challenge. The result: <strong>600 million personalised messages delivered</strong> from a unified profile, with real-time segment-triggered NBA across digital and in-store channels.</p>
-        <div class="proof-source">Source: Salesforce Retail Customer Stories — Casey's</div>
+        <div class="proof-card">
+          <div class="proof-card-company">Williams-Sonoma</div>
+          <div class="proof-card-tag">Salesforce Data Cloud + Einstein</div>
+          <div class="proof-card-metric">High-LTV<span> customers</span></div>
+          <div class="proof-card-metric-label">Identified via purchase pattern mirroring</div>
+          <p class="proof-card-body">Automated replenishment triggers and project-based loyalty recommendations — scoring the next most likely product in the home improvement journey. <strong>The exact motion Bunnings needs: purchase → project inference → replenishment NBA → loyalty mission → repeat.</strong></p>
+        </div>
 
-        <div class="proof-eyebrow" style="margin-top:28px;">Home Depot · Agentforce — Project-Based AI Guidance</div>
-        <p class="proof-desc" style="margin-top:8px;">Home Depot — Bunnings' closest global analogue — uses Salesforce for context-aware AI guidance across customer service and in-store support. <strong>Project-based resolution, cross-sell surfaced in call context, and agent productivity improvements</strong> — exactly the Contact Centre + NBA play Bunnings is scoping for 22M annual store calls.</p>
-        <div class="proof-source">Source: Salesforce Retail Customer Stories — Home Depot</div>
+        <div class="proof-card">
+          <div class="proof-card-company">Casey's</div>
+          <div class="proof-card-tag">Data Cloud — 12M+ Profiles Unified</div>
+          <div class="proof-card-metric">600M<span> messages</span></div>
+          <div class="proof-card-metric-label">Delivered from a single unified profile</div>
+          <p class="proof-card-body">Consolidated 12M+ customer profiles into one Data Cloud identity layer — directly comparable to Bunnings' fragmented B2C + PowerPass + in-store challenge. <strong>Real-time segment-triggered NBA across digital and in-store channels.</strong></p>
+        </div>
+
+        <div class="proof-card">
+          <div class="proof-card-company">Home Depot</div>
+          <div class="proof-card-tag">Agentforce — Project-Based AI Guidance</div>
+          <div class="proof-card-metric">22M<span> calls/yr</span></div>
+          <div class="proof-card-metric-label">Same contact centre scale as Bunnings</div>
+          <p class="proof-card-body">Context-aware AI guidance across customer service and in-store support. <strong>Project-based resolution, cross-sell surfaced in call context</strong> — exactly the Contact Centre + NBA play Bunnings is scoping.</p>
+        </div>
+
       </div>
       <div class="proof-stats">
         <div class="proof-stat">
@@ -731,7 +749,7 @@
           <div class="proof-stat-label">Bunnings household prize — trapped cross-sell and replenishment value</div>
         </div>
         <div class="proof-stat">
-          <div class="proof-stat-val">15<span style="font-size:18px;">–20%</span></div>
+          <div class="proof-stat-val">15<span>–20%</span></div>
           <div class="proof-stat-label">Sales uplift through real-time personalisation — modelled at Bunnings</div>
         </div>
         <div class="proof-stat">
