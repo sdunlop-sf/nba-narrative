@@ -364,11 +364,11 @@
       var cbName = 'nba_dash_cb_' + Date.now();
       var script = document.createElement('script');
       var timer  = setTimeout(function () {
-        document.getElementById('last-updated').textContent = 'Failed to load';
+        document.getElementById('last-updated').textContent = 'Timed out — click Refresh to retry';
         delete window[cbName];
         if (script.parentNode) script.parentNode.removeChild(script);
         renderEmpty();
-      }, 10000);
+      }, 20000);
 
       window[cbName] = function (data) {
         clearTimeout(timer);
