@@ -17,7 +17,7 @@
   /* ── CONFIG ─────────────────────────────────────────────────── */
   var C = {
     password:     'SFNBA2026!',
-    githubToken:  'REPLACE_WITH_GITHUB_TOKEN',
+    githubToken:  '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',
     githubRepo:   'sdunlop-sf/nba-narrative',
     githubFile:   'tracking.json',
     web3Key:      'ec698e10-6e6a-4c3a-974e-54a7cd7d4343',
