@@ -549,48 +549,97 @@
 
         @media (max-width: 768px) {
             html, body { overflow-y: auto; height: auto; }
-            .deck { height: auto; min-height: 100vh; }
+            .deck { height: auto; }
+
             .slide {
                 position: relative;
                 opacity: 1 !important;
                 transform: none !important;
                 pointer-events: all;
-                padding: 28px 20px 20px;
-                flex-direction: column;
-                gap: 20px;
                 display: none;
+                flex-direction: column;
+                align-items: center;
+                justify-content: flex-start;
+                padding: 32px 20px 88px;
+                gap: 20px;
+                min-height: 100svh;
             }
             .slide.active { display: flex; }
-            .two-col { flex-direction: column; gap: 20px; }
-            .big { font-size: clamp(28px, 7vw, 42px); }
-            .sub { font-size: 15px; }
-            .stat-grid, .outcome-grid, .platform-grid { grid-template-columns: 1fr; }
-            .proof-row { flex-direction: column; gap: 12px; }
-            .cta-steps { flex-direction: column; gap: 12px; }
-            .cta-wrap { padding: 32px 24px; border-radius: 20px; }
-            .flow { flex-wrap: wrap; gap: 16px; justify-content: center; }
+
+            /* Typography */
+            .eyebrow { font-size: 11px; letter-spacing: 0.14em; margin-bottom: 10px; }
+            .big { font-size: clamp(26px, 7vw, 38px); }
+            .sub { font-size: 15px; line-height: 1.75; }
+            .accent-line { margin-bottom: 12px !important; }
+
+            /* Two-col → stack */
+            .two-col { flex-direction: column; gap: 4px; max-width: 100%; }
+            .two-col .col:first-child { margin-bottom: 8px; }
+
+            /* Stat grid → single col */
+            .stat-grid { grid-template-columns: 1fr; gap: 10px; max-width: 100%; }
+            .stat-card { padding: 18px 16px; }
+            .stat-val { font-size: 36px !important; }
+            .stat-label { font-size: 14px; }
+            .stat-desc { font-size: 12px; }
+
+            /* Flow → 2-col wrap */
+            .flow { flex-wrap: wrap; gap: 14px; justify-content: center; max-width: 100%; }
             .flow-arrow { display: none; }
-            .flow-step { width: 44%; }
-            .key-hint, .star-deco, .char { display: none; }
+            .flow-step { width: calc(50% - 8px); }
+            .flow-icon { width: 52px; height: 52px; }
+            .flow-icon img { width: 30px; height: 30px; }
+            .flow-step-title { font-size: 14px; }
+            .flow-step-desc { font-size: 12px; max-width: none; }
+
+            /* Platform grid → 2 cols */
+            .platform-grid { grid-template-columns: 1fr 1fr; gap: 8px; max-width: 100%; }
+            .platform-card { padding: 12px 10px; gap: 8px; }
+            .platform-icon img { width: 26px; height: 26px; }
+            .platform-name { font-size: 13px; }
+            .platform-desc { font-size: 11px; line-height: 1.45; }
+
+            /* Outcome grid → single col */
+            .outcome-grid { grid-template-columns: 1fr; gap: 10px; max-width: 100%; }
+            .outcome-card { padding: 16px; gap: 12px; }
+            .outcome-title { font-size: 14px; }
+            .outcome-desc { font-size: 13px; }
+
+            /* Proof → single col */
+            .proof-row { flex-direction: column; gap: 10px; max-width: 100%; }
+            .proof-card { padding: 20px 16px; }
+            .proof-metric { font-size: 30px; }
+            .proof-co { font-size: 11px; }
+            .proof-text { font-size: 14px; }
+
+            /* Competitor table → horizontal scroll */
+            .comp-slide { overflow-x: auto; -webkit-overflow-scrolling: touch; max-width: 100%; }
+            .comp-table { min-width: 560px; }
+            .comp-table th { font-size: 10px; padding: 8px 10px; }
+            .comp-table td { font-size: 11px; padding: 10px; }
+            .comp-table td:first-child { width: 100px; font-size: 11px; }
+
+            /* CTA */
+            .cta-wrap { padding: 28px 20px; border-radius: 18px; max-width: 100%; }
+            .cta-steps { flex-direction: row; gap: 20px; flex-wrap: wrap; justify-content: center; margin-top: 24px; }
+            .cta-step-label { font-size: 13px; }
+
+            /* Nav */
             .nav-bar { padding: 0 16px; }
+            .nav-title { display: none; }
+            .nav-divider { display: none; }
             .nav-dots { display: none; }
+            .nav-counter { font-size: 12px; }
+
+            /* Hide decorations */
+            .key-hint, .star-deco, .char { display: none; }
         }
 
         @media (max-width: 480px) {
-            .slide { padding: 20px 16px 16px; }
+            .slide { padding: 24px 16px 84px; }
             .big { font-size: 26px; }
-            .stat-val { font-size: 32px !important; }
-            .flow-step { width: 100%; }
-        }
-
-        /* ── MOMENTS VENN ── */
-        .venn-slide-wrap {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 10px;
-            max-width: 860px;
-            width: 100%;
+            .platform-grid { grid-template-columns: 1fr; }
+            .flow-step { width: calc(50% - 7px); }
         }
 
         /* ── COMPETITOR TABLE ── */
@@ -683,53 +732,6 @@
                     <p class="sub" style="max-width: 100%;">The problem is the gap between <strong style="color: #fff;">knowing</strong> and <strong style="color: #fff;">doing</strong> — and it's costing more than most businesses realise.</p>
                     <p class="sub" style="max-width: 100%;">Every signal that fires without an action is a missed moment. And they add up.</p>
                 </div>
-            </div>
-        </section>
-
-        <!-- Slide 3: Moments That Matter -->
-        <section class="slide">
-            <div class="venn-slide-wrap">
-                <div style="text-align:center;">
-                    <div class="accent-line" style="margin:0 auto 10px;"></div>
-                    <div class="eyebrow">Moments That Matter</div>
-                    <h2 class="big" style="font-size:clamp(18px,2.2vw,28px);margin-bottom:0;">Signals are the moments.<br><span class="hl">Most businesses miss them.</span></h2>
-                </div>
-                <svg viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:780px;height:auto;display:block;">
-
-                    <!-- Three overlapping circles -->
-                    <circle cx="200" cy="248" r="145" fill="rgba(4,225,203,0.08)" stroke="rgba(4,225,203,0.55)" stroke-width="1.5"/>
-                    <circle cx="400" cy="148" r="145" fill="rgba(0,179,255,0.08)" stroke="rgba(0,179,255,0.55)" stroke-width="1.5"/>
-                    <circle cx="600" cy="248" r="145" fill="rgba(252,192,3,0.08)"  stroke="rgba(252,192,3,0.55)"  stroke-width="1.5"/>
-
-                    <!-- Marketing exclusive zone bullets (left) -->
-                    <text x="108" y="222" text-anchor="middle" font-size="12" fill="rgba(255,255,255,0.75)" font-family="Segoe UI,Arial,sans-serif">Awareness &amp; display</text>
-                    <text x="108" y="244" text-anchor="middle" font-size="12" fill="rgba(255,255,255,0.75)" font-family="Segoe UI,Arial,sans-serif">Welcome &amp; onboarding</text>
-                    <text x="108" y="266" text-anchor="middle" font-size="12" fill="rgba(255,255,255,0.75)" font-family="Segoe UI,Arial,sans-serif">Behavioural signals</text>
-
-                    <!-- Service exclusive zone bullets (top) -->
-                    <text x="400" y="36" text-anchor="middle" font-size="12" fill="rgba(255,255,255,0.75)" font-family="Segoe UI,Arial,sans-serif">Case management</text>
-                    <text x="400" y="58" text-anchor="middle" font-size="12" fill="rgba(255,255,255,0.75)" font-family="Segoe UI,Arial,sans-serif">Self-service &amp; community</text>
-                    <text x="400" y="80" text-anchor="middle" font-size="12" fill="rgba(255,255,255,0.75)" font-family="Segoe UI,Arial,sans-serif">NPS &amp; loyalty</text>
-
-                    <!-- Sales exclusive zone bullets (right) -->
-                    <text x="692" y="222" text-anchor="middle" font-size="12" fill="rgba(255,255,255,0.75)" font-family="Segoe UI,Arial,sans-serif">Account signals</text>
-                    <text x="692" y="244" text-anchor="middle" font-size="12" fill="rgba(255,255,255,0.75)" font-family="Segoe UI,Arial,sans-serif">Rep outreach</text>
-                    <text x="692" y="266" text-anchor="middle" font-size="12" fill="rgba(255,255,255,0.75)" font-family="Segoe UI,Arial,sans-serif">Account planning</text>
-
-                    <!-- M∩Sv overlap: NBA fires badge -->
-                    <rect x="254" y="182" width="92" height="22" rx="11" fill="rgba(0,179,255,0.15)" stroke="rgba(0,179,255,0.45)" stroke-width="1"/>
-                    <text x="300" y="197" text-anchor="middle" font-size="9" font-weight="bold" fill="rgba(26,185,255,1)" font-family="Segoe UI,Arial,sans-serif" letter-spacing="1">NBA FIRES</text>
-
-                    <!-- Sv∩Sa overlap: NBA fires badge -->
-                    <rect x="454" y="182" width="92" height="22" rx="11" fill="rgba(0,179,255,0.15)" stroke="rgba(0,179,255,0.45)" stroke-width="1"/>
-                    <text x="500" y="197" text-anchor="middle" font-size="9" font-weight="bold" fill="rgba(26,185,255,1)" font-family="Segoe UI,Arial,sans-serif" letter-spacing="1">NBA FIRES</text>
-
-                    <!-- Circle labels -->
-                    <text x="118" y="390" text-anchor="middle" font-size="10" font-weight="bold" fill="rgba(4,225,203,0.9)"  font-family="Segoe UI,Arial,sans-serif" letter-spacing="2">MARKETING MOMENTS</text>
-                    <text x="400" y="307" text-anchor="middle" font-size="10" font-weight="bold" fill="rgba(0,179,255,0.9)" font-family="Segoe UI,Arial,sans-serif" letter-spacing="2">SERVICE MOMENTS</text>
-                    <text x="682" y="390" text-anchor="middle" font-size="10" font-weight="bold" fill="rgba(252,192,3,0.9)"  font-family="Segoe UI,Arial,sans-serif" letter-spacing="2">SALES MOMENTS</text>
-
-                </svg>
             </div>
         </section>
 
