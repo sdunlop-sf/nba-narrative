@@ -543,16 +543,20 @@
         }
 
         /* ── MOMENTS THAT MATTER SLIDE ── */
+        .slide.mtm-slide {
+            padding-left: 60px;
+            padding-right: 40px;
+        }
+
         .mtm-row {
             display: flex;
             align-items: center;
-            gap: 24px;
+            gap: 8px;
             width: 100%;
-            max-width: 1200px;
         }
 
         .mtm-text {
-            flex: 0 0 320px;
+            flex: 0 0 300px;
             display: flex;
             flex-direction: column;
         }
@@ -567,7 +571,7 @@
 
         .mtm-diagram img {
             width: 100%;
-            max-height: calc(100vh - 120px);
+            max-height: calc(100vh - 100px);
             object-fit: contain;
         }
 
@@ -770,7 +774,7 @@
         </section>
 
         <!-- Slide 3: Moments That Matter -->
-        <section class="slide">
+        <section class="slide mtm-slide">
             <div class="mtm-row">
                 <div class="mtm-text">
                     <div class="accent-line" style="margin-bottom: 16px;"></div>
