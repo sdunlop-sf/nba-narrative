@@ -546,14 +546,19 @@
         .mtm-row {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 56px;
+            max-width: 1060px;
             width: 100%;
         }
 
         .mtm-text {
-            flex: 0 0 380px;
+            flex: 0 0 340px;
             display: flex;
             flex-direction: column;
+        }
+
+        .mtm-text .big {
+            font-size: clamp(26px, 2.6vw, 38px);
         }
 
         .mtm-diagram {
@@ -562,12 +567,11 @@
             align-items: center;
             justify-content: center;
             min-width: 0;
-            max-width: 580px;
         }
 
         .mtm-diagram img {
             width: 100%;
-            max-height: calc(100vh - 100px);
+            max-height: calc(100vh - 140px);
             object-fit: contain;
         }
 
