@@ -49,8 +49,12 @@ export default {
       if (getRes.ok) {
         const file = await getRes.json();
         sha = file.sha;
-        try { rows = JSON.parse(atob(file.content.replace(/\s/g, ''))); }
-        catch (e) { rows = []; }
+        try {
+          const binary = atob(file.content.replace(/\s/g, ''));
+          const bytes  = new Uint8Array(binary.length);
+          for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+          rows = JSON.parse(new TextDecoder().decode(bytes));
+        } catch (e) { rows = []; }
       }
 
       rows.push(data);
