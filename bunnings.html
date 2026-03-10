@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Salesforce × Bunnings · Intelligent Decisioning</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      /* Salesforce */
+      --sf-navy:   #032D60;
+      --sf-blue:   #0176D3;
+      --sf-blue-l: #0D9DDA;
+      /* Bunnings */
+      --bn-teal:   #0D5257;
+      --bn-teal-l: #1A7A82;
+      --bn-red:    #DA291C;
+      /* Neutrals */
+      --white:     #FFFFFF;
+      --off-white: #F5F8FA;
+      --gray-100:  #EEF2F7;
+      --gray-200:  #D8E0EA;
+      --gray-500:  #7A8A9A;
+      --gray-700:  #3E4D5C;
+      --text:      #032D60;
+      --body:      #3E4D5C;
+      --muted:     #7A8A9A;
+      --green:     #2E7D32;
+      --amber:     #E65100;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--white);
+      color: var(--body);
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      height: 60px;
+      background: var(--white);
+      border-bottom: 1px solid var(--gray-200);
+      display: flex; align-items: center;
+      padding: 0 48px;
+    }
+    .nav-inner {
+      width: 100%; max-width: 1200px; margin: 0 auto;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-lockup { display: flex; align-items: center; gap: 16px; }
+    .nav-logo-sf  { height: 28px; width: auto; display: block; }
+    .nav-divider  { width: 1px; height: 28px; background: var(--gray-200); }
+    .nav-logo-bn  { height: 32px; width: auto; display: block; }
+    .nav-title    { font-size: 13px; font-weight: 600; color: var(--text); margin-left: 8px; }
+    .nav-tag      { font-size: 11px; color: var(--muted); letter-spacing: 0.04em; }
+
+    /* ── HERO ── */
+    .hero {
+      background: var(--sf-navy);
+      padding: 120px 48px 80px;
+      position: relative; overflow: hidden;
+    }
+    .hero::after {
+      content: ''; position: absolute; bottom: -2px; left: 0; right: 0;
+      height: 60px; background: var(--white);
+      clip-path: ellipse(55% 100% at 50% 100%);
+    }
+    .hero-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+    }
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--sf-blue-l); margin-bottom: 20px;
+    }
+    .hero-eyebrow::before {
+      content: ''; width: 20px; height: 2px; background: var(--bn-red); border-radius: 2px;
+    }
+    .hero h1 {
+      font-size: clamp(32px, 3.5vw, 48px);
+      font-weight: 800; line-height: 1.1; letter-spacing: -0.025em;
+      color: var(--white); margin-bottom: 20px;
+    }
+    .hero h1 em { font-style: normal; color: var(--sf-blue-l); }
+    .hero-sub {
+      font-size: 16px; color: rgba(255,255,255,0.65);
+      line-height: 1.7; margin-bottom: 36px;
+    }
+    .hero-quote {
+      border-left: 3px solid var(--bn-teal);
+      padding: 12px 16px;
+      background: rgba(255,255,255,0.05);
+      border-radius: 0 8px 8px 0;
+    }
+    .hero-quote p { font-size: 13px; color: rgba(255,255,255,0.7); font-style: italic; line-height: 1.6; }
+    .hero-quote cite { font-size: 11px; color: rgba(255,255,255,0.4); margin-top: 6px; display: block; font-style: normal; letter-spacing: 0.03em; }
+    .hero-kpi { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .hero-kpi-card {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 12px; padding: 20px;
+    }
+    .hkc-val { font-size: 28px; font-weight: 800; color: var(--white); line-height: 1; margin-bottom: 6px; letter-spacing: -0.02em; }
+    .hkc-val span { color: var(--sf-blue-l); }
+    .hkc-label { font-size: 12px; color: rgba(255,255,255,0.5); line-height: 1.4; }
+
+    /* ── SECTIONS ── */
+    .section { max-width: 1200px; margin: 0 auto; padding: 80px 48px; }
+    .section-bg { background: var(--off-white); }
+    .eyebrow {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--sf-blue); margin-bottom: 10px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .eyebrow-teal { color: var(--bn-teal); }
+    .section-title {
+      font-size: clamp(26px, 3vw, 38px);
+      font-weight: 800; color: var(--text);
+      letter-spacing: -0.025em; line-height: 1.15; margin-bottom: 12px;
+    }
+    .section-sub { font-size: 16px; color: var(--muted); max-width: 600px; line-height: 1.7; margin-bottom: 48px; }
+    hr.divider { border: none; border-top: 1px solid var(--gray-200); }
+
+    /* ── CARDS ── */
+    .card-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .card-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .card-grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+    .card {
+      background: var(--white); border: 1px solid var(--gray-200);
+      border-radius: 16px; padding: 28px; transition: box-shadow 0.2s;
+    }
+    .card:hover { box-shadow: 0 4px 24px rgba(3,45,96,0.08); }
+    .card-icon { font-size: 28px; margin-bottom: 14px; }
+    .card-title { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+    .card-body { font-size: 13px; color: var(--muted); line-height: 1.7; }
+    .card-body strong { color: var(--body); }
+    .card-accent-teal { border-top: 3px solid var(--bn-teal); }
+    .card-accent-red  { border-top: 3px solid var(--bn-red); }
+    .card-accent-blue { border-top: 3px solid var(--sf-blue); }
+
+    /* ── COMPARE ── */
+    .compare-wrap { border: 1px solid var(--gray-200); border-radius: 16px; overflow: hidden; background: var(--white); }
+    .compare-head { display: grid; grid-template-columns: 1fr 1fr; }
+    .compare-head-col {
+      padding: 14px 24px;
+      font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+      border-bottom: 1px solid var(--gray-200);
+    }
+    .compare-head-col.today { background: var(--gray-100); color: var(--muted); border-right: 1px solid var(--gray-200); }
+    .compare-head-col.tomorrow { background: rgba(1,118,211,0.06); color: var(--sf-blue); }
+    .compare-row { display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1px solid var(--gray-100); }
+    .compare-row:last-child { border-bottom: none; }
+    .compare-cell { padding: 18px 24px; font-size: 13px; line-height: 1.6; }
+    .compare-cell.today { color: var(--muted); background: var(--off-white); border-right: 1px solid var(--gray-200); }
+    .compare-cell.today strong { color: var(--gray-700); }
+    .compare-cell.tomorrow { color: var(--body); background: rgba(1,118,211,0.02); }
+    .compare-cell.tomorrow strong { color: var(--sf-navy); }
+
+    /* ── STACK ── */
+    .stack-wrap { border: 1px solid var(--gray-200); border-radius: 16px; overflow: hidden; background: var(--white); }
+    .stack-header {
+      background: var(--bn-teal);
+      padding: 18px 28px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .stack-header-label { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255,255,255,0.5); }
+    .stack-header-title { font-size: 15px; font-weight: 700; color: var(--white); }
+    .stack-layer { display: grid; grid-template-columns: 200px 1fr; border-bottom: 1px solid var(--gray-100); }
+    .stack-layer:last-child { border-bottom: none; }
+    .sl-left {
+      padding: 20px 24px; border-right: 1px solid var(--gray-200);
+      display: flex; flex-direction: column; justify-content: center; gap: 3px;
+      background: var(--off-white);
+    }
+    .sl-num { font-size: 10px; font-weight: 700; letter-spacing: 0.08em; margin-bottom: 4px; }
+    .sl-product { font-size: 13px; font-weight: 700; color: var(--text); }
+    .sl-product-sub { font-size: 11px; color: var(--muted); }
+    .sl-right { padding: 20px 28px; font-size: 13px; color: var(--body); line-height: 1.7; }
+    .sl-right strong { color: var(--text); }
+
+    .sl-layer-01 { border-left: 4px solid #4f46e5; } .sl-layer-01 .sl-num { color: #4f46e5; }
+    .sl-layer-02 { border-left: 4px solid var(--sf-blue); } .sl-layer-02 .sl-num { color: var(--sf-blue); }
+    .sl-layer-03 { border-left: 4px solid var(--bn-teal); } .sl-layer-03 .sl-num { color: var(--bn-teal); }
+    .sl-layer-04 { border-left: 4px solid var(--bn-red); } .sl-layer-04 .sl-num { color: var(--bn-red); }
+    .sl-layer-05 { border-left: 4px solid #E65100; } .sl-layer-05 .sl-num { color: #E65100; }
+    .sl-layer-06 { border-left: 4px solid var(--sf-blue-l); } .sl-layer-06 .sl-num { color: var(--sf-blue-l); }
+    .sl-layer-07 { border-left: 4px solid #2E7D32; } .sl-layer-07 .sl-num { color: #2E7D32; }
+
+    /* ── DECISIONING FLOW ── */
+    .flow-strip {
+      display: flex; align-items: stretch;
+      border: 1px solid var(--gray-200); border-radius: 16px; overflow: hidden;
+      margin-bottom: 40px;
+    }
+    .flow-step {
+      flex: 1; padding: 24px 20px;
+      border-right: 1px solid var(--gray-200);
+      background: var(--white);
+    }
+    .flow-step:last-child { border-right: none; }
+    .flow-step-num { font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--sf-blue); margin-bottom: 8px; }
+    .flow-step-title { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+    .flow-step-body { font-size: 12px; color: var(--muted); line-height: 1.6; }
+    .flow-step.highlight { background: rgba(13,82,87,0.04); }
+    .flow-detail-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+    .flow-detail-card { background: var(--off-white); border: 1px solid var(--gray-200); border-radius: 12px; padding: 20px; }
+    .fdc-label { font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--bn-teal); margin-bottom: 8px; }
+    .fdc-title { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+    .fdc-body { font-size: 12px; color: var(--muted); line-height: 1.6; }
+
+    /* ── BEACHHEAD ── */
+    .beach-card { background: var(--white); border: 1px solid var(--gray-200); border-radius: 16px; overflow: hidden; }
+    .bc-head { padding: 24px 28px; border-bottom: 1px solid var(--gray-200); display: flex; align-items: center; gap: 16px; }
+    .bc-icon { width: 48px; height: 48px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
+    .bc-meta { flex: 1; }
+    .bc-title { font-size: 17px; font-weight: 800; color: var(--text); margin-bottom: 3px; }
+    .bc-sub { font-size: 12px; color: var(--muted); }
+    .bc-badge { font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 4px 10px; border-radius: 20px; white-space: nowrap; }
+    .bc-body { padding: 0; }
+    .bc-use-case { display: flex; gap: 16px; padding: 18px 28px; border-bottom: 1px solid var(--gray-100); }
+    .bc-use-case:last-child { border-bottom: none; }
+    .bc-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; margin-top: 6px; }
+    .bc-uc-title { font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 3px; }
+    .bc-uc-desc { font-size: 12px; color: var(--muted); line-height: 1.6; }
+
+    /* ── DIGITAL LABOUR ── */
+    .agent-card { background: var(--white); border: 1px solid var(--gray-200); border-radius: 16px; padding: 28px; }
+    .ac-header { display: flex; align-items: center; gap: 14px; margin-bottom: 20px; }
+    .ac-icon { width: 44px; height: 44px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 20px; background: rgba(13,82,87,0.08); flex-shrink: 0; }
+    .ac-title { font-size: 15px; font-weight: 800; color: var(--text); }
+    .ac-role { font-size: 12px; color: var(--muted); margin-top: 2px; }
+    .ac-actions { display: flex; flex-direction: column; gap: 8px; }
+    .ac-action { display: flex; align-items: flex-start; gap: 10px; padding: 10px 14px; background: var(--off-white); border-radius: 8px; font-size: 12px; color: var(--body); line-height: 1.5; }
+    .ac-action-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--bn-teal); flex-shrink: 0; margin-top: 5px; }
+
+    /* ── PROOF ── */
+    .proof-wrap {
+      background: var(--bn-teal);
+      border-radius: 20px; padding: 48px;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start;
+    }
+    .proof-eyebrow { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-bottom: 12px; }
+    .proof-quote { font-size: 20px; font-weight: 700; color: var(--white); line-height: 1.4; letter-spacing: -0.01em; margin-bottom: 14px; }
+    .proof-desc { font-size: 13px; color: rgba(255,255,255,0.65); line-height: 1.7; }
+    .proof-desc strong { color: rgba(255,255,255,0.9); }
+    .proof-source { font-size: 11px; color: rgba(255,255,255,0.35); margin-top: 12px; }
+    .proof-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .proof-stat { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12); border-radius: 12px; padding: 20px; text-align: center; }
+    .proof-stat-val { font-size: 32px; font-weight: 800; color: var(--white); line-height: 1; margin-bottom: 6px; letter-spacing: -0.02em; }
+    .proof-stat-val span { color: rgba(255,255,255,0.6); }
+    .proof-stat-label { font-size: 12px; color: rgba(255,255,255,0.5); line-height: 1.4; }
+
+    /* ── STRATEGY ── */
+    .strategy-card { background: var(--white); border: 1px solid var(--gray-200); border-radius: 16px; padding: 28px; border-top: 3px solid var(--bn-teal); }
+    .strat-pillar { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--bn-teal); margin-bottom: 8px; }
+    .strat-title { font-size: 15px; font-weight: 700; color: var(--text); margin-bottom: 10px; }
+    .strat-body { font-size: 13px; color: var(--muted); line-height: 1.7; }
+    .strat-body strong { color: var(--body); }
+
+    /* ── PHASE ── */
+    .phase-card { background: var(--white); border: 1px solid var(--gray-200); border-radius: 16px; overflow: hidden; }
+    .phase-head { padding: 20px 24px; border-bottom: 1px solid var(--gray-200); display: flex; align-items: center; gap: 12px; }
+    .phase-badge { font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 4px 10px; border-radius: 20px; }
+    .phase-title { font-size: 16px; font-weight: 800; color: var(--text); }
+    .phase-timeline { font-size: 11px; color: var(--muted); margin-top: 2px; }
+    .phase-body { padding: 8px 0; }
+    .phase-item { display: flex; align-items: flex-start; gap: 12px; padding: 12px 24px; border-bottom: 1px solid var(--gray-100); font-size: 13px; line-height: 1.5; }
+    .phase-item:last-child { border-bottom: none; }
+    .phase-item-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; margin-top: 6px; }
+    .phase-item-title { font-weight: 600; color: var(--text); margin-bottom: 2px; }
+    .phase-item-desc { color: var(--muted); }
+
+    /* ── CLOSING ── */
+    .closing-inner {
+      background: linear-gradient(135deg, var(--bn-teal) 0%, #0a3d41 100%);
+      border-radius: 20px; padding: 64px 60px; text-align: center;
+      position: relative; overflow: hidden;
+    }
+    .closing-inner::before {
+      content: ''; position: absolute; top: -80px; right: -80px;
+      width: 320px; height: 320px; border-radius: 50%;
+      background: rgba(218,41,28,0.1);
+    }
+    .closing-inner h2 {
+      font-size: clamp(24px, 3vw, 36px); font-weight: 800; color: var(--white);
+      letter-spacing: -0.025em; line-height: 1.2; margin-bottom: 14px; position: relative;
+    }
+    .closing-inner p { font-size: 16px; color: rgba(255,255,255,0.6); max-width: 520px; margin: 0 auto 40px; line-height: 1.7; position: relative; }
+    .closing-steps { display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap; position: relative; }
+    .c-step { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15); border-radius: 10px; padding: 12px 20px; font-size: 13px; color: var(--white); font-weight: 600; }
+    .c-arrow { color: rgba(255,255,255,0.3); font-size: 16px; }
+    .c-step.primary { background: var(--bn-red); border-color: var(--bn-red); }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 900px) {
+      nav { padding: 0 24px; }
+      .nav-title { display: none; }
+      .hero { padding: 100px 24px 80px; }
+      .hero-inner { grid-template-columns: 1fr; gap: 40px; }
+      .hero-kpi { grid-template-columns: 1fr 1fr; }
+      .section { padding: 60px 24px; }
+      .card-grid-2 { grid-template-columns: 1fr; }
+      .card-grid-3 { grid-template-columns: 1fr; }
+      .card-grid-4 { grid-template-columns: 1fr 1fr; }
+      .compare-head { grid-template-columns: 1fr; }
+      .compare-head-col.today { display: none; }
+      .compare-row { grid-template-columns: 1fr; }
+      .compare-cell.today { display: none; }
+      .stack-layer { grid-template-columns: 1fr; }
+      .sl-left { border-right: none; border-bottom: 1px solid var(--gray-200); flex-direction: row; align-items: center; gap: 10px; }
+      .sl-num { display: none; }
+      .flow-strip { flex-direction: column; }
+      .flow-step { border-right: none; border-bottom: 1px solid var(--gray-200); }
+      .flow-step:last-child { border-bottom: none; }
+      .flow-detail-grid { grid-template-columns: 1fr; }
+      .proof-wrap { grid-template-columns: 1fr; gap: 32px; padding: 32px 24px; }
+      .closing-inner { padding: 40px 24px; }
+      .closing-steps { flex-direction: column; }
+      .c-arrow { transform: rotate(90deg); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-inner">
+      <div class="nav-lockup">
+        <img src="sf-logo.jpeg" class="nav-logo-sf" alt="Salesforce" />
+        <div class="nav-divider"></div>
+        <img src="bunnings-logo.png" class="nav-logo-bn" alt="Bunnings Warehouse" />
+        <div class="nav-title">Intelligent Decisioning · Strategic Proposition</div>
+      </div>
+      <div class="nav-tag">Confidential · For Discussion · 2026</div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-inner">
+      <div>
+        <div class="hero-eyebrow">Decisioning · Digital Labour · Agentic AI</div>
+        <h1>Intelligent decisioning.<br/><em>Unlimited digital labour.</em></h1>
+        <p class="hero-sub">Bunnings has 12 million known customers, a $9.3M Salesforce platform, and a mandate to be "Accelerated by data." What's missing is the engine that connects them — one that determines the right action, for the right customer, in real time, and acts on it through agents at scale.</p>
+        <div class="hero-quote">
+          <p>"At Bunnings, we envision an ecosystem that seamlessly serves suppliers, team members, and customers on a unified platform. By leveraging AI to automate the routine and amplify the team member, we are committed to maximising our investment value."</p>
+          <cite>Bunnings × Salesforce Joint Vision Statement</cite>
+        </div>
+      </div>
+      <div class="hero-kpi">
+        <div class="hero-kpi-card">
+          <div class="hkc-val"><span>$4M</span></div>
+          <div class="hkc-label">Household prize from trapped cross-sell and replenishment cycles</div>
+        </div>
+        <div class="hero-kpi-card">
+          <div class="hkc-val">6<span style="font-size:16px;color:rgba(255,255,255,0.5);"> wks</span></div>
+          <div class="hkc-label">Current time to deploy personalised campaigns — NBA makes it real-time</div>
+        </div>
+        <div class="hero-kpi-card">
+          <div class="hkc-val">12<span style="font-size:16px;color:rgba(255,255,255,0.5);">M</span></div>
+          <div class="hkc-label">Known customer profiles — B2C, PowerPass, in-store — none unified</div>
+        </div>
+        <div class="hero-kpi-card">
+          <div class="hkc-val">Jul<span style="font-size:16px;color:rgba(255,255,255,0.5);"> '26</span></div>
+          <div class="hkc-label">PPNG Loyalty launch — the forcing function for real-time data</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WHY NOW -->
+  <div class="section" style="padding-top:100px;">
+    <div class="eyebrow">Why Now</div>
+    <div class="section-title">Every condition is aligned.<br/>The platform is already in place.</div>
+    <div class="section-sub">Bunnings has been building toward this moment. Data Cloud is deployed. Personalisation is in pilot. Loyalty is live in July. The decisioning layer is the missing piece that makes all of it compounding.</div>
+    <div class="card-grid-2">
+      <div class="card card-accent-teal">
+        <div class="card-icon">🎯</div>
+        <div class="card-title">PPNG Loyalty launches July 2026 — and it needs real-time data</div>
+        <div class="card-body">The PowerPass Next Generation Loyalty program is the biggest transformation in Bunnings' customer strategy. <strong>"Spend and Get" missions require real-time event-driven triggers</strong> — not batch campaign cycles that take 6 weeks to deploy. The platform must be ready at launch.</div>
+      </div>
+      <div class="card card-accent-red">
+        <div class="card-icon">🔍</div>
+        <div class="card-title">Deloitte running 5-use-case Personalisation discovery right now</div>
+        <div class="card-body">A 4-week discovery engagement is underway with Deloitte scoping 5 personalisation use cases. <strong>This is the window to position the full decisioning architecture</strong> — not just a point solution for each use case. The platform decision is being made now.</div>
+      </div>
+      <div class="card card-accent-blue">
+        <div class="card-icon">☁️</div>
+        <div class="card-title">Data Cloud and Personalisation already deployed — underutilised</div>
+        <div class="card-body">Data Cloud is live with an Identity Hub in progress. Marketing Cloud Personalisation is in pilot. <strong>The foundation exists — what's missing is the decisioning engine</strong> that activates these investments into real-time NBA at scale.</div>
+      </div>
+      <div class="card card-accent-teal">
+        <div class="card-icon">🤖</div>
+        <div class="card-title">Agentforce in-flight for Contact Centre — NBA is the natural extension</div>
+        <div class="card-body">Agentforce Voice is scoped for Bunnings' 22M annual store calls. <strong>An agent without a unified customer profile is a script reader.</strong> The NBA decisioning layer is what grounds every agent interaction in real customer context — purchase history, project phase, loyalty tier.</div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider" />
+
+  <!-- THE GAP -->
+  <div class="section-bg">
+    <div class="section">
+      <div class="eyebrow eyebrow-teal">The Gap</div>
+      <div class="section-title">12 million customers.<br/>Zero unified decisions.</div>
+      <div class="section-sub">Bunnings has data across B2C, PowerPass B2B, and in-store transactions — but it lives in silos. No single profile. No real-time triggers. No Next Best Action. The data exists. The engine to use it doesn't.</div>
+      <div class="compare-wrap">
+        <div class="compare-head">
+          <div class="compare-head-col today">Today — siloed, broadcast, reactive</div>
+          <div class="compare-head-col tomorrow">With unified NBA decisioning</div>
+        </div>
+        <div class="compare-row">
+          <div class="compare-cell today"><strong>12M customer profiles fragmented</strong> across B2C (consumer), PowerPass (trade), and in-store POS systems. No single view of who the customer is, what they've bought, and what project they're working on.</div>
+          <div class="compare-cell tomorrow"><strong>One Living Profile per customer</strong> in Data Cloud — B2C + PowerPass + in-store unified in real time. Purchase history, project phase (Inspiration to Installation), loyalty tier, and seasonal signals all in one place.</div>
+        </div>
+        <div class="compare-row">
+          <div class="compare-cell today"><strong>~6-week campaign cycle</strong> — personalisation is manual and broadcast-driven. The same offer goes to broad segments on a schedule. By the time it deploys, the customer's context has changed.</div>
+          <div class="compare-cell tomorrow"><strong>Real-time signal-to-action.</strong> Customer completes a tile purchase → replenishment trigger fires → grout and adhesive NBA surfaces in-app within minutes. Not weeks. The trigger determines the timing, not the campaign calendar.</div>
+        </div>
+        <div class="compare-row">
+          <div class="compare-cell today"><strong>Agentforce Voice without context.</strong> 22M annual store calls handled by agents with no access to the customer's purchase history, active project, loyalty status, or service history. Each call starts from zero.</div>
+          <div class="compare-cell tomorrow"><strong>Every agent interaction grounded in the Individual profile.</strong> Agent knows what the customer bought, what project they're on, when they last called, and what NBA the decisioning engine has pre-ranked for this interaction.</div>
+        </div>
+        <div class="compare-row">
+          <div class="compare-cell today"><strong>No closed-loop attribution.</strong> Digital ads, in-store transactions, and loyalty missions are siloed. No verified connection between a digital campaign and a physical till transaction. Marketing is flying blind on ROAS.</div>
+          <div class="compare-cell tomorrow"><strong>Data Cloud as the identity bridge.</strong> Ad impression → loyalty profile match → in-store POS transaction → closed-loop attribution. Retail Media becomes a verified revenue engine, not a best-guess estimate.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider" />
+
+  <!-- STACK -->
+  <div class="section">
+    <div class="eyebrow">The Connected Stack</div>
+    <div class="section-title">Seven layers. One decisioning engine.<br/>Built on what Bunnings already owns.</div>
+    <div class="section-sub">No new vendors. No greenfield build. Every layer amplifies the Salesforce investment already in place — and the Data Cloud foundation already being created.</div>
+    <div class="stack-wrap">
+      <div class="stack-header">
+        <div class="stack-header-label">Seven layers</div>
+        <div class="stack-header-title">One decisioning engine across B2C, PowerPass, Contact Centre, and Retail Media</div>
+      </div>
+      <div class="stack-layer sl-layer-01">
+        <div class="sl-left">
+          <div class="sl-num">01</div>
+          <div class="sl-product">Data Cloud</div>
+          <div class="sl-product-sub">Unified Living Profile</div>
+        </div>
+        <div class="sl-right">Unifies B2C consumer data, PowerPass trade profiles, in-store POS transactions, digital behaviour, and loyalty mission progress into one real-time profile per customer. <strong>Every signal — a till transaction, a browsing session, a Loyalty milestone hit, a project completion — updates the profile the moment it fires.</strong> This is the Individual identity map the entire decisioning stack reads at runtime.</div>
+      </div>
+      <div class="stack-layer sl-layer-02">
+        <div class="sl-left">
+          <div class="sl-num">02</div>
+          <div class="sl-product">Einstein Studio + Flow</div>
+          <div class="sl-product-sub">NBA Scoring Engine</div>
+        </div>
+        <div class="sl-right">Trains on Bunnings' own conversion history — which product recommendations led to purchases, which replenishment triggers converted, which Loyalty missions drove repeat visits. Scores each available NBA against the live customer profile and <strong>returns a ranked shortlist with propensity scores.</strong> Flow orchestrates the eligibility → score → arbitrate → execute loop automatically.</div>
+      </div>
+      <div class="stack-layer sl-layer-03">
+        <div class="sl-left">
+          <div class="sl-num">03</div>
+          <div class="sl-product">Salesforce Personalisation</div>
+          <div class="sl-product-sub">Real-Time Decision Engine</div>
+        </div>
+        <div class="sl-right">Einstein Recipes drive automated product recommendations and NBA delivery across App, Web, and Email — already in pilot via Deloitte. <strong>The decisioning layer elevates this from 5 use cases to an always-on engine</strong> — triggered by real-time Data Cloud segment membership, not scheduled batch campaigns. Replaces the 6-week campaign cycle with sub-second decisions.</div>
+      </div>
+      <div class="stack-layer sl-layer-04">
+        <div class="sl-left">
+          <div class="sl-num">04</div>
+          <div class="sl-product">Loyalty Management</div>
+          <div class="sl-product-sub">PPNG · PowerPass · NZ</div>
+        </div>
+        <div class="sl-right">PPNG Loyalty launching July 2026 creates the forcing function — "Spend and Get" missions require real-time data to trigger rewards. <strong>The Loyalty platform becomes a data flywheel</strong> — every transaction, scan, and mission completion feeds the unified profile, improving decisioning accuracy continuously. NZ follows September 2026 on the same engine.</div>
+      </div>
+      <div class="stack-layer sl-layer-05">
+        <div class="sl-left">
+          <div class="sl-num">05</div>
+          <div class="sl-product">Marketing Cloud</div>
+          <div class="sl-product-sub">Event-Driven Journeys</div>
+        </div>
+        <div class="sl-right">Trigger-based Email and push journeys fired by real-time Data Cloud segment events — not scheduled batch sends. <strong>Tile project completed → grout replenishment prompt. Winter approaches → heating and insulation NBA. PowerPass trade customer inactive 30 days → reactivation sequence.</strong> Marketing Cloud Intelligence closes the attribution loop — campaign investment tracked to in-store revenue.</div>
+      </div>
+      <div class="stack-layer sl-layer-06">
+        <div class="sl-left">
+          <div class="sl-num">06</div>
+          <div class="sl-product">Agentforce</div>
+          <div class="sl-product-sub">Voice · Chat · Commerce</div>
+        </div>
+        <div class="sl-right">22M annual store calls grounded in the Individual identity map. Each Agentforce Voice interaction has the customer's full project history, purchase record, loyalty status, and pre-ranked NBA before the first word is spoken. <strong>70% First Call Resolution target becomes achievable when the agent already knows the context.</strong> Service agents, commerce agents, and trade agents all running on the same decisioning foundation.</div>
+      </div>
+      <div class="stack-layer sl-layer-07">
+        <div class="sl-left">
+          <div class="sl-num">07</div>
+          <div class="sl-product">Feedback Loop</div>
+          <div class="sl-product-sub">Model retrains on every outcome</div>
+        </div>
+        <div class="sl-right">Customer accepts a Loyalty mission → outcome logged → positive training signal → Einstein retrains on Bunnings' actual conversion patterns. Agent resolves a call → project phase updated → next interaction is smarter. <strong>After 3–4 months of live operation, the model reflects Bunnings' real customer behaviour</strong> — seasonal DIY patterns, project cycles, trade vs. consumer differences. Proprietary and defensible.</div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider" />
+
+  <!-- HOW IT WORKS -->
+  <div class="section-bg">
+    <div class="section">
+      <div class="eyebrow">How It Works</div>
+      <div class="section-title">From customer signal to<br/>personalised action in milliseconds.</div>
+      <div class="section-sub">Every NBA follows the same five-step loop — running continuously, across 12 million customer profiles, in real time.</div>
+      <div class="flow-strip">
+        <div class="flow-step">
+          <div class="flow-step-num">Step 01</div>
+          <div class="flow-step-title">Signal fires</div>
+          <div class="flow-step-body">Till transaction, Loyalty milestone, app session, browsing pattern, project completion, seasonal trigger, or inactivity threshold. Data Cloud segment membership updates in real time.</div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-step-num">Step 02</div>
+          <div class="flow-step-title">Profile read</div>
+          <div class="flow-step-body">Full Living Profile fetched — purchase history, project phase, PowerPass status, Loyalty tier, seasonal context, suppression flags, consent status.</div>
+        </div>
+        <div class="flow-step highlight">
+          <div class="flow-step-num">Step 03</div>
+          <div class="flow-step-title">NBAs scored</div>
+          <div class="flow-step-body">Einstein Recipes + Studio run propensity models against the NBA catalogue. Each action gets an eligibility check and a probability score. Ranked shortlist returned in milliseconds.</div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-step-num">Step 04</div>
+          <div class="flow-step-title">Best action arbitrated</div>
+          <div class="flow-step-body">Business rules apply — frequency caps, Loyalty mission priority, channel preference, commercial margins. One winning NBA. Governed, consistent, auditable.</div>
+        </div>
+        <div class="flow-step">
+          <div class="flow-step-num">Step 05</div>
+          <div class="flow-step-title">Executed + fed back</div>
+          <div class="flow-step-body">In-app prompt, personalised email, agent brief, or push notification fires. Outcome is logged → Einstein retrains → next decision is smarter.</div>
+        </div>
+      </div>
+      <div class="flow-detail-grid">
+        <div class="flow-detail-card">
+          <div class="fdc-label">B2C Consumer</div>
+          <div class="fdc-title">Project-based replenishment NBA</div>
+          <div class="fdc-body">Customer buys timber and screws. Data Cloud infers a decking project. NBA engine scores: sandpaper, stain, sealant. Personalisation surfaces the ranked recommendation in-app before the customer's next visit.</div>
+        </div>
+        <div class="flow-detail-card">
+          <div class="fdc-label">PowerPass B2B Trade</div>
+          <div class="fdc-title">Trade reactivation + cross-sell</div>
+          <div class="fdc-body">PowerPass account inactive 21 days. Purchase volume declining. NBA engine scores a reactivation offer — targeted to their trade category (plumbing, electrical, carpentry). Marketing Cloud fires a personalised outreach before they switch supplier.</div>
+        </div>
+        <div class="flow-detail-card">
+          <div class="fdc-label">Agentforce Voice</div>
+          <div class="fdc-title">22M calls grounded in context</div>
+          <div class="fdc-body">Customer calls about a product. Agent already has their purchase history, project phase, Loyalty status, and the top-scored NBA pre-loaded. Resolution in one call. Cross-sell surfaced naturally. No repeat questions.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider" />
+
+  <!-- BEACHHEADS -->
+  <div class="section">
+    <div class="eyebrow">Start Here</div>
+    <div class="section-title">Two beachheads that unlock<br/>the full platform value.</div>
+    <div class="section-sub">The right place to start is where the mandate is explicit, the data is closest to ready, and the forcing function (PPNG) creates urgency — consumer NBA and PowerPass trade.</div>
+    <div class="card-grid-2">
+      <div class="beach-card">
+        <div class="bc-head">
+          <div class="bc-icon" style="background:rgba(13,82,87,0.08);">🏠</div>
+          <div class="bc-meta">
+            <div class="bc-title">Consumer NBA + PPNG Loyalty</div>
+            <div class="bc-sub">July 2026 Loyalty launch is the forcing function</div>
+          </div>
+          <div class="bc-badge" style="background:rgba(13,82,87,0.08);color:var(--bn-teal);border:1px solid rgba(13,82,87,0.15);">Phase 1</div>
+        </div>
+        <div class="bc-body">
+          <div class="bc-use-case">
+            <div class="bc-dot" style="background:var(--bn-teal);"></div>
+            <div>
+              <div class="bc-uc-title">Real-time "Spend and Get" Loyalty triggers</div>
+              <div class="bc-uc-desc">PPNG mission milestone hit → NBA engine scores the best next action — a bonus offer, a complementary product prompt, or a tier upgrade nudge — and fires it through the right channel in real time. Not the next campaign cycle.</div>
+            </div>
+          </div>
+          <div class="bc-use-case">
+            <div class="bc-dot" style="background:var(--bn-teal);"></div>
+            <div>
+              <div class="bc-uc-title">Project-phase replenishment NBA</div>
+              <div class="bc-uc-desc">Purchase pattern signals a decking, bathroom, or kitchen project. Einstein Recipes score the next most likely product need. Personalisation surfaces it in-app before the customer searches online or visits a competitor.</div>
+            </div>
+          </div>
+          <div class="bc-use-case">
+            <div class="bc-dot" style="background:var(--bn-teal);"></div>
+            <div>
+              <div class="bc-uc-title">Seasonal DIY cross-sell</div>
+              <div class="bc-uc-desc">Seasonal trigger (winter, summer, spring) + customer purchase history → NBA engine scores the highest-propensity product category. 15–20% sales uplift per the modelled business case — at 12M customers, this is material.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="beach-card">
+        <div class="bc-head">
+          <div class="bc-icon" style="background:rgba(218,41,28,0.08);">🔧</div>
+          <div class="bc-meta">
+            <div class="bc-title">PowerPass Trade + Agentforce Voice</div>
+            <div class="bc-sub">B2B trade reactivation and 22M call virtualisation</div>
+          </div>
+          <div class="bc-badge" style="background:rgba(218,41,28,0.08);color:var(--bn-red);border:1px solid rgba(218,41,28,0.15);">Phase 1</div>
+        </div>
+        <div class="bc-body">
+          <div class="bc-use-case">
+            <div class="bc-dot" style="background:var(--bn-red);"></div>
+            <div>
+              <div class="bc-uc-title">PowerPass reactivation — at-risk trade accounts</div>
+              <div class="bc-uc-desc">Trade account activity declining. Data Cloud fires a signal before the account switches to a competitor. NBA engine scores the right retention action — category-specific offer, rep outreach, or promotional pricing — based on their trade profile.</div>
+            </div>
+          </div>
+          <div class="bc-use-case">
+            <div class="bc-dot" style="background:var(--bn-red);"></div>
+            <div>
+              <div class="bc-uc-title">Agentforce Voice — context-aware call resolution</div>
+              <div class="bc-uc-desc">22M annual store calls. Agent grounded in purchase history, project phase, and pre-scored NBA. First Call Resolution targets 70%. Cross-sell surfaced naturally in context. 50+ FTE redeployed from routine handling to the sales floor.</div>
+            </div>
+          </div>
+          <div class="bc-use-case">
+            <div class="bc-dot" style="background:var(--bn-red);"></div>
+            <div>
+              <div class="bc-uc-title">Commercial trade quoting intelligence</div>
+              <div class="bc-uc-desc">Revenue Cloud pilot in discovery for 850K annual manual quotes. NBA decisioning layer adds commercial propensity scoring — which trade customers are most likely to convert, what pricing structure wins, when to escalate to a rep.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider" />
+
+  <!-- DIGITAL LABOUR -->
+  <div class="section-bg">
+    <div class="section">
+      <div class="eyebrow">Digital Labour</div>
+      <div class="section-title">Agents that know Bunnings customers<br/>better than any script.</div>
+      <div class="section-sub">Agentforce agents are not chatbots. They read the unified Living Profile, act on the NBA decisioning context, take real actions in Salesforce, and hand off to humans when the situation demands it.</div>
+      <div class="card-grid-3">
+        <div class="agent-card">
+          <div class="ac-header">
+            <div class="ac-icon">📞</div>
+            <div>
+              <div class="ac-title">Store Call Agent</div>
+              <div class="ac-role">Virtualises 22M annual calls — Agentforce Voice</div>
+            </div>
+          </div>
+          <div class="ac-actions">
+            <div class="ac-action"><div class="ac-action-dot"></div>Greets the customer with their name, purchase history, and active project context pre-loaded — no ID questions, no repeat information</div>
+            <div class="ac-action"><div class="ac-action-dot"></div>Resolves stock, product, and service queries using real-time inventory and the customer's project profile — 70% FCR target</div>
+            <div class="ac-action"><div class="ac-action-dot"></div>Surfaces the pre-scored NBA naturally in conversation — a complementary product, an upcoming Loyalty mission, a seasonal offer</div>
+            <div class="ac-action"><div class="ac-action-dot"></div>Escalates complex cases with full conversation context and NBA recommendation pre-loaded for the human agent</div>
+          </div>
+        </div>
+        <div class="agent-card">
+          <div class="ac-header">
+            <div class="ac-icon">🛒</div>
+            <div>
+              <div class="ac-title">Commerce Agent</div>
+              <div class="ac-role">Personalised digital shopping and project guidance</div>
+            </div>
+          </div>
+          <div class="ac-actions">
+            <div class="ac-action"><div class="ac-action-dot"></div>Guides customers through project-based shopping journeys — "You're building a deck, here's your complete materials list" — using purchase history and Einstein Recipes</div>
+            <div class="ac-action"><div class="ac-action-dot"></div>Surfaces personalised Loyalty missions relevant to the customer's current project phase and spend trajectory</div>
+            <div class="ac-action"><div class="ac-action-dot"></div>Handles order status, click-and-collect queries, and returns autonomously — reducing service load and improving satisfaction scores</div>
+            <div class="ac-action"><div class="ac-action-dot"></div>Closes the digital-to-physical loop — app engagement mapped back to in-store POS transactions for verified attribution</div>
+          </div>
+        </div>
+        <div class="agent-card">
+          <div class="ac-header">
+            <div class="ac-icon">🏗️</div>
+            <div>
+              <div class="ac-title">Trade Agent</div>
+              <div class="ac-role">PowerPass B2B account management at scale</div>
+            </div>
+          </div>
+          <div class="ac-actions">
+            <div class="ac-action"><div class="ac-action-dot"></div>Proactively surfaces reactivation signals — PowerPass accounts with declining spend, approaching inactivity, or shifting trade category</div>
+            <div class="ac-action"><div class="ac-action-dot"></div>Handles quote assistance, product availability, and bulk order queries using the trade customer's purchase profile and category expertise</div>
+            <div class="ac-action"><div class="ac-action-dot"></div>Supports Revenue Cloud quoting pilot — scoring commercial leads by propensity and surfacing the right pricing structure to the sales rep</div>
+            <div class="ac-action"><div class="ac-action-dot"></div>Feeds trade engagement outcomes back to Einstein — model continuously improves on Bunnings' actual PowerPass conversion patterns</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider" />
+
+  <!-- PROOF POINTS -->
+  <div class="section">
+    <div class="eyebrow">Platform Proof at Scale</div>
+    <div class="section-title" style="margin-bottom:32px;">Retailers running this exact play<br/>on the same platform.</div>
+    <div class="proof-wrap">
+      <div>
+        <div class="proof-eyebrow">Williams-Sonoma · Salesforce Data Cloud + Einstein</div>
+        <div class="proof-quote">"Automated project-based loyalty and high-frequency replenishment triggers — the direct analogue for Bunnings' DIY customer cycle."</div>
+        <p class="proof-desc">Williams-Sonoma uses Salesforce to drive automated replenishment triggers and project-based loyalty recommendations — identifying high-LTV customers through purchase pattern mirroring and scoring the next most likely product in their home improvement journey. <strong>The exact motion Bunnings needs for its 12M customer base: purchase → project inference → replenishment NBA → loyalty mission → repeat.</strong></p>
+        <div class="proof-source">Source: Salesforce Retail Customer Stories — Williams-Sonoma</div>
+
+        <div class="proof-eyebrow" style="margin-top:28px;">Casey's · Data Cloud — 12M+ Profiles Unified</div>
+        <p class="proof-desc" style="margin-top:8px;">Casey's consolidated 12M+ customer profiles into a single Data Cloud identity layer — directly comparable to Bunnings' fragmented B2C + PowerPass + in-store profile challenge. The result: <strong>600 million personalised messages delivered</strong> from a unified profile, with real-time segment-triggered NBA across digital and in-store channels.</p>
+        <div class="proof-source">Source: Salesforce Retail Customer Stories — Casey's</div>
+
+        <div class="proof-eyebrow" style="margin-top:28px;">Home Depot · Agentforce — Project-Based AI Guidance</div>
+        <p class="proof-desc" style="margin-top:8px;">Home Depot — Bunnings' closest global analogue — uses Salesforce for context-aware AI guidance across customer service and in-store support. <strong>Project-based resolution, cross-sell surfaced in call context, and agent productivity improvements</strong> — exactly the Contact Centre + NBA play Bunnings is scoping for 22M annual store calls.</p>
+        <div class="proof-source">Source: Salesforce Retail Customer Stories — Home Depot</div>
+      </div>
+      <div class="proof-stats">
+        <div class="proof-stat">
+          <div class="proof-stat-val"><span>600M</span></div>
+          <div class="proof-stat-label">Personalised messages from unified profiles — Casey's on Data Cloud</div>
+        </div>
+        <div class="proof-stat">
+          <div class="proof-stat-val"><span>$4M</span></div>
+          <div class="proof-stat-label">Bunnings household prize — trapped cross-sell and replenishment value</div>
+        </div>
+        <div class="proof-stat">
+          <div class="proof-stat-val">15<span style="font-size:18px;">–20%</span></div>
+          <div class="proof-stat-label">Sales uplift through real-time personalisation — modelled at Bunnings</div>
+        </div>
+        <div class="proof-stat">
+          <div class="proof-stat-val"><span>70%</span></div>
+          <div class="proof-stat-label">First Call Resolution target — Agentforce Voice across 22M store calls</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider" />
+
+  <!-- STRATEGY ALIGNMENT -->
+  <div class="section-bg">
+    <div class="section">
+      <div class="eyebrow">Strategic Fit</div>
+      <div class="section-title">"Accelerated by data.<br/>Simpler and Better."</div>
+      <div class="section-sub">Bunnings' own mandate maps directly to what the NBA decisioning platform delivers. This is not a new initiative — it is the engine that makes the existing mandate measurable.</div>
+      <div class="card-grid-4">
+        <div class="strategy-card">
+          <div class="strat-pillar">Mandate 1</div>
+          <div class="strat-title">Accelerated by Data</div>
+          <div class="strat-body">12M profiles unified in Data Cloud. Every NBA decision driven by real-time signals. <strong>Campaign time-to-market from 6 weeks to sub-second.</strong> Data is the accelerant, not a constraint.</div>
+        </div>
+        <div class="strategy-card">
+          <div class="strat-pillar">Mandate 2</div>
+          <div class="strat-title">Simpler and Better</div>
+          <div class="strat-body">One decisioning engine across App, Web, Email, and Contact Centre. <strong>No more siloed tools, manual workflows, or swivel-chair friction.</strong> One platform. One profile. One governed decision.</div>
+        </div>
+        <div class="strategy-card">
+          <div class="strat-pillar">Pillar 1</div>
+          <div class="strat-title">Lowest Prices</div>
+          <div class="strat-body">NBA decisioning enables <strong>precision pricing and targeted promotional offers</strong> — the right offer to the right customer, not a broadcast discount that erodes margin across the entire base.</div>
+        </div>
+        <div class="strategy-card">
+          <div class="strat-pillar">Pillar 3</div>
+          <div class="strat-title">Best Experience</div>
+          <div class="strat-body">Project-aware personalisation, context-grounded agents, and real-time Loyalty missions create <strong>an experience that feels like Bunnings knows you</strong> — because the unified profile means they do.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider" />
+
+  <!-- ROADMAP -->
+  <div class="section">
+    <div class="eyebrow">The Path Forward</div>
+    <div class="section-title">2026 Foundation → 2027 Velocity<br/>→ 2028 Autonomous.</div>
+    <div class="section-sub">Bunnings' own 3-year roadmap aligns precisely with the NBA platform build. Each phase compounds the last — and each phase generates measurable commercial outcomes before the next begins.</div>
+    <div class="card-grid-2">
+      <div class="phase-card">
+        <div class="phase-head">
+          <div class="phase-badge" style="background:rgba(13,82,87,0.1);color:var(--bn-teal);border:1px solid rgba(13,82,87,0.2);">2026 · Foundation</div>
+          <div>
+            <div class="phase-title">Decisioning Core + PPNG Launch</div>
+            <div class="phase-timeline">Consumer NBA · PowerPass · Agentforce Voice pilot</div>
+          </div>
+        </div>
+        <div class="phase-body">
+          <div class="phase-item">
+            <div class="phase-item-dot" style="background:var(--bn-teal);"></div>
+            <div><div class="phase-item-title">Data Cloud Living Profile</div><div class="phase-item-desc">Unify B2C, PowerPass, and in-store POS into a single real-time customer profile — the Individual identity map</div></div>
+          </div>
+          <div class="phase-item">
+            <div class="phase-item-dot" style="background:var(--bn-teal);"></div>
+            <div><div class="phase-item-title">PPNG Loyalty real-time triggers</div><div class="phase-item-desc">Mission completions, "Spend and Get" events, and Loyalty tier changes trigger real-time NBAs at launch in July 2026</div></div>
+          </div>
+          <div class="phase-item">
+            <div class="phase-item-dot" style="background:var(--bn-teal);"></div>
+            <div><div class="phase-item-title">Salesforce Personalisation NBA engine</div><div class="phase-item-desc">Einstein Recipes extended from 5 Deloitte use cases to always-on NBA across App, Web, and Email</div></div>
+          </div>
+          <div class="phase-item">
+            <div class="phase-item-dot" style="background:var(--bn-teal);"></div>
+            <div><div class="phase-item-title">Agentforce Voice pilot — Contact Centre</div><div class="phase-item-desc">Grounded in the Individual profile — FCR improvement and NBA in-call cross-sell measured from day one</div></div>
+          </div>
+          <div class="phase-item">
+            <div class="phase-item-dot" style="background:var(--bn-teal);"></div>
+            <div><div class="phase-item-title">Attribution model live</div><div class="phase-item-desc">Digital ad impression → Loyalty profile → in-store POS transaction — closed-loop ROAS from day one</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="phase-card">
+        <div class="phase-head">
+          <div class="phase-badge" style="background:rgba(218,41,28,0.08);color:var(--bn-red);border:1px solid rgba(218,41,28,0.15);">2027–2028 · Velocity + Autonomous</div>
+          <div>
+            <div class="phase-title">Scale + Agentic Commerce</div>
+            <div class="phase-timeline">Agentforce at scale · Retail Media · SRM · Revenue Cloud</div>
+          </div>
+        </div>
+        <div class="phase-body">
+          <div class="phase-item">
+            <div class="phase-item-dot" style="background:var(--bn-red);"></div>
+            <div><div class="phase-item-title">Agentforce Voice — full scale</div><div class="phase-item-desc">All 22M annual calls virtualised. 50+ FTE redeployed to the sales floor. NZ Contact Centre on the same platform.</div></div>
+          </div>
+          <div class="phase-item">
+            <div class="phase-item-dot" style="background:var(--bn-red);"></div>
+            <div><div class="phase-item-title">Retail Media closed-loop engine</div><div class="phase-item-desc">Data Cloud as identity bridge — verified attribution from ad impression to in-store POS. $25M high-margin revenue target.</div></div>
+          </div>
+          <div class="phase-item">
+            <div class="phase-item-dot" style="background:var(--bn-red);"></div>
+            <div><div class="phase-item-title">Revenue Cloud commercial scaling</div><div class="phase-item-desc">850K annual manual quotes automated — $17M EBIT uplift, 25% efficiency gain in trade quoting workflows</div></div>
+          </div>
+          <div class="phase-item">
+            <div class="phase-item-dot" style="background:var(--bn-red);"></div>
+            <div><div class="phase-item-title">Predictive agentic commerce</div><div class="phase-item-desc">NBA engine predicts replenishment needs before the customer knows — automated reorder prompts, project completion triggers, and seasonal forecasting</div></div>
+          </div>
+          <div class="phase-item">
+            <div class="phase-item-dot" style="background:var(--bn-red);"></div>
+            <div><div class="phase-item-title">Enterprise Agentforce orchestration</div><div class="phase-item-desc">Store Agent, Commerce Agent, Trade Agent, and Internal Team Agent all orchestrated from one platform — total closed-loop attribution across every channel</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider" />
+
+  <!-- CLOSING -->
+  <div class="section">
+    <div class="closing-inner">
+      <h2>The data is there.<br/>The platform is deployed.<br/>PPNG launches in July.</h2>
+      <p>Bunnings has everything needed to move from pilot to production-grade intelligent decisioning — across consumer, trade, and contact centre. The Loyalty launch is the forcing function. This is the moment.</p>
+      <div class="closing-steps">
+        <div class="c-step">Architecture workshop</div>
+        <div class="c-arrow">→</div>
+        <div class="c-step">NBA use case definition</div>
+        <div class="c-arrow">→</div>
+        <div class="c-step">Data Cloud blueprint</div>
+        <div class="c-arrow">→</div>
+        <div class="c-step primary">First NBA live at PPNG launch</div>
+      </div>
+    </div>
+  </div>
+
+  <script src="gate.js" data-page="Bunnings Narrative"></script>
+
+</body>
+</html>
