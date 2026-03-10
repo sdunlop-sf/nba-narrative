@@ -105,7 +105,7 @@
 
     /* ── TYPE SYSTEM ── */
     .eyebrow {
-      font-size: 10px; font-weight: 700; letter-spacing: 0.2em;
+      font-size: 12px; font-weight: 700; letter-spacing: 0.18em;
       text-transform: uppercase; color: var(--blue2); margin-bottom: 14px;
     }
     .big {
@@ -113,7 +113,7 @@
       line-height: 1.05; letter-spacing: -0.03em; margin-bottom: 20px;
     }
     .sub {
-      font-size: clamp(13px, 1.2vw, 16px); color: var(--muted);
+      font-size: clamp(15px, 1.4vw, 18px); color: var(--muted);
       line-height: 1.8; max-width: 540px;
     }
     .hl-blue  { color: var(--blue2); }
@@ -156,8 +156,8 @@
     .stat-card.g { border-left-color: var(--gold); }
     .stat-card.g::before { background: linear-gradient(90deg, var(--gold), transparent); }
     .stat-val { font-size: clamp(32px, 3.8vw, 50px); font-weight: 900; letter-spacing: -0.03em; line-height: 1; margin-bottom: 9px; }
-    .stat-label { font-size: 13px; font-weight: 700; margin-bottom: 5px; }
-    .stat-desc  { font-size: 12px; color: var(--muted); line-height: 1.6; }
+    .stat-label { font-size: 16px; font-weight: 700; margin-bottom: 6px; }
+    .stat-desc  { font-size: 14px; color: var(--muted); line-height: 1.65; }
 
     /* ── FLOW ── */
     .flow { display: flex; align-items: flex-start; width: 100%; max-width: 1020px; }
@@ -169,9 +169,9 @@
       border-radius: 18px;
     }
     .flow-icon img { width: 38px; height: 38px; object-fit: contain; }
-    .flow-num   { font-size: 9px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--blue2); margin-bottom: 5px; }
-    .flow-title { font-size: 13px; font-weight: 700; margin-bottom: 5px; }
-    .flow-desc  { font-size: 11px; color: var(--muted); line-height: 1.55; max-width: 115px; }
+    .flow-num   { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--blue2); margin-bottom: 5px; }
+    .flow-title { font-size: 16px; font-weight: 700; margin-bottom: 6px; }
+    .flow-desc  { font-size: 13px; color: var(--muted); line-height: 1.6; max-width: 130px; }
     .flow-arrow { flex-shrink: 0; align-self: center; padding-bottom: 48px; color: rgba(0,179,255,0.3); font-size: 20px; margin: 0 2px; }
 
     /* ── PLATFORM ── */
@@ -183,9 +183,9 @@
     }
     .pcard:hover { background: var(--card-h); border-color: rgba(0,179,255,0.3); }
     .pcard-icon img { width: 34px; height: 34px; object-fit: contain; flex-shrink: 0; }
-    .pcard-num  { font-size: 9px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--blue2); margin-bottom: 2px; }
-    .pcard-name { font-size: 12px; font-weight: 700; margin-bottom: 3px; }
-    .pcard-desc { font-size: 11px; color: var(--muted); line-height: 1.5; }
+    .pcard-num  { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--blue2); margin-bottom: 3px; }
+    .pcard-name { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+    .pcard-desc { font-size: 13px; color: var(--muted); line-height: 1.55; }
 
     /* ── VALUE GRID (outcomes) ── */
     .value-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 13px; width: 100%; max-width: 860px; }
@@ -193,10 +193,10 @@
       background: var(--card); border: 1px solid var(--border); border-radius: 14px;
       padding: 22px; display: flex; gap: 14px; align-items: flex-start;
     }
-    .vcard-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; margin-top: 6px; }
-    .vcard-title { font-size: 13px; font-weight: 700; margin-bottom: 5px; }
-    .vcard-num { font-size: 26px; font-weight: 900; letter-spacing: -0.03em; line-height: 1; margin-bottom: 4px; }
-    .vcard-desc { font-size: 12px; color: var(--muted); line-height: 1.65; }
+    .vcard-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; margin-top: 7px; }
+    .vcard-title { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+    .vcard-num { font-size: 30px; font-weight: 900; letter-spacing: -0.03em; line-height: 1; margin-bottom: 5px; }
+    .vcard-desc { font-size: 14px; color: var(--muted); line-height: 1.65; }
 
     /* ── PROOF ── */
     .proof-row { display: flex; gap: 14px; width: 100%; max-width: 960px; }
@@ -211,8 +211,8 @@
     .pf-card.g { border-top-color: var(--gold); }
     .pf-card.g::after { background: linear-gradient(180deg, rgba(252,192,3,0.04) 0%, transparent 40%); }
     .pf-metric { font-size: 36px; font-weight: 900; letter-spacing: -0.03em; line-height: 1; margin-bottom: 3px; position: relative; }
-    .pf-co   { font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 10px; position: relative; }
-    .pf-text { font-size: 12px; color: rgba(255,255,255,0.82); line-height: 1.7; position: relative; }
+    .pf-co   { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 12px; position: relative; }
+    .pf-text { font-size: 15px; color: rgba(255,255,255,0.82); line-height: 1.7; position: relative; }
     .pf-text strong { color: var(--white); }
 
     /* ── GOOGLE SLIDE ── */
@@ -226,10 +226,10 @@
       display: flex; align-items: center; justify-content: center;
       font-size: 11px; font-weight: 900; color: var(--muted); letter-spacing: 0.02em;
     }
-    .vs-col-header { font-size: 12px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); margin-bottom: 16px; }
-    .vs-item { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 13px; font-size: 12px; line-height: 1.55; }
+    .vs-col-header { font-size: 13px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); margin-bottom: 18px; }
+    .vs-item { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 15px; font-size: 14px; line-height: 1.6; }
     .vs-item:last-child { margin-bottom: 0; }
-    .vs-icon { flex-shrink: 0; font-size: 13px; margin-top: 1px; }
+    .vs-icon { flex-shrink: 0; font-size: 15px; margin-top: 2px; }
     .vs-item-text { color: var(--muted); }
     .vs-item-text strong { color: var(--white); font-weight: 600; }
 
@@ -253,10 +253,10 @@
       font-size: 11px; font-weight: 700; color: var(--blue2);
       display: flex; align-items: center; justify-content: center;
     }
-    .cta-label { font-size: 12px; color: rgba(255,255,255,0.82); font-weight: 600; }
+    .cta-label { font-size: 15px; color: rgba(255,255,255,0.82); font-weight: 600; }
 
     /* ── PILL ── */
-    .pill { display: inline-block; padding: 5px 12px; border-radius: 20px; font-size: 11px; font-weight: 700; letter-spacing: 0.03em; }
+    .pill { display: inline-block; padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 700; letter-spacing: 0.03em; }
 
     /* ── CHAR ── */
     .char { position: absolute; pointer-events: none; user-select: none; z-index: 2; }
@@ -268,7 +268,7 @@
 
     /* ── BOLD STATEMENT (google slide headline) ── */
     .bold-statement {
-      font-size: clamp(18px, 2.2vw, 30px); font-weight: 700; line-height: 1.4;
+      font-size: clamp(22px, 2.6vw, 36px); font-weight: 700; line-height: 1.4;
       color: rgba(255,255,255,0.95); max-width: 820px; text-align: center;
       margin: 0 auto 28px;
     }
@@ -449,7 +449,7 @@
     <div style="text-align:center;">
       <div class="eyebrow">The Platform</div>
       <div class="big" style="font-size:clamp(24px,2.8vw,40px);margin-bottom:4px;">Six layers. One connected system.</div>
-      <p style="font-size:12px;color:rgba(255,255,255,0.72);letter-spacing:0.06em;text-transform:uppercase;font-weight:600;">Already licensed · Already live · Ready to activate</p>
+      <p style="font-size:14px;color:rgba(255,255,255,0.72);letter-spacing:0.06em;text-transform:uppercase;font-weight:600;">Already licensed · Already live · Ready to activate</p>
     </div>
     <div class="platform-grid">
       <div class="pcard">
@@ -579,7 +579,7 @@
     <div class="cta-wrap">
       <div class="eyebrow" style="justify-content:center;text-align:center;">Next Steps</div>
       <div class="big" style="font-size:clamp(28px,3.4vw,50px);">First NBA live at<br/><span class="hl-blue">PPNG launch.</span></div>
-      <p class="sub" style="margin:14px auto 0;font-size:14px;max-width:440px;">July 2026 is the forcing function. The Deloitte discovery is the window. The platform decision is being made now — and you've already made the investment.</p>
+      <p class="sub" style="margin:14px auto 0;max-width:440px;">July 2026 is the forcing function. The Deloitte discovery is the window. The platform decision is being made now — and you've already made the investment.</p>
       <div class="cta-steps">
         <div class="cta-step"><div class="cta-num">1</div><div class="cta-label">Align on 3 NBAs</div></div>
         <div class="cta-step"><div class="cta-num">2</div><div class="cta-label">Data Cloud scoping</div></div>
