@@ -583,6 +583,143 @@
             .flow-step { width: 100%; }
         }
 
+        /* ── MOMENTS THAT MATTER ── */
+        .moments-wrap {
+            width: 100%;
+            max-width: 1020px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        .moments-arc {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 10px;
+            position: relative;
+        }
+
+        /* faint connecting arc line behind the columns */
+        .moments-arc::before {
+            content: '';
+            position: absolute;
+            top: 28px;
+            left: 12%;
+            right: 12%;
+            height: 2px;
+            background: linear-gradient(90deg, var(--teal), var(--blue2), var(--gold));
+            opacity: 0.2;
+            border-radius: 1px;
+            pointer-events: none;
+        }
+
+        .moment-col {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 16px 14px 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .moment-col::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 3px;
+        }
+
+        .moment-col.col-mkt::before  { background: linear-gradient(90deg, var(--teal), transparent); }
+        .moment-col.col-svc::before  { background: linear-gradient(90deg, var(--blue2), transparent); }
+        .moment-col.col-sales::before { background: linear-gradient(90deg, var(--gold), transparent); }
+
+        .moment-col-label {
+            font-size: 10px;
+            font-weight: 800;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .col-mkt   .moment-col-label  { color: var(--teal); }
+        .col-svc   .moment-col-label  { color: var(--blue2); }
+        .col-sales .moment-col-label  { color: var(--gold); }
+
+        .moment-tag {
+            font-size: 12px;
+            color: rgba(255,255,255,0.82);
+            padding: 5px 10px;
+            border-radius: 6px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.07);
+            line-height: 1.4;
+        }
+
+        .moment-tag.highlight {
+            background: rgba(0,179,255,0.1);
+            border-color: rgba(0,179,255,0.25);
+            color: var(--white);
+            font-weight: 600;
+        }
+
+        .moments-platform {
+            display: flex;
+            align-items: center;
+            gap: 0;
+            background: rgba(2, 39, 117, 0.3);
+            border: 1px solid rgba(0, 179, 255, 0.15);
+            border-radius: 10px;
+            padding: 10px 18px;
+            overflow: hidden;
+        }
+
+        .platform-label {
+            font-size: 9px;
+            font-weight: 800;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--blue2);
+            white-space: nowrap;
+            margin-right: 18px;
+            flex-shrink: 0;
+        }
+
+        .platform-pills {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        .platform-pill {
+            font-size: 11px;
+            color: rgba(255,255,255,0.55);
+            padding: 3px 10px;
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.1);
+            white-space: nowrap;
+        }
+
+        .moments-outcomes {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+        }
+
+        .outcome-badge {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.06em;
+            padding: 5px 16px;
+            border-radius: 20px;
+        }
+
+        .outcome-badge.ob-blue  { color: var(--blue2); background: rgba(0,179,255,0.1);  border: 1px solid rgba(0,179,255,0.25); }
+        .outcome-badge.ob-teal  { color: var(--teal);  background: rgba(4,225,203,0.1);  border: 1px solid rgba(4,225,203,0.25); }
+        .outcome-badge.ob-gold  { color: var(--gold);  background: rgba(252,192,3,0.1);  border: 1px solid rgba(252,192,3,0.25); }
+
         /* ── COMPETITOR TABLE ── */
         .comp-slide {
             width: 100%;
@@ -676,7 +813,61 @@
             </div>
         </section>
 
-        <!-- Slide 3: Stats -->
+        <!-- Slide 3: Moments That Matter -->
+        <section class="slide">
+            <div class="moments-wrap">
+                <div style="text-align: center; margin-bottom: 4px;">
+                    <div class="accent-line" style="margin: 0 auto 12px;"></div>
+                    <div class="eyebrow">Moments That Matter</div>
+                    <h2 class="big" style="font-size: clamp(20px, 2.4vw, 32px); margin-bottom: 6px;">Every signal is a moment.<br><span class="hl">Most businesses miss them.</span></h2>
+                </div>
+                <div class="moments-arc">
+                    <div class="moment-col col-mkt">
+                        <div class="moment-col-label">Marketing Moments</div>
+                        <div class="moment-tag">Display &amp; awareness</div>
+                        <div class="moment-tag">Welcome &amp; onboarding</div>
+                        <div class="moment-tag">Behavioural signals (browse, cart)</div>
+                        <div class="moment-tag highlight">Next Best Action fires</div>
+                        <div class="moment-tag">Targeted &amp; personalised offer</div>
+                    </div>
+                    <div class="moment-col col-svc">
+                        <div class="moment-col-label">Service Moments</div>
+                        <div class="moment-tag">Post-sale messaging</div>
+                        <div class="moment-tag">Case raised &amp; resolved</div>
+                        <div class="moment-tag">Self-service &amp; community</div>
+                        <div class="moment-tag highlight">Next Best Action fires</div>
+                        <div class="moment-tag">Loyalty &amp; retention trigger</div>
+                    </div>
+                    <div class="moment-col col-sales">
+                        <div class="moment-col-label">Sales Moments</div>
+                        <div class="moment-tag">Account signal detected</div>
+                        <div class="moment-tag">Rep surface &amp; outreach</div>
+                        <div class="moment-tag">Hyper-personalised pitch</div>
+                        <div class="moment-tag highlight">Next Best Action fires</div>
+                        <div class="moment-tag">Account plan updated</div>
+                    </div>
+                </div>
+                <div class="moments-platform">
+                    <div class="platform-label">Platform</div>
+                    <div class="platform-pills">
+                        <span class="platform-pill">Data Cloud</span>
+                        <span class="platform-pill">Einstein AI</span>
+                        <span class="platform-pill">Agentforce</span>
+                        <span class="platform-pill">Marketing Cloud</span>
+                        <span class="platform-pill">Sales Cloud</span>
+                        <span class="platform-pill">Service Cloud</span>
+                        <span class="platform-pill">Feedback Loop</span>
+                    </div>
+                </div>
+                <div class="moments-outcomes">
+                    <span class="outcome-badge ob-blue">Top Line Growth</span>
+                    <span class="outcome-badge ob-teal">Customer Retention</span>
+                    <span class="outcome-badge ob-gold">CSAT &amp; Loyalty</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 4: The Cost of Inaction -->
         <section class="slide">
             <div style="max-width: 900px;">
                 <div class="eyebrow" style="text-align: center; margin-bottom: 36px;">The Cost of Inaction</div>
@@ -705,7 +896,7 @@
             </div>
         </section>
 
-        <!-- Slide 4: What is NBA -->
+        <!-- Slide 5: What is Agentic Decisioning -->
         <section class="slide">
             <div class="two-col">
                 <div class="col">
