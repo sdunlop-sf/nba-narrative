@@ -130,5 +130,17 @@
     "location": "Sydney, New South Wales, Australia",
     "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
     "returning": "yes"
+  },
+  {
+    "timestamp": "Tue, 10 Mar 2026 03:56:23 GMT",
+    "name": "Ben Anderson",
+    "company": "Salesforce",
+    "position": "Account Executive",
+    "page": "Bunnings Narrative",
+    "url": "https://sdunlop-sf.github.io/nba-narrative/bunnings.html",
+    "ip": "165.225.226.233",
+    "location": "Melbourne, Victoria, Australia",
+    "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.3 Safari/605.1.15",
+    "returning": "no"
   }
 ]
