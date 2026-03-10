@@ -1,1 +1,14 @@
-[]
+[
+  {
+    "timestamp": "Tue, 10 Mar 2026 01:26:57 GMT",
+    "name": "Stu",
+    "company": "SF",
+    "position": "Solutions",
+    "page": "NBA Narrative · Home",
+    "url": "https://sdunlop-sf.github.io/nba-narrative/",
+    "ip": "147.161.214.205",
+    "location": "Sydney, New South Wales, Australia",
+    "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+    "returning": "no"
+  }
+]
