@@ -5,24 +5,19 @@
      Add before </body> in each page:
      <script src="gate.js" data-page="Page Name Here"></script>
 
-   GITHUB TOKEN SETUP:
-     1. github.com → Settings → Developer settings → Personal access tokens
-        → Fine-grained tokens → Generate new token
-     2. Repository access: Only select repositories → nba-narrative
-     3. Permissions: Contents → Read and write
-     4. Generate → copy token → paste below as githubToken
+   TRACKING SETUP:
+     See cloudflare-worker.js for full instructions.
+     Once deployed, paste your Worker URL below as workerUrl.
    ───────────────────────────────────────────────────────────────── */
 (function () {
 
   /* ── CONFIG ─────────────────────────────────────────────────── */
   var C = {
-    password:     'SFNBA2026!',
-    githubToken:  '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',
-    githubRepo:   'sdunlop-sf/nba-narrative',
-    githubFile:   'tracking.json',
-    web3Key:      'ec698e10-6e6a-4c3a-974e-54a7cd7d4343',
-    storeKey:     'nba_visitor_v2',
-    authKey:      'nba_auth_v2'
+    password:   'SFNBA2026!',
+    workerUrl:  'REPLACE_WITH_WORKER_URL',
+    web3Key:    'ec698e10-6e6a-4c3a-974e-54a7cd7d4343',
+    storeKey:   'nba_visitor_v2',
+    authKey:    'nba_auth_v2'
   };
 
   /* ── INJECT GATE HTML ────────────────────────────────────────── */
@@ -184,32 +179,12 @@
   }
 
   function appendToGitHub(data) {
-    if (!C.githubToken || C.githubToken.indexOf('REPLACE') !== -1) return;
-    var apiUrl = 'https://api.github.com/repos/' + C.githubRepo + '/contents/' + C.githubFile;
-    var headers = {
-      'Authorization': 'token ' + C.githubToken,
-      'Accept': 'application/vnd.github.v3+json',
-      'Content-Type': 'application/json'
-    };
-
-    fetch(apiUrl, { headers: headers })
-      .then(function (r) { return r.ok ? r.json() : null; })
-      .then(function (file) {
-        var rows = [];
-        var sha  = null;
-        if (file) {
-          sha = file.sha;
-          try { rows = JSON.parse(atob(file.content.replace(/\s/g, ''))); } catch (e) { rows = []; }
-        }
-        rows.push(data);
-        var body = {
-          message: 'track: ' + data.name + ' · ' + data.page,
-          content: btoa(unescape(encodeURIComponent(JSON.stringify(rows, null, 2))))
-        };
-        if (sha) body.sha = sha;
-        return fetch(apiUrl, { method: 'PUT', headers: headers, body: JSON.stringify(body) });
-      })
-      .catch(function () { /* fail silently — email alert already sent */ });
+    if (!C.workerUrl || C.workerUrl.indexOf('REPLACE') !== -1) return;
+    fetch(C.workerUrl, {
+      method:  'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body:    JSON.stringify(data)
+    }).catch(function () { /* fail silently — email alert already sent */ });
   }
 
   function sendEmail(name, company, position, time, ip, loc, page, url, ua) {
