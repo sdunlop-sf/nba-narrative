@@ -55,9 +55,14 @@ export default {
 
       rows.push(data);
 
+      const json    = JSON.stringify(rows, null, 2);
+      const bytes   = new TextEncoder().encode(json);
+      let binary    = '';
+      for (let i = 0; i < bytes.length; i++) binary += String.fromCharCode(bytes[i]);
+
       const putBody = {
         message: 'track: ' + (data.name || 'visitor') + ' · ' + (data.page || ''),
-        content: btoa(unescape(encodeURIComponent(JSON.stringify(rows, null, 2)))),
+        content: btoa(binary),
       };
       if (sha) putBody.sha = sha;
 
