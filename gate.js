@@ -1,23 +1,25 @@
 /* ─────────────────────────────────────────────────────────────────
-   NBA Narrative · Shared Access Gate v2
+   NBA Narrative · Shared Access Gate v3
    ─────────────────────────────────────────────────────────────────
    HOW TO USE:
      Add before </body> in each page:
      <script src="gate.js" data-page="Page Name Here"></script>
 
-   GOOGLE APPS SCRIPT SETUP (for dashboard tracking):
-     1. Go to sheets.google.com → create a new blank sheet
-     2. Extensions → Apps Script → paste the script from apps-script.gs
-     3. Save → Deploy → New Deployment → Web App
-        Execute as: Me | Who has access: Anyone → Deploy
-     4. Copy the /exec URL and replace TRACKING_URL below
+   GITHUB TOKEN SETUP:
+     1. github.com → Settings → Developer settings → Personal access tokens
+        → Fine-grained tokens → Generate new token
+     2. Repository access: Only select repositories → nba-narrative
+     3. Permissions: Contents → Read and write
+     4. Generate → copy token → paste below as githubToken
    ───────────────────────────────────────────────────────────────── */
 (function () {
 
   /* ── CONFIG ─────────────────────────────────────────────────── */
   var C = {
     password:     'SFNBA2026!',
-    trackingUrl:  'https://script.google.com/macros/s/AKfycbxthv7-PIJ6rK4yPvtXmPx3flZ9X33PveWPb6TcCN4N44XB1BCSJnJsYiKg2J3BIIXgqw/exec',
+    githubToken:  'REPLACE_WITH_GITHUB_TOKEN',
+    githubRepo:   'sdunlop-sf/nba-narrative',
+    githubFile:   'tracking.json',
     web3Key:      'ec698e10-6e6a-4c3a-974e-54a7cd7d4343',
     storeKey:     'nba_visitor_v2',
     authKey:      'nba_auth_v2'
@@ -166,27 +168,48 @@
       .then(function (r) { return r.json(); })
       .then(function (ip) {
         var loc = [ip.city, ip.region, ip.country_name].filter(Boolean).join(', ');
-        sendToSheets({ timestamp: time, name: name, company: company, position: position,
-                       page: page, url: url, ip: ip.ip, location: loc, ua: ua,
-                       returning: returning ? 'yes' : 'no' });
+        var data = { timestamp: time, name: name, company: company, position: position,
+                     page: page, url: url, ip: ip.ip, location: loc, ua: ua,
+                     returning: returning ? 'yes' : 'no' };
+        appendToGitHub(data);
         if (!returning) sendEmail(name, company, position, time, ip.ip, loc, page, url, ua);
       })
       .catch(function () {
-        sendToSheets({ timestamp: time, name: name, company: company, position: position,
-                       page: page, url: url, ip: '-', location: '-', ua: ua,
-                       returning: returning ? 'yes' : 'no' });
+        var data = { timestamp: time, name: name, company: company, position: position,
+                     page: page, url: url, ip: '-', location: '-', ua: ua,
+                     returning: returning ? 'yes' : 'no' };
+        appendToGitHub(data);
         if (!returning) sendEmail(name, company, position, time, '-', '-', page, url, ua);
       });
   }
 
-  function sendToSheets(data) {
-    if (!C.trackingUrl || C.trackingUrl.indexOf('REPLACE') !== -1) return;
-    fetch(C.trackingUrl, {
-      method:  'POST',
-      mode:    'no-cors',
-      headers: { 'Content-Type': 'text/plain' },
-      body:    JSON.stringify(data)
-    });
+  function appendToGitHub(data) {
+    if (!C.githubToken || C.githubToken.indexOf('REPLACE') !== -1) return;
+    var apiUrl = 'https://api.github.com/repos/' + C.githubRepo + '/contents/' + C.githubFile;
+    var headers = {
+      'Authorization': 'token ' + C.githubToken,
+      'Accept': 'application/vnd.github.v3+json',
+      'Content-Type': 'application/json'
+    };
+
+    fetch(apiUrl, { headers: headers })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (file) {
+        var rows = [];
+        var sha  = null;
+        if (file) {
+          sha = file.sha;
+          try { rows = JSON.parse(atob(file.content.replace(/\s/g, ''))); } catch (e) { rows = []; }
+        }
+        rows.push(data);
+        var body = {
+          message: 'track: ' + data.name + ' · ' + data.page,
+          content: btoa(unescape(encodeURIComponent(JSON.stringify(rows, null, 2))))
+        };
+        if (sha) body.sha = sha;
+        return fetch(apiUrl, { method: 'PUT', headers: headers, body: JSON.stringify(body) });
+      })
+      .catch(function () { /* fail silently — email alert already sent */ });
   }
 
   function sendEmail(name, company, position, time, ip, loc, page, url, ua) {

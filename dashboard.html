@@ -314,7 +314,7 @@
   </div>
 
   <script>
-    var TRACKING_URL = 'https://script.google.com/macros/s/AKfycbxthv7-PIJ6rK4yPvtXmPx3flZ9X33PveWPb6TcCN4N44XB1BCSJnJsYiKg2J3BIIXgqw/exec';
+    var TRACKING_URL = 'https://raw.githubusercontent.com/sdunlop-sf/nba-narrative/main/tracking.json';
     var PASS         = 'SFNBA2026!';
     var allRows      = [];
 
@@ -348,40 +348,24 @@
     /* ── INIT ── */
     function init() {
       document.getElementById('dash-content').style.display = 'block';
-      if (!TRACKING_URL || TRACKING_URL.indexOf('REPLACE') !== -1) {
-        document.getElementById('setup-banner').style.display = 'flex';
-        renderEmpty();
-        return;
-      }
       loadData();
     }
 
-    /* ── LOAD DATA (JSONP to bypass CORS) ── */
+    /* ── LOAD DATA ── */
     function loadData() {
-      if (!TRACKING_URL || TRACKING_URL.indexOf('REPLACE') !== -1) return;
       document.getElementById('last-updated').textContent = 'Loading…';
-
-      var cbName = 'nba_dash_cb_' + Date.now();
-      var script = document.createElement('script');
-      var timer  = setTimeout(function () {
-        document.getElementById('last-updated').textContent = 'Timed out — click Refresh to retry';
-        delete window[cbName];
-        if (script.parentNode) script.parentNode.removeChild(script);
-        renderEmpty();
-      }, 20000);
-
-      window[cbName] = function (data) {
-        clearTimeout(timer);
-        delete window[cbName];
-        if (script.parentNode) script.parentNode.removeChild(script);
-        allRows = data.reverse();
-        renderAll();
-        document.getElementById('last-updated').textContent =
-          'Updated ' + new Date().toLocaleTimeString();
-      };
-
-      script.src = TRACKING_URL + '?callback=' + cbName;
-      document.head.appendChild(script);
+      fetch(TRACKING_URL + '?t=' + Date.now())
+        .then(function (r) { return r.ok ? r.json() : []; })
+        .then(function (data) {
+          allRows = data.slice().reverse();
+          renderAll();
+          document.getElementById('last-updated').textContent =
+            'Updated ' + new Date().toLocaleTimeString();
+        })
+        .catch(function () {
+          document.getElementById('last-updated').textContent = 'Failed to load — click Refresh to retry';
+          renderEmpty();
+        });
     }
 
     /* ── RENDER SUMMARY ── */
