@@ -1678,5 +1678,17 @@
     "location": "Sydney, New South Wales, Australia",
     "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
     "returning": "yes"
+  },
+  {
+    "timestamp": "Tue, 10 Mar 2026 23:53:23 GMT",
+    "name": "Stuart Dunlop",
+    "company": "Salesforce",
+    "position": "Solutions",
+    "page": "NBA Narrative · Slides",
+    "url": "https://sdunlop-sf.github.io/nba-narrative/slides.html",
+    "ip": "147.161.214.197",
+    "location": "Sydney, New South Wales, Australia",
+    "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+    "returning": "yes"
   }
 ]
