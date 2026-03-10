@@ -584,100 +584,13 @@
         }
 
         /* ── MOMENTS VENN ── */
-        .venn-outer {
+        .venn-slide-wrap {
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 10px;
-            max-width: 900px;
+            max-width: 860px;
             width: 100%;
-        }
-
-        .venn-stage {
-            position: relative;
-            width: 660px;
-            height: 346px;
-            flex-shrink: 0;
-        }
-
-        /* Scale down on smaller screens */
-        @media (max-width: 1100px) {
-            .venn-stage { transform: scale(0.85); transform-origin: top center; }
-        }
-
-        .vc {
-            position: absolute;
-            width: 260px;
-            height: 260px;
-            border-radius: 50%;
-            border: 1.5px solid;
-        }
-
-        .vc-mkt   { left:   0px; top: 50px; background: rgba(4,225,203,0.08);  border-color: rgba(4,225,203,0.55); }
-        .vc-svc   { left: 200px; top:  0px; background: rgba(0,179,255,0.08); border-color: rgba(0,179,255,0.55); }
-        .vc-sales { left: 400px; top: 50px; background: rgba(252,192,3,0.08); border-color: rgba(252,192,3,0.55); }
-
-        /* Circle labels */
-        .vl {
-            position: absolute;
-            font-size: 10px;
-            font-weight: 800;
-            letter-spacing: 0.12em;
-            text-transform: uppercase;
-            text-align: center;
-            width: 260px;
-            line-height: 1.5;
-        }
-
-        .vl-mkt   { left:   0px; top: 316px; color: var(--teal); }
-        .vl-svc   { left: 200px; top: 266px; color: var(--blue2); }
-        .vl-sales { left: 400px; top: 316px; color: var(--gold); }
-
-        /* Bullets in exclusive zones */
-        .vi {
-            position: absolute;
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-        }
-
-        .vi-mkt   { left:   8px; top: 140px; }
-        .vi-svc   { left: 218px; top:  12px; align-items: center; }
-        .vi-sales { left: 454px; top: 140px; }
-
-        .venn-bullet {
-            font-size: 11px;
-            color: rgba(255,255,255,0.78);
-            white-space: nowrap;
-            padding: 3px 9px;
-            background: rgba(255,255,255,0.05);
-            border-radius: 4px;
-            border: 1px solid rgba(255,255,255,0.09);
-        }
-
-        /* Overlap zone badges */
-        .vo {
-            position: absolute;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 4px;
-        }
-
-        .vo-left  { left: 176px; top: 118px; }
-        .vo-right { left: 382px; top: 118px; }
-
-        .nba-fire {
-            font-size: 9px;
-            font-weight: 800;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            color: var(--blue2);
-            background: rgba(0,179,255,0.15);
-            border: 1px solid rgba(0,179,255,0.4);
-            border-radius: 20px;
-            padding: 4px 12px;
-            white-space: nowrap;
         }
 
         /* ── COMPETITOR TABLE ── */
@@ -775,48 +688,48 @@
 
         <!-- Slide 3: Moments That Matter -->
         <section class="slide">
-            <div class="venn-outer">
-                <div style="text-align: center;">
-                    <div class="accent-line" style="margin: 0 auto 10px;"></div>
+            <div class="venn-slide-wrap">
+                <div style="text-align:center;">
+                    <div class="accent-line" style="margin:0 auto 10px;"></div>
                     <div class="eyebrow">Moments That Matter</div>
-                    <h2 class="big" style="font-size: clamp(18px, 2.2vw, 28px); margin-bottom: 0;">Signals are the moments.<br><span class="hl">Most businesses miss them.</span></h2>
+                    <h2 class="big" style="font-size:clamp(18px,2.2vw,28px);margin-bottom:0;">Signals are the moments.<br><span class="hl">Most businesses miss them.</span></h2>
                 </div>
-                <div class="venn-stage">
-                    <!-- Three circles -->
-                    <div class="vc vc-mkt"></div>
-                    <div class="vc vc-svc"></div>
-                    <div class="vc vc-sales"></div>
+                <svg viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg" style="width:100%;max-width:780px;height:auto;display:block;">
+
+                    <!-- Three overlapping circles -->
+                    <circle cx="200" cy="248" r="145" fill="rgba(4,225,203,0.08)" stroke="rgba(4,225,203,0.55)" stroke-width="1.5"/>
+                    <circle cx="400" cy="148" r="145" fill="rgba(0,179,255,0.08)" stroke="rgba(0,179,255,0.55)" stroke-width="1.5"/>
+                    <circle cx="600" cy="248" r="145" fill="rgba(252,192,3,0.08)"  stroke="rgba(252,192,3,0.55)"  stroke-width="1.5"/>
+
+                    <!-- Marketing exclusive zone bullets (left) -->
+                    <text x="108" y="222" text-anchor="middle" font-size="12" fill="rgba(255,255,255,0.75)" font-family="Segoe UI,Arial,sans-serif">Awareness &amp; display</text>
+                    <text x="108" y="244" text-anchor="middle" font-size="12" fill="rgba(255,255,255,0.75)" font-family="Segoe UI,Arial,sans-serif">Welcome &amp; onboarding</text>
+                    <text x="108" y="266" text-anchor="middle" font-size="12" fill="rgba(255,255,255,0.75)" font-family="Segoe UI,Arial,sans-serif">Behavioural signals</text>
+
+                    <!-- Service exclusive zone bullets (top) -->
+                    <text x="400" y="36" text-anchor="middle" font-size="12" fill="rgba(255,255,255,0.75)" font-family="Segoe UI,Arial,sans-serif">Case management</text>
+                    <text x="400" y="58" text-anchor="middle" font-size="12" fill="rgba(255,255,255,0.75)" font-family="Segoe UI,Arial,sans-serif">Self-service &amp; community</text>
+                    <text x="400" y="80" text-anchor="middle" font-size="12" fill="rgba(255,255,255,0.75)" font-family="Segoe UI,Arial,sans-serif">NPS &amp; loyalty</text>
+
+                    <!-- Sales exclusive zone bullets (right) -->
+                    <text x="692" y="222" text-anchor="middle" font-size="12" fill="rgba(255,255,255,0.75)" font-family="Segoe UI,Arial,sans-serif">Account signals</text>
+                    <text x="692" y="244" text-anchor="middle" font-size="12" fill="rgba(255,255,255,0.75)" font-family="Segoe UI,Arial,sans-serif">Rep outreach</text>
+                    <text x="692" y="266" text-anchor="middle" font-size="12" fill="rgba(255,255,255,0.75)" font-family="Segoe UI,Arial,sans-serif">Account planning</text>
+
+                    <!-- M∩Sv overlap: NBA fires badge -->
+                    <rect x="254" y="182" width="92" height="22" rx="11" fill="rgba(0,179,255,0.15)" stroke="rgba(0,179,255,0.45)" stroke-width="1"/>
+                    <text x="300" y="197" text-anchor="middle" font-size="9" font-weight="bold" fill="rgba(26,185,255,1)" font-family="Segoe UI,Arial,sans-serif" letter-spacing="1">NBA FIRES</text>
+
+                    <!-- Sv∩Sa overlap: NBA fires badge -->
+                    <rect x="454" y="182" width="92" height="22" rx="11" fill="rgba(0,179,255,0.15)" stroke="rgba(0,179,255,0.45)" stroke-width="1"/>
+                    <text x="500" y="197" text-anchor="middle" font-size="9" font-weight="bold" fill="rgba(26,185,255,1)" font-family="Segoe UI,Arial,sans-serif" letter-spacing="1">NBA FIRES</text>
 
                     <!-- Circle labels -->
-                    <div class="vl vl-mkt">Marketing<br>Moments</div>
-                    <div class="vl vl-svc">Service<br>Moments</div>
-                    <div class="vl vl-sales">Sales<br>Moments</div>
+                    <text x="118" y="390" text-anchor="middle" font-size="10" font-weight="bold" fill="rgba(4,225,203,0.9)"  font-family="Segoe UI,Arial,sans-serif" letter-spacing="2">MARKETING MOMENTS</text>
+                    <text x="400" y="307" text-anchor="middle" font-size="10" font-weight="bold" fill="rgba(0,179,255,0.9)" font-family="Segoe UI,Arial,sans-serif" letter-spacing="2">SERVICE MOMENTS</text>
+                    <text x="682" y="390" text-anchor="middle" font-size="10" font-weight="bold" fill="rgba(252,192,3,0.9)"  font-family="Segoe UI,Arial,sans-serif" letter-spacing="2">SALES MOMENTS</text>
 
-                    <!-- Exclusive zone bullets -->
-                    <div class="vi vi-mkt">
-                        <div class="venn-bullet">Awareness &amp; display</div>
-                        <div class="venn-bullet">Welcome &amp; onboarding</div>
-                        <div class="venn-bullet">Behavioural signals</div>
-                    </div>
-                    <div class="vi vi-svc">
-                        <div class="venn-bullet">Case management</div>
-                        <div class="venn-bullet">Self-service &amp; community</div>
-                        <div class="venn-bullet">NPS &amp; loyalty</div>
-                    </div>
-                    <div class="vi vi-sales">
-                        <div class="venn-bullet">Account signals</div>
-                        <div class="venn-bullet">Rep outreach</div>
-                        <div class="venn-bullet">Account planning</div>
-                    </div>
-
-                    <!-- Overlap badges -->
-                    <div class="vo vo-left">
-                        <div class="nba-fire">NBA fires</div>
-                    </div>
-                    <div class="vo vo-right">
-                        <div class="nba-fire">NBA fires</div>
-                    </div>
-                </div>
+                </svg>
             </div>
         </section>
 
