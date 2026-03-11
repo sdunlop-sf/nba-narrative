@@ -258,6 +258,141 @@
         .pill.gold  { background: rgba(252,192,3,0.1); border: 1px solid rgba(252,192,3,0.25); color: var(--gold); }
         .pill.lblue { background: rgba(144,208,254,0.1); border: 1px solid rgba(144,208,254,0.25); color: var(--lblue); }
 
+        /* MTM LAYOUT */
+        .mtm-row {
+            display: flex;
+            align-items: center;
+            gap: 56px;
+            max-width: 1060px;
+            width: 100%;
+        }
+        .mtm-text {
+            flex: 0 0 360px;
+            display: flex;
+            flex-direction: column;
+        }
+        .mtm-text .big { font-size: clamp(28px, 2.8vw, 42px); }
+        .mtm-diagram {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 0;
+        }
+        .mtm-diagram img {
+            width: 100%;
+            max-height: calc(100vh - 140px);
+            object-fit: contain;
+        }
+
+        /* BETTER-TOGETHER GRID */
+        .bt-wrap {
+            display: grid;
+            grid-template-columns: 1fr 64px 1fr;
+            gap: 0;
+            align-items: stretch;
+            max-width: 900px;
+            width: 100%;
+        }
+        .bt-col {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 28px 26px;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+        .bt-divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .bt-plus {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: rgba(0,179,255,0.1);
+            border: 1px solid rgba(0,179,255,0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--blue2);
+        }
+        .bt-col-label {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+        .bt-col-label.blue { color: var(--blue2); }
+        .bt-col-label.teal { color: var(--teal); }
+        .bt-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+        .bt-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            flex-shrink: 0;
+            margin-top: 7px;
+        }
+        .bt-item-title { font-size: 14px; font-weight: 700; margin-bottom: 2px; }
+        .bt-item-desc  { font-size: 12px; color: var(--muted); line-height: 1.55; }
+
+        .bt-outcome {
+            margin-top: 20px;
+            padding: 20px 24px;
+            border-radius: 16px;
+            background: linear-gradient(135deg, rgba(2,42,192,0.3), rgba(4,225,203,0.08));
+            border: 1px solid rgba(4,225,203,0.2);
+            text-align: center;
+        }
+        .bt-outcome-label { font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--teal); margin-bottom: 8px; }
+        .bt-outcome-text  { font-size: 16px; font-weight: 700; line-height: 1.45; }
+
+        /* PLAY SLIDE */
+        .play-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 16px;
+            width: 100%;
+            max-width: 920px;
+        }
+        .play-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 28px 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            transition: background 0.2s;
+        }
+        .play-card:hover { background: var(--card-h); }
+        .play-icon {
+            width: 46px; height: 46px;
+            border-radius: 14px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 22px; flex-shrink: 0;
+        }
+        .play-icon.blue  { background: rgba(26,185,255,0.12); border: 1px solid rgba(26,185,255,0.2); }
+        .play-icon.teal  { background: rgba(4,225,203,0.10);  border: 1px solid rgba(4,225,203,0.2); }
+        .play-icon.gold  { background: rgba(252,192,3,0.10);  border: 1px solid rgba(252,192,3,0.2); }
+        .play-label { font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; }
+        .play-label.blue  { color: var(--blue2); }
+        .play-label.teal  { color: var(--teal); }
+        .play-label.gold  { color: var(--gold); }
+        .play-title { font-size: 18px; font-weight: 800; line-height: 1.2; }
+        .play-body  { font-size: 13.5px; color: var(--muted); line-height: 1.7; }
+
         /* MOBILE */
         @media (max-width: 768px) {
             html, body { overflow-y: auto; height: auto; }
@@ -271,6 +406,11 @@
             .slide.active { display: flex; }
             .big { font-size: clamp(26px, 7vw, 38px); }
             .two-col { flex-direction: column; gap: 4px; max-width: 100%; }
+            .mtm-row { flex-direction: column; gap: 16px; }
+            .mtm-text { flex: none; width: 100%; }
+            .mtm-diagram img { max-height: 50svh; }
+            .bt-wrap { grid-template-columns: 1fr; }
+            .bt-divider { flex-direction: row; }
             .play-grid { grid-template-columns: 1fr; max-width: 100%; }
             .nav-title { display: none; }
             .nav-divider { display: none; }
@@ -285,117 +425,119 @@
 
     <div id="deck" class="deck">
 
-        <!-- Slide 1: The Problem -->
+        <!-- Slide 1: Title + Moments That Matter -->
         <section class="slide">
-            <div class="two-col">
-                <div class="col">
-                    <div class="accent-line"></div>
-                    <div class="eyebrow">The Opportunity in Front of Us</div>
-                    <h1 class="big">Customers are<br>telling you everything.<br><span class="hl">Most companies<br>can't act on it.</span></h1>
+            <div class="mtm-row">
+                <div class="mtm-text">
+                    <div class="accent-line" style="margin-bottom: 16px;"></div>
+                    <div class="eyebrow">Agentic Decisioning · Salesforce</div>
+                    <h1 class="big">Stop guessing.<br><span class="hl">Start deciding.</span></h1>
+                    <p class="sub">Every customer interaction fires a signal. Across sales, service and marketing — they're telling you exactly what they need. Most go unanswered. That's the gap we close.</p>
                 </div>
-                <div class="col" style="display: flex; flex-direction: column; gap: 24px;">
-                    <div class="card blue">
-                        <div class="card-num" style="color: var(--blue2);">&lt;1%</div>
-                        <div class="card-title">Of customer data ever drives a decision</div>
-                        <div class="card-desc">Signals fire. Moments pass. Revenue walks out the door.</div>
-                    </div>
-                    <div class="card teal">
-                        <div class="card-num" style="color: var(--teal);">6 weeks</div>
-                        <div class="card-title">Average campaign time-to-market</div>
-                        <div class="card-desc">By the time the message lands, the moment is gone.</div>
-                    </div>
-                    <div class="card gold">
-                        <div class="card-num" style="color: var(--gold);">76%</div>
-                        <div class="card-title">Of customers expect personalisation</div>
-                        <div class="card-desc">Generic outreach signals you don't know them. They notice.</div>
-                    </div>
+                <div class="mtm-diagram">
+                    <img src="moments.svg" alt="Moments That Matter — signals across Sales, Service and Marketing">
                 </div>
             </div>
             <div class="star-deco" style="top: 100px; right: 120px;"><img src="sf-star-gold.png" alt=""></div>
         </section>
 
-        <!-- Slide 2: Why Salesforce -->
+        <!-- Slide 2: Core + Digi Better Together -->
         <section class="slide">
-            <div style="max-width: 940px; width: 100%;">
+            <div style="max-width: 900px; width: 100%;">
                 <div class="accent-line" style="margin: 0 auto 14px;"></div>
-                <div class="eyebrow" style="text-align: center; margin-bottom: 10px;">Why We Win</div>
-                <h2 class="big" style="text-align: center; font-size: clamp(28px, 3.2vw, 48px); margin-bottom: 40px;">
-                    The only platform that goes from<br><span class="hl">signal to action</span> — <span class="hl-teal">in one system.</span>
+                <div class="eyebrow" style="text-align: center; margin-bottom: 10px;">Armed to Win Together</div>
+                <h2 class="big" style="text-align: center; font-size: clamp(24px, 2.8vw, 42px); margin-bottom: 28px;">
+                    Core owns the relationship.<br><span class="hl">Digi owns the engine.</span><br><span class="hl-teal">Together we sell the whole platform.</span>
                 </h2>
-                <div style="display: grid; grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr; gap: 0; align-items: center; max-width: 860px; margin: 0 auto 40px;">
-                    <div style="text-align: center; padding: 20px 16px; background: var(--card); border: 1px solid var(--border); border-radius: 16px;">
-                        <div style="font-size: 28px; margin-bottom: 10px;">🔗</div>
-                        <div style="font-size: 12px; font-weight: 700; color: var(--blue2); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 6px;">Data Cloud</div>
-                        <div style="font-size: 13px; color: var(--muted); line-height: 1.5;">Unified customer profile, real time</div>
+                <div class="bt-wrap">
+                    <div class="bt-col">
+                        <div class="bt-col-label blue">Core brings</div>
+                        <div class="bt-item">
+                            <div class="bt-dot" style="background: var(--blue2);"></div>
+                            <div>
+                                <div class="bt-item-title">The executive relationship</div>
+                                <div class="bt-item-desc">You own the account. You open the door to the CxO conversation.</div>
+                            </div>
+                        </div>
+                        <div class="bt-item">
+                            <div class="bt-dot" style="background: var(--blue2);"></div>
+                            <div>
+                                <div class="bt-item-title">Sales &amp; Service Cloud</div>
+                                <div class="bt-item-desc">The CRM layer — where reps work and where Agentforce surfaces decisions.</div>
+                            </div>
+                        </div>
+                        <div class="bt-item">
+                            <div class="bt-dot" style="background: var(--blue2);"></div>
+                            <div>
+                                <div class="bt-item-title">Agentforce</div>
+                                <div class="bt-item-desc">The digital sales and service rep that acts on every decision — at scale.</div>
+                            </div>
+                        </div>
                     </div>
-                    <div style="color: rgba(0,179,255,0.4); font-size: 22px; padding: 0 8px; text-align: center;">›</div>
-                    <div style="text-align: center; padding: 20px 16px; background: var(--card); border: 1px solid var(--border); border-radius: 16px;">
-                        <div style="font-size: 28px; margin-bottom: 10px;">🧠</div>
-                        <div style="font-size: 12px; font-weight: 700; color: var(--teal); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 6px;">Einstein Studio</div>
-                        <div style="font-size: 13px; color: var(--muted); line-height: 1.5;">Scores every action, picks the winner</div>
+                    <div class="bt-divider">
+                        <div class="bt-plus">+</div>
                     </div>
-                    <div style="color: rgba(0,179,255,0.4); font-size: 22px; padding: 0 8px; text-align: center;">›</div>
-                    <div style="text-align: center; padding: 20px 16px; background: var(--card); border: 1px solid var(--border); border-radius: 16px;">
-                        <div style="font-size: 28px; margin-bottom: 10px;">⚡</div>
-                        <div style="font-size: 12px; font-weight: 700; color: var(--gold); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 6px;">Agentforce</div>
-                        <div style="font-size: 13px; color: var(--muted); line-height: 1.5;">Acts on it — every channel, at scale</div>
-                    </div>
-                    <div style="color: rgba(0,179,255,0.4); font-size: 22px; padding: 0 8px; text-align: center;">›</div>
-                    <div style="text-align: center; padding: 20px 16px; background: var(--card); border: 1px solid var(--border); border-radius: 16px;">
-                        <div style="font-size: 28px; margin-bottom: 10px;">📈</div>
-                        <div style="font-size: 12px; font-weight: 700; color: var(--lblue); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 6px;">Feedback Loop</div>
-                        <div style="font-size: 13px; color: var(--muted); line-height: 1.5;">Every outcome trains the model</div>
+                    <div class="bt-col">
+                        <div class="bt-col-label teal">Digi brings</div>
+                        <div class="bt-item">
+                            <div class="bt-dot" style="background: var(--teal);"></div>
+                            <div>
+                                <div class="bt-item-title">Data Cloud</div>
+                                <div class="bt-item-desc">The signal — unified customer profile, real time. The fuel for every decision.</div>
+                            </div>
+                        </div>
+                        <div class="bt-item">
+                            <div class="bt-dot" style="background: var(--teal);"></div>
+                            <div>
+                                <div class="bt-item-title">Marketing Cloud + Sales Programs</div>
+                                <div class="bt-item-desc">The channel — deliver the winning action across every touchpoint.</div>
+                            </div>
+                        </div>
+                        <div class="bt-item">
+                            <div class="bt-dot" style="background: var(--teal);"></div>
+                            <div>
+                                <div class="bt-item-title">Promotions &amp; Loyalty</div>
+                                <div class="bt-item-desc">The offer — the right incentive at the right moment, scored and selected by AI.</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div style="text-align: center; border-top: 1px solid rgba(0,179,255,0.1); padding-top: 28px;">
-                    <p style="font-size: 15px; color: rgba(255,255,255,0.55); margin-bottom: 16px; letter-spacing: 0.04em; text-transform: uppercase; font-size: 11px; font-weight: 700;">No competitor has all four layers natively connected</p>
-                    <div class="pill-row" style="justify-content: center;">
-                        <span class="pill blue">Pega — no CRM, no execution</span>
-                        <span class="pill lblue">Microsoft — three separate products</span>
-                        <span class="pill teal">Google — data only, no sales motion</span>
-                    </div>
+                <div class="bt-outcome">
+                    <div class="bt-outcome-label">What you unlock together</div>
+                    <div class="bt-outcome-text">Signal → Score → Decide → Act — <span style="color: var(--teal);">one connected platform, one account team, one deal.</span></div>
                 </div>
             </div>
         </section>
 
         <!-- Slide 3: The Play -->
         <section class="slide">
-            <div style="max-width: 960px; width: 100%;">
-                <div class="accent-line" style="margin: 0 auto 14px;"></div>
-                <div class="eyebrow" style="text-align: center; margin-bottom: 10px;">The Play — Armed to Win Together</div>
-                <h2 class="big" style="text-align: center; font-size: clamp(26px, 3vw, 44px); margin-bottom: 36px;">
-                    Three conversations.<br><span class="hl">One agenda: activate the data they already have.</span>
-                </h2>
+            <div style="max-width: 920px; width: 100%;">
+                <div style="text-align: center; margin-bottom: 32px;">
+                    <div class="accent-line" style="margin: 0 auto 14px;"></div>
+                    <div class="eyebrow">The Play</div>
+                    <h2 class="big" style="font-size: clamp(24px, 2.8vw, 40px); margin-bottom: 10px;">
+                        "You already have the signals.<br><span class="hl">What happens next?"</span>
+                    </h2>
+                    <p style="font-size: 15px; color: var(--muted); max-width: 640px; margin: 0 auto; line-height: 1.7;">Every CxO has personalisation or next best action on their strategic roadmap. Almost none of them know how to operationalise it. That's your opening.</p>
+                </div>
                 <div class="play-grid">
                     <div class="play-card">
                         <div class="play-icon blue">🎯</div>
                         <div class="play-label blue">Who to target</div>
-                        <div class="play-title">The right champion</div>
-                        <div class="play-body">CMOs and CDOs sitting on Data Cloud but not activating it. Marketing ops leaders frustrated by campaign lag. CX owners who can see churn but can't move fast enough.</div>
-                        <div class="pill-row">
-                            <span class="pill blue">Data Cloud customer</span>
-                            <span class="pill lblue">Marketing ops</span>
-                        </div>
+                        <div class="play-title">The frustrated CMO or CDO</div>
+                        <div class="play-body">Data Cloud customers not activating it. Marketing ops leaders drowning in campaign lag. CX owners who can see churn signals but can't move fast enough to act.</div>
                     </div>
                     <div class="play-card">
-                        <div class="play-icon teal">💬</div>
-                        <div class="play-label teal">What to say</div>
-                        <div class="play-title">The opening line</div>
-                        <div class="play-body">"You already have the signals. Every customer interaction is telling you something. The question is — what happens next? Right now: nothing. We can change that."</div>
-                        <div class="pill-row">
-                            <span class="pill teal">Signal to action</span>
-                            <span class="pill teal">Platform + AI + Agent</span>
-                        </div>
+                        <div class="play-icon teal">⚡</div>
+                        <div class="play-label teal">Marketing digital labour</div>
+                        <div class="play-title">Replace the campaign calendar</div>
+                        <div class="play-body">An agent monitors every customer continuously. When a moment fires — renewal, risk, opportunity — it determines the NBA, builds the message, and delivers it. No briefs. No lag. No batch.</div>
                     </div>
                     <div class="play-card">
-                        <div class="play-icon gold">🏆</div>
-                        <div class="play-label gold">The prize</div>
-                        <div class="play-title">What we're building toward</div>
-                        <div class="play-body">ANZ saved 1 month per banker per year. FedEx achieved 2,000% ROI. Casey's sent 600M personalised messages. That's a full platform conversation — Data Cloud, Einstein, Agentforce.</div>
-                        <div class="pill-row">
-                            <span class="pill gold">Data Cloud expansion</span>
-                            <span class="pill gold">Agentforce + Einstein</span>
-                        </div>
+                        <div class="play-icon gold">🤝</div>
+                        <div class="play-label gold">Sales digital labour</div>
+                        <div class="play-title">Give reps the conversation to have</div>
+                        <div class="play-body">Agentforce surfaces the scored insight directly in the rep's flow — who to call, what to say, why now. Reps spend time closing, not searching. Agents handle the volume in between.</div>
                     </div>
                 </div>
             </div>
