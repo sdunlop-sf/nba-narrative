@@ -76,20 +76,36 @@
             padding: 64px 108px 88px;
             opacity: 0;
             pointer-events: none;
-            transition: opacity 0.45s cubic-bezier(0.4, 0, 0.2, 1), transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
-            transform: translateY(22px);
+            will-change: transform, opacity;
         }
 
+        /* ── ENTRANCE STATES (set before transition begins) ── */
+        .slide.will-rise    { transform: translateY(48px) scale(0.99); }
+        .slide.will-rise-r  { transform: translateY(-40px) scale(0.99); }
+        .slide.will-slide   { transform: translateX(64px); }
+        .slide.will-slide-r { transform: translateX(-64px); }
+        .slide.will-zoom    { transform: scale(0.91); }
+        .slide.will-zoom-r  { transform: scale(1.08); }
+
+        /* ── ACTIVE STATE ── */
         .slide.active {
             opacity: 1;
             pointer-events: all;
-            transform: translateY(0);
+            transform: none;
+            transition: opacity 0.58s cubic-bezier(0.16, 1, 0.3, 1),
+                        transform 0.58s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .slide.exit {
+        /* ── EXIT STATES (direction-aware) ── */
+        .slide.exit-fwd {
             opacity: 0;
-            transform: translateY(-18px);
-            transition: opacity 0.26s ease, transform 0.26s ease;
+            transform: translateX(-36px) scale(0.97);
+            transition: opacity 0.22s ease, transform 0.22s ease;
+        }
+        .slide.exit-back {
+            opacity: 0;
+            transform: translateX(36px) scale(0.97);
+            transition: opacity 0.22s ease, transform 0.22s ease;
         }
 
         /* ── NAV BAR ── */
@@ -740,7 +756,7 @@
     <div id="deck" class="deck">
 
         <!-- Slide 1: Title -->
-        <section class="slide">
+        <section class="slide" data-anim="zoom">
             <div style="text-align: center; max-width: 820px;">
                 <div class="accent-line" style="margin: 0 auto 20px;"></div>
                 <div class="eyebrow">Salesforce × Direct Connect · Conversion Intelligence</div>
@@ -753,7 +769,7 @@
         </section>
 
         <!-- Slide 2: The Reality -->
-        <section class="slide">
+        <section class="slide" data-anim="rise">
             <div class="two-col">
                 <div class="col">
                     <div class="accent-line"></div>
@@ -769,7 +785,7 @@
         </section>
 
         <!-- Slide 3: Where Direct Connect Is Today -->
-        <section class="slide">
+        <section class="slide" data-anim="rise">
             <div style="max-width: 900px;">
                 <div class="accent-line-blue" style="margin: 0 auto 14px;"></div>
                 <div class="eyebrow" style="text-align: center; margin-bottom: 36px;">Where Direct Connect Is Today</div>
@@ -799,7 +815,7 @@
         </section>
 
         <!-- Slide 4: The Opportunity -->
-        <section class="slide">
+        <section class="slide" data-anim="zoom">
             <div class="two-col" style="align-items: flex-start;">
                 <div class="col">
                     <div class="accent-line"></div>
@@ -825,7 +841,7 @@
         </section>
 
         <!-- Slide 5: How It Works -->
-        <section class="slide">
+        <section class="slide" data-anim="slide">
             <div style="max-width: 1200px; width: 100%;">
                 <div class="accent-line-blue" style="margin: 0 auto 14px;"></div>
                 <div class="eyebrow" style="text-align: center; margin-bottom: 28px;">How It Works · A Direct Connect Lead</div>
@@ -869,7 +885,7 @@
         </section>
 
         <!-- Slide 6: The Platform -->
-        <section class="slide">
+        <section class="slide" data-anim="rise">
             <div style="max-width: 900px;">
                 <div class="accent-line" style="margin: 0 auto 14px;"></div>
                 <div class="eyebrow" style="text-align: center; margin-bottom: 8px;">The Platform</div>
@@ -913,7 +929,7 @@
         </section>
 
         <!-- Slide 7: Crawl / Walk / Run -->
-        <section class="slide">
+        <section class="slide" data-anim="slide">
             <div style="max-width: 960px;">
                 <div class="accent-line" style="margin: 0 auto 14px;"></div>
                 <div class="eyebrow" style="text-align: center; margin-bottom: 36px;">The Roadmap · Crawl · Walk · Run</div>
@@ -950,7 +966,7 @@
         </section>
 
         <!-- Slide 8: The 4 Priority Use Cases -->
-        <section class="slide">
+        <section class="slide" data-anim="zoom">
             <div style="max-width: 900px;">
                 <div class="accent-line-blue" style="margin: 0 auto 14px;"></div>
                 <div class="eyebrow" style="text-align: center; margin-bottom: 36px;">The 4 Priority Use Cases</div>
@@ -1032,18 +1048,38 @@
             prog.appendChild(dot);
         }
 
+        var ANIMS = {
+            'rise':  ['will-rise',   'will-rise-r'],
+            'slide': ['will-slide',  'will-slide-r'],
+            'zoom':  ['will-zoom',   'will-zoom-r']
+        };
+
         function goTo(idx) {
             if (busy || idx === current || idx < 0 || idx >= total) return;
             busy = true;
-            slides[current].classList.add('exit');
-            var prev = current;
-            current = idx;
-            setTimeout(function() {
-                slides[prev].classList.remove('active', 'exit');
+
+            var dir      = idx > current ? 1 : -1;
+            var prev     = current;
+            current      = idx;
+            var anim     = slides[current].dataset.anim || 'rise';
+            var preClass = ANIMS[anim][dir > 0 ? 0 : 1];
+
+            // Exit outgoing slide (direction-aware)
+            slides[prev].classList.add(dir > 0 ? 'exit-fwd' : 'exit-back');
+
+            // Snap incoming slide to its pre-enter position (no transition)
+            slides[current].classList.add(preClass);
+            slides[current].offsetHeight; // force reflow
+
+            setTimeout(function () {
+                slides[prev].classList.remove('active', 'exit-fwd', 'exit-back');
                 slides[current].classList.add('active');
                 updateUI();
-                setTimeout(function() { busy = false; }, 450);
-            }, 260);
+                setTimeout(function () {
+                    slides[current].classList.remove(preClass);
+                    busy = false;
+                }, 580);
+            }, 220);
         }
 
         function navigate(dir) { goTo(current + dir); }
