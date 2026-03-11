@@ -390,7 +390,7 @@
 
       document.getElementById('s-total').innerHTML  = '<span>' + total + '</span>';
       document.getElementById('s-unique').innerHTML = '<span>' + unique + '</span>';
-      document.getElementById('s-top').textContent  = topPage.replace(' Narrative','').replace('NBA ','');
+      document.getElementById('s-top').textContent  = topPage.replace(/^[^·]*·\s*/, '') || topPage;
       document.getElementById('s-last').textContent = last;
 
       renderBreakdown(pageCounts, total);
