@@ -393,6 +393,109 @@
         .play-title { font-size: 18px; font-weight: 800; line-height: 1.2; }
         .play-body  { font-size: 13.5px; color: var(--muted); line-height: 1.7; }
 
+        /* DECISIONING ENGINE SLIDE */
+        .dec-wrap {
+            display: flex;
+            align-items: stretch;
+            gap: 0;
+            max-width: 980px;
+            width: 100%;
+        }
+        .dec-panel {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .dec-divider {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 10px;
+            color: rgba(0,179,255,0.3);
+            font-size: 22px;
+            flex-shrink: 0;
+        }
+        .dec-panel-label {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+        .dec-trigger {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 11px 14px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .dec-trigger-icon { font-size: 18px; flex-shrink: 0; }
+        .dec-trigger-title { font-size: 13px; font-weight: 700; margin-bottom: 1px; }
+        .dec-trigger-desc  { font-size: 11px; color: var(--muted); line-height: 1.4; }
+        .dec-engine {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 18px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            flex: 1;
+        }
+        .dec-step {
+            border-radius: 10px;
+            padding: 11px 14px;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+        .dec-step.eligible { background: rgba(26,185,255,0.07);  border: 1px solid rgba(26,185,255,0.15); }
+        .dec-step.score    { background: rgba(4,225,203,0.07);   border: 1px solid rgba(4,225,203,0.15); }
+        .dec-step.gate     { background: rgba(252,192,3,0.07);   border: 1px solid rgba(252,192,3,0.15); }
+        .dec-step-num {
+            width: 22px; height: 22px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 10px; font-weight: 700; flex-shrink: 0; margin-top: 1px;
+        }
+        .eligible .dec-step-num { background: rgba(26,185,255,0.15); color: var(--blue2); }
+        .score    .dec-step-num { background: rgba(4,225,203,0.15);  color: var(--teal); }
+        .gate     .dec-step-num { background: rgba(252,192,3,0.15);  color: var(--gold); }
+        .dec-step-title { font-size: 13px; font-weight: 700; margin-bottom: 2px; }
+        .dec-step-desc  { font-size: 11.5px; color: var(--muted); line-height: 1.5; }
+        .dec-winner {
+            background: linear-gradient(135deg, rgba(4,225,203,0.1), rgba(2,42,192,0.2));
+            border: 1px solid rgba(4,225,203,0.25);
+            border-radius: 14px;
+            padding: 16px 18px;
+            text-align: center;
+        }
+        .dec-winner-label { font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--teal); margin-bottom: 6px; }
+        .dec-winner-title { font-size: 16px; font-weight: 800; margin-bottom: 4px; }
+        .dec-winner-desc  { font-size: 12px; color: var(--muted); line-height: 1.5; }
+        .dec-channel {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 10px 14px;
+            font-size: 12px;
+            font-weight: 600;
+            text-align: center;
+            color: rgba(255,255,255,0.7);
+        }
+        .dec-feedback {
+            background: rgba(144,208,254,0.06);
+            border: 1px solid rgba(144,208,254,0.15);
+            border-radius: 10px;
+            padding: 11px 14px;
+            font-size: 12px;
+            color: var(--lblue);
+            text-align: center;
+            font-weight: 600;
+        }
+
         /* COMP TABLE */
         .comp-wrap { width: 100%; max-width: 1060px; overflow-x: auto; }
         .comp-table { width: 100%; border-collapse: separate; border-spacing: 0; min-width: 760px; }
@@ -522,7 +625,100 @@
             </div>
         </section>
 
-        <!-- Slide 3: The Play -->
+        <!-- Slide 3: How Decisioning Works -->
+        <section class="slide">
+            <div style="max-width: 980px; width: 100%;">
+                <div class="accent-line" style="margin: 0 auto 14px;"></div>
+                <div class="eyebrow" style="text-align: center; margin-bottom: 8px;">Under the Hood</div>
+                <h2 class="big" style="text-align: center; font-size: clamp(22px, 2.6vw, 38px); margin-bottom: 28px;">
+                    Every customer. Every signal.<br><span class="hl">One winning action.</span>
+                </h2>
+                <div class="dec-wrap">
+
+                    <!-- Panel 1: Triggers -->
+                    <div class="dec-panel">
+                        <div class="dec-panel-label" style="color: var(--blue2);">What fires it</div>
+                        <div class="dec-trigger">
+                            <div class="dec-trigger-icon">📉</div>
+                            <div>
+                                <div class="dec-trigger-title">Churn Signal</div>
+                                <div class="dec-trigger-desc">Usage drop, missed payment, complaint raised</div>
+                            </div>
+                        </div>
+                        <div class="dec-trigger">
+                            <div class="dec-trigger-icon">📈</div>
+                            <div>
+                                <div class="dec-trigger-title">Upsell Signal</div>
+                                <div class="dec-trigger-desc">Limit hit, product spike, segment upgrade</div>
+                            </div>
+                        </div>
+                        <div class="dec-trigger">
+                            <div class="dec-trigger-icon">🔁</div>
+                            <div>
+                                <div class="dec-trigger-title">Lifecycle Event</div>
+                                <div class="dec-trigger-desc">Renewal due, onboarding complete, anniversary</div>
+                            </div>
+                        </div>
+                        <div class="dec-trigger">
+                            <div class="dec-trigger-icon">🧩</div>
+                            <div>
+                                <div class="dec-trigger-title">Segment Change</div>
+                                <div class="dec-trigger-desc">Customer enters or exits a high-value segment</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dec-divider">›</div>
+
+                    <!-- Panel 2: Engine -->
+                    <div class="dec-panel">
+                        <div class="dec-panel-label" style="color: var(--teal);">What the engine does — for every possible action</div>
+                        <div class="dec-engine">
+                            <div class="dec-step eligible">
+                                <div class="dec-step-num">1</div>
+                                <div>
+                                    <div class="dec-step-title">Eligibility check</div>
+                                    <div class="dec-step-desc">Is this customer in the right segment? Any frequency caps or active exclusions?</div>
+                                </div>
+                            </div>
+                            <div class="dec-step score">
+                                <div class="dec-step-num">2</div>
+                                <div>
+                                    <div class="dec-step-title">AI scores the action</div>
+                                    <div class="dec-step-desc">Einstein calculates the propensity for this customer to respond to this specific action.</div>
+                                </div>
+                            </div>
+                            <div class="dec-step gate">
+                                <div class="dec-step-num">3</div>
+                                <div>
+                                    <div class="dec-step-title">Threshold gate</div>
+                                    <div class="dec-step-desc">Score × business value above the bar? Stay in the race. Below? Discard.</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dec-divider">›</div>
+
+                    <!-- Panel 3: Output -->
+                    <div class="dec-panel">
+                        <div class="dec-panel-label" style="color: var(--gold);">What comes out</div>
+                        <div class="dec-winner">
+                            <div class="dec-winner-label">One winner per customer</div>
+                            <div class="dec-winner-title">Highest score wins</div>
+                            <div class="dec-winner-desc">The top-ranked action is selected. One customer, one moment, one best thing to do next.</div>
+                        </div>
+                        <div class="dec-channel">Rep prompt in CRM</div>
+                        <div class="dec-channel">Digital message or offer</div>
+                        <div class="dec-channel">Loyalty or retention action</div>
+                        <div class="dec-feedback">↩ Outcome feeds back — model improves with every interaction</div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 4: The Play -->
         <section class="slide">
             <div style="max-width: 920px; width: 100%;">
                 <div style="text-align: center; margin-bottom: 32px;">
@@ -625,7 +821,7 @@
         <div class="nav-dots" role="tablist" id="progress"></div>
         <div class="nav-controls">
             <button class="nav-btn" id="btn-prev" aria-label="Previous slide">‹</button>
-            <span class="nav-counter" id="counter">1 / 4</span>
+            <span class="nav-counter" id="counter">1 / 5</span>
             <button class="nav-btn" id="btn-next" aria-label="Next slide">›</button>
         </div>
     </nav>
