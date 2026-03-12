@@ -2722,5 +2722,17 @@
     "location": "Auckland, Auckland, New Zealand",
     "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
     "returning": "no"
+  },
+  {
+    "timestamp": "Thu, 12 Mar 2026 03:22:06 GMT",
+    "name": "Stuart Dunlop",
+    "company": "Salesforce",
+    "position": "Solutions",
+    "page": "NBA Narrative · AE Vision",
+    "url": "https://sdunlop-sf.github.io/nba-narrative/ae-vision.html",
+    "ip": "165.225.232.249",
+    "location": "Sydney, New South Wales, Australia",
+    "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+    "returning": "yes"
   }
 ]
