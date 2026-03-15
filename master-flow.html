@@ -11,22 +11,25 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --navy:   #032D60;
-      --navy2:  #021845;
-      --blue:   #00B3FF;
-      --blue2:  #1AB9FF;
+      --navy:   #CFE9FE;
+      --navy2:  #EAF5FE;
+      --blue:   #022AC0;
+      --blue2:  #022AC0;
       --royal:  #022AC0;
       --teal:   #04E1CB;
+      --teal-d: #007A72;
       --lblue:  #90D0FE;
-      --gold:   #FCC003;
-      --white:  #FFFFFF;
-      --green:  #10B981;
-      --red:    #EF4444;
-      --card:   rgba(2, 39, 117, 0.22);
-      --card-h: rgba(2, 39, 117, 0.38);
-      --border: rgba(0, 179, 255, 0.14);
-      --muted:  rgba(255, 255, 255, 0.60);
-      --text:   rgba(255, 255, 255, 0.88);
+      --lblue-d: #0057B8;
+      --gold:   #F6BC06;
+      --gold-d: #C89000;
+      --white:  #002775;
+      --green:  #007A72;
+      --red:    #C41C00;
+      --card:   rgba(0, 39, 117, 0.06);
+      --card-h: rgba(0, 39, 117, 0.12);
+      --border: rgba(0, 39, 117, 0.14);
+      --muted:  rgba(0, 39, 117, 0.6);
+      --text:   rgba(0, 39, 117, 0.82);
       --mono:   'JetBrains Mono', 'Courier New', monospace;
     }
 
@@ -34,9 +37,9 @@
 
     body {
       background:
-        radial-gradient(ellipse 90% 70% at 100% 0%, rgba(2,42,192,0.28) 0%, transparent 55%),
-        radial-gradient(ellipse 60% 50% at 0% 100%, rgba(4,225,203,0.06) 0%, transparent 50%),
-        linear-gradient(170deg, #032D60 0%, #021340 60%, #032D60 100%);
+        radial-gradient(ellipse 90% 70% at 100% 0%, rgba(2, 42, 192, 0.07) 0%, transparent 55%),
+        radial-gradient(ellipse 60% 50% at 0% 100%, rgba(4, 225, 203, 0.04) 0%, transparent 50%),
+        linear-gradient(170deg, #CFE9FE 0%, #D8EFFE 60%, #CFE9FE 100%);
       background-attachment: fixed;
       color: var(--white);
       font-family: 'Segoe UI', Arial, sans-serif;
@@ -53,7 +56,7 @@
       inset: 0;
       z-index: 0;
       pointer-events: none;
-      opacity: 0.025;
+      opacity: 0.012;
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
       background-repeat: repeat;
       background-size: 200px 200px;
@@ -68,9 +71,9 @@
       height: 56px;
       display: flex; align-items: center; justify-content: space-between;
       padding: 0 40px;
-      background: rgba(3, 22, 55, 0.96);
+      background: rgba(255, 255, 255, 0.92);
       backdrop-filter: blur(20px);
-      border-bottom: 1px solid rgba(0, 179, 255, 0.1);
+      border-bottom: 1px solid rgba(0, 39, 117, 0.1);
     }
 
     .nav-brand {
@@ -81,20 +84,20 @@
 
     .nav-divider {
       width: 1px; height: 18px;
-      background: rgba(255, 255, 255, 0.12);
+      background: rgba(0, 39, 117, 0.14);
     }
 
     .nav-title {
       font-size: 11px; font-weight: 700; letter-spacing: 0.08em;
-      text-transform: uppercase; color: rgba(255,255,255,0.55);
+      text-transform: uppercase; color: rgba(0, 39, 117, 0.5);
     }
 
-    .nav-sub { font-size: 11px; color: rgba(255,255,255,0.3); }
+    .nav-sub { font-size: 11px; color: rgba(0, 39, 117, 0.35); }
 
     .nav-pill {
       font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
-      background: rgba(0,179,255,0.1); color: var(--blue2);
-      border: 1px solid rgba(0,179,255,0.25); border-radius: 20px;
+      background: rgba(2, 42, 192, 0.08); color: var(--blue2);
+      border: 1px solid rgba(2, 42, 192, 0.22); border-radius: 20px;
       padding: 3px 12px;
     }
 
@@ -124,7 +127,7 @@
     }
 
     .hero h1 .hl {
-      background: linear-gradient(135deg, var(--blue2), var(--teal));
+      background: linear-gradient(135deg, var(--blue2), var(--lblue-d));
       -webkit-background-clip: text; -webkit-text-fill-color: transparent;
       background-clip: text;
     }
@@ -136,7 +139,7 @@
 
     /* ── FLOW STRIP ── */
     .flow-strip-wrap {
-      background: rgba(2, 39, 117, 0.18);
+      background: rgba(0, 39, 117, 0.05);
       border-top: 1px solid var(--border);
       border-bottom: 1px solid var(--border);
       padding: 28px 40px;
@@ -167,7 +170,7 @@
 
     .fs-arrow {
       flex-shrink: 0;
-      color: rgba(0,179,255,0.3);
+      color: rgba(2, 42, 192, 0.25);
       font-size: 18px;
       padding: 0 4px;
       margin-bottom: 22px;
@@ -183,7 +186,7 @@
     .section + .section { border-top: 1px solid var(--border); }
 
     .section-alt {
-      background: rgba(2, 39, 117, 0.12);
+      background: rgba(0, 39, 117, 0.04);
       border-top: 1px solid var(--border);
       border-bottom: 1px solid var(--border);
     }
@@ -232,7 +235,7 @@
       content: '';
       position: absolute; top: 0; left: 0; right: 0; height: 1px;
       background: linear-gradient(90deg, var(--blue2), transparent);
-      opacity: 0.5;
+      opacity: 0.4;
     }
 
     .trigger-primary-label {
@@ -255,7 +258,7 @@
       transition: background 0.2s, border-color 0.2s;
     }
 
-    .trigger-alt:hover { background: var(--card-h); border-color: rgba(0,179,255,0.28); }
+    .trigger-alt:hover { background: var(--card-h); border-color: rgba(2, 42, 192, 0.28); }
 
     .trigger-alt-icon { font-size: 20px; margin-bottom: 10px; }
     .trigger-alt-title { font-size: 13px; font-weight: 700; color: var(--white); margin-bottom: 6px; }
@@ -270,7 +273,7 @@
     }
 
     .catalogue-header {
-      background: rgba(0,179,255,0.06);
+      background: rgba(2, 42, 192, 0.04);
       border-bottom: 1px solid var(--border);
       padding: 14px 24px;
       display: flex; align-items: center; gap: 10px;
@@ -285,7 +288,7 @@
       display: grid; grid-template-columns: 40px 1fr 1fr 80px;
       align-items: center; gap: 16px;
       padding: 11px 24px;
-      border-bottom: 1px solid rgba(255,255,255,0.04);
+      border-bottom: 1px solid rgba(0, 39, 117, 0.05);
       font-size: 12px;
     }
 
@@ -297,8 +300,8 @@
     .cr-criteria { color: var(--muted); }
     .cr-model {
       font-family: var(--mono); font-size: 10px;
-      background: rgba(144,208,254,0.1); color: var(--lblue);
-      border: 1px solid rgba(144,208,254,0.2);
+      background: rgba(0, 87, 184, 0.08); color: var(--lblue-d);
+      border: 1px solid rgba(0, 87, 184, 0.18);
       border-radius: 6px; padding: 2px 8px; text-align: center;
     }
 
@@ -327,7 +330,7 @@
     }
 
     .loop-step {
-      background: rgba(2, 39, 117, 0.35);
+      background: rgba(0, 39, 117, 0.06);
       border: 1px solid var(--border);
       border-radius: 14px;
       padding: 20px;
@@ -347,11 +350,11 @@
       border-radius: 20px; padding: 3px 10px;
     }
 
-    .loop-arr { text-align: center; color: rgba(0,179,255,0.3); font-size: 18px; }
+    .loop-arr { text-align: center; color: rgba(2, 42, 192, 0.25); font-size: 18px; }
 
     .eligibility-rules {
-      background: rgba(4, 225, 203, 0.05);
-      border: 1px solid rgba(4, 225, 203, 0.18);
+      background: rgba(0, 122, 114, 0.05);
+      border: 1px solid rgba(0, 122, 114, 0.18);
       border-radius: 12px;
       padding: 18px 22px;
       margin-top: 16px;
@@ -359,7 +362,7 @@
 
     .eligibility-rules .er-label {
       font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
-      color: var(--teal); margin-bottom: 12px;
+      color: var(--teal-d); margin-bottom: 12px;
     }
 
     .er-rule {
@@ -372,8 +375,8 @@
 
     /* ── CODE BLOCK ── */
     .code-block {
-      background: rgba(2, 10, 30, 0.7);
-      border: 1px solid rgba(0,179,255,0.15);
+      background: rgba(2, 10, 30, 0.88);
+      border: 1px solid rgba(0, 39, 117, 0.2);
       border-radius: 12px;
       padding: 20px 24px;
       font-family: var(--mono);
@@ -383,11 +386,11 @@
       margin: 20px 0;
     }
 
-    .code-block .c-comment { color: rgba(0,179,255,0.3); }
-    .code-block .c-key { color: var(--blue2); }
-    .code-block .c-val { color: var(--teal); }
-    .code-block .c-str { color: var(--lblue); }
-    .code-block .c-num { color: var(--gold); }
+    .code-block .c-comment { color: rgba(0, 179, 255, 0.4); }
+    .code-block .c-key { color: #90D0FE; }
+    .code-block .c-val { color: #04E1CB; }
+    .code-block .c-str { color: #B0D8FF; }
+    .code-block .c-num { color: #FCC003; }
 
     /* ── ARBITRATION ── */
     .arb-rules {
@@ -444,8 +447,8 @@
     .ec-body strong { color: var(--text); }
 
     .exec-parallel {
-      background: rgba(252, 192, 3, 0.06);
-      border: 1px solid rgba(252, 192, 3, 0.2);
+      background: rgba(200, 144, 0, 0.06);
+      border: 1px solid rgba(200, 144, 0, 0.2);
       border-radius: 12px;
       padding: 18px 22px;
       display: flex; align-items: center; gap: 14px;
@@ -453,7 +456,7 @@
 
     .exec-parallel-icon { font-size: 20px; flex-shrink: 0; }
     .exec-parallel p { font-size: 13px; color: var(--text); line-height: 1.65; }
-    .exec-parallel strong { color: var(--gold); }
+    .exec-parallel strong { color: var(--gold-d); }
 
     /* ── FEEDBACK LOOP ── */
     .feedback-loop {
@@ -473,12 +476,12 @@
     .fb-node-icon { font-size: 24px; margin-bottom: 10px; }
     .fb-node-title { font-size: 13px; font-weight: 700; color: var(--white); margin-bottom: 5px; }
     .fb-node-desc { font-size: 11px; color: var(--muted); line-height: 1.55; }
-    .fb-arr { text-align: center; color: rgba(0,179,255,0.3); font-size: 20px; }
+    .fb-arr { text-align: center; color: rgba(2, 42, 192, 0.25); font-size: 20px; }
 
     .retrain-callout {
       background: var(--card);
       border: 1px solid var(--border);
-      border-left: 3px solid var(--lblue);
+      border-left: 3px solid var(--lblue-d);
       border-radius: 14px;
       padding: 24px 28px;
       position: relative; overflow: hidden;
@@ -487,12 +490,12 @@
     .retrain-callout::before {
       content: '';
       position: absolute; top: 0; left: 0; right: 0; height: 1px;
-      background: linear-gradient(90deg, var(--lblue), transparent); opacity: 0.5;
+      background: linear-gradient(90deg, var(--lblue-d), transparent); opacity: 0.4;
     }
 
     .rc-label {
       font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
-      color: var(--lblue); margin-bottom: 10px;
+      color: var(--lblue-d); margin-bottom: 10px;
     }
 
     .rc-body { font-size: 14px; color: var(--text); line-height: 1.75; }
@@ -501,14 +504,14 @@
     /* ── REALITY CHECK ── */
     .reality-wrap {
       background: var(--card);
-      border: 1px solid rgba(239, 68, 68, 0.2);
+      border: 1px solid rgba(196, 28, 0, 0.18);
       border-radius: 16px;
       padding: 28px 32px;
     }
 
     .reality-label {
       font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
-      color: rgba(239, 68, 68, 0.85); margin-bottom: 22px;
+      color: rgba(196, 28, 0, 0.8); margin-bottom: 22px;
     }
 
     .reality-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
@@ -545,7 +548,7 @@
     .effort-card::after {
       content: '';
       position: absolute; inset: 0;
-      background: linear-gradient(180deg, rgba(0,179,255,0.04) 0%, transparent 40%);
+      background: linear-gradient(180deg, rgba(2, 42, 192, 0.03) 0%, transparent 40%);
     }
 
     .effort-card-num {
@@ -609,37 +612,37 @@
   <div class="flow-strip-wrap">
     <div class="flow-strip">
       <div class="fs-node">
-        <div class="fs-icon" style="background:rgba(0,179,255,0.1);color:var(--blue2);">⚡</div>
+        <div class="fs-icon" style="background:rgba(2,42,192,0.08);color:var(--blue2);">⚡</div>
         <div class="fs-label">Trigger</div>
         <div class="fs-sub">Segment change / CRM event</div>
       </div>
       <div class="fs-arrow">›</div>
       <div class="fs-node">
-        <div class="fs-icon" style="background:rgba(4,225,203,0.1);color:var(--teal);">📋</div>
+        <div class="fs-icon" style="background:rgba(0,122,114,0.08);color:#007A72;">📋</div>
         <div class="fs-label">Load Catalogue</div>
         <div class="fs-sub">5–15 active NBAs</div>
       </div>
       <div class="fs-arrow">›</div>
       <div class="fs-node">
-        <div class="fs-icon" style="background:rgba(144,208,254,0.1);color:var(--lblue);">🔁</div>
+        <div class="fs-icon" style="background:rgba(0,87,184,0.08);color:#0057B8;">🔁</div>
         <div class="fs-label">Loop</div>
         <div class="fs-sub">Eligibility · Score · Gate</div>
       </div>
       <div class="fs-arrow">›</div>
       <div class="fs-node">
-        <div class="fs-icon" style="background:rgba(252,192,3,0.1);color:var(--gold);">⚖️</div>
+        <div class="fs-icon" style="background:rgba(200,144,0,0.08);color:#C89000;">⚖️</div>
         <div class="fs-label">Arbitrate</div>
         <div class="fs-sub">Pick the winner</div>
       </div>
       <div class="fs-arrow">›</div>
       <div class="fs-node">
-        <div class="fs-icon" style="background:rgba(4,225,203,0.1);color:var(--teal);">🚀</div>
+        <div class="fs-icon" style="background:rgba(0,122,114,0.08);color:#007A72;">🚀</div>
         <div class="fs-label">Execute</div>
         <div class="fs-sub">Task · Portal · Email</div>
       </div>
       <div class="fs-arrow">›</div>
       <div class="fs-node">
-        <div class="fs-icon" style="background:rgba(0,179,255,0.1);color:var(--blue2);">🔄</div>
+        <div class="fs-icon" style="background:rgba(2,42,192,0.08);color:var(--blue2);">🔄</div>
         <div class="fs-label">Feedback</div>
         <div class="fs-sub">Retrain Einstein</div>
       </div>
@@ -649,7 +652,7 @@
   <!-- TRIGGER -->
   <div class="section">
     <div class="step-head">
-      <div class="step-num" style="background:rgba(0,179,255,0.1);color:var(--blue2);font-size:26px;">⚡</div>
+      <div class="step-num" style="background:rgba(2,42,192,0.08);color:var(--blue2);font-size:26px;">⚡</div>
       <div>
         <div class="step-title">The Trigger</div>
         <div class="step-desc">What fires the flow and starts the decisioning process</div>
@@ -685,7 +688,7 @@
   <!-- STEP 1 -->
   <div class="section">
     <div class="step-head">
-      <div class="step-num" style="background:rgba(4,225,203,0.1);color:var(--teal);">01</div>
+      <div class="step-num" style="background:rgba(0,122,114,0.08);color:#007A72;">01</div>
       <div>
         <div class="step-title">Load the NBA Catalogue</div>
         <div class="step-desc">Query every active NBA available to this customer's segment and region</div>
@@ -741,7 +744,7 @@
   <div class="section-alt">
     <div class="section">
       <div class="step-head">
-        <div class="step-num" style="background:rgba(144,208,254,0.1);color:var(--lblue);">02</div>
+        <div class="step-num" style="background:rgba(0,87,184,0.08);color:#0057B8;">02</div>
         <div>
           <div class="step-title">The Loop</div>
           <div class="step-desc">For each NBA in the catalogue, run three sub-steps in sequence</div>
@@ -752,24 +755,24 @@
         <div class="loop-label">For each NBA in catalogue</div>
         <div class="loop-steps">
           <div class="loop-step">
-            <div class="loop-step-num" style="color:var(--teal);">① Eligibility</div>
+            <div class="loop-step-num" style="color:#007A72;">① Eligibility</div>
             <div class="loop-step-title">Gate check</div>
             <div class="loop-step-desc">Pure logic. No ML. Fast and cheap. Most NBAs are knocked out here before Einstein is ever called.</div>
-            <div class="loop-step-tag" style="background:rgba(4,225,203,0.1);color:var(--teal);border:1px solid rgba(4,225,203,0.25);">Rules only</div>
+            <div class="loop-step-tag" style="background:rgba(0,122,114,0.08);color:#007A72;border:1px solid rgba(0,122,114,0.25);">Rules only</div>
           </div>
           <div class="loop-arr">›</div>
           <div class="loop-step">
             <div class="loop-step-num" style="color:var(--blue2);">② Score</div>
             <div class="loop-step-title">Einstein Studio</div>
             <div class="loop-step-desc">Invocable action call. Passes the unified Data Cloud profile. Returns a probability score 0–1 per NBA.</div>
-            <div class="loop-step-tag" style="background:rgba(0,179,255,0.1);color:var(--blue2);border:1px solid rgba(0,179,255,0.25);">ML inference</div>
+            <div class="loop-step-tag" style="background:rgba(2,42,192,0.08);color:var(--blue2);border:1px solid rgba(2,42,192,0.22);">ML inference</div>
           </div>
           <div class="loop-arr">›</div>
           <div class="loop-step">
-            <div class="loop-step-num" style="color:var(--gold);">③ Gate</div>
+            <div class="loop-step-num" style="color:#C89000;">③ Gate</div>
             <div class="loop-step-title">Threshold filter</div>
             <div class="loop-step-desc">If score &lt; 0.4, drop it. You're left with eligible, high-confidence NBAs only.</div>
-            <div class="loop-step-tag" style="background:rgba(252,192,3,0.1);color:var(--gold);border:1px solid rgba(252,192,3,0.25);">Score ≥ 0.4</div>
+            <div class="loop-step-tag" style="background:rgba(200,144,0,0.08);color:#C89000;border:1px solid rgba(200,144,0,0.25);">Score ≥ 0.4</div>
           </div>
         </div>
       </div>
@@ -800,7 +803,7 @@
   <!-- STEP 3 -->
   <div class="section">
     <div class="step-head">
-      <div class="step-num" style="background:rgba(252,192,3,0.1);color:var(--gold);">03</div>
+      <div class="step-num" style="background:rgba(200,144,0,0.08);color:#C89000;">03</div>
       <div>
         <div class="step-title">Arbitration</div>
         <div class="step-desc">Multiple NBAs have passed. Pick the one that gets executed.</div>
@@ -811,28 +814,28 @@
 
     <div class="arb-rules">
       <div class="arb-rule">
-        <div class="arb-rule-icon" style="background:rgba(0,179,255,0.1);">🏆</div>
+        <div class="arb-rule-icon" style="background:rgba(2,42,192,0.08);">🏆</div>
         <div>
           <div class="arb-rule-title">Highest score wins</div>
           <div class="arb-rule-desc">The simplest approach. Einstein's top-scoring NBA gets executed. No overrides needed in most cases.</div>
         </div>
       </div>
       <div class="arb-rule">
-        <div class="arb-rule-icon" style="background:rgba(4,225,203,0.1);">📈</div>
+        <div class="arb-rule-icon" style="background:rgba(0,122,114,0.08);">📈</div>
         <div>
           <div class="arb-rule-title">Priority rules</div>
           <div class="arb-rule-desc">Revenue-generating NBAs rank above retention NBAs when scores are within 0.1 of each other. Configurable per business context.</div>
         </div>
       </div>
       <div class="arb-rule">
-        <div class="arb-rule-icon" style="background:rgba(144,208,254,0.1);">😴</div>
+        <div class="arb-rule-icon" style="background:rgba(0,87,184,0.08);">😴</div>
         <div>
           <div class="arb-rule-title">Fatigue rules</div>
           <div class="arb-rule-desc">If this customer received the top-scoring NBA on the last rep visit, serve the second-ranked. Prevents reps delivering the same message every call.</div>
         </div>
       </div>
       <div class="arb-rule">
-        <div class="arb-rule-icon" style="background:rgba(252,192,3,0.1);">📡</div>
+        <div class="arb-rule-icon" style="background:rgba(200,144,0,0.08);">📡</div>
         <div>
           <div class="arb-rule-title">Channel constraints</div>
           <div class="arb-rule-desc">If the trigger was a portal login, only surface portal-deliverable NBAs. Rep-only NBAs are filtered out for digital triggers.</div>
@@ -845,7 +848,7 @@
   <div class="section-alt">
     <div class="section">
       <div class="step-head">
-        <div class="step-num" style="background:rgba(4,225,203,0.1);color:var(--teal);">04</div>
+        <div class="step-num" style="background:rgba(0,122,114,0.08);color:#007A72;">04</div>
         <div>
           <div class="step-title">Execute</div>
           <div class="step-desc">The winning NBA gets delivered. Channel depends on the trigger.</div>
@@ -892,7 +895,7 @@
   <!-- STEP 5 -->
   <div class="section">
     <div class="step-head">
-      <div class="step-num" style="background:rgba(144,208,254,0.1);color:var(--lblue);">05</div>
+      <div class="step-num" style="background:rgba(0,87,184,0.08);color:#0057B8;">05</div>
       <div>
         <div class="step-title">Feedback Loop</div>
         <div class="step-desc">What makes it a learning system rather than a static rules engine</div>
@@ -930,7 +933,7 @@
   <!-- REALITY CHECK -->
   <div class="section">
     <div class="step-head">
-      <div class="step-num" style="background:rgba(239,68,68,0.1);color:#f87171;">⚠️</div>
+      <div class="step-num" style="background:rgba(196,28,0,0.08);color:#C41C00;">⚠️</div>
       <div>
         <div class="step-title">What's Real vs. Simulated in the Demo</div>
         <div class="step-desc">Meridian and Xero demos simulate this flow — here's the honest breakdown</div>
@@ -941,21 +944,21 @@
       <div class="reality-label">Demo architecture audit</div>
       <div class="reality-grid">
         <div>
-          <div class="reality-col-label" style="color:var(--teal);">✓ Actually built</div>
-          <div class="reality-item"><div class="dot" style="background:var(--teal);"></div>Data Cloud unified profile schema and CampaignMember DMO</div>
-          <div class="reality-item"><div class="dot" style="background:var(--teal);"></div>Einstein Studio models created (waiting on training data)</div>
-          <div class="reality-item"><div class="dot" style="background:var(--teal);"></div>Salesforce Flows deployed: Get_Pending_Signals, Get_Available_NBAs, Create_Campaign_Offer, ARIA_Score_Customer</div>
-          <div class="reality-item"><div class="dot" style="background:var(--teal);"></div>Campaign + CampaignMember write-back on NBA approval</div>
-          <div class="reality-item"><div class="dot" style="background:var(--teal);"></div>Status progression: Sent → Responded → Accepted</div>
-          <div class="reality-item"><div class="dot" style="background:var(--teal);"></div>Xero: NBA catalogue from live Promotions objects</div>
+          <div class="reality-col-label" style="color:#007A72;">✓ Actually built</div>
+          <div class="reality-item"><div class="dot" style="background:#007A72;"></div>Data Cloud unified profile schema and CampaignMember DMO</div>
+          <div class="reality-item"><div class="dot" style="background:#007A72;"></div>Einstein Studio models created (waiting on training data)</div>
+          <div class="reality-item"><div class="dot" style="background:#007A72;"></div>Salesforce Flows deployed: Get_Pending_Signals, Get_Available_NBAs, Create_Campaign_Offer, ARIA_Score_Customer</div>
+          <div class="reality-item"><div class="dot" style="background:#007A72;"></div>Campaign + CampaignMember write-back on NBA approval</div>
+          <div class="reality-item"><div class="dot" style="background:#007A72;"></div>Status progression: Sent → Responded → Accepted</div>
+          <div class="reality-item"><div class="dot" style="background:#007A72;"></div>Xero: NBA catalogue from live Promotions objects</div>
         </div>
         <div>
-          <div class="reality-col-label" style="color:#f87171;">✗ Simulated</div>
-          <div class="reality-item"><div class="dot" style="background:#f87171;"></div>Eligibility, scoring, arbitration — all done by Claude Haiku/Opus, not a real Flow loop</div>
-          <div class="reality-item"><div class="dot" style="background:#f87171;"></div>Einstein scores are fabricated per scenario, not real inference calls</div>
-          <div class="reality-item"><div class="dot" style="background:#f87171;"></div>Trigger is a button click, not a Data Cloud segment membership event</div>
-          <div class="reality-item"><div class="dot" style="background:#f87171;"></div>No real master Flow loop in Salesforce</div>
-          <div class="reality-item"><div class="dot" style="background:#f87171;"></div>Einstein models have no training data yet — would return random scores if called</div>
+          <div class="reality-col-label" style="color:#C41C00;">✗ Simulated</div>
+          <div class="reality-item"><div class="dot" style="background:#C41C00;"></div>Eligibility, scoring, arbitration — all done by Claude Haiku/Opus, not a real Flow loop</div>
+          <div class="reality-item"><div class="dot" style="background:#C41C00;"></div>Einstein scores are fabricated per scenario, not real inference calls</div>
+          <div class="reality-item"><div class="dot" style="background:#C41C00;"></div>Trigger is a button click, not a Data Cloud segment membership event</div>
+          <div class="reality-item"><div class="dot" style="background:#C41C00;"></div>No real master Flow loop in Salesforce</div>
+          <div class="reality-item"><div class="dot" style="background:#C41C00;"></div>Einstein models have no training data yet — would return random scores if called</div>
         </div>
       </div>
     </div>
@@ -965,7 +968,7 @@
   <div class="section-alt">
     <div class="section">
       <div class="step-head">
-        <div class="step-num" style="background:rgba(0,179,255,0.1);color:var(--blue2);">🏗️</div>
+        <div class="step-num" style="background:rgba(2,42,192,0.08);color:var(--blue2);">🏗️</div>
         <div>
           <div class="step-title">What It Takes to Build for Real</div>
           <div class="step-desc">The Flow wiring is the fast part — here's where the real effort sits</div>
@@ -978,13 +981,13 @@
           <div class="effort-card-label">Unified Profile in Data Cloud</div>
           <div class="effort-card-desc">Mapping source systems (CRM, ERP, Commerce) into clean DMOs. This is the longest dependency — everything else sits on top of it. If data is already clean in the ERP, compress to 3 weeks.</div>
         </div>
-        <div class="effort-card" style="border-top-color:var(--teal);">
-          <div class="effort-card-num" style="color:var(--teal);">2–4w</div>
+        <div class="effort-card" style="border-top-color:#007A72;">
+          <div class="effort-card-num" style="color:#007A72;">2–4w</div>
           <div class="effort-card-label">Train Einstein Studio</div>
           <div class="effort-card-desc">Models exist in the org. Need historical outcome data: what NBAs were offered, which converted. If CRM win/loss data is reliable, this is straightforward. Start with rules-based scoring if it's patchy.</div>
         </div>
-        <div class="effort-card" style="border-top-color:var(--gold);">
-          <div class="effort-card-num" style="color:var(--gold);">2–3w</div>
+        <div class="effort-card" style="border-top-color:#C89000;">
+          <div class="effort-card-num" style="color:#C89000;">2–3w</div>
           <div class="effort-card-label">Master Flow + NBA Catalogue</div>
           <div class="effort-card-desc">The actual Flow orchestration once the data foundation is in place. The catalogue object needs commercial alignment on what the NBAs are — that's a stakeholder conversation, not a technical one.</div>
         </div>
