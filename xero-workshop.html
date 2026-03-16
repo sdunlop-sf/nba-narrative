@@ -442,6 +442,36 @@
             width: auto;
         }
 
+        /* ── PLATFORM GRID ── */
+        .platform-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 11px;
+            width: 100%;
+            max-width: 880px;
+        }
+
+        .platform-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 16px 14px;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            transition: background 0.2s, border-color 0.2s;
+        }
+
+        .platform-card:hover {
+            background: var(--card-h);
+            border-color: rgba(2, 42, 192, 0.28);
+        }
+
+        .platform-icon img { width: 34px; height: 34px; object-fit: contain; flex-shrink: 0; }
+        .platform-num  { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--blue2); margin-bottom: 3px; }
+        .platform-name { font-size: 15px; font-weight: 700; margin-bottom: 4px; color: var(--text); }
+        .platform-desc { font-size: 13px; color: var(--muted); line-height: 1.55; }
+
         /* ── WORKSHOP SPECIFIC ── */
 
         /* Activity badges */
@@ -1059,44 +1089,59 @@
 
         <!-- Slide 6: Art of the Possible -->
         <section class="slide">
-            <div style="max-width: 1020px; width: 100%;">
+            <div style="max-width: 900px;">
                 <div class="accent-line" style="margin: 0 auto 14px;"></div>
                 <div class="eyebrow" style="text-align: center; margin-bottom: 8px;">Art of the Possible · 9:45 – 10:30</div>
-                <h2 class="big" style="text-align: center; font-size: clamp(24px, 2.8vw, 40px); margin-bottom: 36px;">How it works — for Xero.</h2>
-                <div class="flow">
-                    <div class="flow-step">
-                        <div class="flow-icon"><img src="icon-data360.png" alt="Signal"></div>
-                        <div class="flow-step-num">Signal</div>
-                        <div class="flow-step-title">Customer Data</div>
-                        <div class="flow-step-desc">Login patterns, feature usage, billing events, support contacts — unified in real time</div>
+                <h2 class="big" style="text-align: center; font-size: clamp(26px, 3vw, 44px); margin-bottom: 32px;">Six layers. One connected system.</h2>
+                <div class="platform-grid">
+                    <div class="platform-card">
+                        <div class="platform-icon"><img src="icon-data360.png" alt="Data Cloud"></div>
+                        <div>
+                            <div class="platform-num">01</div>
+                            <div class="platform-name">Data Cloud</div>
+                            <div class="platform-desc">The signal — unified customer profile, real time</div>
+                        </div>
                     </div>
-                    <div class="flow-arrow">›</div>
-                    <div class="flow-step">
-                        <div class="flow-icon"><img src="icon-platform.png" alt="Model"></div>
-                        <div class="flow-step-num">Model</div>
-                        <div class="flow-step-title">AI Scoring</div>
-                        <div class="flow-step-desc">Einstein scores every NBA for every customer — one winner selected per account</div>
+                    <div class="platform-card">
+                        <div class="platform-icon"><img src="icon-platform.png" alt="Einstein"></div>
+                        <div>
+                            <div class="platform-num">02</div>
+                            <div class="platform-name">Einstein Studio + Flow</div>
+                            <div class="platform-desc">The brain — scores and selects the best action</div>
+                        </div>
                     </div>
-                    <div class="flow-arrow">›</div>
-                    <div class="flow-step">
-                        <div class="flow-icon"><img src="icon-salesrevenue.png" alt="Action"></div>
-                        <div class="flow-step-num">Action</div>
-                        <div class="flow-step-title">Next Best Activity</div>
-                        <div class="flow-step-desc">Surfaced to rep in CRM, or executed directly by an Agentforce agent</div>
+                    <div class="platform-card">
+                        <div class="platform-icon"><img src="icon-salesrevenue.png" alt="Promotions"></div>
+                        <div>
+                            <div class="platform-num">03</div>
+                            <div class="platform-name">Promotions &amp; Offers</div>
+                            <div class="platform-desc">The content — what the customer receives</div>
+                        </div>
                     </div>
-                    <div class="flow-arrow">›</div>
-                    <div class="flow-step">
-                        <div class="flow-icon"><img src="icon-agentforce.png" alt="Outcome"></div>
-                        <div class="flow-step-num">Outcome</div>
-                        <div class="flow-step-title">Feedback Loop</div>
-                        <div class="flow-step-desc">Accept, decline, ignore — every response trains the model and sharpens future scores</div>
+                    <div class="platform-card">
+                        <div class="platform-icon"><img src="icon-marketing.png" alt="Personalization"></div>
+                        <div>
+                            <div class="platform-num">04</div>
+                            <div class="platform-name">Personalization</div>
+                            <div class="platform-desc">The timing — right moment on digital surfaces</div>
+                        </div>
                     </div>
-                </div>
-                <div style="margin-top: 32px; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
-                    <div style="padding: 6px 14px; border-radius: 20px; background: rgba(2,42,192,0.08); border: 1px solid rgba(2,42,192,0.22); font-size: 11px; font-weight: 700; color: var(--blue2); letter-spacing: 0.05em;">Data Cloud unified profile</div>
-                    <div style="padding: 6px 14px; border-radius: 20px; background: rgba(0,122,114,0.08); border: 1px solid rgba(0,122,114,0.22); font-size: 11px; font-weight: 700; color: #007A72; letter-spacing: 0.05em;">Einstein Studio scoring</div>
-                    <div style="padding: 6px 14px; border-radius: 20px; background: rgba(200,144,0,0.08); border: 1px solid rgba(200,144,0,0.22); font-size: 11px; font-weight: 700; color: #C89000; letter-spacing: 0.05em;">Agentforce execution</div>
-                    <div style="padding: 6px 14px; border-radius: 20px; background: rgba(0,87,184,0.08); border: 1px solid rgba(0,87,184,0.22); font-size: 11px; font-weight: 700; color: #0057B8; letter-spacing: 0.05em;">Self-improving model</div>
+                    <div class="platform-card">
+                        <div class="platform-icon"><img src="icon-marketing.png" alt="Agentforce Marketing"></div>
+                        <div>
+                            <div class="platform-num">05</div>
+                            <div class="platform-name">Agentforce Marketing</div>
+                            <div class="platform-desc">The conversation — two-way, every channel, at scale</div>
+                        </div>
+                    </div>
+                    <div class="platform-card">
+                        <div class="platform-icon"><img src="icon-agentforce.png" alt="Agentforce"></div>
+                        <div>
+                            <div class="platform-num">06</div>
+                            <div class="platform-name">Feedback Loop</div>
+                            <div class="platform-desc">The learning — every outcome improves the model</div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
