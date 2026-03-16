@@ -453,19 +453,21 @@
         }
 
         .platform-card {
-            background: var(--card);
+            background: #FFFFFF;
             border: 1px solid var(--border);
             border-radius: 12px;
             padding: 16px 14px;
             display: flex;
             align-items: flex-start;
             gap: 12px;
-            transition: background 0.2s, border-color 0.2s;
+            box-shadow: 0 1px 3px rgba(0,39,117,0.07), 0 4px 12px rgba(0,39,117,0.06);
+            transition: background 0.2s, border-color 0.2s, box-shadow 0.2s;
         }
 
         .platform-card:hover {
-            background: var(--card-h);
+            background: #F4FAFF;
             border-color: rgba(2, 42, 192, 0.28);
+            box-shadow: 0 2px 6px rgba(0,39,117,0.1), 0 6px 20px rgba(0,39,117,0.09);
         }
 
         .platform-icon img { width: 34px; height: 34px; object-fit: contain; flex-shrink: 0; }
@@ -1066,10 +1068,10 @@
                         <div class="state-label now">Current State</div>
                         <div style="font-size: 13px; color: var(--muted); margin-bottom: 16px; line-height: 1.5;">How does Xero decide who to contact and when today?</div>
                         <div style="display: flex; flex-direction: column; gap: 10px;">
-                            <div style="padding: 10px 12px; border: 1px dashed rgba(0,39,117,0.2); border-radius: 8px; font-size: 13px; color: rgba(0,39,117,0.3); font-style: italic;">Where do customer signals currently live?</div>
-                            <div style="padding: 10px 12px; border: 1px dashed rgba(0,39,117,0.2); border-radius: 8px; font-size: 13px; color: rgba(0,39,117,0.3); font-style: italic;">How does a rep know who to call today?</div>
-                            <div style="padding: 10px 12px; border: 1px dashed rgba(0,39,117,0.2); border-radius: 8px; font-size: 13px; color: rgba(0,39,117,0.3); font-style: italic;">What signals go unacted on — and why?</div>
-                            <div style="padding: 10px 12px; border: 1px dashed rgba(0,39,117,0.2); border-radius: 8px; font-size: 13px; color: rgba(0,39,117,0.3); font-style: italic;">Where does the biggest volume of missed moments sit?</div>
+                            <div style="padding: 10px 12px; border: 1px dashed rgba(0,39,117,0.25); border-radius: 8px; font-size: 14px; color: rgba(0,39,117,0.65); background: rgba(255,255,255,0.5);">Where do customer signals currently live?</div>
+                            <div style="padding: 10px 12px; border: 1px dashed rgba(0,39,117,0.25); border-radius: 8px; font-size: 14px; color: rgba(0,39,117,0.65); background: rgba(255,255,255,0.5);">How does a rep know who to call today?</div>
+                            <div style="padding: 10px 12px; border: 1px dashed rgba(0,39,117,0.25); border-radius: 8px; font-size: 14px; color: rgba(0,39,117,0.65); background: rgba(255,255,255,0.5);">What signals go unacted on — and why?</div>
+                            <div style="padding: 10px 12px; border: 1px dashed rgba(0,39,117,0.25); border-radius: 8px; font-size: 14px; color: rgba(0,39,117,0.65); background: rgba(255,255,255,0.5);">Where does the biggest volume of missed moments sit?</div>
                         </div>
                     </div>
                     <div class="state-arrow-col">›</div>
@@ -1077,10 +1079,10 @@
                         <div class="state-label next">Future State</div>
                         <div style="font-size: 13px; color: var(--muted); margin-bottom: 16px; line-height: 1.5;">What does success look like 12 months from now?</div>
                         <div style="display: flex; flex-direction: column; gap: 10px;">
-                            <div style="padding: 10px 12px; border: 1px dashed rgba(0,122,114,0.25); border-radius: 8px; font-size: 13px; color: rgba(0,122,114,0.4); font-style: italic;">What metric moves if this works?</div>
-                            <div style="padding: 10px 12px; border: 1px dashed rgba(0,122,114,0.25); border-radius: 8px; font-size: 13px; color: rgba(0,122,114,0.4); font-style: italic;">What does a rep's day look like differently?</div>
-                            <div style="padding: 10px 12px; border: 1px dashed rgba(0,122,114,0.25); border-radius: 8px; font-size: 13px; color: rgba(0,122,114,0.4); font-style: italic;">Which customer segments benefit most?</div>
-                            <div style="padding: 10px 12px; border: 1px dashed rgba(0,122,114,0.25); border-radius: 8px; font-size: 13px; color: rgba(0,122,114,0.4); font-style: italic;">What would make this a clear win in 90 days?</div>
+                            <div style="padding: 10px 12px; border: 1px dashed rgba(0,122,114,0.3); border-radius: 8px; font-size: 14px; color: rgba(0,100,90,0.75); background: rgba(255,255,255,0.5);">What metric moves if this works?</div>
+                            <div style="padding: 10px 12px; border: 1px dashed rgba(0,122,114,0.3); border-radius: 8px; font-size: 14px; color: rgba(0,100,90,0.75); background: rgba(255,255,255,0.5);">What does a rep's day look like differently?</div>
+                            <div style="padding: 10px 12px; border: 1px dashed rgba(0,122,114,0.3); border-radius: 8px; font-size: 14px; color: rgba(0,100,90,0.75); background: rgba(255,255,255,0.5);">Which customer segments benefit most?</div>
+                            <div style="padding: 10px 12px; border: 1px dashed rgba(0,122,114,0.3); border-radius: 8px; font-size: 14px; color: rgba(0,100,90,0.75); background: rgba(255,255,255,0.5);">What would make this a clear win in 90 days?</div>
                         </div>
                     </div>
                 </div>
