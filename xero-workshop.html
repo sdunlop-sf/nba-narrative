@@ -109,6 +109,7 @@
             background: rgba(255, 255, 255, 0.92);
             backdrop-filter: blur(20px);
             border-top: 1px solid rgba(0, 39, 117, 0.1);
+            overflow: hidden;
         }
 
         .nav-brand {
@@ -123,10 +124,11 @@
         }
 
         .nav-xero-logo {
-            height: 32px;
+            height: 64px;
             width: auto;
             opacity: 0.85;
             display: block;
+            margin: -16px 0;
         }
 
         .nav-divider {
@@ -1489,9 +1491,7 @@
             <div class="nav-divider"></div>
             <span class="nav-title">Agentic Decisioning · Xero Workshop</span>
             <div class="nav-divider"></div>
-            <div style="display:flex;align-items:center;height:32px;overflow:hidden;">
-                <img class="nav-xero-logo" src="xero-logo.png" alt="Xero">
-            </div>
+            <img class="nav-xero-logo" src="xero-logo.png" alt="Xero">
         </div>
         <div class="nav-dots" role="tablist" id="progress"></div>
         <div class="nav-controls">
