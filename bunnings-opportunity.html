@@ -1,0 +1,1011 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bunnings · Phase 2 Opportunity — Salesforce</title>
+    <style>
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --navy:   #CFE9FE;
+            --navy2:  #EAF5FE;
+            --blue:   #022AC0;
+            --blue2:  #022AC0;
+            --royal:  #022AC0;
+            --teal:   #04E1CB;
+            --lblue:  #90D0FE;
+            --gold:   #F6BC06;
+            --white:  #002775;
+            --text:   #002775;
+            --card:   rgba(0, 39, 117, 0.06);
+            --card-h: rgba(0, 39, 117, 0.12);
+            --border: rgba(0, 39, 117, 0.14);
+            --muted:  rgba(0, 39, 117, 0.6);
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: var(--navy);
+            color: var(--text);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .bg-base {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            background: radial-gradient(ellipse 90% 70% at 100% 0%, rgba(2, 42, 192, 0.07) 0%, transparent 55%),
+                        radial-gradient(ellipse 60% 50% at 0% 100%, rgba(4, 225, 203, 0.04) 0%, transparent 50%),
+                        linear-gradient(170deg, #CFE9FE 0%, #D8EFFE 60%, #CFE9FE 100%);
+        }
+
+        .bg-noise {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0.012;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+            background-repeat: repeat;
+            background-size: 200px 200px;
+        }
+
+        .deck {
+            width: 100%;
+            height: 100vh;
+            position: relative;
+            z-index: 1;
+        }
+
+        .slide {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 64px 108px 88px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.45s cubic-bezier(0.4, 0, 0.2, 1), transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateY(22px);
+        }
+
+        .slide.active {
+            opacity: 1;
+            pointer-events: all;
+            transform: translateY(0);
+        }
+
+        .slide.exit {
+            opacity: 0;
+            transform: translateY(-18px);
+            transition: opacity 0.26s ease, transform 0.26s ease;
+        }
+
+        /* ── NAV BAR ── */
+        .nav-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            height: 56px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 40px;
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(0, 39, 117, 0.1);
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .nav-sf-logo {
+            height: 24px;
+            width: auto;
+        }
+
+        .nav-bunnings-logo {
+            height: 22px;
+            width: auto;
+        }
+
+        .nav-divider {
+            width: 1px;
+            height: 18px;
+            background: rgba(0, 39, 117, 0.14);
+        }
+
+        .nav-title {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: rgba(0, 39, 117, 0.5);
+        }
+
+        .nav-controls {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .nav-btn {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: 1px solid rgba(2, 42, 192, 0.3);
+            background: none;
+            color: rgba(0, 39, 117, 0.7);
+            font-size: 15px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .nav-btn:hover {
+            border-color: var(--blue2);
+            color: var(--blue2);
+            background: rgba(2, 42, 192, 0.06);
+        }
+
+        .nav-btn:focus-visible {
+            outline: 2px solid var(--blue2);
+            outline-offset: 3px;
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.28;
+            cursor: default;
+        }
+
+        .nav-counter {
+            font-size: 11px;
+            color: var(--muted);
+            min-width: 32px;
+            text-align: center;
+            letter-spacing: 0.04em;
+        }
+
+        .nav-dots {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .dot {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: rgba(0, 39, 117, 0.2);
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            padding: 0;
+            flex-shrink: 0;
+        }
+
+        .dot:focus-visible {
+            outline: 2px solid var(--blue2);
+            outline-offset: 3px;
+            border-radius: 4px;
+        }
+
+        .dot.active {
+            background: var(--blue2);
+            width: 16px;
+            border-radius: 3px;
+        }
+
+        .key-hint {
+            position: fixed;
+            bottom: 66px;
+            right: 36px;
+            font-size: 9px;
+            color: rgba(0, 39, 117, 0.22);
+            letter-spacing: 0.06em;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .key {
+            padding: 2px 5px;
+            border-radius: 3px;
+            border: 1px solid rgba(0, 39, 117, 0.14);
+            font-size: 8px;
+        }
+
+        /* ── TYPOGRAPHY ── */
+        .eyebrow {
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--blue2);
+            margin-bottom: 14px;
+        }
+
+        .big {
+            font-size: clamp(32px, 4vw, 58px);
+            font-weight: 900;
+            line-height: 1.05;
+            letter-spacing: -0.03em;
+            margin-bottom: 20px;
+            color: var(--text);
+        }
+
+        .sub {
+            font-size: clamp(15px, 1.4vw, 18px);
+            color: var(--muted);
+            line-height: 1.8;
+            max-width: 540px;
+        }
+
+        .hl       { color: var(--blue2); }
+        .hl-teal  { color: #007A72; }
+        .hl-gold  { color: #C89000; }
+
+        .accent-line {
+            width: 40px;
+            height: 3px;
+            border-radius: 2px;
+            margin-bottom: 20px;
+            background: linear-gradient(90deg, var(--blue2), var(--teal));
+        }
+
+        /* ── 2-COLUMN ── */
+        .two-col {
+            display: flex;
+            gap: 72px;
+            align-items: center;
+            max-width: 980px;
+        }
+
+        .two-col .col { flex: 1; }
+
+        /* ── STAT GRID ── */
+        .stat-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            width: 100%;
+            max-width: 880px;
+            margin: 0 auto;
+        }
+
+        .stat-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 26px 22px;
+            border-left: 3px solid var(--blue2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, var(--blue2), transparent);
+            opacity: 0.4;
+        }
+
+        .stat-card.teal  { border-left-color: #009E90; }
+        .stat-card.teal::before  { background: linear-gradient(90deg, #009E90, transparent); }
+        .stat-card.gold  { border-left-color: #C89000; }
+        .stat-card.gold::before  { background: linear-gradient(90deg, #C89000, transparent); }
+        .stat-card.lblue { border-left-color: #0057B8; }
+        .stat-card.lblue::before { background: linear-gradient(90deg, #0057B8, transparent); }
+
+        .stat-val {
+            font-size: clamp(32px, 3.8vw, 50px);
+            font-weight: 900;
+            letter-spacing: -0.03em;
+            line-height: 1;
+            margin-bottom: 9px;
+        }
+
+        .stat-val.c-blue  { color: var(--blue2); }
+        .stat-val.c-teal  { color: #007A72; }
+        .stat-val.c-gold  { color: #C89000; }
+        .stat-val.c-lblue { color: #0057B8; }
+
+        .stat-label { font-size: 15px; font-weight: 700; margin-bottom: 6px; color: var(--text); }
+        .stat-desc  { font-size: 13px; color: var(--muted); line-height: 1.65; }
+
+        /* ── OUTCOME GRID ── */
+        .outcome-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 13px;
+            width: 100%;
+            max-width: 860px;
+        }
+
+        .outcome-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 22px;
+            display: flex;
+            gap: 14px;
+            align-items: flex-start;
+            transition: background 0.2s;
+        }
+
+        .outcome-card:hover { background: var(--card-h); }
+
+        .outcome-bullet { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; margin-top: 7px; }
+        .outcome-title  { font-size: 15px; font-weight: 700; margin-bottom: 6px; color: var(--text); }
+        .outcome-desc   { font-size: 14px; color: var(--muted); line-height: 1.65; }
+
+        /* ── PROOF ROW ── */
+        .proof-row {
+            display: flex;
+            gap: 14px;
+            width: 100%;
+            max-width: 960px;
+        }
+
+        .proof-card {
+            flex: 1;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px 20px;
+            border-top: 3px solid var(--blue2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .proof-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(2, 42, 192, 0.03) 0%, transparent 40%);
+        }
+
+        .proof-card.teal { border-top-color: #007A72; }
+        .proof-card.teal::after { background: linear-gradient(180deg, rgba(0, 122, 114, 0.04) 0%, transparent 40%); }
+        .proof-card.gold { border-top-color: #C89000; }
+        .proof-card.gold::after { background: linear-gradient(180deg, rgba(200, 144, 0, 0.04) 0%, transparent 40%); }
+
+        .proof-metric { font-size: 36px; font-weight: 900; letter-spacing: -0.03em; line-height: 1; margin-bottom: 3px; position: relative; color: var(--text); }
+        .proof-co     { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 12px; position: relative; }
+        .proof-text   { font-size: 15px; color: var(--muted); line-height: 1.7; position: relative; }
+        .proof-text strong { color: var(--text); }
+
+        /* ── CTA ── */
+        .cta-wrap {
+            border: 1px solid rgba(2, 42, 192, 0.18);
+            border-radius: 28px;
+            padding: 50px 60px;
+            text-align: center;
+            max-width: 640px;
+            background: rgba(255, 255, 255, 0.6);
+            backdrop-filter: blur(12px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-wrap::before {
+            content: '';
+            position: absolute;
+            top: -1px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--blue2), transparent);
+        }
+
+        .cta-steps { display: flex; gap: 32px; justify-content: center; margin-top: 36px; }
+
+        .cta-step-num {
+            width: 26px;
+            height: 26px;
+            border-radius: 50%;
+            margin: 0 auto 8px;
+            background: rgba(2, 42, 192, 0.08);
+            border: 1px solid rgba(2, 42, 192, 0.25);
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--blue2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .cta-step-label { font-size: 15px; color: var(--muted); font-weight: 600; }
+
+        /* ── FLOW ── */
+        .flow {
+            display: flex;
+            align-items: flex-start;
+            width: 100%;
+            max-width: 1020px;
+        }
+
+        .flow-step {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .flow-icon {
+            width: 64px;
+            height: 64px;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(2, 42, 192, 0.06);
+            border: 1px solid rgba(2, 42, 192, 0.16);
+            border-radius: 18px;
+            font-size: 22px;
+        }
+
+        .flow-step-num {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--blue2);
+            margin-bottom: 5px;
+        }
+
+        .flow-step-title { font-size: 16px; font-weight: 700; margin-bottom: 6px; color: var(--text); }
+        .flow-step-desc  { font-size: 13px; color: var(--muted); line-height: 1.6; max-width: 130px; }
+
+        .flow-arrow {
+            flex-shrink: 0;
+            align-self: center;
+            padding-bottom: 48px;
+            color: rgba(2, 42, 192, 0.25);
+            font-size: 20px;
+            margin: 0 2px;
+        }
+
+        /* ── PLATFORM GRID ── */
+        .platform-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 11px;
+            width: 100%;
+            max-width: 880px;
+        }
+
+        .platform-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 18px 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            transition: background 0.2s, border-color 0.2s;
+        }
+
+        .platform-card:hover {
+            background: var(--card-h);
+            border-color: rgba(2, 42, 192, 0.28);
+        }
+
+        .platform-num  { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--blue2); }
+        .platform-name { font-size: 15px; font-weight: 700; color: var(--text); }
+        .platform-desc { font-size: 13px; color: var(--muted); line-height: 1.55; }
+
+        /* ── STAR DECO ── */
+        .star-deco {
+            position: absolute;
+            pointer-events: none;
+            user-select: none;
+            z-index: 2;
+        }
+
+        .star-deco img {
+            display: block;
+            width: 28px;
+            height: 28px;
+            opacity: 0.3;
+        }
+
+        /* ── MOBILE ── */
+        @media (max-width: 900px) {
+            .slide { padding: 48px 64px 80px; }
+        }
+
+        @media (max-width: 768px) {
+            html, body { overflow-y: auto; height: auto; }
+            .deck { height: auto; }
+
+            .slide {
+                position: relative;
+                opacity: 1 !important;
+                transform: none !important;
+                pointer-events: all;
+                display: none;
+                flex-direction: column;
+                align-items: center;
+                justify-content: flex-start;
+                padding: 32px 20px 88px;
+                gap: 20px;
+                min-height: 100svh;
+            }
+            .slide.active { display: flex; }
+
+            .eyebrow { font-size: 11px; letter-spacing: 0.14em; margin-bottom: 10px; }
+            .big { font-size: clamp(26px, 7vw, 38px); }
+            .sub { font-size: 15px; line-height: 1.75; }
+            .accent-line { margin-bottom: 12px !important; }
+
+            .two-col { flex-direction: column; gap: 4px; max-width: 100%; }
+            .two-col .col:first-child { margin-bottom: 8px; }
+
+            .stat-grid { grid-template-columns: 1fr; gap: 10px; max-width: 100%; }
+            .stat-card { padding: 18px 16px; }
+            .stat-val { font-size: 36px !important; }
+            .stat-label { font-size: 14px; }
+            .stat-desc { font-size: 12px; }
+
+            .outcome-grid { grid-template-columns: 1fr; gap: 10px; max-width: 100%; }
+            .outcome-card { padding: 16px; gap: 12px; }
+            .outcome-title { font-size: 14px; }
+            .outcome-desc { font-size: 13px; }
+
+            .proof-row { flex-direction: column; gap: 10px; max-width: 100%; }
+            .proof-card { padding: 20px 16px; }
+            .proof-metric { font-size: 30px; }
+            .proof-text { font-size: 14px; }
+
+            .platform-grid { grid-template-columns: 1fr 1fr; gap: 8px; max-width: 100%; }
+            .platform-card { padding: 12px 10px; gap: 6px; }
+            .platform-name { font-size: 13px; }
+            .platform-desc { font-size: 11px; }
+
+            .flow { flex-wrap: wrap; gap: 14px; justify-content: center; max-width: 100%; }
+            .flow-arrow { display: none; }
+            .flow-step { width: calc(50% - 8px); }
+            .flow-icon { width: 52px; height: 52px; font-size: 18px; }
+            .flow-step-title { font-size: 14px; }
+            .flow-step-desc { font-size: 12px; max-width: none; }
+
+            .cta-wrap { padding: 28px 20px; border-radius: 18px; max-width: 100%; }
+            .cta-steps { flex-direction: row; gap: 20px; flex-wrap: wrap; justify-content: center; margin-top: 24px; }
+
+            .nav-bar { padding: 0 16px; }
+            .nav-title { display: none; }
+            .nav-divider { display: none; }
+            .nav-dots { display: none; }
+
+            .key-hint, .star-deco { display: none; }
+        }
+
+        @media (max-width: 480px) {
+            .slide { padding: 24px 16px 84px; }
+            .big { font-size: 26px; }
+            .platform-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-base"></div>
+    <div class="bg-noise"></div>
+
+    <div id="deck" class="deck">
+
+        <!-- Slide 1: Cover -->
+        <section class="slide">
+            <div style="text-align: center; max-width: 820px;">
+                <!-- Logo row -->
+                <div style="display: flex; align-items: center; justify-content: center; gap: 20px; margin-bottom: 36px;">
+                    <img src="sf-logo-cloud.png" alt="Salesforce" style="height: 40px; width: auto; opacity: 0.85;">
+                    <div style="width: 1px; height: 28px; background: rgba(0,39,117,0.2);"></div>
+                    <img src="bunnings-logo.svg" alt="Bunnings" style="height: 36px; width: auto; opacity: 0.85;">
+                </div>
+                <div class="accent-line" style="margin: 0 auto 20px;"></div>
+                <div class="eyebrow">Personalisation · Phase 2</div>
+                <h1 class="big">The decisioning<br><span class="hl">layer.</span></h1>
+                <p class="sub" style="margin: 0 auto; max-width: 460px;">Three opportunities to move from known customers to customers who feel known.</p>
+            </div>
+            <div class="star-deco" style="top: 100px; right: 120px;"><img src="sf-star-gold.png" alt=""></div>
+            <div class="star-deco" style="top: 140px; right: 80px; opacity: 0.2;"><img src="sf-star-gold.png" style="width:16px;height:16px;opacity:1;"></div>
+        </section>
+
+        <!-- Slide 2: Where you are -->
+        <section class="slide">
+            <div style="max-width: 900px; width: 100%;">
+                <div class="accent-line" style="margin: 0 auto 6px;"></div>
+                <div class="eyebrow" style="text-align: center; margin-bottom: 8px;">Phase 1 · What You've Built</div>
+                <h2 class="big" style="text-align: center; font-size: clamp(26px, 3vw, 40px); margin-bottom: 32px;">The data foundation is real.<br><span class="hl">The results prove it.</span></h2>
+                <div class="stat-grid">
+                    <div class="stat-card">
+                        <div class="stat-val c-blue">65%</div>
+                        <div class="stat-label">Of total sales now addressable</div>
+                        <div class="stat-desc">Up from 38% at the start of Phase 1. Consumer identity went from 24% to 43%. Commercial is at 100%.</div>
+                    </div>
+                    <div class="stat-card teal">
+                        <div class="stat-val c-teal">7M</div>
+                        <div class="stat-label">Known contactable customers</div>
+                        <div class="stat-desc">A unified profile base that Google, Meta and your eDM engine can now activate against — live today.</div>
+                    </div>
+                    <div class="stat-card gold">
+                        <div class="stat-val c-gold">&gt;90%</div>
+                        <div class="stat-label">Of eDMs now personalised</div>
+                        <div class="stat-desc">Post-Purchase v2 scaling from 30k to 9.3M triggers per month. The signal-to-email loop is working.</div>
+                    </div>
+                    <div class="stat-card lblue">
+                        <div class="stat-val c-lblue">240%</div>
+                        <div class="stat-label">ROI on Flybuys-channel offers</div>
+                        <div class="stat-desc">Early proof that personalised decisioning outperforms broadcast. The constraint is the channel — not the model.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 3: The gap -->
+        <section class="slide">
+            <div class="two-col">
+                <div class="col">
+                    <div class="accent-line"></div>
+                    <div class="eyebrow">The Constraint</div>
+                    <h2 class="big">Phase 1 proves the signal.<br><span class="hl">Phase 2 acts on it.</span></h2>
+                </div>
+                <div class="col" style="display: flex; flex-direction: column; gap: 18px;">
+                    <div style="background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px;">
+                        <div style="font-size: 12px; font-weight: 700; color: #C89000; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 6px;">Mobile · Dark channel</div>
+                        <p style="font-size: 14px; color: var(--muted); line-height: 1.6;">Mobile SDK not yet deployed. The highest-intent channel in retail generates no signal and receives no personalisation.</p>
+                    </div>
+                    <div style="background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px;">
+                        <div style="font-size: 12px; font-weight: 700; color: #C89000; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 6px;">Web · 35% coverage</div>
+                        <p style="font-size: 14px; color: var(--muted); line-height: 1.6;">MCP sits on 35% of web traffic. 65% of digital visits see no personalisation — no product, no offer, no recognition.</p>
+                    </div>
+                    <div style="background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px;">
+                        <div style="font-size: 12px; font-weight: 700; color: #C89000; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 6px;">Offers · Manual and siloed</div>
+                        <p style="font-size: 14px; color: var(--muted); line-height: 1.6;">Flybuys delivers 240% ROI but requires manual processes and can't serve PowerPass, Commercial or eDM-only customers.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 4: Three opportunities overview -->
+        <section class="slide">
+            <div style="max-width: 980px; width: 100%;">
+                <div class="accent-line" style="margin: 0 auto 6px;"></div>
+                <div class="eyebrow" style="text-align: center; margin-bottom: 8px;">Phase 2 · Three Opportunities</div>
+                <h2 class="big" style="text-align: center; font-size: clamp(24px, 2.8vw, 38px); margin-bottom: 32px;">Each one expands reach.<br><span class="hl">Together they compound.</span></h2>
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;">
+
+                    <div style="background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 24px 20px; display: flex; flex-direction: column; gap: 10px; border-top: 3px solid var(--blue2);">
+                        <div style="font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--blue2);">01</div>
+                        <div style="font-size: 17px; font-weight: 800; color: var(--text); line-height: 1.2;">Scale Personalisation<br>with Omni</div>
+                        <div style="font-size: 13px; color: var(--muted); line-height: 1.6; flex: 1;">Mobile SDK. Full web. Real-time triggers across every channel. Personalisation that covers the whole customer, not just the email list.</div>
+                        <div style="font-size: 11px; font-weight: 700; color: var(--blue2); letter-spacing: 0.04em;">Salesforce Personalisation</div>
+                    </div>
+
+                    <div style="background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 24px 20px; display: flex; flex-direction: column; gap: 10px; border-top: 3px solid #007A72;">
+                        <div style="font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #007A72;">02</div>
+                        <div style="font-size: 17px; font-weight: 800; color: var(--text); line-height: 1.2;">Real-Time Offer<br>Management</div>
+                        <div style="font-size: 13px; color: var(--muted); line-height: 1.6; flex: 1;">Replace the Flybuys bottleneck. Serve PowerPass, Commercial and all segments with a single automated offer engine.</div>
+                        <div style="font-size: 11px; font-weight: 700; color: #007A72; letter-spacing: 0.04em;">Real-Time Offer Management</div>
+                    </div>
+
+                    <div style="background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 24px 20px; display: flex; flex-direction: column; gap: 10px; border-top: 3px solid #C89000;">
+                        <div style="font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #C89000;">03</div>
+                        <div style="font-size: 17px; font-weight: 800; color: var(--text); line-height: 1.2;">Einstein + Data<br>Cloud</div>
+                        <div style="font-size: 13px; color: var(--muted); line-height: 1.6; flex: 1;">NBA prediction models that score every customer for every action. Build the learning loop that makes each decision better than the last.</div>
+                        <div style="font-size: 11px; font-weight: 700; color: #C89000; letter-spacing: 0.04em;">Einstein Studio · Data Cloud</div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 5: Opportunity 1 — Personalisation at Scale -->
+        <section class="slide">
+            <div class="two-col">
+                <div class="col">
+                    <div class="accent-line"></div>
+                    <div class="eyebrow" style="color: var(--blue2);">Opportunity 01 · Personalisation</div>
+                    <h2 class="big">Every customer.<br>Every surface.<br><span class="hl">Real time.</span></h2>
+                    <p class="sub" style="max-width: 100%; font-size: 15px;">You've personalised the email. Now personalise the visit.</p>
+                </div>
+                <div class="col" style="display: flex; flex-direction: column; gap: 12px;">
+                    <div style="background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px; border-left: 3px solid var(--blue2);">
+                        <div style="font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 4px;">Mobile SDK</div>
+                        <p style="font-size: 13px; color: var(--muted); line-height: 1.6;">Close the dark channel. Capture in-app behaviour, trigger personalised content, and connect mobile identity to the unified profile.</p>
+                    </div>
+                    <div style="background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px; border-left: 3px solid var(--blue2);">
+                        <div style="font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 4px;">Full Web Coverage</div>
+                        <p style="font-size: 13px; color: var(--muted); line-height: 1.6;">Expand MCP from 35% to 100% of web traffic. Homepage tiles, search results, product pages, category banners — all responding to who is visiting.</p>
+                    </div>
+                    <div style="background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px; border-left: 3px solid var(--blue2);">
+                        <div style="font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 4px;">Real-Time Triggers at Scale</div>
+                        <p style="font-size: 13px; color: var(--muted); line-height: 1.6;">Post-Purchase v2 proved the model. Extend triggers to browse abandonment, category affinity, seasonal signals and in-store proximity events.</p>
+                    </div>
+                    <div style="background: rgba(2,42,192,0.05); border: 1px solid rgba(2,42,192,0.18); border-radius: 12px; padding: 14px 18px;">
+                        <p style="font-size: 13px; color: var(--blue2); font-style: italic; line-height: 1.6;">"Central decisioning engine" — your own language for what this becomes.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 6: Opportunity 2 — RTOM -->
+        <section class="slide">
+            <div class="two-col">
+                <div class="col">
+                    <div style="width: 40px; height: 3px; border-radius: 2px; margin-bottom: 20px; background: linear-gradient(90deg, #007A72, #04E1CB);"></div>
+                    <div class="eyebrow" style="color: #007A72;">Opportunity 02 · Offer Management</div>
+                    <h2 class="big">240% ROI.<br>Without the<br><span style="color: #007A72;">manual overhead.</span></h2>
+                    <p class="sub" style="max-width: 100%; font-size: 15px;">The Flybuys result proves the value. Real-Time Offer Management removes the constraint.</p>
+                </div>
+                <div class="col" style="display: flex; flex-direction: column; gap: 12px;">
+                    <div style="background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px; border-left: 3px solid #007A72;">
+                        <div style="font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 4px;">Automate the Flybuys Process</div>
+                        <p style="font-size: 13px; color: var(--muted); line-height: 1.6;">Replace manual offer creation and targeting with an automated engine — offer catalogue, eligibility rules, AI scoring, execution — all in one system.</p>
+                    </div>
+                    <div style="background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px; border-left: 3px solid #007A72;">
+                        <div style="font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 4px;">Extend to PowerPass and Commercial</div>
+                        <p style="font-size: 13px; color: var(--muted); line-height: 1.6;">Commercial is already 100% addressable. PowerPass carries high-value Pro customers. Both segments need personalised offers today — not after a Flybuys integration.</p>
+                    </div>
+                    <div style="background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px; border-left: 3px solid #007A72;">
+                        <div style="font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 4px;">Project Glass / LMS Readiness</div>
+                        <p style="font-size: 13px; color: var(--muted); line-height: 1.6;">RTOM provides the offer management infrastructure that Project Glass requires. Build once — the LMS layer connects when it arrives.</p>
+                    </div>
+                    <div style="background: rgba(0,122,114,0.05); border: 1px solid rgba(0,122,114,0.2); border-radius: 12px; padding: 14px 18px;">
+                        <p style="font-size: 13px; color: #007A72; font-style: italic; line-height: 1.6;">RTOM is available today. The 240% ROI benchmark is replicable at scale — without the manual work.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 7: Opportunity 3 — Einstein + Data Cloud -->
+        <section class="slide">
+            <div class="two-col">
+                <div class="col">
+                    <div style="width: 40px; height: 3px; border-radius: 2px; margin-bottom: 20px; background: linear-gradient(90deg, #C89000, #F6BC06);"></div>
+                    <div class="eyebrow" style="color: #C89000;">Opportunity 03 · Einstein + Data Cloud</div>
+                    <h2 class="big">A model that<br>learns from every<br><span style="color: #C89000;">customer response.</span></h2>
+                    <p class="sub" style="max-width: 100%; font-size: 15px;">Post-Purchase v2 showed you can act at volume. Einstein Studio shows you how to act on the right signal.</p>
+                </div>
+                <div class="col" style="display: flex; flex-direction: column; gap: 12px;">
+                    <div style="background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px; border-left: 3px solid #C89000;">
+                        <div style="font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 4px;">NBA Prediction Models</div>
+                        <p style="font-size: 13px; color: var(--muted); line-height: 1.6;">Train binary classification models on CampaignMember outcomes. Score every customer for every action — propensity to buy, category affinity, churn risk.</p>
+                    </div>
+                    <div style="background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px; border-left: 3px solid #C89000;">
+                        <div style="font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 4px;">9.3M Triggers as Training Data</div>
+                        <p style="font-size: 13px; color: var(--muted); line-height: 1.6;">Post-Purchase v2's trigger volume is already generating the signal volume Einstein Studio needs. Each accept and ignore becomes a training label.</p>
+                    </div>
+                    <div style="background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 16px 18px; border-left: 3px solid #C89000;">
+                        <div style="font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 4px;">Data Cloud Credit Expansion</div>
+                        <p style="font-size: 13px; color: var(--muted); line-height: 1.6;">Scoring at 7M customers across multiple models drives Data Cloud activation credits. Expanding the model catalogue compounds the credit return.</p>
+                    </div>
+                    <div style="background: rgba(200,144,0,0.05); border: 1px solid rgba(200,144,0,0.22); border-radius: 12px; padding: 14px 18px;">
+                        <p style="font-size: 13px; color: #C89000; font-style: italic; line-height: 1.6;">After 3–4 months of live data the model reflects real Bunnings customer behaviour — proprietary and impossible to replicate out of the box.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 8: The Decisioning Engine -->
+        <section class="slide">
+            <div style="max-width: 1020px; width: 100%;">
+                <div class="accent-line" style="margin: 0 auto 6px;"></div>
+                <div class="eyebrow" style="text-align: center; margin-bottom: 8px;">Where This Goes · The Always-On Engine</div>
+                <h2 class="big" style="text-align: center; font-size: clamp(24px, 2.8vw, 40px); margin-bottom: 10px;">Three investments.<br><span class="hl">One engine that compounds.</span></h2>
+                <p style="text-align: center; font-size: 14px; color: var(--muted); margin: 0 auto 32px; max-width: 520px;">Each opportunity feeds the next. Personalisation generates signals. Offers generate outcomes. Einstein turns outcomes into better decisions.</p>
+                <div class="flow">
+                    <div class="flow-step">
+                        <div class="flow-icon">📡</div>
+                        <div class="flow-step-num">Signal</div>
+                        <div class="flow-step-title">Data Cloud</div>
+                        <div class="flow-step-desc">Unified profile — mobile, web, in-store, commercial</div>
+                    </div>
+                    <div class="flow-arrow">›</div>
+                    <div class="flow-step">
+                        <div class="flow-icon">🧠</div>
+                        <div class="flow-step-num">Score</div>
+                        <div class="flow-step-title">Einstein Studio</div>
+                        <div class="flow-step-desc">NBA model scores every customer for every action</div>
+                    </div>
+                    <div class="flow-arrow">›</div>
+                    <div class="flow-step">
+                        <div class="flow-icon">🏆</div>
+                        <div class="flow-step-num">Decide</div>
+                        <div class="flow-step-title">Arbitration</div>
+                        <div class="flow-step-desc">One winning action per customer — budget, eligibility, channel</div>
+                    </div>
+                    <div class="flow-arrow">›</div>
+                    <div class="flow-step">
+                        <div class="flow-icon">⚡</div>
+                        <div class="flow-step-num">Execute</div>
+                        <div class="flow-step-title">Omni + RTOM</div>
+                        <div class="flow-step-desc">Delivered via web, app, email or offer — in real time</div>
+                    </div>
+                    <div class="flow-arrow">›</div>
+                    <div class="flow-step">
+                        <div class="flow-icon">🔄</div>
+                        <div class="flow-step-num">Learn</div>
+                        <div class="flow-step-title">Feedback Loop</div>
+                        <div class="flow-step-desc">Every outcome trains the model — it gets better with use</div>
+                    </div>
+                </div>
+                <p style="text-align: center; font-size: 13px; font-style: italic; color: var(--muted); margin-top: 28px;">The catalogue grows. The model learns. The returns compound.</p>
+            </div>
+        </section>
+
+        <!-- Slide 9: The Business Case -->
+        <section class="slide">
+            <div style="max-width: 960px; width: 100%;">
+                <div class="accent-line" style="margin: 0 auto 6px;"></div>
+                <div class="eyebrow" style="text-align: center; margin-bottom: 8px;">The Business Case · Your Own Benchmarks</div>
+                <h2 class="big" style="text-align: center; font-size: clamp(24px, 2.8vw, 38px); margin-bottom: 32px;">The returns are in the data<br><span class="hl">you already have.</span></h2>
+                <div class="proof-row">
+                    <div class="proof-card">
+                        <div class="proof-metric">1–2%</div>
+                        <div class="proof-co">McKinsey · Sales Lift</div>
+                        <div class="proof-text">Total sales lift from full personalisation maturity. On a business the size of Bunnings, <strong>each percentage point is substantial</strong>.</div>
+                    </div>
+                    <div class="proof-card teal">
+                        <div class="proof-metric" style="color: #007A72;">15%</div>
+                        <div class="proof-co">McKinsey · Revenue Uplift</div>
+                        <div class="proof-text">Revenue uplift from known customers when personalisation is fully activated. You have <strong>7 million known customers</strong> to act on.</div>
+                    </div>
+                    <div class="proof-card gold">
+                        <div class="proof-metric" style="color: #C89000;">15–20%</div>
+                        <div class="proof-co">McKinsey · Media Efficiency</div>
+                        <div class="proof-text">Media efficiency improvement from first-party data activation. <strong>Google and Meta are already live</strong> — this is the next layer of return.</div>
+                    </div>
+                </div>
+                <div style="background: rgba(2,42,192,0.05); border: 1px solid rgba(2,42,192,0.15); border-radius: 14px; padding: 18px 22px; margin-top: 16px; text-align: center;">
+                    <p style="font-size: 14px; color: var(--muted); line-height: 1.7;">You already have the 240% ROI proof from Flybuys. <strong style="color: var(--text);">Phase 2 removes the constraint that keeps that number in a silo.</strong></p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 10: Next Step -->
+        <section class="slide">
+            <div style="text-align: center; max-width: 680px;">
+                <div class="accent-line" style="margin: 0 auto 24px;"></div>
+                <div class="eyebrow" style="margin-bottom: 16px;">Proposed Next Step</div>
+                <h2 class="big" style="font-size: clamp(34px, 4.5vw, 60px); margin-bottom: 20px;">Where do you<br>want to <span class="hl">start?</span></h2>
+                <p class="sub" style="margin: 0 auto 40px; max-width: 420px; font-size: 15px;">Each opportunity can be scoped independently. The decisioning engine emerges as they connect.</p>
+                <div class="cta-steps">
+                    <div style="text-align: center;">
+                        <div class="cta-step-num">01</div>
+                        <div class="cta-step-label" style="font-size: 13px; color: var(--muted); max-width: 120px; line-height: 1.5;">Prioritise the three opportunities</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div class="cta-step-num">02</div>
+                        <div class="cta-step-label" style="font-size: 13px; color: var(--muted); max-width: 120px; line-height: 1.5;">Scope a pilot on the highest priority</div>
+                    </div>
+                    <div style="text-align: center;">
+                        <div class="cta-step-num">03</div>
+                        <div class="cta-step-label" style="font-size: 13px; color: var(--muted); max-width: 120px; line-height: 1.5;">Define the decisioning engine roadmap</div>
+                    </div>
+                </div>
+                <div style="margin-top: 36px; display: flex; align-items: center; justify-content: center; gap: 20px; opacity: 0.7;">
+                    <img src="sf-logo-cloud.png" alt="Salesforce" style="height: 28px; width: auto;">
+                    <div style="width: 1px; height: 20px; background: rgba(0,39,117,0.2);"></div>
+                    <img src="bunnings-logo.svg" alt="Bunnings" style="height: 24px; width: auto;">
+                </div>
+            </div>
+            <div class="star-deco" style="top: 100px; right: 120px;"><img src="sf-star-gold.png" alt=""></div>
+            <div class="star-deco" style="top: 140px; right: 80px; opacity: 0.2;"><img src="sf-star-gold.png" style="width:16px;height:16px;opacity:1;"></div>
+        </section>
+
+    </div>
+
+    <!-- Navigation -->
+    <nav class="nav-bar" role="navigation" aria-label="Slide navigation">
+        <div class="nav-brand">
+            <img class="nav-sf-logo" src="sf-logo-cloud.png" alt="Salesforce">
+            <div class="nav-divider"></div>
+            <img class="nav-bunnings-logo" src="bunnings-logo.svg" alt="Bunnings">
+            <div class="nav-divider"></div>
+            <span class="nav-title">Phase 2 · The Decisioning Layer</span>
+        </div>
+        <div class="nav-dots" role="tablist" id="progress"></div>
+        <div class="nav-controls">
+            <button class="nav-btn" id="btn-prev" aria-label="Previous slide">‹</button>
+            <span class="nav-counter" id="counter">1 / 10</span>
+            <button class="nav-btn" id="btn-next" aria-label="Next slide">›</button>
+        </div>
+    </nav>
+
+    <div class="key-hint">
+        <span class="key">←→</span> navigate <span class="key">Space</span> advance
+    </div>
+
+    <script src="gate.js" data-page="Bunnings · Phase 2 Opportunity"></script>
+
+    <script>
+        var slides  = document.querySelectorAll('#deck > .slide');
+        var total   = slides.length;
+        var current = 0;
+        var busy    = false;
+        var prog    = document.getElementById('progress');
+
+        for (var i = 0; i < total; i++) {
+            var dot = document.createElement('button');
+            dot.className = 'dot' + (i === 0 ? ' active' : '');
+            dot.setAttribute('role', 'tab');
+            dot.setAttribute('aria-label', 'Slide ' + (i + 1));
+            dot.setAttribute('aria-selected', i === 0 ? 'true' : 'false');
+            dot.addEventListener('click', (function(idx) {
+                return function() { goTo(idx); };
+            })(i));
+            prog.appendChild(dot);
+        }
+
+        function goTo(idx) {
+            if (busy || idx === current || idx < 0 || idx >= total) return;
+            busy = true;
+            slides[current].classList.add('exit');
+            var prev = current;
+            current = idx;
+            setTimeout(function() {
+                slides[prev].classList.remove('active', 'exit');
+                slides[current].classList.add('active');
+                updateUI();
+                setTimeout(function() { busy = false; }, 450);
+            }, 260);
+        }
+
+        function navigate(dir) { goTo(current + dir); }
+
+        function updateUI() {
+            document.getElementById('counter').textContent = (current + 1) + ' / ' + total;
+            document.getElementById('btn-prev').disabled = current === 0;
+            document.getElementById('btn-next').disabled = current === total - 1;
+            document.getElementById('btn-prev').setAttribute('aria-label', 'Previous slide (slide ' + current + ' of ' + total + ')');
+            document.getElementById('btn-next').setAttribute('aria-label', 'Next slide (slide ' + (current + 2) + ' of ' + total + ')');
+            document.querySelectorAll('.dot').forEach(function(d, i) {
+                d.classList.toggle('active', i === current);
+                d.setAttribute('aria-selected', i === current ? 'true' : 'false');
+            });
+        }
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') { e.preventDefault(); navigate(1); }
+            if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')                    { e.preventDefault(); navigate(-1); }
+        });
+
+        var tx = null;
+        document.addEventListener('touchstart', function(e) { tx = e.touches[0].clientX; });
+        document.addEventListener('touchend',   function(e) {
+            if (tx === null) return;
+            if (Math.abs(e.changedTouches[0].clientX - tx) > 50) navigate(e.changedTouches[0].clientX - tx < 0 ? 1 : -1);
+            tx = null;
+        });
+
+        slides[0].classList.add('active');
+        updateUI();
+    </script>
+</body>
+</html>
