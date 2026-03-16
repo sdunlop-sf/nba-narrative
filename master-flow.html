@@ -11,37 +11,33 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --navy:   #CFE9FE;
-      --navy2:  #EAF5FE;
-      --blue:   #022AC0;
+      --bg:     #C8E4FD;
+      --bg-alt: #D8ECFE;
       --blue2:  #022AC0;
-      --royal:  #022AC0;
       --teal:   #04E1CB;
       --teal-d: #007A72;
-      --lblue:  #90D0FE;
       --lblue-d: #0057B8;
-      --gold:   #F6BC06;
-      --gold-d: #C89000;
-      --white:  #002775;
-      --green:  #007A72;
+      --gold:   #FCC003;
+      --gold-d: #A87700;
+      --ink:    #002775;
+      --muted:  rgba(0, 39, 117, 0.55);
+      --text:   rgba(0, 39, 117, 0.85);
+      --card:   #FFFFFF;
+      --card-h: #F4FAFF;
+      --border: rgba(0, 39, 117, 0.1);
+      --shadow: 0 1px 3px rgba(0,39,117,0.07), 0 4px 18px rgba(0,39,117,0.07);
+      --shadow-sm: 0 1px 2px rgba(0,39,117,0.06), 0 2px 8px rgba(0,39,117,0.05);
       --red:    #C41C00;
-      --card:   rgba(0, 39, 117, 0.06);
-      --card-h: rgba(0, 39, 117, 0.12);
-      --border: rgba(0, 39, 117, 0.14);
-      --muted:  rgba(0, 39, 117, 0.6);
-      --text:   rgba(0, 39, 117, 0.82);
+      --green:  #007A72;
       --mono:   'JetBrains Mono', 'Courier New', monospace;
     }
 
     html { scroll-behavior: smooth; }
 
     body {
-      background:
-        radial-gradient(ellipse 90% 70% at 100% 0%, rgba(2, 42, 192, 0.07) 0%, transparent 55%),
-        radial-gradient(ellipse 60% 50% at 0% 100%, rgba(4, 225, 203, 0.04) 0%, transparent 50%),
-        linear-gradient(170deg, #CFE9FE 0%, #D8EFFE 60%, #CFE9FE 100%);
+      background: var(--bg);
       background-attachment: fixed;
-      color: var(--white);
+      color: var(--ink);
       font-family: 'Segoe UI', Arial, sans-serif;
       font-size: 15px;
       line-height: 1.7;
@@ -71,9 +67,10 @@
       height: 56px;
       display: flex; align-items: center; justify-content: space-between;
       padding: 0 40px;
-      background: rgba(255, 255, 255, 0.92);
+      background: rgba(255, 255, 255, 0.96);
       backdrop-filter: blur(20px);
       border-bottom: 1px solid rgba(0, 39, 117, 0.1);
+      box-shadow: 0 1px 0 rgba(0,39,117,0.06), 0 2px 12px rgba(0,39,117,0.06);
     }
 
     .nav-brand {
@@ -89,10 +86,10 @@
 
     .nav-title {
       font-size: 11px; font-weight: 700; letter-spacing: 0.08em;
-      text-transform: uppercase; color: rgba(0, 39, 117, 0.5);
+      text-transform: uppercase; color: var(--ink);
     }
 
-    .nav-sub { font-size: 11px; color: rgba(0, 39, 117, 0.35); }
+    .nav-sub { font-size: 11px; color: var(--muted); }
 
     .nav-pill {
       font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
@@ -123,11 +120,11 @@
     .hero h1 {
       font-size: clamp(32px, 5vw, 52px);
       font-weight: 900; line-height: 1.05; letter-spacing: -0.03em;
-      color: var(--white); margin-bottom: 20px;
+      color: var(--ink); margin-bottom: 20px;
     }
 
     .hero h1 .hl {
-      background: linear-gradient(135deg, var(--blue2), var(--lblue-d));
+      background: linear-gradient(135deg, var(--blue2) 0%, #04E1CB 100%);
       -webkit-background-clip: text; -webkit-text-fill-color: transparent;
       background-clip: text;
     }
@@ -139,9 +136,10 @@
 
     /* ── FLOW STRIP ── */
     .flow-strip-wrap {
-      background: rgba(0, 39, 117, 0.05);
+      background: var(--card);
       border-top: 1px solid var(--border);
       border-bottom: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
       padding: 28px 40px;
       overflow-x: auto;
     }
@@ -165,12 +163,12 @@
       border: 1px solid var(--border);
     }
 
-    .fs-label { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--white); }
+    .fs-label { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink); }
     .fs-sub { font-size: 10px; color: var(--muted); }
 
     .fs-arrow {
       flex-shrink: 0;
-      color: rgba(2, 42, 192, 0.25);
+      color: rgba(2, 42, 192, 0.3);
       font-size: 18px;
       padding: 0 4px;
       margin-bottom: 22px;
@@ -186,9 +184,9 @@
     .section + .section { border-top: 1px solid var(--border); }
 
     .section-alt {
-      background: rgba(0, 39, 117, 0.04);
-      border-top: 1px solid var(--border);
-      border-bottom: 1px solid var(--border);
+      background: var(--bg-alt);
+      border-top: 1px solid rgba(0,39,117,0.12);
+      border-bottom: 1px solid rgba(0,39,117,0.12);
     }
 
     .section-alt .section { padding: 72px 40px; }
@@ -204,11 +202,13 @@
       width: 48px; height: 48px; border-radius: 14px;
       display: flex; align-items: center; justify-content: center;
       font-family: var(--mono); font-size: 14px; font-weight: 700;
-      border: 1px solid var(--border);
+      border: 2px solid var(--border);
+      background: var(--card);
+      box-shadow: var(--shadow-sm);
     }
 
     .step-title {
-      font-size: 26px; font-weight: 800; color: var(--white);
+      font-size: 26px; font-weight: 800; color: var(--ink);
       letter-spacing: -0.02em; line-height: 1.2;
     }
 
@@ -225,10 +225,11 @@
       background: var(--card);
       border: 1px solid var(--border);
       border-radius: 16px;
-      border-left: 3px solid var(--blue2);
+      border-left: 4px solid var(--blue2);
       padding: 28px 32px;
       margin-bottom: 20px;
       position: relative; overflow: hidden;
+      box-shadow: var(--shadow);
     }
 
     .trigger-primary::before {
@@ -244,7 +245,7 @@
     }
 
     .trigger-primary p { font-size: 15px; line-height: 1.75; color: var(--text); }
-    .trigger-primary strong { color: var(--white); }
+    .trigger-primary strong { color: var(--ink); }
 
     .trigger-alts {
       display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
@@ -255,13 +256,14 @@
       border: 1px solid var(--border);
       border-radius: 14px;
       padding: 20px;
-      transition: background 0.2s, border-color 0.2s;
+      box-shadow: var(--shadow-sm);
+      transition: box-shadow 0.2s, border-color 0.2s, transform 0.2s;
     }
 
-    .trigger-alt:hover { background: var(--card-h); border-color: rgba(2, 42, 192, 0.28); }
+    .trigger-alt:hover { background: var(--card-h); border-color: rgba(2,42,192,0.22); box-shadow: var(--shadow); transform: translateY(-1px); }
 
     .trigger-alt-icon { font-size: 20px; margin-bottom: 10px; }
-    .trigger-alt-title { font-size: 13px; font-weight: 700; color: var(--white); margin-bottom: 6px; }
+    .trigger-alt-title { font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 6px; }
     .trigger-alt-desc { font-size: 12px; color: var(--muted); line-height: 1.55; }
 
     /* ── CATALOGUE ── */
@@ -270,10 +272,11 @@
       border: 1px solid var(--border);
       border-radius: 16px;
       overflow: hidden;
+      box-shadow: var(--shadow);
     }
 
     .catalogue-header {
-      background: rgba(2, 42, 192, 0.04);
+      background: rgba(2, 42, 192, 0.05);
       border-bottom: 1px solid var(--border);
       padding: 14px 24px;
       display: flex; align-items: center; gap: 10px;
@@ -312,6 +315,7 @@
       border-radius: 16px;
       padding: 28px;
       margin-bottom: 20px;
+      box-shadow: var(--shadow);
     }
 
     .loop-label {
@@ -330,8 +334,8 @@
     }
 
     .loop-step {
-      background: rgba(0, 39, 117, 0.06);
-      border: 1px solid var(--border);
+      background: #F4FAFF;
+      border: 1px solid rgba(0,39,117,0.1);
       border-radius: 14px;
       padding: 20px;
     }
@@ -341,7 +345,7 @@
       letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 8px;
     }
 
-    .loop-step-title { font-size: 14px; font-weight: 700; color: var(--white); margin-bottom: 8px; }
+    .loop-step-title { font-size: 14px; font-weight: 700; color: var(--ink); margin-bottom: 8px; }
     .loop-step-desc { font-size: 12px; color: var(--muted); line-height: 1.55; }
 
     .loop-step-tag {
@@ -403,10 +407,11 @@
       border-radius: 14px;
       padding: 20px;
       display: flex; gap: 14px;
-      transition: background 0.2s;
+      box-shadow: var(--shadow-sm);
+      transition: box-shadow 0.2s, transform 0.2s;
     }
 
-    .arb-rule:hover { background: var(--card-h); }
+    .arb-rule:hover { box-shadow: var(--shadow); transform: translateY(-1px); }
 
     .arb-rule-icon {
       flex-shrink: 0;
@@ -415,7 +420,7 @@
       font-size: 16px; border: 1px solid var(--border);
     }
 
-    .arb-rule-title { font-size: 13px; font-weight: 700; color: var(--white); margin-bottom: 5px; }
+    .arb-rule-title { font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 5px; }
     .arb-rule-desc { font-size: 12px; color: var(--muted); line-height: 1.55; }
 
     /* ── EXECUTION CHANNELS ── */
@@ -429,19 +434,21 @@
       border: 1px solid var(--border);
       border-radius: 14px;
       overflow: hidden;
-      transition: background 0.2s;
+      box-shadow: var(--shadow-sm);
+      transition: box-shadow 0.2s, transform 0.2s;
     }
 
-    .exec-channel:hover { background: var(--card-h); }
+    .exec-channel:hover { box-shadow: var(--shadow); transform: translateY(-1px); }
 
     .ec-head {
       padding: 14px 18px;
       border-bottom: 1px solid var(--border);
       display: flex; align-items: center; gap: 10px;
+      background: #F4FAFF;
     }
 
     .ec-icon { font-size: 17px; }
-    .ec-title { font-size: 13px; font-weight: 700; color: var(--white); }
+    .ec-title { font-size: 13px; font-weight: 700; color: var(--ink); }
     .ec-body { padding: 16px 18px; }
     .ec-body p { font-size: 12px; color: var(--muted); line-height: 1.65; }
     .ec-body strong { color: var(--text); }
@@ -471,20 +478,22 @@
       border-radius: 14px;
       padding: 22px 18px;
       text-align: center;
+      box-shadow: var(--shadow-sm);
     }
 
     .fb-node-icon { font-size: 24px; margin-bottom: 10px; }
-    .fb-node-title { font-size: 13px; font-weight: 700; color: var(--white); margin-bottom: 5px; }
+    .fb-node-title { font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 5px; }
     .fb-node-desc { font-size: 11px; color: var(--muted); line-height: 1.55; }
     .fb-arr { text-align: center; color: rgba(2, 42, 192, 0.25); font-size: 20px; }
 
     .retrain-callout {
       background: var(--card);
       border: 1px solid var(--border);
-      border-left: 3px solid var(--lblue-d);
+      border-left: 4px solid var(--lblue-d);
       border-radius: 14px;
       padding: 24px 28px;
       position: relative; overflow: hidden;
+      box-shadow: var(--shadow);
     }
 
     .retrain-callout::before {
@@ -499,7 +508,7 @@
     }
 
     .rc-body { font-size: 14px; color: var(--text); line-height: 1.75; }
-    .rc-body strong { color: var(--white); }
+    .rc-body strong { color: var(--ink); }
 
     /* ── REALITY CHECK ── */
     .reality-wrap {
@@ -507,6 +516,7 @@
       border: 1px solid rgba(196, 28, 0, 0.18);
       border-radius: 16px;
       padding: 28px 32px;
+      box-shadow: var(--shadow);
     }
 
     .reality-label {
@@ -540,10 +550,11 @@
       padding: 26px 22px;
       border-top: 3px solid var(--blue2);
       position: relative; overflow: hidden;
-      transition: background 0.2s;
+      box-shadow: var(--shadow);
+      transition: box-shadow 0.2s, transform 0.2s;
     }
 
-    .effort-card:hover { background: var(--card-h); }
+    .effort-card:hover { box-shadow: 0 4px 24px rgba(0,39,117,0.12); transform: translateY(-2px); }
 
     .effort-card::after {
       content: '';
@@ -556,7 +567,7 @@
       color: var(--blue2); line-height: 1; margin-bottom: 8px; position: relative;
     }
 
-    .effort-card-label { font-size: 14px; font-weight: 700; color: var(--white); margin-bottom: 8px; position: relative; }
+    .effort-card-label { font-size: 14px; font-weight: 700; color: var(--ink); margin-bottom: 8px; position: relative; }
     .effort-card-desc { font-size: 12px; color: var(--muted); line-height: 1.6; position: relative; }
 
     /* ── DIVIDER ── */
@@ -612,37 +623,37 @@
   <div class="flow-strip-wrap">
     <div class="flow-strip">
       <div class="fs-node">
-        <div class="fs-icon" style="background:rgba(2,42,192,0.08);color:var(--blue2);">⚡</div>
+        <div class="fs-icon" style="background:rgba(2,42,192,0.1);color:#022AC0;border-color:rgba(2,42,192,0.18);">⚡</div>
         <div class="fs-label">Trigger</div>
         <div class="fs-sub">Segment change / CRM event</div>
       </div>
       <div class="fs-arrow">›</div>
       <div class="fs-node">
-        <div class="fs-icon" style="background:rgba(0,122,114,0.08);color:#007A72;">📋</div>
+        <div class="fs-icon" style="background:rgba(4,225,203,0.15);color:#007A72;border-color:rgba(4,225,203,0.3);">📋</div>
         <div class="fs-label">Load Catalogue</div>
         <div class="fs-sub">5–15 active NBAs</div>
       </div>
       <div class="fs-arrow">›</div>
       <div class="fs-node">
-        <div class="fs-icon" style="background:rgba(0,87,184,0.08);color:#0057B8;">🔁</div>
+        <div class="fs-icon" style="background:rgba(0,87,184,0.12);color:#0057B8;border-color:rgba(0,87,184,0.2);">🔁</div>
         <div class="fs-label">Loop</div>
         <div class="fs-sub">Eligibility · Score · Gate</div>
       </div>
       <div class="fs-arrow">›</div>
       <div class="fs-node">
-        <div class="fs-icon" style="background:rgba(200,144,0,0.08);color:#C89000;">⚖️</div>
+        <div class="fs-icon" style="background:rgba(252,192,3,0.15);color:#A87700;border-color:rgba(252,192,3,0.3);">⚖️</div>
         <div class="fs-label">Arbitrate</div>
         <div class="fs-sub">Pick the winner</div>
       </div>
       <div class="fs-arrow">›</div>
       <div class="fs-node">
-        <div class="fs-icon" style="background:rgba(0,122,114,0.08);color:#007A72;">🚀</div>
+        <div class="fs-icon" style="background:rgba(4,225,203,0.15);color:#007A72;border-color:rgba(4,225,203,0.3);">🚀</div>
         <div class="fs-label">Execute</div>
         <div class="fs-sub">Task · Portal · Email</div>
       </div>
       <div class="fs-arrow">›</div>
       <div class="fs-node">
-        <div class="fs-icon" style="background:rgba(2,42,192,0.08);color:var(--blue2);">🔄</div>
+        <div class="fs-icon" style="background:rgba(2,42,192,0.1);color:#022AC0;border-color:rgba(2,42,192,0.18);">🔄</div>
         <div class="fs-label">Feedback</div>
         <div class="fs-sub">Retrain Einstein</div>
       </div>
@@ -652,7 +663,7 @@
   <!-- TRIGGER -->
   <div class="section">
     <div class="step-head">
-      <div class="step-num" style="background:rgba(2,42,192,0.08);color:var(--blue2);font-size:26px;">⚡</div>
+      <div class="step-num" style="background:rgba(2,42,192,0.1);color:#022AC0;border-color:rgba(2,42,192,0.2);font-size:26px;">⚡</div>
       <div>
         <div class="step-title">The Trigger</div>
         <div class="step-desc">What fires the flow and starts the decisioning process</div>
@@ -688,7 +699,7 @@
   <!-- STEP 1 -->
   <div class="section">
     <div class="step-head">
-      <div class="step-num" style="background:rgba(0,122,114,0.08);color:#007A72;">01</div>
+      <div class="step-num" style="background:rgba(4,225,203,0.15);color:#007A72;border-color:rgba(4,225,203,0.35);">01</div>
       <div>
         <div class="step-title">Load the NBA Catalogue</div>
         <div class="step-desc">Query every active NBA available to this customer's segment and region</div>
@@ -744,7 +755,7 @@
   <div class="section-alt">
     <div class="section">
       <div class="step-head">
-        <div class="step-num" style="background:rgba(0,87,184,0.08);color:#0057B8;">02</div>
+        <div class="step-num" style="background:rgba(0,87,184,0.12);color:#0057B8;border-color:rgba(0,87,184,0.25);">02</div>
         <div>
           <div class="step-title">The Loop</div>
           <div class="step-desc">For each NBA in the catalogue, run three sub-steps in sequence</div>
@@ -803,7 +814,7 @@
   <!-- STEP 3 -->
   <div class="section">
     <div class="step-head">
-      <div class="step-num" style="background:rgba(200,144,0,0.08);color:#C89000;">03</div>
+      <div class="step-num" style="background:rgba(252,192,3,0.15);color:#A87700;border-color:rgba(252,192,3,0.35);">03</div>
       <div>
         <div class="step-title">Arbitration</div>
         <div class="step-desc">Multiple NBAs have passed. Pick the one that gets executed.</div>
@@ -848,7 +859,7 @@
   <div class="section-alt">
     <div class="section">
       <div class="step-head">
-        <div class="step-num" style="background:rgba(0,122,114,0.08);color:#007A72;">04</div>
+        <div class="step-num" style="background:rgba(4,225,203,0.15);color:#007A72;border-color:rgba(4,225,203,0.35);">04</div>
         <div>
           <div class="step-title">Execute</div>
           <div class="step-desc">The winning NBA gets delivered. Channel depends on the trigger.</div>
@@ -895,7 +906,7 @@
   <!-- STEP 5 -->
   <div class="section">
     <div class="step-head">
-      <div class="step-num" style="background:rgba(0,87,184,0.08);color:#0057B8;">05</div>
+      <div class="step-num" style="background:rgba(0,87,184,0.12);color:#0057B8;border-color:rgba(0,87,184,0.25);">05</div>
       <div>
         <div class="step-title">Feedback Loop</div>
         <div class="step-desc">What makes it a learning system rather than a static rules engine</div>
@@ -933,7 +944,7 @@
   <!-- REALITY CHECK -->
   <div class="section">
     <div class="step-head">
-      <div class="step-num" style="background:rgba(196,28,0,0.08);color:#C41C00;">⚠️</div>
+      <div class="step-num" style="background:rgba(196,28,0,0.1);color:#C41C00;border-color:rgba(196,28,0,0.2);">⚠️</div>
       <div>
         <div class="step-title">What's Real vs. Simulated in the Demo</div>
         <div class="step-desc">Meridian and Xero demos simulate this flow — here's the honest breakdown</div>
@@ -968,7 +979,7 @@
   <div class="section-alt">
     <div class="section">
       <div class="step-head">
-        <div class="step-num" style="background:rgba(2,42,192,0.08);color:var(--blue2);">🏗️</div>
+        <div class="step-num" style="background:rgba(2,42,192,0.1);color:#022AC0;border-color:rgba(2,42,192,0.2);">🏗️</div>
         <div>
           <div class="step-title">What It Takes to Build for Real</div>
           <div class="step-desc">The Flow wiring is the fast part — here's where the real effort sits</div>
