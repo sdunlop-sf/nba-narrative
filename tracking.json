@@ -4642,5 +4642,17 @@
     "location": "Sydney, New South Wales, Australia",
     "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
     "returning": "yes"
+  },
+  {
+    "timestamp": "Wed, 18 Mar 2026 23:41:26 GMT",
+    "name": "paulstevenson",
+    "company": "salesforce",
+    "position": "Consultant",
+    "page": "Xero LUCA Narrative",
+    "url": "https://sdunlop-sf.github.io/nba-narrative/xero.html",
+    "ip": "165.225.114.138",
+    "location": "Sydney, New South Wales, Australia",
+    "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
+    "returning": "yes"
   }
 ]
