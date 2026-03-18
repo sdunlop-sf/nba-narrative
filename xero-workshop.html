@@ -1932,11 +1932,16 @@
             if (panel.classList.contains('open')) {
                 renderComments();
                 document.getElementById('comment-input').focus();
+            } else {
+                document.getElementById('comment-input').blur();
+                document.body.focus();
             }
         });
 
         document.getElementById('comment-close').addEventListener('click', function() {
             panel.classList.remove('open');
+            document.getElementById('comment-input').blur();
+            document.body.focus();
         });
 
         document.getElementById('comment-submit').addEventListener('click', function() {
