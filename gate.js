@@ -12,8 +12,9 @@
 (function () {
 
   /* ── CONFIG ─────────────────────────────────────────────────── */
+  var _scriptTag = document.querySelector('script[src*="gate.js"]');
   var C = {
-    password:   'SFNBA2026!',
+    password:   (_scriptTag && _scriptTag.dataset.password) ? _scriptTag.dataset.password : 'SFNBA2026!',
     workerUrl:  'https://summer-mountain-4569.sdunlop.workers.dev',
     web3Key:    'ec698e10-6e6a-4c3a-974e-54a7cd7d4343',
     storeKey:   'nba_visitor_v2',
