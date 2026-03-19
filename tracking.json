@@ -4810,5 +4810,17 @@
     "location": "Auckland, Auckland, New Zealand",
     "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36",
     "returning": "yes"
+  },
+  {
+    "timestamp": "Thu, 19 Mar 2026 00:59:24 GMT",
+    "name": "Riaan",
+    "company": "Salesforce",
+    "position": "AE",
+    "page": "NBA Narrative · Xero Workshop",
+    "url": "https://sdunlop-sf.github.io/nba-narrative/xero-workshop.html",
+    "ip": "147.161.217.26",
+    "location": "Auckland, Auckland, New Zealand",
+    "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36",
+    "returning": "yes"
   }
 ]
