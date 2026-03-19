@@ -615,9 +615,9 @@
   <!-- HERO -->
   <div class="hero">
     <div class="accent-line"></div>
-    <div class="hero-eyebrow">Salesforce · Data Cloud · Einstein Studio · Flow</div>
+    <div class="hero-eyebrow">Salesforce · Data Cloud · Einstein Studio · Agentforce · Flow</div>
     <h1>How the NBA engine<br/><span class="hl">actually runs</span></h1>
-    <p class="hero-sub">A practical guide to building the master decisioning flow — from trigger to execution to feedback loop.</p>
+    <p class="hero-sub">A practical guide to the two-mode decisioning engine — from trigger to execution to feedback loop. Mode 1 handles scale with ML. Mode 2 handles complexity with reasoning. Both learn.</p>
   </div>
 
   <!-- FLOW STRIP -->
@@ -644,19 +644,80 @@
       <div class="fs-node">
         <div class="fs-icon" style="background:rgba(252,192,3,0.15);color:#A87700;border-color:rgba(252,192,3,0.3);">⚖️</div>
         <div class="fs-label">Arbitrate</div>
-        <div class="fs-sub">Pick the winner</div>
+        <div class="fs-sub">Flow · or · Agentforce</div>
       </div>
       <div class="fs-arrow">›</div>
       <div class="fs-node">
         <div class="fs-icon" style="background:rgba(4,225,203,0.15);color:#007A72;border-color:rgba(4,225,203,0.3);">🚀</div>
         <div class="fs-label">Execute</div>
-        <div class="fs-sub">Task · Portal · Email</div>
+        <div class="fs-sub">Agentforce M&amp;P · Rep · Portal</div>
       </div>
       <div class="fs-arrow">›</div>
       <div class="fs-node">
         <div class="fs-icon" style="background:rgba(2,42,192,0.1);color:#022AC0;border-color:rgba(2,42,192,0.18);">🔄</div>
         <div class="fs-label">Feedback</div>
         <div class="fs-sub">Retrain Einstein</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TWO MODES -->
+  <div class="section-alt">
+    <div class="section">
+      <div class="eyebrow">Architecture</div>
+      <div class="step-head" style="margin-bottom: 24px;">
+        <div class="step-num" style="background:rgba(2,42,192,0.08);color:#022AC0;border-color:rgba(2,42,192,0.2);font-size:22px;">⚙️</div>
+        <div>
+          <div class="step-title">Two modes. One engine.</div>
+          <div class="step-desc">The decisioning engine operates in two modes depending on decision complexity. Both feed the same feedback loop and improve the same model over time.</div>
+        </div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px;">
+
+        <!-- Mode 1 -->
+        <div style="background: var(--card); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; box-shadow: var(--shadow);">
+          <div style="background: rgba(2,42,192,0.05); border-bottom: 1px solid var(--border); padding: 14px 22px; display: flex; align-items: center; gap: 10px;">
+            <div style="width: 8px; height: 8px; border-radius: 50%; background: var(--blue2); flex-shrink: 0;"></div>
+            <div style="font-size: 11px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: var(--blue2);">Mode 1 · ML at Scale</div>
+            <div style="margin-left: auto; font-size: 10px; background: rgba(2,42,192,0.08); border: 1px solid rgba(2,42,192,0.2); border-radius: 20px; padding: 2px 10px; color: var(--blue2); font-weight: 700; white-space: nowrap;">~85% of decisions</div>
+          </div>
+          <div style="padding: 22px;">
+            <div style="font-size: 15px; font-weight: 700; color: var(--ink); margin-bottom: 10px;">Einstein Studio + Flow</div>
+            <p style="font-size: 14px; color: var(--muted); line-height: 1.7; margin-bottom: 16px;">An ML model scores every eligible NBA. Flow arbitrates the winner — highest score plus priority and fatigue rules. Fast, deterministic, and auditable. Processes the entire customer base without human intervention.</p>
+            <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+              <span style="font-size: 10px; font-weight: 700; padding: 3px 10px; border-radius: 20px; background: rgba(2,42,192,0.07); border: 1px solid rgba(2,42,192,0.18); color: var(--blue2);">Real-time</span>
+              <span style="font-size: 10px; font-weight: 700; padding: 3px 10px; border-radius: 20px; background: rgba(2,42,192,0.07); border: 1px solid rgba(2,42,192,0.18); color: var(--blue2);">Deterministic</span>
+              <span style="font-size: 10px; font-weight: 700; padding: 3px 10px; border-radius: 20px; background: rgba(2,42,192,0.07); border: 1px solid rgba(2,42,192,0.18); color: var(--blue2);">Auditable</span>
+              <span style="font-size: 10px; font-weight: 700; padding: 3px 10px; border-radius: 20px; background: rgba(2,42,192,0.07); border: 1px solid rgba(2,42,192,0.18); color: var(--blue2);">Scales to millions</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mode 2 -->
+        <div style="background: var(--card); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; box-shadow: var(--shadow);">
+          <div style="background: rgba(0,122,114,0.05); border-bottom: 1px solid var(--border); padding: 14px 22px; display: flex; align-items: center; gap: 10px;">
+            <div style="width: 8px; height: 8px; border-radius: 50%; background: var(--teal-d); flex-shrink: 0;"></div>
+            <div style="font-size: 11px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: var(--teal-d);">Mode 2 · Agentic Reasoning</div>
+            <div style="margin-left: auto; font-size: 10px; background: rgba(0,122,114,0.08); border: 1px solid rgba(0,122,114,0.2); border-radius: 20px; padding: 2px 10px; color: var(--teal-d); font-weight: 700; white-space: nowrap;">~15% of decisions</div>
+          </div>
+          <div style="padding: 22px;">
+            <div style="font-size: 15px; font-weight: 700; color: var(--ink); margin-bottom: 10px;">Agentforce</div>
+            <p style="font-size: 14px; color: var(--muted); line-height: 1.7; margin-bottom: 16px;">When signals are conflicting or context is ambiguous, an Agentforce agent evaluates the full customer situation using live reasoning. Handles the nuance and edge cases that ML scores and rules can't resolve on their own.</p>
+            <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+              <span style="font-size: 10px; font-weight: 700; padding: 3px 10px; border-radius: 20px; background: rgba(0,122,114,0.07); border: 1px solid rgba(0,122,114,0.18); color: var(--teal-d);">Contextual reasoning</span>
+              <span style="font-size: 10px; font-weight: 700; padding: 3px 10px; border-radius: 20px; background: rgba(0,122,114,0.07); border: 1px solid rgba(0,122,114,0.18); color: var(--teal-d);">Edge cases</span>
+              <span style="font-size: 10px; font-weight: 700; padding: 3px 10px; border-radius: 20px; background: rgba(0,122,114,0.07); border: 1px solid rgba(0,122,114,0.18); color: var(--teal-d);">Explainable</span>
+              <span style="font-size: 10px; font-weight: 700; padding: 3px 10px; border-radius: 20px; background: rgba(0,122,114,0.07); border: 1px solid rgba(0,122,114,0.18); color: var(--teal-d);">Works in tandem</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div style="background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 16px 22px; display: flex; align-items: center; gap: 14px; box-shadow: var(--shadow-sm);">
+        <div style="font-size: 20px; flex-shrink: 0;">🔀</div>
+        <p style="font-size: 13px; color: var(--muted); line-height: 1.65;"><strong style="color: var(--ink);">How the mode is selected:</strong> Mode 1 runs first — always. If the arbitration step cannot resolve a clear winner (scores too close, conflicting eligibility flags, or a high-value edge case is flagged), the engine escalates to Mode 2. Agentforce receives the full context, reasons to a decision, and returns a recommendation with rationale. Both outcomes are written back to Data Cloud as training signals.</p>
       </div>
     </div>
   </div>
@@ -854,6 +915,25 @@
         </div>
       </div>
     </div>
+
+    <!-- Mode 2 escalation -->
+    <div style="margin-top: 20px; background: rgba(0,122,114,0.04); border: 1px solid rgba(0,122,114,0.2); border-radius: 14px; padding: 24px 26px;">
+      <div style="font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--teal-d); margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
+        <div style="width: 6px; height: 6px; border-radius: 50%; background: var(--teal-d);"></div>
+        Mode 2 · When Flow arbitration can't resolve
+      </div>
+      <div style="display: grid; grid-template-columns: 1fr 36px 1fr; align-items: center; gap: 0;">
+        <div>
+          <div style="font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 6px;">Conflicting signals</div>
+          <div style="font-size: 13px; color: var(--muted); line-height: 1.65;">Two NBAs score within 0.05 of each other. Priority rules are tied. Fatigue hasn't resolved it. Or a high-value customer flag triggers mandatory escalation regardless of scores.</div>
+        </div>
+        <div style="text-align: center; color: rgba(0,122,114,0.35); font-size: 22px;">›</div>
+        <div>
+          <div style="font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 6px;">Agentforce adjudicates</div>
+          <div style="font-size: 13px; color: var(--muted); line-height: 1.65;">The agent receives the full customer context — unified profile, both NBAs, their Einstein scores, and the arbitration rationale — reasons to a decision, and returns a recommendation with a plain-language explanation.</div>
+        </div>
+      </div>
+    </div>
   </div>
 
   <!-- STEP 4 -->
@@ -863,7 +943,7 @@
         <div class="step-num" style="background:rgba(4,225,203,0.15);color:#007A72;border-color:rgba(4,225,203,0.35);">04</div>
         <div>
           <div class="step-title">Execute</div>
-          <div class="step-desc">The winning NBA gets delivered. Channel depends on the trigger.</div>
+          <div class="step-desc">The winning NBA gets delivered. Channel depends on the trigger. Agentforce Marketing &amp; Personalization handles two-way communication and real-time in-channel personalisation.</div>
         </div>
       </div>
 
@@ -874,32 +954,32 @@
             <div class="ec-title">Rep Visit Brief</div>
           </div>
           <div class="ec-body">
-            <p>Flow creates or updates a Salesforce <strong>Task</strong> on the account. Includes the NBA detail, talking points, and any linked Promotion & Offer. Rep sees it in their CRM view before the visit.</p>
+            <p>Flow creates or updates a Salesforce <strong>Task</strong> on the account. Includes the NBA detail, talking points, and any linked Promotion &amp; Offer. Rep sees it in their CRM view before the visit.</p>
           </div>
         </div>
         <div class="exec-channel">
           <div class="ec-head">
             <div class="ec-icon">🖥️</div>
-            <div class="ec-title">Portal Personalisation</div>
+            <div class="ec-title">Real-time Personalisation</div>
           </div>
           <div class="ec-body">
-            <p>Flow calls <strong>Salesforce Personalisation</strong> via API. Recommendation renders in the SAP Commerce portal in real time when the customer is logged in. JS tag only — no structural rebuild.</p>
+            <p><strong>Agentforce Marketing &amp; Personalization</strong> renders the recommendation in the customer portal in real time. Offer content adapts to the customer's current session context — no structural rebuild required.</p>
           </div>
         </div>
         <div class="exec-channel">
           <div class="ec-head">
-            <div class="ec-icon">✉️</div>
-            <div class="ec-title">Email via Marketing Cloud</div>
+            <div class="ec-icon">💬</div>
+            <div class="ec-title">Agentic Two-Way Comms</div>
           </div>
           <div class="ec-body">
-            <p>Flow triggers a <strong>Marketing Cloud journey entry event</strong>. Email sends with the offer baked in, referencing the live Promotion & Offer record for eligibility and mechanics.</p>
+            <p>Agentforce initiates an outbound message — email, SMS, or in-app — and <strong>handles the reply conversation autonomously</strong>. Customer responses are captured, fed back as outcome signals, and update the CampaignMember record.</p>
           </div>
         </div>
       </div>
 
       <div class="exec-parallel">
         <div class="exec-parallel-icon">⚡</div>
-        <p><strong>All three in parallel:</strong> Flow branches at execution and fires all three channels simultaneously — rep gets the Task, customer gets the portal recommendation, email triggers in the background. One NBA decision, three coordinated touchpoints.</p>
+        <p><strong>All three in parallel:</strong> Flow branches at execution and fires all channels simultaneously — rep gets the Task, customer gets the personalised portal experience, Agentforce opens the two-way conversation in the background. One NBA decision, three coordinated touchpoints, one feedback loop.</p>
       </div>
     </div>
   </div>
@@ -987,21 +1067,26 @@
         </div>
       </div>
 
-      <div class="effort-grid">
+      <div class="effort-grid" style="grid-template-columns: repeat(4, 1fr);">
         <div class="effort-card">
           <div class="effort-card-num">4–6w</div>
           <div class="effort-card-label">Unified Profile in Data Cloud</div>
-          <div class="effort-card-desc">Mapping source systems (CRM, ERP, Commerce) into clean DMOs. This is the longest dependency — everything else sits on top of it. If data is already clean in the ERP, compress to 3 weeks.</div>
+          <div class="effort-card-desc">Mapping source systems (CRM, ERP, Commerce) into clean DMOs. The longest dependency — everything else sits on top of it. If data is already clean in the ERP, compress to 3 weeks.</div>
         </div>
         <div class="effort-card" style="border-top-color:#007A72;">
           <div class="effort-card-num" style="color:#007A72;">2–4w</div>
-          <div class="effort-card-label">Train Einstein Studio</div>
-          <div class="effort-card-desc">Models exist in the org. Need historical outcome data: what NBAs were offered, which converted. If CRM win/loss data is reliable, this is straightforward. Start with rules-based scoring if it's patchy.</div>
+          <div class="effort-card-label">Mode 1 — Train Einstein Studio</div>
+          <div class="effort-card-desc">Models exist in the org. Need historical outcome data: what NBAs were offered, which converted. Start with rules-based scoring if historical data is patchy — replace with ML as signal accumulates.</div>
         </div>
         <div class="effort-card" style="border-top-color:#C89000;">
           <div class="effort-card-num" style="color:#C89000;">2–3w</div>
-          <div class="effort-card-label">Master Flow + NBA Catalogue</div>
-          <div class="effort-card-desc">The actual Flow orchestration once the data foundation is in place. The catalogue object needs commercial alignment on what the NBAs are — that's a stakeholder conversation, not a technical one.</div>
+          <div class="effort-card-label">Mode 1 — Master Flow + Catalogue</div>
+          <div class="effort-card-desc">Flow orchestration once the data foundation is in place. The NBA catalogue needs commercial alignment — that's a stakeholder conversation, not a technical one.</div>
+        </div>
+        <div class="effort-card" style="border-top-color:var(--teal-d);">
+          <div class="effort-card-num" style="color:var(--teal-d);">1–2w</div>
+          <div class="effort-card-label">Mode 2 — Agentforce Agent</div>
+          <div class="effort-card-desc">Configure the Agentforce agent with a system prompt, tools to fetch customer context, and escalation triggers. Relatively fast to stand up once Mode 1 is running — it only activates for the edge cases Flow can't resolve.</div>
         </div>
       </div>
     </div>
