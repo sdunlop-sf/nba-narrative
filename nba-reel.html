@@ -372,26 +372,9 @@
   }
 
   function tick() {
-    var d    = dur(cur);
     var fill = FILLS[cur];
-    t0 = Date.now();
-
-    // CSS-driven fill
     fill.style.transition = 'none';
-    fill.style.width = '0%';
-
-    // Force reflow so transition applies
-    fill.offsetWidth; // jshint ignore:line
-    fill.style.transition = 'width ' + d + 'ms linear';
     fill.style.width = '100%';
-
-    // Auto-advance
-    tmr = setTimeout(function() {
-      if (cur < SCENES.length - 1) {
-        goTo(cur + 1);
-      }
-      // On last scene: stop — user can tap to replay
-    }, d);
   }
 
   // Right-click to advance
