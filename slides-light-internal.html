@@ -949,65 +949,99 @@
 
         <!-- Slide 7: The Platform -->
         <section class="slide">
-            <div style="max-width: 960px; width: 100%;">
-                <div class="accent-line" style="margin: 0 auto 14px;"></div>
-                <div class="eyebrow" style="text-align: center; margin-bottom: 8px;">The Platform</div>
-                <h2 class="big" style="text-align: center; font-size: clamp(24px, 2.8vw, 40px); margin-bottom: 28px;">Five layers. One connected system.</h2>
+            <div style="max-width: 980px; width: 100%;">
+                <div class="accent-line" style="margin: 0 auto 12px;"></div>
+                <div class="eyebrow" style="text-align: center; margin-bottom: 6px;">The Platform</div>
+                <h2 class="big" style="text-align: center; font-size: clamp(22px, 2.6vw, 36px); margin-bottom: 24px;">Five layers. One connected system.</h2>
 
-                <!-- 5 boxes -->
-                <div class="platform-grid" style="grid-template-columns: repeat(5, 1fr); max-width: 960px; margin-bottom: 20px;">
-                    <div class="platform-card">
-                        <div class="platform-num">01</div>
-                        <div class="platform-name">Promotions &amp; Offers</div>
-                        <div class="platform-desc">The catalogue — what's available to offer each customer</div>
+                <!-- 5 cards: icon top, ghost number, name, desc -->
+                <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 16px;">
+
+                    <div style="background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 18px 16px; display: flex; flex-direction: column; gap: 12px; position: relative; overflow: hidden;">
+                        <div style="position: absolute; top: 10px; right: 14px; font-size: 36px; font-weight: 900; color: rgba(0,39,117,0.06); line-height: 1; letter-spacing: -0.03em; pointer-events: none;">01</div>
+                        <div style="width: 36px; height: 36px; border-radius: 10px; background: rgba(2,42,192,0.08); border: 1px solid rgba(2,42,192,0.14); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                            <img src="icon-salesrevenue.png" style="width: 20px; height: 20px; object-fit: contain;">
+                        </div>
+                        <div>
+                            <div style="font-size: 12px; font-weight: 700; color: var(--text); line-height: 1.3; margin-bottom: 5px;">Promotions &amp; Offers</div>
+                            <div style="font-size: 11px; color: var(--muted); line-height: 1.55;">The catalogue — what's available to offer each customer</div>
+                        </div>
                     </div>
-                    <div class="platform-card">
-                        <div class="platform-num">02</div>
-                        <div class="platform-name">Data 360</div>
-                        <div class="platform-desc">The signal — unified customer profile, real time</div>
+
+                    <div style="background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 18px 16px; display: flex; flex-direction: column; gap: 12px; position: relative; overflow: hidden;">
+                        <div style="position: absolute; top: 10px; right: 14px; font-size: 36px; font-weight: 900; color: rgba(0,39,117,0.06); line-height: 1; letter-spacing: -0.03em; pointer-events: none;">02</div>
+                        <div style="width: 36px; height: 36px; border-radius: 10px; background: rgba(2,42,192,0.08); border: 1px solid rgba(2,42,192,0.14); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                            <img src="icon-data360.png" style="width: 20px; height: 20px; object-fit: contain;">
+                        </div>
+                        <div>
+                            <div style="font-size: 12px; font-weight: 700; color: var(--text); line-height: 1.3; margin-bottom: 5px;">Data 360</div>
+                            <div style="font-size: 11px; color: var(--muted); line-height: 1.55;">The signal — unified customer profile, real time</div>
+                        </div>
                     </div>
-                    <div class="platform-card" style="border-color: rgba(2,42,192,0.22); background: rgba(2,42,192,0.04);">
-                        <div class="platform-num">03</div>
-                        <div class="platform-name">Einstein Studio + Flow <span style="color: var(--muted); font-weight: 400;">or</span> Agentforce</div>
-                        <div class="platform-desc">The brain — ML scoring at scale, or agentic reasoning for complex decisions</div>
+
+                    <!-- Einstein card — highlighted -->
+                    <div style="background: rgba(2,42,192,0.05); border: 1px solid rgba(2,42,192,0.2); border-radius: 14px; padding: 18px 16px; display: flex; flex-direction: column; gap: 12px; position: relative; overflow: hidden;">
+                        <div style="position: absolute; top: 10px; right: 14px; font-size: 36px; font-weight: 900; color: rgba(2,42,192,0.08); line-height: 1; letter-spacing: -0.03em; pointer-events: none;">03</div>
+                        <div style="width: 36px; height: 36px; border-radius: 10px; background: rgba(2,42,192,0.12); border: 1px solid rgba(2,42,192,0.2); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                            <img src="icon-platform.png" style="width: 20px; height: 20px; object-fit: contain;">
+                        </div>
+                        <div>
+                            <div style="font-size: 12px; font-weight: 700; color: var(--text); line-height: 1.3; margin-bottom: 5px;">Einstein Studio + Flow <span style="font-weight: 500; color: var(--muted);">or</span> Agentforce</div>
+                            <div style="font-size: 11px; color: var(--muted); line-height: 1.55;">The brain — ML scoring at scale, or agentic reasoning for complex decisions</div>
+                        </div>
+                        <div style="display: flex; gap: 4px; flex-wrap: wrap; margin-top: -4px;">
+                            <span style="font-size: 9px; font-weight: 700; letter-spacing: 0.08em; padding: 3px 7px; border-radius: 4px; background: rgba(2,42,192,0.1); color: var(--blue2);">ML · SCALE</span>
+                            <span style="font-size: 9px; font-weight: 700; letter-spacing: 0.08em; padding: 3px 7px; border-radius: 4px; background: rgba(0,122,114,0.1); color: #007A72;">AGENTIC · REASONING</span>
+                        </div>
                     </div>
-                    <div class="platform-card">
-                        <div class="platform-num">04</div>
-                        <div class="platform-name">Agentforce Marketing &amp; Personalization</div>
-                        <div class="platform-desc">The execution — every channel, every moment, at scale</div>
+
+                    <div style="background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 18px 16px; display: flex; flex-direction: column; gap: 12px; position: relative; overflow: hidden;">
+                        <div style="position: absolute; top: 10px; right: 14px; font-size: 36px; font-weight: 900; color: rgba(0,39,117,0.06); line-height: 1; letter-spacing: -0.03em; pointer-events: none;">04</div>
+                        <div style="width: 36px; height: 36px; border-radius: 10px; background: rgba(2,42,192,0.08); border: 1px solid rgba(2,42,192,0.14); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                            <img src="icon-marketing.png" style="width: 20px; height: 20px; object-fit: contain;">
+                        </div>
+                        <div>
+                            <div style="font-size: 12px; font-weight: 700; color: var(--text); line-height: 1.3; margin-bottom: 5px;">Agentforce Marketing &amp; Personalization</div>
+                            <div style="font-size: 11px; color: var(--muted); line-height: 1.55;">The execution — every channel, every moment, at scale</div>
+                        </div>
                     </div>
-                    <div class="platform-card">
-                        <div class="platform-num">05</div>
-                        <div class="platform-name">Feedback Loop</div>
-                        <div class="platform-desc">The learning — every outcome improves the model</div>
+
+                    <div style="background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 18px 16px; display: flex; flex-direction: column; gap: 12px; position: relative; overflow: hidden;">
+                        <div style="position: absolute; top: 10px; right: 14px; font-size: 36px; font-weight: 900; color: rgba(0,39,117,0.06); line-height: 1; letter-spacing: -0.03em; pointer-events: none;">05</div>
+                        <div style="width: 36px; height: 36px; border-radius: 10px; background: rgba(2,42,192,0.08); border: 1px solid rgba(2,42,192,0.14); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                            <img src="icon-agentforce.png" style="width: 20px; height: 20px; object-fit: contain;">
+                        </div>
+                        <div>
+                            <div style="font-size: 12px; font-weight: 700; color: var(--text); line-height: 1.3; margin-bottom: 5px;">Feedback Loop</div>
+                            <div style="font-size: 11px; color: var(--muted); line-height: 1.55;">The learning — every outcome improves the model</div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Two modes: single horizontal bar -->
+                <div style="display: flex; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 14px; background: rgba(255,255,255,0.5);">
+                    <div style="flex: 1; padding: 14px 18px; border-right: 1px solid var(--border);">
+                        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+                            <div style="width: 8px; height: 8px; border-radius: 50%; background: var(--blue2); flex-shrink: 0;"></div>
+                            <div style="font-size: 10px; font-weight: 800; letter-spacing: 0.13em; text-transform: uppercase; color: var(--blue2);">Mode 1 · ML at Scale</div>
+                        </div>
+                        <div style="font-size: 12px; color: var(--muted); line-height: 1.55; padding-left: 16px;">Einstein Studio + Flow — ML model scores every action, Flow arbitrates the winner. Fast, deterministic, auditable across millions of customers.</div>
+                    </div>
+                    <div style="flex: 1; padding: 14px 18px;">
+                        <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+                            <div style="width: 8px; height: 8px; border-radius: 50%; background: #007A72; flex-shrink: 0;"></div>
+                            <div style="font-size: 10px; font-weight: 800; letter-spacing: 0.13em; text-transform: uppercase; color: #007A72;">Mode 2 · Agentic Reasoning</div>
+                        </div>
+                        <div style="font-size: 12px; color: var(--muted); line-height: 1.55; padding-left: 16px;">Agentforce — an AI agent evaluates using live context and reasoning. For edge cases and nuance that rules can't resolve. Both modes work in tandem.</div>
                     </div>
                 </div>
 
-                <!-- Two modes -->
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 11px; margin-bottom: 18px;">
-                    <div style="border: 1px solid var(--border); border-radius: 12px; padding: 18px 20px; background: rgba(2,42,192,0.03); border-left: 3px solid var(--blue2); display: flex; gap: 12px; align-items: flex-start;">
-                        <div style="flex: 1;">
-                            <div style="font-size: 10px; font-weight: 800; letter-spacing: 0.13em; text-transform: uppercase; color: var(--blue2); margin-bottom: 4px;">Mode 1 · ML at Scale</div>
-                            <div style="font-size: 12px; font-weight: 700; color: var(--text); margin-bottom: 3px;">Einstein Studio + Salesforce Flow</div>
-                            <div style="font-size: 12px; color: var(--muted); line-height: 1.55;">A trained ML model scores every candidate action. Flow applies eligibility rules and arbitrates the winner — fast, deterministic, and auditable across millions of customers.</div>
-                        </div>
-                    </div>
-                    <div style="border: 1px solid var(--border); border-radius: 12px; padding: 18px 20px; background: rgba(0,122,114,0.03); border-left: 3px solid #007A72; display: flex; gap: 12px; align-items: flex-start;">
-                        <div style="flex: 1;">
-                            <div style="font-size: 10px; font-weight: 800; letter-spacing: 0.13em; text-transform: uppercase; color: #007A72; margin-bottom: 4px;">Mode 2 · Agentic Reasoning</div>
-                            <div style="font-size: 12px; font-weight: 700; color: var(--text); margin-bottom: 3px;">Agentforce</div>
-                            <div style="font-size: 12px; color: var(--muted); line-height: 1.55;">An AI agent evaluates candidates using live context and reasoning — handling edge cases and nuanced situations that rules alone can't resolve. The two modes work in tandem.</div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Slack + Agentforce footer (subdued) -->
-                <div style="display: flex; align-items: center; gap: 10px; padding: 0 2px;">
-                    <div style="display: flex; align-items: center; gap: 5px; flex-shrink: 0;">
-                        <img src="icon-slack.png" alt="Slack" style="width:16px;height:16px;object-fit:contain;opacity:0.45;">
-                        <img src="icon-agentforce.png" alt="Agentforce" style="width:16px;height:16px;object-fit:contain;opacity:0.45;">
-                    </div>
-                    <div style="font-size: 11px; color: rgba(0,39,117,0.4); line-height: 1.4;"><strong style="color: rgba(0,39,117,0.5);">Slack &amp; Agentforce in the flow of work</strong> — bringing decisioning to where teams operate, optimising outcomes without switching context.</div>
+                <!-- Slack + Agentforce footer -->
+                <div style="display: flex; align-items: center; gap: 8px;">
+                    <img src="icon-slack.png" alt="Slack" style="width:14px;height:14px;object-fit:contain;opacity:0.4;">
+                    <img src="icon-agentforce.png" alt="Agentforce" style="width:14px;height:14px;object-fit:contain;opacity:0.4;">
+                    <div style="font-size: 11px; color: rgba(0,39,117,0.38); line-height: 1.4;"><strong style="color: rgba(0,39,117,0.45); font-weight: 600;">Slack &amp; Agentforce in the flow of work</strong> — bringing decisioning to where teams operate, optimising outcomes without switching context.</div>
                 </div>
 
             </div>
