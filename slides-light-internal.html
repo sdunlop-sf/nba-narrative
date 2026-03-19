@@ -999,9 +999,8 @@
                 <div class="eyebrow" style="text-align: center; margin-bottom: 8px;">The Platform</div>
                 <h2 class="big" style="text-align: center; font-size: clamp(24px, 2.8vw, 40px); margin-bottom: 20px;">Five layers. One connected system.</h2>
 
-                <!-- Top row: 3 cards -->
-                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 11px; margin-bottom: 11px;">
-
+                <!-- 5 boxes -->
+                <div class="platform-grid" style="grid-template-columns: repeat(5, 1fr); max-width: 960px; margin-bottom: 14px;">
                     <div class="platform-card">
                         <div class="platform-icon"><img src="icon-salesrevenue.png" alt="Promotions"></div>
                         <div>
@@ -1010,7 +1009,6 @@
                             <div class="platform-desc">The catalogue — what's available to offer each customer</div>
                         </div>
                     </div>
-
                     <div class="platform-card">
                         <div class="platform-icon"><img src="icon-data360.png" alt="Data 360"></div>
                         <div>
@@ -1019,32 +1017,15 @@
                             <div class="platform-desc">The signal — unified customer profile, real time</div>
                         </div>
                     </div>
-
-                    <!-- Einstein card with two modes -->
                     <div class="platform-card" style="border-color: rgba(2,42,192,0.22); background: rgba(2,42,192,0.04);">
                         <div class="platform-icon"><img src="icon-platform.png" alt="Einstein"></div>
-                        <div style="width: 100%;">
+                        <div>
                             <div class="platform-num">03</div>
-                            <div class="platform-name">Einstein Studio + Flow</div>
-                            <div class="platform-desc" style="margin-bottom: 10px;">The brain — scores, arbitrates, and selects the best action</div>
-                            <div style="display: flex; flex-direction: column; gap: 6px;">
-                                <div style="padding: 8px 10px; border-radius: 8px; background: rgba(2,42,192,0.06); border-left: 2px solid var(--blue2);">
-                                    <div style="font-size: 9px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: var(--blue2); margin-bottom: 2px;">Mode 1 · ML at Scale</div>
-                                    <div style="font-size: 11px; color: var(--muted); line-height: 1.5;">ML model scores every action. Flow arbitrates the winner — fast, deterministic, auditable.</div>
-                                </div>
-                                <div style="padding: 8px 10px; border-radius: 8px; background: rgba(0,122,114,0.06); border-left: 2px solid #007A72;">
-                                    <div style="font-size: 9px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: #007A72; margin-bottom: 2px;">Mode 2 · Agentic Reasoning</div>
-                                    <div style="font-size: 11px; color: var(--muted); line-height: 1.5;">Agentforce evaluates using live context — for edge cases and nuance that rules can't resolve.</div>
-                                </div>
-                            </div>
+                            <div class="platform-name">Einstein Studio + Flow <span style="color: var(--muted); font-weight: 400;">or</span> Agentforce</div>
+                            <div class="platform-desc">The brain — ML scoring at scale, or agentic reasoning for complex decisions</div>
                         </div>
                     </div>
-
-                </div>
-
-                <!-- Bottom row: 2 cards centred using 6-col grid -->
-                <div style="display: grid; grid-template-columns: repeat(6, 1fr); gap: 11px; margin-bottom: 14px;">
-                    <div class="platform-card" style="grid-column: span 3;">
+                    <div class="platform-card">
                         <div class="platform-icon"><img src="icon-marketing.png" alt="Agentforce Marketing"></div>
                         <div>
                             <div class="platform-num">04</div>
@@ -1052,7 +1033,7 @@
                             <div class="platform-desc">The execution — every channel, every moment, at scale</div>
                         </div>
                     </div>
-                    <div class="platform-card" style="grid-column: span 3;">
+                    <div class="platform-card">
                         <div class="platform-icon"><img src="icon-agentforce.png" alt="Feedback Loop"></div>
                         <div>
                             <div class="platform-num">05</div>
@@ -1062,13 +1043,31 @@
                     </div>
                 </div>
 
-                <!-- Slack + Agentforce footer (subdued) -->
-                <div style="display: flex; align-items: center; gap: 10px; padding: 0 4px;">
-                    <div style="display: flex; align-items: center; gap: 5px;">
-                        <img src="icon-slack.png" alt="Slack" style="width:18px;height:18px;object-fit:contain;opacity:0.5;">
-                        <img src="icon-agentforce.png" alt="Agentforce" style="width:18px;height:18px;object-fit:contain;opacity:0.5;">
+                <!-- Two modes -->
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 11px; margin-bottom: 12px;">
+                    <div style="border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; background: rgba(2,42,192,0.03); border-left: 3px solid var(--blue2); display: flex; gap: 12px; align-items: flex-start;">
+                        <div style="flex: 1;">
+                            <div style="font-size: 10px; font-weight: 800; letter-spacing: 0.13em; text-transform: uppercase; color: var(--blue2); margin-bottom: 4px;">Mode 1 · ML at Scale</div>
+                            <div style="font-size: 12px; font-weight: 700; color: var(--text); margin-bottom: 3px;">Einstein Studio + Salesforce Flow</div>
+                            <div style="font-size: 12px; color: var(--muted); line-height: 1.55;">A trained ML model scores every candidate action. Flow applies eligibility rules and arbitrates the winner — fast, deterministic, and auditable across millions of customers.</div>
+                        </div>
                     </div>
-                    <div style="font-size: 11px; color: var(--muted); opacity: 0.7; line-height: 1.4;"><strong style="color: var(--muted);">Slack &amp; Agentforce in the flow of work</strong> — bringing decisioning to where teams operate, optimising outcomes without switching context.</div>
+                    <div style="border: 1px solid var(--border); border-radius: 12px; padding: 14px 16px; background: rgba(0,122,114,0.03); border-left: 3px solid #007A72; display: flex; gap: 12px; align-items: flex-start;">
+                        <div style="flex: 1;">
+                            <div style="font-size: 10px; font-weight: 800; letter-spacing: 0.13em; text-transform: uppercase; color: #007A72; margin-bottom: 4px;">Mode 2 · Agentic Reasoning</div>
+                            <div style="font-size: 12px; font-weight: 700; color: var(--text); margin-bottom: 3px;">Agentforce</div>
+                            <div style="font-size: 12px; color: var(--muted); line-height: 1.55;">An AI agent evaluates candidates using live context and reasoning — handling edge cases and nuanced situations that rules alone can't resolve. The two modes work in tandem.</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Slack + Agentforce footer (subdued) -->
+                <div style="display: flex; align-items: center; gap: 10px; padding: 0 2px;">
+                    <div style="display: flex; align-items: center; gap: 5px; flex-shrink: 0;">
+                        <img src="icon-slack.png" alt="Slack" style="width:16px;height:16px;object-fit:contain;opacity:0.45;">
+                        <img src="icon-agentforce.png" alt="Agentforce" style="width:16px;height:16px;object-fit:contain;opacity:0.45;">
+                    </div>
+                    <div style="font-size: 11px; color: rgba(0,39,117,0.4); line-height: 1.4;"><strong style="color: rgba(0,39,117,0.5);">Slack &amp; Agentforce in the flow of work</strong> — bringing decisioning to where teams operate, optimising outcomes without switching context.</div>
                 </div>
 
             </div>
