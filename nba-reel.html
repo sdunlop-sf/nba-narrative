@@ -3,17 +3,16 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Next Best Action · 30s</title>
+<title>Next Best Action · 60s</title>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
-    --navy:  #030C20;
-    --blue:  #022AC0;
-    --teal:  #04E1CB;
-    --gold:  #FCC003;
-    --white: #FFFFFF;
-    --dim:   rgba(255,255,255,0.55);
+    --navy: #030C20;
+    --blue: #022AC0;
+    --teal: #04E1CB;
+    --gold: #FCC003;
+    --dim:  rgba(255,255,255,0.55);
   }
 
   html, body {
@@ -23,17 +22,15 @@
     overflow: hidden;
   }
 
-  /* ── STAGE: 9:16 box centred on desktop, full-screen on mobile ── */
+  /* ── STAGE ── */
   #stage {
     position: relative;
-    width: 100%;
-    height: 100%;
+    width: 100%; height: 100%;
     max-width: 420px;
     margin: 0 auto;
     overflow: hidden;
     background: var(--navy);
   }
-
   @media (min-width: 421px) {
     body { display: flex; align-items: center; justify-content: center; }
     #stage {
@@ -44,187 +41,232 @@
     }
   }
 
-  /* ── BACKGROUND GRADIENTS ── */
+  /* ── BACKGROUNDS ── */
   .bg {
     position: absolute; inset: 0;
+    opacity: 0;
     transition: opacity 0.6s ease;
+    pointer-events: none;
   }
-  .bg-1 { background: radial-gradient(ellipse at 30% 20%, rgba(2,42,192,0.5) 0%, transparent 60%),
-                       radial-gradient(ellipse at 80% 80%, rgba(4,225,203,0.2) 0%, transparent 50%),
-                       var(--navy); }
-  .bg-2 { background: radial-gradient(ellipse at 70% 30%, rgba(252,192,3,0.18) 0%, transparent 55%),
-                       radial-gradient(ellipse at 20% 70%, rgba(2,42,192,0.4) 0%, transparent 50%),
-                       var(--navy); opacity: 0; }
-  .bg-3 { background: radial-gradient(ellipse at 50% 50%, rgba(4,225,203,0.25) 0%, transparent 65%),
-                       var(--navy); opacity: 0; }
-  .bg-4 { background: radial-gradient(ellipse at 20% 40%, rgba(2,42,192,0.6) 0%, transparent 55%),
-                       radial-gradient(ellipse at 80% 60%, rgba(0,87,184,0.3) 0%, transparent 50%),
-                       var(--navy); opacity: 0; }
-  .bg-5 { background: radial-gradient(ellipse at 60% 30%, rgba(4,225,203,0.3) 0%, transparent 60%),
-                       var(--navy); opacity: 0; }
-  .bg-6 { background: radial-gradient(ellipse at 40% 60%, rgba(2,42,192,0.5) 0%, transparent 60%),
-                       var(--navy); opacity: 0; }
+  .bg.visible { opacity: 1; }
 
   /* ── PROGRESS BAR ── */
   #progress-track {
     position: absolute; top: 0; left: 0; right: 0;
-    height: 3px;
-    display: flex; gap: 4px;
-    padding: 0 14px;
-    padding-top: 10px;
+    padding: 10px 14px 0;
+    display: flex; gap: 3px;
     z-index: 100;
-    align-items: flex-start;
   }
   .seg {
     flex: 1; height: 3px; border-radius: 2px;
-    background: rgba(255,255,255,0.22);
+    background: rgba(255,255,255,0.2);
     overflow: hidden;
   }
   .seg-fill {
-    height: 100%;
-    background: #fff;
-    width: 0%;
+    height: 100%; width: 0%;
     border-radius: 2px;
-    transition: none;
+    background: #fff;
   }
   .seg.done .seg-fill { width: 100%; }
 
-  /* ── SF LOGO WATERMARK ── */
+  /* Part 2 segments get a teal tint */
+  .seg.p2 { background: rgba(4,225,203,0.25); }
+  .seg.p2 .seg-fill { background: var(--teal); }
+
+  /* ── PART LABEL ── */
+  #part-label {
+    position: absolute; top: 22px; left: 16px;
+    z-index: 90;
+    font-size: 10px; font-weight: 700; letter-spacing: 0.16em;
+    text-transform: uppercase; color: rgba(255,255,255,0.35);
+    transition: color 0.5s, opacity 0.4s;
+  }
+
+  /* ── SF LOGO ── */
   #watermark {
     position: absolute; top: 22px; right: 16px;
-    z-index: 90;
-    opacity: 0.75;
+    z-index: 90; opacity: 0.65;
   }
-  #watermark img { height: 28px; width: auto; filter: brightness(0) invert(1); }
-  .closer-logo img { filter: brightness(0) invert(1); }
+  #watermark img { height: 26px; width: auto; filter: brightness(0) invert(1); }
 
   /* ── SCENES ── */
   .scene {
     position: absolute; inset: 0;
     display: flex; flex-direction: column;
     justify-content: center; align-items: flex-start;
-    padding: 60px 32px 80px;
+    padding: 64px 32px 80px;
     opacity: 0;
-    transform: translateY(18px) scale(0.98);
-    transition: opacity 0.45s ease, transform 0.45s ease;
+    transform: translateY(20px) scale(0.98);
+    transition: opacity 0.4s ease, transform 0.4s ease;
     pointer-events: none;
   }
   .scene.active {
-    opacity: 1;
-    transform: translateY(0) scale(1);
+    opacity: 1; transform: none;
     pointer-events: all;
   }
   .scene.exit {
-    opacity: 0;
-    transform: translateY(-14px) scale(1.01);
+    opacity: 0; transform: translateY(-14px) scale(1.01);
   }
+
+  /* ── DIVIDER SCENE ── */
+  .scene.divider {
+    align-items: center; justify-content: center; text-align: center;
+  }
+  .divider-line {
+    width: 40px; height: 3px; border-radius: 2px;
+    background: var(--teal);
+    margin: 0 auto 20px;
+    opacity: 0; transform: scaleX(0);
+    transition: opacity 0.4s 0.1s, transform 0.5s 0.1s;
+    transform-origin: left;
+  }
+  .scene.divider.active .divider-line { opacity: 1; transform: scaleX(1); }
 
   /* ── TYPOGRAPHY ── */
   .eyebrow {
     font-size: 11px; font-weight: 700; letter-spacing: 0.18em;
     text-transform: uppercase; color: var(--teal);
-    margin-bottom: 18px;
-    opacity: 0; transform: translateY(10px);
-    transition: opacity 0.4s 0.1s, transform 0.4s 0.1s;
+    margin-bottom: 16px;
+    opacity: 0; transform: translateY(8px);
+    transition: opacity 0.35s 0.1s, transform 0.35s 0.1s;
   }
+  .eyebrow.gold { color: var(--gold); }
   .scene.active .eyebrow { opacity: 1; transform: none; }
 
   .headline {
-    font-size: clamp(34px, 9vw, 48px);
+    font-size: clamp(32px, 9vw, 46px);
     font-weight: 900; line-height: 1.08;
-    letter-spacing: -0.03em;
-    color: var(--white);
-    margin-bottom: 20px;
+    letter-spacing: -0.03em; color: #fff;
+    margin-bottom: 18px;
     opacity: 0; transform: translateY(14px);
     transition: opacity 0.4s 0.2s, transform 0.4s 0.2s;
   }
   .scene.active .headline { opacity: 1; transform: none; }
 
-  .hl       { color: var(--teal); }
-  .hl-gold  { color: var(--gold); }
-  .hl-blue  { color: #6699FF; }
+  .hl      { color: var(--teal); }
+  .hl-gold { color: var(--gold); }
+  .hl-blue { color: #6699FF; }
 
   .body {
-    font-size: clamp(16px, 4.5vw, 20px);
-    font-weight: 400; line-height: 1.6;
-    color: var(--dim);
-    max-width: 320px;
-    opacity: 0; transform: translateY(12px);
+    font-size: clamp(15px, 4.2vw, 18px);
+    color: var(--dim); line-height: 1.65;
+    max-width: 310px;
+    opacity: 0; transform: translateY(10px);
     transition: opacity 0.4s 0.32s, transform 0.4s 0.32s;
   }
   .scene.active .body { opacity: 1; transform: none; }
-
   .body strong { color: #fff; font-weight: 700; }
 
-  /* ── FLOW STEPS (scene 4) ── */
+  /* ── PART DIVIDER CONTENT ── */
+  .part-num {
+    font-size: 11px; font-weight: 800; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--teal);
+    margin-bottom: 14px;
+    opacity: 0; transition: opacity 0.4s 0.15s;
+  }
+  .scene.active .part-num { opacity: 1; }
+
+  .part-title {
+    font-size: clamp(28px, 7.5vw, 38px);
+    font-weight: 900; line-height: 1.1;
+    letter-spacing: -0.03em; color: #fff;
+    margin-bottom: 12px;
+    opacity: 0; transform: translateY(12px);
+    transition: opacity 0.4s 0.25s, transform 0.4s 0.25s;
+  }
+  .scene.active .part-title { opacity: 1; transform: none; }
+
+  .part-sub {
+    font-size: 14px; color: var(--dim); line-height: 1.55;
+    opacity: 0; transition: opacity 0.4s 0.4s;
+  }
+  .scene.active .part-sub { opacity: 1; }
+
+  /* ── FLOW STEPS ── */
   .flow-steps {
     display: flex; flex-direction: column;
-    gap: 14px; width: 100%;
-    opacity: 0; transform: translateY(14px);
-    transition: opacity 0.4s 0.25s, transform 0.4s 0.25s;
+    gap: 11px; width: 100%;
+    opacity: 0; transform: translateY(12px);
+    transition: opacity 0.3s 0.2s, transform 0.3s 0.2s;
   }
   .scene.active .flow-steps { opacity: 1; transform: none; }
 
   .flow-step {
-    display: flex; align-items: center; gap: 16px;
+    display: flex; align-items: center; gap: 14px;
     background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.09);
-    border-radius: 14px;
-    padding: 14px 18px;
-    opacity: 0; transform: translateX(-16px);
-    transition: opacity 0.35s, transform 0.35s;
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 14px; padding: 13px 16px;
+    opacity: 0; transform: translateX(-14px);
+    transition: opacity 0.3s, transform 0.3s;
   }
-  .scene.active .flow-step:nth-child(1) { opacity: 1; transform: none; transition-delay: 0.3s; }
-  .scene.active .flow-step:nth-child(2) { opacity: 1; transform: none; transition-delay: 0.55s; }
-  .scene.active .flow-step:nth-child(3) { opacity: 1; transform: none; transition-delay: 0.8s; }
-  .scene.active .flow-step:nth-child(4) { opacity: 1; transform: none; transition-delay: 1.05s; }
+  .scene.active .flow-step:nth-child(1) { opacity:1; transform:none; transition-delay:0.28s; }
+  .scene.active .flow-step:nth-child(2) { opacity:1; transform:none; transition-delay:0.5s; }
+  .scene.active .flow-step:nth-child(3) { opacity:1; transform:none; transition-delay:0.72s; }
+  .scene.active .flow-step:nth-child(4) { opacity:1; transform:none; transition-delay:0.94s; }
 
   .step-icon {
-    width: 42px; height: 42px; border-radius: 12px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 20px; flex-shrink: 0;
+    width: 40px; height: 40px; border-radius: 11px; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center; font-size: 19px;
   }
-  .step-label { font-size: 15px; font-weight: 700; color: #fff; line-height: 1.2; }
-  .step-sub   { font-size: 12px; color: var(--dim); margin-top: 2px; }
+  .step-label { font-size: 14px; font-weight: 700; color: #fff; line-height: 1.2; }
+  .step-sub   { font-size: 11px; color: var(--dim); margin-top: 2px; }
 
-  /* ── BIG STAT (scene 5) ── */
-  .stat-row {
-    display: flex; flex-direction: column; gap: 12px;
+  /* ── PLATFORM STEPS (Part 2) ── */
+  .platform-step {
     width: 100%;
+    background: rgba(4,225,203,0.05);
+    border: 1px solid rgba(4,225,203,0.15);
+    border-radius: 16px; padding: 20px 22px;
+    opacity: 0; transform: translateY(14px);
+    transition: opacity 0.4s 0.2s, transform 0.4s 0.2s;
   }
+  .scene.active .platform-step { opacity: 1; transform: none; }
+
+  .platform-tag {
+    font-size: 10px; font-weight: 800; letter-spacing: 0.16em;
+    text-transform: uppercase; color: var(--teal);
+    margin-bottom: 8px;
+  }
+  .platform-name {
+    font-size: clamp(22px, 6vw, 30px);
+    font-weight: 900; color: #fff; line-height: 1.1;
+    letter-spacing: -0.02em; margin-bottom: 10px;
+  }
+  .platform-desc {
+    font-size: 14px; color: var(--dim); line-height: 1.6;
+  }
+  .platform-desc strong { color: #fff; }
+
+  /* ── STAT PILLS ── */
+  .stat-row { display: flex; flex-direction: column; gap: 11px; width: 100%; }
   .stat-pill {
     display: flex; align-items: center; gap: 14px;
-    padding: 16px 20px;
-    border-radius: 16px;
-    opacity: 0; transform: translateY(12px);
-    transition: opacity 0.4s, transform 0.4s;
+    border-radius: 14px; padding: 14px 18px;
+    opacity: 0; transform: translateY(10px);
+    transition: opacity 0.35s, transform 0.35s;
   }
-  .scene.active .stat-pill:nth-child(1) { opacity: 1; transform: none; transition-delay: 0.25s; }
-  .scene.active .stat-pill:nth-child(2) { opacity: 1; transform: none; transition-delay: 0.5s; }
-  .scene.active .stat-pill:nth-child(3) { opacity: 1; transform: none; transition-delay: 0.75s; }
-
-  .stat-num  { font-size: 32px; font-weight: 900; letter-spacing: -0.04em; line-height: 1; }
-  .stat-text { font-size: 14px; color: var(--dim); line-height: 1.4; }
+  .scene.active .stat-pill:nth-child(1) { opacity:1; transform:none; transition-delay:0.25s; }
+  .scene.active .stat-pill:nth-child(2) { opacity:1; transform:none; transition-delay:0.45s; }
+  .scene.active .stat-pill:nth-child(3) { opacity:1; transform:none; transition-delay:0.65s; }
+  .stat-num  { font-size: 28px; font-weight: 900; letter-spacing: -0.04em; flex-shrink: 0; }
+  .stat-text { font-size: 13px; color: var(--dim); line-height: 1.4; }
   .stat-text strong { color: #fff; }
 
-  /* ── CTA / CLOSER ── */
+  /* ── CLOSER ── */
   .closer-logo {
-    margin-bottom: 28px;
-    opacity: 0; transform: translateY(10px);
+    margin-bottom: 24px;
+    opacity: 0; transform: translateY(8px);
     transition: opacity 0.5s 0.1s, transform 0.5s 0.1s;
   }
   .scene.active .closer-logo { opacity: 1; transform: none; }
-  .closer-logo img { height: 36px; width: auto; }
+  .closer-logo img { height: 34px; width: auto; filter: brightness(0) invert(1); }
 
   .badge {
     display: inline-flex; align-items: center; gap: 8px;
-    margin-top: 20px;
-    padding: 10px 18px; border-radius: 100px;
-    background: rgba(4,225,203,0.12);
-    border: 1px solid rgba(4,225,203,0.3);
-    font-size: 13px; font-weight: 700; color: var(--teal);
-    letter-spacing: 0.04em;
-    opacity: 0; transform: translateY(10px);
+    margin-top: 20px; padding: 10px 18px; border-radius: 100px;
+    background: rgba(4,225,203,0.12); border: 1px solid rgba(4,225,203,0.3);
+    font-size: 13px; font-weight: 700; color: var(--teal); letter-spacing: 0.04em;
+    opacity: 0; transform: translateY(8px);
     transition: opacity 0.4s 0.5s, transform 0.4s 0.5s;
   }
   .scene.active .badge { opacity: 1; transform: none; }
@@ -234,282 +276,290 @@
     position: absolute; bottom: 22px; left: 50%;
     transform: translateX(-50%);
     font-size: 11px; font-weight: 600; letter-spacing: 0.12em;
-    text-transform: uppercase; color: rgba(255,255,255,0.3);
-    z-index: 80;
+    text-transform: uppercase; color: rgba(255,255,255,0.28);
+    z-index: 80; white-space: nowrap;
     animation: pulse 2.5s ease-in-out infinite;
   }
-  @keyframes pulse { 0%,100%{opacity:0.3} 50%{opacity:0.7} }
+  @keyframes pulse { 0%,100%{opacity:.3} 50%{opacity:.7} }
 
-  /* ── PARTICLES (decorative dots) ── */
+  /* ── PARTICLES ── */
   .dot {
     position: absolute; border-radius: 50%;
-    background: var(--teal); opacity: 0.18;
-    animation: float linear infinite;
-    pointer-events: none;
+    background: var(--teal); opacity: 0.15;
+    animation: float linear infinite; pointer-events: none;
   }
   @keyframes float {
-    0%   { transform: translateY(0) scale(1); opacity: 0.18; }
-    50%  { opacity: 0.08; }
-    100% { transform: translateY(-80px) scale(0.6); opacity: 0; }
+    0%   { transform: translateY(0) scale(1); opacity: 0.15; }
+    100% { transform: translateY(-90px) scale(0.4); opacity: 0; }
   }
 </style>
 </head>
 <body>
-
 <div id="stage">
 
-  <!-- Backgrounds -->
-  <div class="bg bg-1" id="bg1"></div>
-  <div class="bg bg-2" id="bg2"></div>
-  <div class="bg bg-3" id="bg3"></div>
-  <div class="bg bg-4" id="bg4"></div>
-  <div class="bg bg-5" id="bg5"></div>
-  <div class="bg bg-6" id="bg6"></div>
+  <!-- Backgrounds (one per scene) -->
+  <div class="bg visible" id="bg0" style="background:radial-gradient(ellipse at 25% 25%,rgba(2,42,192,0.55) 0%,transparent 60%),radial-gradient(ellipse at 80% 75%,rgba(4,225,203,0.18) 0%,transparent 50%),#030C20;"></div>
+  <div class="bg" id="bg1" style="background:radial-gradient(ellipse at 70% 25%,rgba(252,192,3,0.2) 0%,transparent 55%),radial-gradient(ellipse at 20% 70%,rgba(2,42,192,0.45) 0%,transparent 50%),#030C20;"></div>
+  <div class="bg" id="bg2" style="background:radial-gradient(ellipse at 50% 40%,rgba(4,225,203,0.22) 0%,transparent 60%),#030C20;"></div>
+  <div class="bg" id="bg3" style="background:radial-gradient(ellipse at 20% 40%,rgba(2,42,192,0.6) 0%,transparent 55%),radial-gradient(ellipse at 80% 65%,rgba(0,87,184,0.3) 0%,transparent 50%),#030C20;"></div>
+  <div class="bg" id="bg4" style="background:radial-gradient(ellipse at 65% 30%,rgba(4,225,203,0.22) 0%,transparent 60%),#030C20;"></div>
+  <!-- Part 2 bgs — slightly warmer teal bias -->
+  <div class="bg" id="bg5" style="background:radial-gradient(ellipse at 50% 50%,rgba(4,225,203,0.35) 0%,transparent 65%),radial-gradient(ellipse at 80% 20%,rgba(2,42,192,0.3) 0%,transparent 50%),#030C20;"></div>
+  <div class="bg" id="bg6" style="background:radial-gradient(ellipse at 30% 60%,rgba(2,42,192,0.5) 0%,transparent 55%),radial-gradient(ellipse at 75% 30%,rgba(4,225,203,0.2) 0%,transparent 50%),#030C20;"></div>
+  <div class="bg" id="bg7" style="background:radial-gradient(ellipse at 60% 40%,rgba(0,87,184,0.5) 0%,transparent 55%),radial-gradient(ellipse at 25% 70%,rgba(4,225,203,0.18) 0%,transparent 50%),#030C20;"></div>
+  <div class="bg" id="bg8" style="background:radial-gradient(ellipse at 40% 30%,rgba(4,225,203,0.28) 0%,transparent 55%),radial-gradient(ellipse at 70% 70%,rgba(2,42,192,0.4) 0%,transparent 50%),#030C20;"></div>
+  <div class="bg" id="bg9" style="background:radial-gradient(ellipse at 45% 55%,rgba(2,42,192,0.55) 0%,transparent 60%),radial-gradient(ellipse at 80% 25%,rgba(4,225,203,0.2) 0%,transparent 50%),#030C20;"></div>
 
-  <!-- Floating dots -->
-  <div class="dot" style="width:6px;height:6px;left:15%;bottom:20%;animation-duration:7s;animation-delay:0s;"></div>
-  <div class="dot" style="width:4px;height:4px;left:75%;bottom:35%;animation-duration:9s;animation-delay:2s;background:var(--gold);"></div>
-  <div class="dot" style="width:5px;height:5px;left:55%;bottom:15%;animation-duration:6s;animation-delay:1s;"></div>
-  <div class="dot" style="width:3px;height:3px;left:30%;bottom:55%;animation-duration:11s;animation-delay:3s;background:#fff;"></div>
+  <!-- Particles -->
+  <div class="dot" style="width:6px;height:6px;left:14%;bottom:22%;animation-duration:7s;"></div>
+  <div class="dot" style="width:4px;height:4px;left:76%;bottom:38%;animation-duration:9s;animation-delay:2s;background:var(--gold);"></div>
+  <div class="dot" style="width:5px;height:5px;left:54%;bottom:14%;animation-duration:6s;animation-delay:1s;"></div>
+  <div class="dot" style="width:3px;height:3px;left:32%;bottom:58%;animation-duration:11s;animation-delay:3.5s;background:#fff;"></div>
 
   <!-- Progress bar -->
   <div id="progress-track">
-    <div class="seg" id="seg0"><div class="seg-fill" id="fill0"></div></div>
-    <div class="seg" id="seg1"><div class="seg-fill" id="fill1"></div></div>
-    <div class="seg" id="seg2"><div class="seg-fill" id="fill2"></div></div>
-    <div class="seg" id="seg3"><div class="seg-fill" id="fill3"></div></div>
-    <div class="seg" id="seg4"><div class="seg-fill" id="fill4"></div></div>
-    <div class="seg" id="seg5"><div class="seg-fill" id="fill5"></div></div>
+    <!-- Part 1: 5 scenes -->
+    <div class="seg"    id="seg0"><div class="seg-fill"></div></div>
+    <div class="seg"    id="seg1"><div class="seg-fill"></div></div>
+    <div class="seg"    id="seg2"><div class="seg-fill"></div></div>
+    <div class="seg"    id="seg3"><div class="seg-fill"></div></div>
+    <div class="seg"    id="seg4"><div class="seg-fill"></div></div>
+    <!-- Part 2: 5 scenes (teal tint) -->
+    <div class="seg p2" id="seg5"><div class="seg-fill"></div></div>
+    <div class="seg p2" id="seg6"><div class="seg-fill"></div></div>
+    <div class="seg p2" id="seg7"><div class="seg-fill"></div></div>
+    <div class="seg p2" id="seg8"><div class="seg-fill"></div></div>
+    <div class="seg p2" id="seg9"><div class="seg-fill"></div></div>
   </div>
 
-  <!-- SF logo watermark -->
+  <!-- Part label -->
+  <div id="part-label">Part 1 of 2</div>
+
+  <!-- SF logo -->
   <div id="watermark">
-    <img src="sf-logo-cloud.png" alt="Salesforce" onerror="this.style.display='none'">
+    <img src="sf-logo-cloud.png" alt="Salesforce">
   </div>
 
-  <!-- ════════════════════════════════════════ -->
-  <!-- SCENE 1 · Hook                           -->
-  <!-- ════════════════════════════════════════ -->
-  <div class="scene active" data-duration="5000">
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- PART 1: HOW DECISIONING WORKS                  -->
+  <!-- ══════════════════════════════════════════════ -->
+
+  <!-- Scene 0 · Hook -->
+  <div class="scene active" data-duration="5000" data-part="1">
     <div class="eyebrow">Next Best Action</div>
-    <div class="headline">Your customers are<br>telling you what<br>they need.<br><span class="hl">Right now.</span></div>
-    <div class="body">Every click, every silence, every signal — firing in real time.</div>
+    <div class="headline">Your customers<br>are signalling.<br><span class="hl">Right now.</span></div>
+    <div class="body">Every click, every silence, every behaviour — telling you exactly what they need.</div>
   </div>
 
-  <!-- ════════════════════════════════════════ -->
-  <!-- SCENE 2 · The gap                        -->
-  <!-- ════════════════════════════════════════ -->
-  <div class="scene" data-duration="5000">
+  <!-- Scene 1 · The problem -->
+  <div class="scene" data-duration="5000" data-part="1">
     <div class="eyebrow">The problem</div>
-    <div class="headline">Most teams<br>guess.<br><span class="hl-gold">Or worse —<br>they wait.</span></div>
-    <div class="body">By the time the campaign sends, the moment is gone. The customer has already decided.</div>
+    <div class="headline">Most teams<br>guess.<br><span class="hl-gold">Or wait.<br>Or miss it.</span></div>
+    <div class="body">By the time the campaign fires, the moment's gone. The customer's already decided.</div>
   </div>
 
-  <!-- ════════════════════════════════════════ -->
-  <!-- SCENE 3 · The solution                   -->
-  <!-- ════════════════════════════════════════ -->
-  <div class="scene" data-duration="5000">
-    <div class="eyebrow">The answer</div>
-    <div class="headline">Stop guessing.<br><span class="hl">Start deciding.</span></div>
-    <div class="body">Next Best Action scores <strong>every customer</strong> against every possible action — and delivers the winner in <strong>seconds</strong>.</div>
+  <!-- Scene 2 · The concept -->
+  <div class="scene" data-duration="5000" data-part="1">
+    <div class="eyebrow">The idea</div>
+    <div class="headline">Score every<br>customer.<br><span class="hl">Pick the<br>winner.</span></div>
+    <div class="body">Next Best Action evaluates <strong>every possible action</strong> for <strong>every customer</strong> — and delivers the best one in seconds.</div>
   </div>
 
-  <!-- ════════════════════════════════════════ -->
-  <!-- SCENE 4 · The flow                       -->
-  <!-- ════════════════════════════════════════ -->
-  <div class="scene" data-duration="7000">
+  <!-- Scene 3 · The generic flow -->
+  <div class="scene" data-duration="7000" data-part="1">
     <div class="eyebrow">How it works</div>
-    <div class="headline" style="font-size:clamp(28px,7vw,38px);margin-bottom:24px;">Four steps.<br><span class="hl">Sub-second.</span></div>
+    <div class="headline" style="font-size:clamp(26px,7vw,36px);margin-bottom:20px;">Four steps.<br><span class="hl">Sub-second.</span></div>
     <div class="flow-steps">
       <div class="flow-step">
-        <div class="step-icon" style="background:rgba(2,42,192,0.2);">⚡</div>
-        <div><div class="step-label">Signal fires</div><div class="step-sub">Customer enters a real-time segment</div></div>
+        <div class="step-icon" style="background:rgba(2,42,192,0.25);">⚡</div>
+        <div><div class="step-label">A signal fires</div><div class="step-sub">Customer behaviour triggers the engine</div></div>
       </div>
       <div class="flow-step">
-        <div class="step-icon" style="background:rgba(4,225,203,0.15);">🧠</div>
-        <div><div class="step-label">Einstein scores</div><div class="step-sub">Every action ranked against this customer</div></div>
+        <div class="step-icon" style="background:rgba(4,225,203,0.18);">🧠</div>
+        <div><div class="step-label">Actions are scored</div><div class="step-sub">Every option ranked for this customer, right now</div></div>
       </div>
       <div class="flow-step">
-        <div class="step-icon" style="background:rgba(252,192,3,0.15);">⚖️</div>
-        <div><div class="step-label">Best action wins</div><div class="step-sub">Eligibility + score + business rules</div></div>
+        <div class="step-icon" style="background:rgba(252,192,3,0.18);">⚖️</div>
+        <div><div class="step-label">The winner is chosen</div><div class="step-sub">Best score + eligibility + business rules</div></div>
       </div>
       <div class="flow-step">
-        <div class="step-icon" style="background:rgba(4,225,203,0.15);">🚀</div>
-        <div><div class="step-label">Delivered</div><div class="step-sub">Rep task · email · portal · agent</div></div>
+        <div class="step-icon" style="background:rgba(4,225,203,0.18);">🚀</div>
+        <div><div class="step-label">Delivered instantly</div><div class="step-sub">Rep · email · portal · agent</div></div>
       </div>
     </div>
   </div>
 
-  <!-- ════════════════════════════════════════ -->
-  <!-- SCENE 5 · Outcomes                       -->
-  <!-- ════════════════════════════════════════ -->
-  <div class="scene" data-duration="6000">
-    <div class="eyebrow">What you get</div>
-    <div class="headline" style="margin-bottom:24px;">It gets<br>smarter<br><span class="hl">every day.</span></div>
-    <div class="stat-row">
-      <div class="stat-pill" style="background:rgba(2,42,192,0.15);border:1px solid rgba(2,42,192,0.3);">
-        <div class="stat-num" style="color:#6699FF;">6wk</div>
-        <div class="stat-text"><strong>→ sub-second</strong><br>Campaign time to market</div>
-      </div>
-      <div class="stat-pill" style="background:rgba(4,225,203,0.1);border:1px solid rgba(4,225,203,0.25);">
-        <div class="stat-num" style="color:var(--teal);">100%</div>
-        <div class="stat-text"><strong>of your book</strong><br>Not just the squeaky wheel</div>
-      </div>
-      <div class="stat-pill" style="background:rgba(252,192,3,0.1);border:1px solid rgba(252,192,3,0.25);">
-        <div class="stat-num" style="color:var(--gold);">↑</div>
-        <div class="stat-text"><strong>Model improves</strong><br>Every accept &amp; decline trains Einstein</div>
-      </div>
+  <!-- Scene 4 · The loop -->
+  <div class="scene" data-duration="5000" data-part="1">
+    <div class="eyebrow">The loop</div>
+    <div class="headline">Every outcome<br>trains the<br><span class="hl">next decision.</span></div>
+    <div class="body">Accept. Decline. Ignore. Every response feeds back in — so the engine gets smarter with <strong>every single interaction</strong>.</div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- PART DIVIDER                                   -->
+  <!-- ══════════════════════════════════════════════ -->
+
+  <!-- Scene 5 · Part 2 title card -->
+  <div class="scene divider" data-duration="4000" data-part="2">
+    <div class="divider-line"></div>
+    <div class="part-num">Part 2 of 2</div>
+    <div class="part-title">Now, here's how<br>it runs on<br><span style="color:var(--teal);">Salesforce.</span></div>
+    <div class="part-sub">The actual products powering each step.</div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════ -->
+  <!-- PART 2: THE SALESFORCE PLATFORM                -->
+  <!-- ══════════════════════════════════════════════ -->
+
+  <!-- Scene 6 · Data Cloud -->
+  <div class="scene" data-duration="5500" data-part="2">
+    <div class="eyebrow gold">The signal layer</div>
+    <div class="platform-step">
+      <div class="platform-tag">Step 1 — Trigger</div>
+      <div class="platform-name">Data Cloud</div>
+      <div class="platform-desc">Unifies every customer signal in real time. The moment a customer <strong>enters a segment</strong> — 60 days no order, cart abandoned, health score dropped — a Data Action fires the flow. <strong>No batch. No wait.</strong></div>
     </div>
   </div>
 
-  <!-- ════════════════════════════════════════ -->
-  <!-- SCENE 6 · Closer                         -->
-  <!-- ════════════════════════════════════════ -->
-  <div class="scene" data-duration="5000" style="align-items:center;text-align:center;">
+  <!-- Scene 7 · Einstein Studio -->
+  <div class="scene" data-duration="5500" data-part="2">
+    <div class="eyebrow gold">The brain</div>
+    <div class="platform-step">
+      <div class="platform-tag">Step 2 — Score</div>
+      <div class="platform-name">Einstein Studio</div>
+      <div class="platform-desc">A custom ML model trained on <strong>your data</strong>. Scores every active NBA for this customer — propensity, value, timing. The scores flow directly back into Salesforce Flow.</div>
+    </div>
+  </div>
+
+  <!-- Scene 8 · Salesforce Flow -->
+  <div class="scene" data-duration="5500" data-part="2">
+    <div class="eyebrow gold">The orchestrator</div>
+    <div class="platform-step">
+      <div class="platform-tag">Step 3 — Decide</div>
+      <div class="platform-name">Salesforce Flow</div>
+      <div class="platform-desc">Loops through every candidate NBA. Checks <strong>eligibility, fatigue rules, and business gates</strong>. Arbitrates the winner. Then routes it — to a rep, a channel, or an agent.</div>
+    </div>
+  </div>
+
+  <!-- Scene 9 · Agentforce / Delivery -->
+  <div class="scene" data-duration="5500" data-part="2">
+    <div class="eyebrow gold">The delivery</div>
+    <div class="platform-step">
+      <div class="platform-tag">Step 4 — Execute</div>
+      <div class="platform-name">Agentforce</div>
+      <div class="platform-desc">Surfaces the winning action — a <strong>rep task in Sales Cloud</strong>, a personalised email via Marketing Cloud, a portal offer, or a fully autonomous agent conversation. <strong>Every channel. One decision engine.</strong></div>
+    </div>
+  </div>
+
+  <!-- Scene 10 · Closer -->
+  <div class="scene divider" data-duration="5000" data-part="2" style="align-items:center;text-align:center;justify-content:center;">
     <div class="closer-logo">
-      <img src="sf-logo-cloud.png" alt="Salesforce" onerror="this.style.display='none'">
+      <img src="sf-logo-cloud.png" alt="Salesforce">
     </div>
-    <div class="eyebrow" style="text-align:center;">Salesforce · Agentforce</div>
-    <div class="headline" style="text-align:center;font-size:clamp(30px,8vw,44px);">The right action.<br>The right person.<br><span class="hl">Right now.</span></div>
+    <div class="eyebrow" style="text-align:center;">Data Cloud · Einstein · Flow · Agentforce</div>
+    <div class="headline" style="text-align:center;font-size:clamp(28px,7.5vw,40px);">One engine.<br>Every customer.<br><span class="hl">Right now.</span></div>
     <div class="badge">↗ Next Best Action</div>
   </div>
 
   <!-- Tap hint -->
   <div id="tap-hint">Tap to advance</div>
 
-</div><!-- /#stage -->
+</div>
 
 <script>
-(function() {
+(function () {
+  var scenes  = document.querySelectorAll('.scene');
+  var segs    = document.querySelectorAll('.seg');
+  var fills   = Array.from(segs).map(function(s){ return s.querySelector('.seg-fill'); });
+  var bgs     = Array.from({length: scenes.length}, function(_, i){ return document.getElementById('bg' + i); });
+  var partLbl = document.getElementById('part-label');
+  var tapHint = document.getElementById('tap-hint');
 
-  var scenes    = document.querySelectorAll('.scene');
-  var fills     = document.querySelectorAll('.seg-fill');
-  var segs      = document.querySelectorAll('.seg');
-  var bgs       = [document.getElementById('bg1'), document.getElementById('bg2'),
-                   document.getElementById('bg3'), document.getElementById('bg4'),
-                   document.getElementById('bg5'), document.getElementById('bg6')];
-  var tapHint   = document.getElementById('tap-hint');
+  var current = 0;
+  var raf     = null;
+  var timer   = null;
+  var startAt = 0;
 
-  var current   = 0;
-  var timer     = null;
-  var fillTimer = null;
-  var startedAt = 0;
-  var paused    = false;
-
-  function getDuration(i) {
-    return parseInt(scenes[i].dataset.duration) || 5000;
-  }
+  function dur(i) { return parseInt(scenes[i].dataset.duration) || 5000; }
 
   function goTo(idx) {
-    if (idx >= scenes.length) { idx = scenes.length - 1; }
-    if (idx < 0) { idx = 0; }
+    if (idx < 0) idx = 0;
+    if (idx >= scenes.length) idx = scenes.length - 1;
 
-    // Mark all previous as done
+    // Clear timers
+    clearTimeout(timer);
+    cancelAnimationFrame(raf);
+
+    // Reset all scenes + fills + bgs
     scenes.forEach(function(s, i) {
       s.classList.remove('active', 'exit');
       segs[i].classList.remove('done');
-      fills[i].style.transition = 'none';
       fills[i].style.width = '0%';
-      bgs[i].style.opacity = '0';
+      if (bgs[i]) bgs[i].classList.remove('visible');
       if (i < idx) {
         segs[i].classList.add('done');
         fills[i].style.width = '100%';
       }
     });
 
-    // Animate out previous
+    // Exit old
     if (current !== idx && scenes[current]) {
       scenes[current].classList.add('exit');
-      setTimeout(function() {
-        if (scenes[current]) scenes[current].classList.remove('exit');
-      }, 450);
+      var old = current;
+      setTimeout(function() { scenes[old] && scenes[old].classList.remove('exit'); }, 420);
     }
 
     current = idx;
     scenes[current].classList.add('active');
-    bgs[current].style.opacity = '1';
+    if (bgs[current]) bgs[current].classList.add('visible');
 
-    // Hide tap hint after scene 1
-    if (current > 0) tapHint.style.display = 'none';
+    // Part label
+    var part = scenes[current].dataset.part || '1';
+    partLbl.textContent = 'Part ' + part + ' of 2';
+    partLbl.style.color = part === '2' ? 'rgba(4,225,203,0.5)' : 'rgba(255,255,255,0.3)';
 
-    startFill();
+    // Hide tap hint after first tap
+    if (current > 0) tapHint.style.opacity = '0';
+
+    animFill();
   }
 
-  function startFill() {
-    clearInterval(fillTimer);
-    clearTimeout(timer);
-
-    var dur = getDuration(current);
+  function animFill() {
+    var d    = dur(current);
     var fill = fills[current];
     var seg  = segs[current];
+    startAt  = Date.now();
 
-    startedAt = Date.now();
-    fill.style.transition = 'none';
-    fill.style.width = '0%';
-
-    // Animate fill via rAF
-    function step() {
-      var elapsed = Date.now() - startedAt;
-      var pct = Math.min(elapsed / dur * 100, 100);
+    (function tick() {
+      var pct = Math.min((Date.now() - startAt) / d * 100, 100);
       fill.style.width = pct + '%';
-      if (pct < 100 && !paused) {
-        fillTimer = requestAnimationFrame(step);
-      }
-    }
-    requestAnimationFrame(step);
+      if (pct < 100) { raf = requestAnimationFrame(tick); }
+    })();
 
-    timer = setTimeout(function() {
+    timer = setTimeout(function () {
       seg.classList.add('done');
-      if (current < scenes.length - 1) {
-        goTo(current + 1);
-      }
-    }, dur);
+      if (current < scenes.length - 1) goTo(current + 1);
+      // last scene — stop (let user replay via tap)
+    }, d);
   }
 
-  // Tap / click to advance
-  document.getElementById('stage').addEventListener('click', function(e) {
+  // Tap / click
+  document.getElementById('stage').addEventListener('click', function (e) {
     var rect  = document.getElementById('stage').getBoundingClientRect();
-    var tapX  = (e.clientX || (e.touches && e.touches[0].clientX) || 0) - rect.left;
-    var third = rect.width / 3;
-
-    clearTimeout(timer);
-    cancelAnimationFrame(fillTimer);
+    var tapX  = (e.clientX - rect.left) / rect.width;
     segs[current].classList.add('done');
-
-    if (tapX < third) {
-      // Left third → previous
-      goTo(current > 0 ? current - 1 : 0);
+    if (tapX < 0.3 && current > 0) {
+      goTo(current - 1);
+    } else if (current < scenes.length - 1) {
+      goTo(current + 1);
     } else {
-      // Right two-thirds → next
-      if (current < scenes.length - 1) {
-        goTo(current + 1);
-      } else {
-        // Replay
-        goTo(0);
-      }
+      goTo(0); // replay
     }
   });
 
-  // Touch swipe up → replay, swipe left → next, swipe right → prev
-  var touchStartY = 0, touchStartX = 0;
-  document.getElementById('stage').addEventListener('touchstart', function(e) {
-    touchStartY = e.touches[0].clientY;
-    touchStartX = e.touches[0].clientX;
-  }, { passive: true });
-  document.getElementById('stage').addEventListener('touchend', function(e) {
-    var dy = touchStartY - e.changedTouches[0].clientY;
-    var dx = touchStartX - e.changedTouches[0].clientX;
-    if (Math.abs(dy) > 50 && Math.abs(dy) > Math.abs(dx)) {
-      if (dy > 0) { /* swipe up — could trigger replay/share in future */ }
-    }
-  }, { passive: true });
-
   // Init
-  bgs[0].style.opacity = '1';
-  bgs.slice(1).forEach(function(b) { b.style.transition = 'opacity 0.6s ease'; });
-  bgs[0].style.transition = 'opacity 0.6s ease';
   goTo(0);
-
 })();
 </script>
 </body>
