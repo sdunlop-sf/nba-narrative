@@ -220,37 +220,31 @@
 <body>
 <div id="stage">
 
-  <!-- 11 backgrounds (one per scene) -->
-  <div class="bg on"  id="bg0"  style="background:radial-gradient(ellipse at 25% 25%,rgba(2,42,192,.55) 0%,transparent 60%),radial-gradient(ellipse at 80% 75%,rgba(4,225,203,.18) 0%,transparent 55%),#030C20;"></div>
-  <div class="bg"     id="bg1"  style="background:radial-gradient(ellipse at 70% 25%,rgba(252,192,3,.2) 0%,transparent 55%),radial-gradient(ellipse at 20% 70%,rgba(2,42,192,.45) 0%,transparent 50%),#030C20;"></div>
-  <div class="bg"     id="bg2"  style="background:radial-gradient(ellipse at 50% 40%,rgba(4,225,203,.22) 0%,transparent 60%),#030C20;"></div>
-  <div class="bg"     id="bg3"  style="background:radial-gradient(ellipse at 20% 40%,rgba(2,42,192,.6) 0%,transparent 55%),radial-gradient(ellipse at 80% 65%,rgba(0,87,184,.3) 0%,transparent 50%),#030C20;"></div>
-  <div class="bg"     id="bg4"  style="background:radial-gradient(ellipse at 65% 30%,rgba(4,225,203,.22) 0%,transparent 60%),#030C20;"></div>
-  <div class="bg"     id="bg5"  style="background:radial-gradient(ellipse at 50% 50%,rgba(4,225,203,.35) 0%,transparent 65%),radial-gradient(ellipse at 80% 20%,rgba(2,42,192,.3) 0%,transparent 50%),#030C20;"></div>
-  <div class="bg"     id="bg6"  style="background:radial-gradient(ellipse at 30% 60%,rgba(2,42,192,.5) 0%,transparent 55%),radial-gradient(ellipse at 75% 30%,rgba(4,225,203,.2) 0%,transparent 50%),#030C20;"></div>
-  <div class="bg"     id="bg7"  style="background:radial-gradient(ellipse at 60% 40%,rgba(0,87,184,.5) 0%,transparent 55%),radial-gradient(ellipse at 25% 70%,rgba(4,225,203,.18) 0%,transparent 50%),#030C20;"></div>
-  <div class="bg"     id="bg8"  style="background:radial-gradient(ellipse at 40% 30%,rgba(4,225,203,.28) 0%,transparent 55%),radial-gradient(ellipse at 70% 70%,rgba(2,42,192,.4) 0%,transparent 50%),#030C20;"></div>
-  <div class="bg"     id="bg9"  style="background:radial-gradient(ellipse at 45% 55%,rgba(2,42,192,.55) 0%,transparent 60%),radial-gradient(ellipse at 80% 25%,rgba(4,225,203,.2) 0%,transparent 50%),#030C20;"></div>
-  <div class="bg"     id="bg10" style="background:radial-gradient(ellipse at 40% 40%,rgba(2,42,192,.5) 0%,transparent 60%),radial-gradient(ellipse at 75% 65%,rgba(4,225,203,.25) 0%,transparent 50%),#030C20;"></div>
+  <!-- 8 backgrounds (one per scene) -->
+  <div class="bg on" id="bg0" style="background:radial-gradient(ellipse at 25% 25%,rgba(2,42,192,.55) 0%,transparent 60%),radial-gradient(ellipse at 80% 75%,rgba(4,225,203,.18) 0%,transparent 55%),#030C20;"></div>
+  <div class="bg"    id="bg1" style="background:radial-gradient(ellipse at 20% 40%,rgba(2,42,192,.6) 0%,transparent 55%),radial-gradient(ellipse at 80% 65%,rgba(0,87,184,.3) 0%,transparent 50%),#030C20;"></div>
+  <div class="bg"    id="bg2" style="background:radial-gradient(ellipse at 50% 50%,rgba(4,225,203,.35) 0%,transparent 65%),radial-gradient(ellipse at 80% 20%,rgba(2,42,192,.3) 0%,transparent 50%),#030C20;"></div>
+  <div class="bg"    id="bg3" style="background:radial-gradient(ellipse at 30% 60%,rgba(2,42,192,.5) 0%,transparent 55%),radial-gradient(ellipse at 75% 30%,rgba(4,225,203,.2) 0%,transparent 50%),#030C20;"></div>
+  <div class="bg"    id="bg4" style="background:radial-gradient(ellipse at 60% 40%,rgba(0,87,184,.5) 0%,transparent 55%),radial-gradient(ellipse at 25% 70%,rgba(4,225,203,.18) 0%,transparent 50%),#030C20;"></div>
+  <div class="bg"    id="bg5" style="background:radial-gradient(ellipse at 40% 30%,rgba(4,225,203,.28) 0%,transparent 55%),radial-gradient(ellipse at 70% 70%,rgba(2,42,192,.4) 0%,transparent 50%),#030C20;"></div>
+  <div class="bg"    id="bg6" style="background:radial-gradient(ellipse at 45% 55%,rgba(2,42,192,.55) 0%,transparent 60%),radial-gradient(ellipse at 80% 25%,rgba(4,225,203,.2) 0%,transparent 50%),#030C20;"></div>
+  <div class="bg"    id="bg7" style="background:radial-gradient(ellipse at 40% 40%,rgba(2,42,192,.5) 0%,transparent 60%),radial-gradient(ellipse at 75% 65%,rgba(4,225,203,.25) 0%,transparent 50%),#030C20;"></div>
 
   <!-- Particles -->
   <div class="dot" style="width:6px;height:6px;left:14%;bottom:22%;animation-duration:7s;"></div>
   <div class="dot" style="width:4px;height:4px;left:76%;bottom:38%;animation-duration:9s;animation-delay:2s;background:var(--gold);"></div>
   <div class="dot" style="width:5px;height:5px;left:54%;bottom:14%;animation-duration:6s;animation-delay:1s;"></div>
 
-  <!-- Progress: 11 segments (5 white + 1 mid + 5 teal) -->
+  <!-- Progress: 8 segments (2 white Part 1 + 1 white divider + 5 teal Part 2) -->
   <div id="prog">
     <div class="seg"      id="s0"><div class="fill"></div></div>
     <div class="seg"      id="s1"><div class="fill"></div></div>
-    <div class="seg"      id="s2"><div class="fill"></div></div>
-    <div class="seg"      id="s3"><div class="fill"></div></div>
-    <div class="seg"      id="s4"><div class="fill"></div></div>
-    <div class="seg"      id="s5"><div class="fill"></div></div><!-- divider — white -->
+    <div class="seg"      id="s2"><div class="fill"></div></div><!-- divider — white -->
+    <div class="seg teal" id="s3"><div class="fill"></div></div>
+    <div class="seg teal" id="s4"><div class="fill"></div></div>
+    <div class="seg teal" id="s5"><div class="fill"></div></div>
     <div class="seg teal" id="s6"><div class="fill"></div></div>
     <div class="seg teal" id="s7"><div class="fill"></div></div>
-    <div class="seg teal" id="s8"><div class="fill"></div></div>
-    <div class="seg teal" id="s9"><div class="fill"></div></div>
-    <div class="seg teal" id="s10"><div class="fill"></div></div>
   </div>
 
   <div id="part-label">Part 1 of 2</div>
@@ -260,28 +254,14 @@
   <!-- PART 1 — HOW DECISIONING WORKS -->
   <!-- ═══════════════════════════════ -->
 
-  <!-- 0 · Hook -->
+  <!-- 0 · Hook + Problem -->
   <div class="scene in" data-dur="5000" data-part="1">
     <div class="eye s1">Next Best Action</div>
     <div class="head s2">Your customers<br>are signalling.<br><span class="hl">Right now.</span></div>
-    <div class="bod s3">Every click, every silence, every pattern — telling you exactly what they need next.</div>
+    <div class="bod s3">Most teams miss it — by the time the campaign fires, the moment's gone. NBA catches it <strong>in seconds</strong>.</div>
   </div>
 
-  <!-- 1 · Problem -->
-  <div class="scene" data-dur="5000" data-part="1">
-    <div class="eye s1">The problem</div>
-    <div class="head s2">Most teams<br>guess.<br><span class="hl-gold">Or wait.<br>Or miss it.</span></div>
-    <div class="bod s3">By the time the campaign fires, the moment's gone. The customer already decided.</div>
-  </div>
-
-  <!-- 2 · Concept -->
-  <div class="scene" data-dur="5000" data-part="1">
-    <div class="eye s1">The idea</div>
-    <div class="head s2">Score every<br>customer.<br><span class="hl">Pick the<br>winner.</span></div>
-    <div class="bod s3">NBA evaluates <strong>every possible action</strong> for <strong>every customer</strong> — and delivers the best one in seconds.</div>
-  </div>
-
-  <!-- 3 · Flow (7s — steps stagger in) -->
+  <!-- 1 · How it works -->
   <div class="scene" data-dur="7000" data-part="1">
     <div class="eye s1">How it works</div>
     <div class="head s2" style="font-size:clamp(26px,7vw,34px);margin-bottom:18px;">Four steps.<br><span class="hl">Sub-second.</span></div>
@@ -293,19 +273,12 @@
     </div>
   </div>
 
-  <!-- 4 · Loop -->
-  <div class="scene" data-dur="5000" data-part="1">
-    <div class="eye s1">The loop</div>
-    <div class="head s2">Every outcome<br>trains the<br><span class="hl">next decision.</span></div>
-    <div class="bod s3">Accept. Decline. Ignore. Every response feeds back — so the engine gets <strong>smarter with every interaction</strong>.</div>
-  </div>
-
   <!-- ═══════════════════════════════ -->
   <!-- DIVIDER                         -->
   <!-- ═══════════════════════════════ -->
 
-  <!-- 5 · Part 2 card -->
-  <div class="scene center" data-dur="4000" data-part="2">
+  <!-- 2 · Part 2 card -->
+  <div class="scene center" data-dur="3500" data-part="2">
     <div class="div-line"></div>
     <div class="part-num s1">Part 2 of 2</div>
     <div class="part-title s2">Now here's how<br>it runs on<br><span style="color:var(--teal);">Salesforce.</span></div>
