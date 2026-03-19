@@ -416,6 +416,12 @@
     }, d);
   }
 
+  // Right-click to advance
+  document.getElementById('stage').addEventListener('contextmenu', function(e) {
+    e.preventDefault();
+    if (cur < SCENES.length - 1) { goTo(cur + 1); } else { goTo(0); }
+  });
+
   // Tap/click to navigate
   document.getElementById('stage').addEventListener('click', function(e) {
     var rect = document.getElementById('stage').getBoundingClientRect();
