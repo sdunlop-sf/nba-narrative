@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bunnings · The Opportunity — Salesforce</title>
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --navy:   #CFE9FE;
+            --navy2:  #EAF5FE;
+            --blue:   #022AC0;
+            --blue2:  #022AC0;
+            --teal:   #04E1CB;
+            --gold:   #F6BC06;
+            --text:   #002775;
+            --card:   rgba(0, 39, 117, 0.06);
+            --card-h: rgba(0, 39, 117, 0.12);
+            --border: rgba(0, 39, 117, 0.14);
+            --muted:  rgba(0, 39, 117, 0.6);
+        }
+
+        html, body {
+            width: 100%; height: 100%;
+            overflow: hidden;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: var(--navy);
+            color: var(--text);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .bg-base {
+            position: fixed; inset: 0; z-index: 0; pointer-events: none;
+            background: radial-gradient(ellipse 90% 70% at 100% 0%, rgba(2,42,192,0.07) 0%, transparent 55%),
+                        radial-gradient(ellipse 60% 50% at 0% 100%, rgba(4,225,203,0.04) 0%, transparent 50%),
+                        linear-gradient(170deg, #CFE9FE 0%, #D8EFFE 60%, #CFE9FE 100%);
+        }
+
+        .bg-noise {
+            position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: 0.012;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+            background-repeat: repeat; background-size: 200px 200px;
+        }
+
+        .deck { width: 100%; height: 100vh; position: relative; z-index: 1; }
+
+        .slide {
+            position: absolute; inset: 0;
+            display: flex; align-items: center; justify-content: center;
+            padding: 64px 108px 88px;
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.45s cubic-bezier(0.4,0,0.2,1), transform 0.45s cubic-bezier(0.4,0,0.2,1);
+            transform: translateY(22px);
+        }
+        .slide.active { opacity: 1; pointer-events: all; transform: translateY(0); }
+        .slide.exit   { opacity: 0; transform: translateY(-18px); transition: opacity 0.26s ease, transform 0.26s ease; }
+
+        /* ── NAV BAR ── */
+        .nav-bar {
+            position: fixed; bottom: 0; left: 0; right: 0; z-index: 100;
+            height: 56px; display: flex; align-items: center; justify-content: space-between;
+            padding: 0 40px;
+            background: rgba(255,255,255,0.92); backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(0,39,117,0.1);
+        }
+        .nav-brand { display: flex; align-items: center; gap: 12px; }
+        .nav-sf-logo { height: 24px; width: auto; }
+        .nav-bunnings-logo { height: 22px; width: auto; }
+        .nav-divider { width: 1px; height: 18px; background: rgba(0,39,117,0.14); }
+        .nav-title { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: rgba(0,39,117,0.5); }
+        .nav-controls { display: flex; align-items: center; gap: 14px; }
+        .nav-btn {
+            width: 30px; height: 30px; border-radius: 50%;
+            border: 1px solid rgba(2,42,192,0.3); background: none;
+            color: rgba(0,39,117,0.7); font-size: 15px; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.2s; font-family: inherit;
+        }
+        .nav-btn:hover { border-color: var(--blue2); color: var(--blue2); background: rgba(2,42,192,0.06); }
+        .nav-btn:disabled { opacity: 0.28; cursor: default; }
+        .nav-counter { font-size: 11px; color: var(--muted); min-width: 32px; text-align: center; letter-spacing: 0.04em; }
+        .nav-dots { display: flex; align-items: center; gap: 5px; }
+        .dot {
+            width: 5px; height: 5px; border-radius: 50%;
+            background: rgba(0,39,117,0.2); cursor: pointer;
+            transition: all 0.3s; border: none; padding: 0; flex-shrink: 0;
+        }
+        .dot.active { background: var(--blue2); width: 16px; border-radius: 3px; }
+
+        .key-hint {
+            position: fixed; bottom: 66px; right: 36px;
+            font-size: 9px; color: rgba(0,39,117,0.22); letter-spacing: 0.06em;
+            display: flex; align-items: center; gap: 4px;
+        }
+        .key { padding: 2px 5px; border-radius: 3px; border: 1px solid rgba(0,39,117,0.14); font-size: 8px; }
+
+        /* ── TYPOGRAPHY ── */
+        .eyebrow {
+            font-size: 12px; font-weight: 700; letter-spacing: 0.18em;
+            text-transform: uppercase; color: var(--blue2); margin-bottom: 14px;
+        }
+        .big {
+            font-size: clamp(32px, 4vw, 58px); font-weight: 900;
+            line-height: 1.05; letter-spacing: -0.03em; margin-bottom: 20px; color: var(--text);
+        }
+        .hl { color: var(--blue2); }
+
+        .accent-line {
+            width: 40px; height: 3px; border-radius: 2px; margin-bottom: 20px;
+            background: linear-gradient(90deg, var(--blue2), var(--teal));
+        }
+
+        /* ── FLOW ── */
+        .flow { display: flex; align-items: flex-start; width: 100%; max-width: 1020px; }
+        .flow-step { flex: 1; display: flex; flex-direction: column; align-items: center; text-align: center; }
+        .flow-icon {
+            width: 64px; height: 64px; margin-bottom: 14px;
+            display: flex; align-items: center; justify-content: center;
+            background: rgba(2,42,192,0.06); border: 1px solid rgba(2,42,192,0.16);
+            border-radius: 18px; font-size: 22px;
+        }
+        .flow-step-num { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--blue2); margin-bottom: 5px; }
+        .flow-step-title { font-size: 16px; font-weight: 700; margin-bottom: 6px; color: var(--text); }
+        .flow-step-desc { font-size: 13px; color: var(--muted); line-height: 1.6; max-width: 130px; }
+        .flow-arrow { flex-shrink: 0; align-self: center; padding-bottom: 48px; color: rgba(2,42,192,0.25); font-size: 20px; margin: 0 2px; }
+
+        /* ── MOBILE ── */
+        @media (max-width: 900px) { .slide { padding: 48px 64px 80px; } }
+
+        @media (max-width: 768px) {
+            html, body { overflow-y: auto; height: auto; }
+            .deck { height: auto; }
+            .slide {
+                position: relative; opacity: 1 !important; transform: none !important;
+                pointer-events: all; display: none; flex-direction: column;
+                align-items: center; justify-content: flex-start;
+                padding: 32px 20px 88px; gap: 20px; min-height: 100svh;
+            }
+            .slide.active { display: flex; }
+            .big { font-size: clamp(26px, 7vw, 38px); }
+            .flow { flex-wrap: wrap; gap: 14px; justify-content: center; max-width: 100%; }
+            .flow-arrow { display: none; }
+            .flow-step { width: calc(50% - 8px); }
+            .flow-icon { width: 52px; height: 52px; font-size: 18px; }
+            .flow-step-title { font-size: 14px; }
+            .flow-step-desc { font-size: 12px; max-width: none; }
+            .nav-bar { padding: 0 16px; }
+            .nav-title { display: none; }
+            .nav-divider { display: none; }
+            .nav-dots { display: none; }
+            .key-hint { display: none; }
+        }
+
+        @media (max-width: 480px) {
+            .slide { padding: 24px 16px 84px; }
+            .big { font-size: 26px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-base"></div>
+    <div class="bg-noise"></div>
+
+    <div id="deck" class="deck">
+
+        <!-- Slide 1: Three Opportunities -->
+        <section class="slide active">
+            <div style="max-width: 980px; width: 100%;">
+                <div class="accent-line" style="margin: 0 auto 6px;"></div>
+                <div class="eyebrow" style="text-align: center; margin-bottom: 8px;">Three Opportunities</div>
+                <h2 class="big" style="text-align: center; font-size: clamp(24px, 2.8vw, 38px); margin-bottom: 32px;">Each one expands reach.<br><span class="hl">Together they compound.</span></h2>
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;">
+
+                    <div style="background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 24px 20px; display: flex; flex-direction: column; gap: 10px; border-top: 3px solid var(--blue2);">
+                        <div style="font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--blue2);">01</div>
+                        <div style="font-size: 17px; font-weight: 800; color: var(--text); line-height: 1.2;">Scale Personalization<br>across Channels</div>
+                        <div style="font-size: 13px; color: var(--muted); line-height: 1.6; flex: 1;">Mobile SDK. Full web. Real-time triggers across every channel. Personalisation that covers the whole customer, not just the email list.</div>
+                        <div style="font-size: 11px; font-weight: 700; color: var(--blue2); letter-spacing: 0.04em;">Salesforce Personalisation</div>
+                    </div>
+
+                    <div style="background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 24px 20px; display: flex; flex-direction: column; gap: 10px; border-top: 3px solid #007A72;">
+                        <div style="font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #007A72;">02</div>
+                        <div style="font-size: 17px; font-weight: 800; color: var(--text); line-height: 1.2;">Real-Time Offer<br>Management</div>
+                        <div style="font-size: 13px; color: var(--muted); line-height: 1.6; flex: 1;">Replace the Flybuys bottleneck. Serve PowerPass, Commercial and all segments with a single automated offer engine.</div>
+                        <div style="font-size: 11px; font-weight: 700; color: #007A72; letter-spacing: 0.04em;">Real-Time Offer Management</div>
+                    </div>
+
+                    <div style="background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 24px 20px; display: flex; flex-direction: column; gap: 10px; border-top: 3px solid #C89000;">
+                        <div style="font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #C89000;">03</div>
+                        <div style="font-size: 17px; font-weight: 800; color: var(--text); line-height: 1.2;">Einstein + Data<br>Cloud</div>
+                        <div style="font-size: 13px; color: var(--muted); line-height: 1.6; flex: 1;">NBA prediction models that score every customer for every action. Build the learning loop that makes each decision better than the last.</div>
+                        <div style="font-size: 11px; font-weight: 700; color: #C89000; letter-spacing: 0.04em;">Einstein Studio · Data Cloud</div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 2: The Decisioning Engine -->
+        <section class="slide">
+            <div style="max-width: 1020px; width: 100%;">
+                <div class="accent-line" style="margin: 0 auto 6px;"></div>
+                <div class="eyebrow" style="text-align: center; margin-bottom: 8px;">The Always-On Engine</div>
+                <h2 class="big" style="text-align: center; font-size: clamp(24px, 2.8vw, 40px); margin-bottom: 10px;">Three capabilities.<br><span class="hl">One engine that compounds.</span></h2>
+                <p style="text-align: center; font-size: 14px; color: var(--muted); margin: 0 auto 32px; max-width: 520px;">Each capability feeds the next. Personalisation generates signals. Offers generate outcomes. Einstein turns outcomes into better decisions.</p>
+                <div class="flow">
+                    <div class="flow-step">
+                        <div class="flow-icon">📡</div>
+                        <div class="flow-step-num">Signal</div>
+                        <div class="flow-step-title">Data Cloud</div>
+                        <div class="flow-step-desc">Unified profile — mobile, web, in-store, commercial</div>
+                    </div>
+                    <div class="flow-arrow">›</div>
+                    <div class="flow-step">
+                        <div class="flow-icon">🧠</div>
+                        <div class="flow-step-num">Score</div>
+                        <div class="flow-step-title">Einstein Studio</div>
+                        <div class="flow-step-desc">NBA model scores every customer for every action</div>
+                    </div>
+                    <div class="flow-arrow">›</div>
+                    <div class="flow-step">
+                        <div class="flow-icon">🏆</div>
+                        <div class="flow-step-num">Decide</div>
+                        <div class="flow-step-title">Arbitration</div>
+                        <div class="flow-step-desc">One winning action per customer — budget, eligibility, channel</div>
+                    </div>
+                    <div class="flow-arrow">›</div>
+                    <div class="flow-step">
+                        <div class="flow-icon">⚡</div>
+                        <div class="flow-step-num">Execute</div>
+                        <div class="flow-step-title">Omni + RTOM</div>
+                        <div class="flow-step-desc">Delivered via web, app, email or offer — in real time</div>
+                    </div>
+                    <div class="flow-arrow">›</div>
+                    <div class="flow-step">
+                        <div class="flow-icon">🔄</div>
+                        <div class="flow-step-num">Learn</div>
+                        <div class="flow-step-title">Feedback Loop</div>
+                        <div class="flow-step-desc">Every outcome trains the model — it gets better with use</div>
+                    </div>
+                </div>
+                <p style="text-align: center; font-size: 13px; font-style: italic; color: var(--muted); margin-top: 28px;">The catalogue grows. The model learns. The returns compound.</p>
+            </div>
+        </section>
+
+    </div>
+
+    <nav class="nav-bar">
+        <div class="nav-brand">
+            <img class="nav-sf-logo" src="sf-logo-cloud.png" alt="Salesforce">
+            <div class="nav-divider"></div>
+            <img class="nav-bunnings-logo" src="bunnings-logo.png" alt="Bunnings">
+            <div class="nav-divider"></div>
+            <span class="nav-title">The Opportunity</span>
+        </div>
+        <div class="nav-dots" id="progress"></div>
+        <div class="nav-controls">
+            <button class="nav-btn" id="btn-prev" aria-label="Previous slide">‹</button>
+            <span class="nav-counter" id="counter">1 / 2</span>
+            <button class="nav-btn" id="btn-next" aria-label="Next slide">›</button>
+        </div>
+    </nav>
+
+    <div class="key-hint">
+        <span class="key">←→</span> navigate <span class="key">Space</span> advance
+    </div>
+
+    <script src="gate.js" data-page="Bunnings · The Opportunity"></script>
+
+    <script>
+        var slides  = document.querySelectorAll('#deck > .slide');
+        var total   = slides.length;
+        var current = 0;
+        var busy    = false;
+        var prog    = document.getElementById('progress');
+
+        for (var i = 0; i < total; i++) {
+            var dot = document.createElement('button');
+            dot.className = 'dot' + (i === 0 ? ' active' : '');
+            dot.setAttribute('aria-label', 'Slide ' + (i + 1));
+            dot.addEventListener('click', (function(idx) { return function() { goTo(idx); }; })(i));
+            prog.appendChild(dot);
+        }
+
+        function goTo(idx) {
+            if (busy || idx === current || idx < 0 || idx >= total) return;
+            busy = true;
+            slides[current].classList.add('exit');
+            var prev = current;
+            current = idx;
+            setTimeout(function() {
+                slides[prev].classList.remove('active', 'exit');
+                slides[current].classList.add('active');
+                document.querySelectorAll('.dot').forEach(function(d, i) {
+                    d.classList.toggle('active', i === current);
+                });
+                document.getElementById('counter').textContent = (current + 1) + ' / ' + total;
+                document.getElementById('btn-prev').disabled = current === 0;
+                document.getElementById('btn-next').disabled = current === total - 1;
+                busy = false;
+            }, 280);
+        }
+
+        document.getElementById('btn-prev').addEventListener('click', function() { goTo(current - 1); });
+        document.getElementById('btn-next').addEventListener('click', function() { goTo(current + 1); });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); goTo(current + 1); }
+            if (e.key === 'ArrowLeft')                   { e.preventDefault(); goTo(current - 1); }
+        });
+
+        // Init state
+        document.getElementById('btn-prev').disabled = true;
+        document.getElementById('btn-next').disabled = total <= 1;
+    </script>
+</body>
+</html>
