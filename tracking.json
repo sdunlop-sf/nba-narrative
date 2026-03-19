@@ -5722,5 +5722,17 @@
     "location": "Melbourne, Victoria, Australia",
     "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36",
     "returning": "no"
+  },
+  {
+    "timestamp": "Thu, 19 Mar 2026 13:22:26 GMT",
+    "name": "Abigail",
+    "company": "Salesforce",
+    "position": "Product",
+    "page": "NBA Narrative · Slides Light Internal",
+    "url": "https://sdunlop-sf.github.io/nba-narrative/slides-light-internal.html",
+    "ip": "170.85.56.113",
+    "location": "Atlanta, Georgia, United States",
+    "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36",
+    "returning": "yes"
   }
 ]
