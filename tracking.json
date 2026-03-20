@@ -6046,5 +6046,17 @@
     "location": "Wellington, Wellington Region, New Zealand",
     "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36",
     "returning": "no"
+  },
+  {
+    "timestamp": "Fri, 20 Mar 2026 01:55:11 GMT",
+    "name": "CarolineSwarbrick",
+    "company": "Salesforce",
+    "position": "CX",
+    "page": "NBA Narrative · Xero Workshop",
+    "url": "https://sdunlop-sf.github.io/nba-narrative/xero-workshop.html",
+    "ip": "147.161.213.7",
+    "location": "Melbourne, Victoria, Australia",
+    "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36",
+    "returning": "yes"
   }
 ]
