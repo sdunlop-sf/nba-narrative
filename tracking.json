@@ -6082,5 +6082,17 @@
     "location": "Sydney, New South Wales, Australia",
     "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36",
     "returning": "yes"
+  },
+  {
+    "timestamp": "Fri, 20 Mar 2026 03:06:54 GMT",
+    "name": "Lachlan",
+    "company": "Salesforce",
+    "position": "SE",
+    "page": "NBA Narrative · Slides Light Internal",
+    "url": "https://sdunlop-sf.github.io/nba-narrative/slides-light-internal.html",
+    "ip": "147.161.213.10",
+    "location": "Melbourne, Victoria, Australia",
+    "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36",
+    "returning": "yes"
   }
 ]
