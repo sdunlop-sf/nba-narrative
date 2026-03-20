@@ -1215,6 +1215,9 @@
             });
         }
 
+        document.getElementById('btn-prev').addEventListener('click', function() { navigate(-1); });
+        document.getElementById('btn-next').addEventListener('click', function() { navigate(1); });
+
         document.addEventListener('keydown', function(e) {
             if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') { e.preventDefault(); navigate(1); }
             if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')                    { e.preventDefault(); navigate(-1); }
