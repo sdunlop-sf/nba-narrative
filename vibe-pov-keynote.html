@@ -31,7 +31,6 @@
       -webkit-font-smoothing: antialiased;
     }
 
-    /* background gradient */
     .bg-base {
       position: fixed; inset: 0; z-index: 0; pointer-events: none;
       background:
@@ -47,124 +46,209 @@
       position: absolute; inset: 0;
       display: none; flex-direction: column;
       align-items: center; justify-content: center;
-      padding: 80px 120px;
+      padding: 72px 100px 80px;
       opacity: 0; transform: translateY(12px);
       transition: opacity 0.38s ease, transform 0.38s ease;
       text-align: center;
     }
-    .slide.left  { text-align: left;  align-items: flex-start; }
-    .slide.split { text-align: left;  align-items: stretch; justify-content: center; }
+    .slide.left  { text-align: left; align-items: flex-start; }
+    .slide.split { text-align: left; align-items: stretch; justify-content: center; }
     .slide.active { display: flex; }
     .slide.active.in { opacity: 1; transform: translateY(0); }
     .slide.exit { opacity: 0; transform: translateY(-8px); transition: opacity 0.22s ease, transform 0.22s ease; }
 
-    /* ── TYPOGRAPHY ── */
-    .t-super { font-size: 96px; font-weight: 900; letter-spacing: -0.05em; line-height: 0.96; color: var(--text); }
-    .t-hero  { font-size: 72px; font-weight: 900; letter-spacing: -0.04em; line-height: 1.0;  color: var(--text); }
-    .t-h1    { font-size: 54px; font-weight: 800; letter-spacing: -0.03em; line-height: 1.08; color: var(--text); }
-    .t-sub   { font-size: 22px; font-weight: 400; line-height: 1.55; color: var(--dim); }
-    .t-sm    { font-size: 16px; line-height: 1.6;  color: var(--muted); }
+    /* ── TYPE ── */
+    .t-super { font-size: 92px; font-weight: 900; letter-spacing: -0.05em; line-height: 0.96; color: var(--text); }
+    .t-hero  { font-size: 68px; font-weight: 900; letter-spacing: -0.04em; line-height: 1.0;  color: var(--text); }
+    .t-h1    { font-size: 52px; font-weight: 800; letter-spacing: -0.03em; line-height: 1.08; color: var(--text); }
+    .t-sub   { font-size: 21px; font-weight: 400; line-height: 1.55; color: var(--dim); }
+    .t-sm    { font-size: 15px; line-height: 1.6;  color: var(--muted); }
     .t-label { font-size: 12px; font-weight: 700;  letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
     .accent  { color: var(--blue); }
     .red     { color: var(--red); }
     .green   { color: var(--green); }
     .amber   { color: var(--amber); }
 
-    .rule { width: 48px; height: 4px; border-radius: 2px; margin: 28px 0; }
+    .rule { width: 48px; height: 4px; border-radius: 2px; margin: 24px 0; }
     .r-blue  { background: var(--blue); }
     .r-green { background: var(--green); }
     .r-amber { background: var(--amber); }
-    .r-red   { background: var(--red); }
 
     /* ── BIG NUMBER ── */
-    .bignum { font-size: 180px; font-weight: 900; letter-spacing: -0.06em; line-height: 1; color: var(--blue); }
+    .bignum { font-size: 160px; font-weight: 900; letter-spacing: -0.06em; line-height: 1; color: var(--blue); }
 
     /* ── PULL QUOTE ── */
-    .pq { font-size: 30px; font-weight: 700; line-height: 1.35; color: var(--text); max-width: 860px; }
+    .pq { font-size: 28px; font-weight: 700; line-height: 1.35; color: var(--text); max-width: 860px; }
     .pq-border { border-left: 5px solid var(--blue); padding-left: 28px; text-align: left; }
-
-    /* ── SPLIT LAYOUT ── */
-    .split-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; width: 100%; }
-    .col-left  { border-right: 1px solid var(--bord); padding-right: 80px; }
-
-    /* ── FLOW NODES ── */
-    .flow { display: flex; align-items: center; gap: 0; width: 100%; max-width: 1000px; }
-    .fnode {
-      flex: 1; border-radius: 14px; padding: 20px 24px;
-      background: rgba(0,39,117,0.05); border: 1px solid var(--bord);
-      display: flex; flex-direction: column; gap: 6px; text-align: left;
-    }
-    .fnode.hl { background: rgba(2,42,192,0.08); border-color: rgba(2,42,192,0.2); }
-    .fnode-t { font-size: 13px; font-weight: 700; color: var(--blue); text-transform: uppercase; letter-spacing: 0.08em; }
-    .fnode-s { font-size: 14px; color: var(--dim); line-height: 1.45; }
-    .farr { padding: 0 12px; font-size: 24px; font-weight: 700; color: var(--blue); flex-shrink: 0; }
-
-    /* ── PLATFORM LIST ── */
-    .platform-list { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; width: 100%; max-width: 900px; text-align: left; }
-    .pl-item { border-left: 3px solid var(--blue); padding: 4px 0 4px 20px; }
-    .pl-name { font-size: 18px; font-weight: 700; color: var(--blue); margin-bottom: 4px; }
-    .pl-desc { font-size: 15px; color: var(--dim); line-height: 1.45; }
-
-    /* ── MODES ── */
-    .modes { display: flex; gap: 32px; margin-top: 28px; width: 100%; max-width: 900px; }
-    .mode { flex: 1; background: var(--card); border: 1px solid var(--bord); border-radius: 12px; padding: 18px 22px; text-align: left; }
-    .mode-t { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
-    .mode-s { font-size: 14px; color: var(--dim); line-height: 1.5; }
-
-    /* ── CONTRAST ── */
-    .contrast { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; width: 100%; text-align: left; }
-    .c-block { border-radius: 14px; padding: 28px 32px; }
-    .c-block.bad  { background: rgba(194,57,52,0.06);  border: 1px solid rgba(194,57,52,0.18); }
-    .c-block.good { background: rgba(2,122,56,0.06);   border: 1px solid rgba(2,122,56,0.18); }
-    .c-label { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 16px; }
-    .c-msg { font-size: 15px; color: var(--dim); line-height: 1.6; margin-bottom: 12px; padding: 12px 16px; border-radius: 8px; background: rgba(255,255,255,0.55); }
-    .c-outcome { font-size: 14px; font-weight: 600; margin-top: 8px; }
-
-    /* ── NAV ── */
-    .nav-bar {
-      position: fixed; bottom: 0; left: 0; right: 0; z-index: 100;
-      height: 52px;
-      display: flex; align-items: center; justify-content: center; gap: 16px;
-    }
-    .nav-btn {
-      width: 36px; height: 36px; border-radius: 8px;
-      border: 1px solid var(--bord); background: rgba(210,235,254,0.8);
-      color: var(--blue); font-size: 18px; font-weight: 700;
-      cursor: pointer; display: flex; align-items: center; justify-content: center;
-      transition: all 0.15s; backdrop-filter: blur(8px);
-    }
-    .nav-btn:hover:not(:disabled) { background: rgba(2,42,192,0.1); border-color: rgba(2,42,192,0.35); }
-    .nav-btn:disabled { opacity: 0.2; cursor: not-allowed; }
-    .nav-counter { font-size: 12px; font-weight: 600; color: var(--muted); min-width: 48px; text-align: center; }
-    .nav-dots { display: flex; gap: 6px; align-items: center; }
-    .dot {
-      width: 6px; height: 6px; border-radius: 50%;
-      background: var(--bord); border: none; cursor: pointer; padding: 0;
-      transition: all 0.2s; flex-shrink: 0;
-    }
-    .dot.active { background: var(--blue); transform: scale(1.4); }
 
     /* ── SF LOGO TOP ── */
     .sf-mark {
-      position: fixed; top: 20px; left: 28px; z-index: 100;
-      display: flex; align-items: center; gap: 10px; opacity: 0.55;
+      position: fixed; top: 18px; left: 24px; z-index: 100;
+      display: flex; align-items: center; gap: 9px; opacity: 0.5;
     }
-    .sf-mark img { height: 18px; }
+    .sf-mark img { height: 17px; }
     .sf-mark span { font-size: 11px; font-weight: 600; color: var(--muted); }
 
-    /* ── PCP DOTS (cover) ── */
+    /* ── PCP DOTS ── */
     .pcp-row { display: flex; gap: 8px; margin-top: 40px; }
     .pcp-dot { width: 28px; height: 4px; border-radius: 2px; background: var(--bord); }
     .pcp-dot.p { background: var(--blue); }
     .pcp-dot.c { background: var(--amber); }
     .pcp-dot.x { background: var(--green); }
 
-    /* key hint */
+    /* ── NAV ── */
+    .nav-bar {
+      position: fixed; bottom: 0; left: 0; right: 0; z-index: 100;
+      height: 52px;
+      display: flex; align-items: center; justify-content: center; gap: 14px;
+    }
+    .nav-btn {
+      width: 34px; height: 34px; border-radius: 8px;
+      border: 1px solid var(--bord); background: rgba(210,235,254,0.85);
+      color: var(--blue); font-size: 18px; font-weight: 700;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      transition: all 0.15s; backdrop-filter: blur(8px);
+    }
+    .nav-btn:hover:not(:disabled) { background: rgba(2,42,192,0.1); border-color: rgba(2,42,192,0.35); }
+    .nav-btn:disabled { opacity: 0.2; cursor: not-allowed; }
+    .nav-counter { font-size: 12px; font-weight: 600; color: var(--muted); min-width: 44px; text-align: center; }
+    .nav-dots { display: flex; gap: 6px; align-items: center; }
+    .dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--bord); border: none; cursor: pointer; padding: 0;
+      transition: all 0.2s;
+    }
+    .dot.active { background: var(--blue); transform: scale(1.4); }
     .key-hint {
-      position: fixed; bottom: 16px; right: 24px; z-index: 200;
+      position: fixed; bottom: 16px; right: 22px; z-index: 200;
       font-size: 10px; color: var(--muted); display: flex; gap: 6px; align-items: center;
     }
     .key { background: rgba(0,39,117,0.06); border: 1px solid var(--bord); border-radius: 3px; padding: 2px 6px; font-size: 9px; font-weight: 600; color: var(--blue); }
+
+    /* ══════════════════════════════════════════════
+       SLIDE-SPECIFIC COMPONENTS
+    ══════════════════════════════════════════════ */
+
+    /* ── BEFORE/AFTER DIAGRAM (slide 2) ── */
+    .before-after {
+      display: grid; grid-template-columns: 1fr auto 1fr; gap: 0;
+      align-items: center; margin-top: 32px; width: 100%; max-width: 880px;
+    }
+    .ba-box {
+      border-radius: 14px; padding: 24px 28px; text-align: left;
+    }
+    .ba-box.before {
+      background: rgba(160,92,0,0.07); border: 1px solid rgba(160,92,0,0.2);
+    }
+    .ba-box.after {
+      background: rgba(2,42,192,0.07); border: 1px solid rgba(2,42,192,0.2);
+    }
+    .ba-label { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 12px; }
+    .ba-stat  { font-size: 32px; font-weight: 900; letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 6px; }
+    .ba-desc  { font-size: 14px; color: var(--dim); line-height: 1.5; }
+    .ba-arrow { font-size: 36px; font-weight: 900; color: var(--blue); padding: 0 24px; }
+
+    /* ── VENDOR BADGES (slide 3) ── */
+    .vendor-strip { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; margin-top: 32px; max-width: 820px; }
+    .vbadge {
+      display: flex; align-items: center; gap: 8px;
+      border-radius: 999px; padding: 7px 16px;
+      font-size: 13px; font-weight: 700; border: 1px solid transparent;
+    }
+    .vbadge svg { flex-shrink: 0; }
+
+    /* ── CHAOS DIAGRAM (slide 7) ── */
+    .chaos-wrap { display: grid; grid-template-columns: 1fr auto 1fr; gap: 0; align-items: center; margin-top: 28px; width: 100%; }
+    .chaos-side { display: flex; flex-direction: column; gap: 8px; }
+    .chaos-label { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 6px; }
+    .chaos-teams { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+    .chaos-team {
+      border-radius: 8px; padding: 8px 10px;
+      font-size: 11px; font-weight: 600; color: var(--dim);
+      background: rgba(160,92,0,0.06); border: 1px solid rgba(160,92,0,0.18);
+      display: flex; flex-direction: column; gap: 4px;
+    }
+    .chaos-team-name { font-size: 10px; font-weight: 700; color: var(--amber); text-transform: uppercase; letter-spacing: 0.08em; }
+    .chaos-vendor { display: inline-block; font-size: 9px; font-weight: 600; padding: 1px 6px; border-radius: 4px; margin: 1px 1px 0 0; }
+    .chaos-arrow { font-size: 36px; font-weight: 900; color: var(--blue); padding: 0 20px; text-align: center; }
+    .platform-stack { display: flex; flex-direction: column; gap: 8px; }
+    .pstack-row {
+      border-radius: 10px; padding: 12px 16px; text-align: left;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .pstack-row img { width: 28px; height: 28px; object-fit: contain; flex-shrink: 0; }
+    .pstack-name { font-size: 13px; font-weight: 700; }
+    .pstack-desc { font-size: 11px; margin-top: 1px; }
+
+    /* ── PLATFORM CARDS (slide 9) ── */
+    .plat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; width: 100%; max-width: 960px; text-align: left; }
+    .plat-card {
+      border-radius: 16px; padding: 24px 28px;
+      display: flex; flex-direction: column; gap: 10px;
+      border: 1px solid transparent;
+    }
+    .plat-head { display: flex; align-items: center; gap: 14px; }
+    .plat-icon { width: 44px; height: 44px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .plat-icon img { width: 30px; height: 30px; object-fit: contain; }
+    .plat-name { font-size: 20px; font-weight: 800; }
+    .plat-desc { font-size: 15px; line-height: 1.55; }
+
+    /* Data Cloud */
+    .pc-dc   { background: rgba(11,118,200,0.08); border-color: rgba(11,118,200,0.22); }
+    .pc-dc .plat-icon  { background: rgba(11,118,200,0.14); }
+    .pc-dc .plat-name  { color: #0B76C8; }
+    .pc-dc .plat-desc  { color: rgba(11,118,200,0.75); }
+    /* Agentforce */
+    .pc-af   { background: rgba(1,179,207,0.08); border-color: rgba(1,179,207,0.25); }
+    .pc-af .plat-icon  { background: rgba(1,179,207,0.14); }
+    .pc-af .plat-name  { color: #0191A8; }
+    .pc-af .plat-desc  { color: rgba(1,145,168,0.75); }
+    /* Marketing Cloud */
+    .pc-mc   { background: rgba(247,154,46,0.09); border-color: rgba(247,154,46,0.28); }
+    .pc-mc .plat-icon  { background: rgba(247,154,46,0.16); }
+    .pc-mc .plat-name  { color: #C97500; }
+    .pc-mc .plat-desc  { color: rgba(160,92,0,0.78); }
+    /* Einstein Studio */
+    .pc-es   { background: rgba(123,94,167,0.09); border-color: rgba(123,94,167,0.25); }
+    .pc-es .plat-icon  { background: rgba(123,94,167,0.14); }
+    .pc-es .plat-name  { color: #6039A0; }
+    .pc-es .plat-desc  { color: rgba(96,57,160,0.72); }
+
+    /* ── NBA FLOW (slide 10) ── */
+    .flow { display: flex; align-items: stretch; gap: 0; width: 100%; max-width: 1040px; }
+    .fnode {
+      flex: 1; border-radius: 14px; padding: 20px 20px;
+      display: flex; flex-direction: column; gap: 6px; text-align: left;
+    }
+    .fnode-icon { width: 32px; height: 32px; border-radius: 7px; display: flex; align-items: center; justify-content: center; margin-bottom: 4px; flex-shrink: 0; }
+    .fnode-icon img { width: 22px; height: 22px; object-fit: contain; }
+    .fnode-t { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; }
+    .fnode-s { font-size: 13px; color: var(--dim); line-height: 1.45; }
+    .fn-dc   { background: rgba(11,118,200,0.08);  border: 1px solid rgba(11,118,200,0.22);  } .fn-dc  .fnode-t { color: #0B76C8; } .fn-dc  .fnode-icon { background: rgba(11,118,200,0.14); }
+    .fn-es   { background: rgba(123,94,167,0.09);  border: 1px solid rgba(123,94,167,0.25);  } .fn-es  .fnode-t { color: #6039A0; } .fn-es  .fnode-icon { background: rgba(123,94,167,0.16); }
+    .fn-af   { background: rgba(1,179,207,0.08);   border: 1px solid rgba(1,179,207,0.25);   } .fn-af  .fnode-t { color: #0191A8; } .fn-af  .fnode-icon { background: rgba(1,179,207,0.14); }
+    .fn-crm  { background: rgba(2,42,192,0.07);    border: 1px solid rgba(2,42,192,0.2);     } .fn-crm .fnode-t { color: var(--blue); } .fn-crm .fnode-icon { background: rgba(2,42,192,0.1); }
+    .farr { display: flex; align-items: center; padding: 0 10px; font-size: 22px; font-weight: 700; color: rgba(0,39,117,0.28); flex-shrink: 0; }
+
+    .modes { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-top: 20px; width: 100%; max-width: 1040px; }
+    .mode { border-radius: 10px; padding: 16px 18px; text-align: left; }
+    .mode-t { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 5px; }
+    .mode-s { font-size: 13px; color: var(--dim); line-height: 1.5; }
+    .m-flow { background: rgba(2,42,192,0.07);  border: 1px solid rgba(2,42,192,0.18);  } .m-flow .mode-t { color: var(--blue); }
+    .m-af   { background: rgba(1,179,207,0.07); border: 1px solid rgba(1,179,207,0.22); } .m-af   .mode-t { color: #0191A8; }
+    .m-loop { background: rgba(2,122,56,0.07);  border: 1px solid rgba(2,122,56,0.18);  } .m-loop .mode-t { color: var(--green); }
+
+    /* ── CONTRAST (slide 11) ── */
+    .contrast { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; width: 100%; text-align: left; }
+    .c-block { border-radius: 16px; padding: 24px 28px; }
+    .c-block.bad  { background: rgba(194,57,52,0.06);  border: 1px solid rgba(194,57,52,0.18); }
+    .c-block.good { background: rgba(2,122,56,0.06);   border: 1px solid rgba(2,122,56,0.18); }
+    .c-label { font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 14px; }
+    .c-msg { font-size: 14px; color: var(--dim); line-height: 1.6; margin-bottom: 10px; padding: 11px 14px; border-radius: 8px; background: rgba(255,255,255,0.55); }
+    .c-outcome { font-size: 13px; font-weight: 600; margin-top: 6px; }
+
+    /* ── SPLIT LAYOUT ── */
+    .split-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; width: 100%; }
   </style>
 </head>
 <body>
@@ -195,17 +279,73 @@
 <!-- ② BARRIER GONE -->
 <div class="slide">
   <h1 class="t-hero">The barrier to building<br><span class="accent">has disappeared.</span></h1>
-  <div class="rule r-blue"></div>
-  <p class="t-sub" style="max-width:700px;">An AI coding assistant and a credit card is now a development team.<br>What took months and a team now takes evenings and a hundred dollars a month.</p>
+  <div class="before-after">
+    <div class="ba-box before">
+      <div class="ba-label" style="color:var(--amber);">Then</div>
+      <div class="ba-stat" style="color:var(--amber);">4 people · 4 months</div>
+      <div class="ba-desc">Sprint planning. DevOps team. £80k+ budget. Procurement sign-off before a single line of code.</div>
+    </div>
+    <div class="ba-arrow">→</div>
+    <div class="ba-box after">
+      <div class="ba-label" style="color:var(--blue);">Now</div>
+      <div class="ba-stat" style="color:var(--blue);">1 person · 6 weeks</div>
+      <div class="ba-desc">AI coding assistant. Evenings and weekends. ~$200/month in tooling. In production before IT knows it exists.</div>
+    </div>
+  </div>
 </div>
 
 
 <!-- ③ THE PROOF -->
 <div class="slide">
-  <p class="t-label" style="margin-bottom:20px;">Better Game Golf — a real vibe-coded build</p>
+  <p class="t-label" style="margin-bottom:16px;">Better Game Golf — built solo, holding a full-time job at Salesforce</p>
   <h1 class="t-hero">One person.<br>Six weeks.<br><span class="accent">In production.</span></h1>
-  <div class="rule r-blue"></div>
-  <p class="t-sub" style="max-width:640px;">AI content engine. 24/7 coaching bot. Stripe billing. Social auto-publish. Lead nurture. Audio generation. Built solo — holding a full-time job at Salesforce.</p>
+  <div class="vendor-strip">
+    <!-- Claude -->
+    <div class="vbadge" style="background:rgba(193,125,94,0.10);border-color:rgba(193,125,94,0.28);color:#8B4513;">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" fill="#C17D5E" opacity=".9"/><text x="12" y="16" text-anchor="middle" font-size="11" font-weight="800" fill="white" font-family="Inter,sans-serif">A</text></svg>
+      Claude
+    </div>
+    <!-- OpenAI -->
+    <div class="vbadge" style="background:rgba(16,16,16,0.07);border-color:rgba(16,16,16,0.18);color:#111;">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="#111"><circle cx="12" cy="12" r="10"/><text x="12" y="16" text-anchor="middle" font-size="10" font-weight="800" fill="white" font-family="Inter,sans-serif">AI</text></svg>
+      OpenAI GPT-4o
+    </div>
+    <!-- Vercel -->
+    <div class="vbadge" style="background:rgba(16,16,16,0.07);border-color:rgba(16,16,16,0.18);color:#111;">
+      <svg width="16" height="16" viewBox="0 0 24 24"><polygon points="12,3 22,21 2,21" fill="#111"/></svg>
+      Vercel
+    </div>
+    <!-- Supabase -->
+    <div class="vbadge" style="background:rgba(62,207,142,0.10);border-color:rgba(62,207,142,0.3);color:#1a7a4a;">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect width="24" height="24" rx="5" fill="#3ECF8E" opacity=".85"/><text x="12" y="16" text-anchor="middle" font-size="10" font-weight="800" fill="white" font-family="Inter,sans-serif">S</text></svg>
+      Supabase
+    </div>
+    <!-- Stripe -->
+    <div class="vbadge" style="background:rgba(103,114,229,0.10);border-color:rgba(103,114,229,0.28);color:#3D45CC;">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect width="24" height="24" rx="5" fill="#6772E5"/><text x="12" y="16" text-anchor="middle" font-size="10" font-weight="800" fill="white" font-family="Inter,sans-serif">$</text></svg>
+      Stripe
+    </div>
+    <!-- ElevenLabs -->
+    <div class="vbadge" style="background:rgba(16,16,16,0.07);border-color:rgba(16,16,16,0.18);color:#111;">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect width="24" height="24" rx="5" fill="#111"/><text x="12" y="16" text-anchor="middle" font-size="8" font-weight="800" fill="white" font-family="Inter,sans-serif">11x</text></svg>
+      ElevenLabs
+    </div>
+    <!-- Meta -->
+    <div class="vbadge" style="background:rgba(24,119,242,0.10);border-color:rgba(24,119,242,0.28);color:#1265CC;">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect width="24" height="24" rx="5" fill="#1877F2"/><text x="12" y="16" text-anchor="middle" font-size="9" font-weight="800" fill="white" font-family="Inter,sans-serif">f</text></svg>
+      Meta Graph API
+    </div>
+    <!-- Resend -->
+    <div class="vbadge" style="background:rgba(16,16,16,0.07);border-color:rgba(16,16,16,0.18);color:#111;">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect width="24" height="24" rx="5" fill="#111"/><text x="12" y="16" text-anchor="middle" font-size="8" font-weight="800" fill="white" font-family="Inter,sans-serif">Re</text></svg>
+      Resend
+    </div>
+    <!-- GitHub -->
+    <div class="vbadge" style="background:rgba(16,16,16,0.07);border-color:rgba(16,16,16,0.18);color:#111;">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="#111"><circle cx="12" cy="12" r="10"/><text x="12" y="16" text-anchor="middle" font-size="8" font-weight="800" fill="white" font-family="Inter,sans-serif">GH</text></svg>
+      GitHub
+    </div>
+  </div>
 </div>
 
 
@@ -214,7 +354,7 @@
   <div class="bignum">10+</div>
   <p class="t-sub" style="margin-top:12px;">external production systems. One developer. Six weeks.</p>
   <div class="rule r-blue"></div>
-  <div class="pq pq-border" style="max-width:720px;margin:0 auto;">
+  <div class="pq pq-border" style="max-width:760px;margin:0 auto;">
     "Someone on your team has already built something like this.<br>You just don't know about it yet."
   </div>
 </div>
@@ -233,20 +373,102 @@
   <h1 class="t-h1">What happens when legal asks<br>where the <span class="amber">customer data went?</span></h1>
   <div class="rule r-amber"></div>
   <p class="t-sub" style="max-width:700px;margin-bottom:28px;">Data residency. Model versioning. Prompt audit trails. Right to erasure.</p>
-  <div class="pq" style="color:var(--red);font-size:36px;font-weight:900;letter-spacing:-0.02em;">
+  <div class="pq" style="color:var(--red);font-size:40px;font-weight:900;letter-spacing:-0.03em;">
     "We don't know."
   </div>
   <p class="t-sub" style="margin-top:16px;">That is not an answer your legal team will accept.</p>
 </div>
 
 
-<!-- ⑦ AT SCALE -->
-<div class="slide">
-  <h1 class="t-hero">What happens when<br><span class="amber">10 teams</span> do this?</h1>
-  <div class="rule r-amber"></div>
-  <p class="t-sub" style="max-width:680px;">30 AI vendors. 30 separate invoices. No shared data. No cost visibility. No audit trail. Contradictory outputs to the same customer — from the same organisation.</p>
-  <div class="rule r-amber" style="margin-top:28px;"></div>
-  <p class="pq" style="max-width:780px;color:var(--amber);">"This is shadow IT — but faster, cheaper, and more capable than anything shadow IT has produced before."</p>
+<!-- ⑦ CHAOS DIAGRAM -->
+<div class="slide left">
+  <h1 class="t-h1" style="margin-bottom:8px;">What happens when <span class="amber">10 teams</span> build like this?</h1>
+  <p class="t-sm" style="font-size:16px;margin-bottom:22px;">Each team with their own AI vendors, data stores, and billing — no shared foundation.</p>
+  <div class="chaos-wrap">
+
+    <!-- Left: chaos -->
+    <div class="chaos-side">
+      <div class="chaos-label" style="color:var(--amber);">Without a platform — today</div>
+      <div class="chaos-teams">
+        <div class="chaos-team">
+          <div class="chaos-team-name">Content Team</div>
+          <span class="chaos-vendor" style="background:rgba(193,125,94,0.15);color:#8B4513;">Claude</span>
+          <span class="chaos-vendor" style="background:rgba(16,16,16,0.08);color:#111;">Vercel</span>
+          <span class="chaos-vendor" style="background:rgba(16,16,16,0.08);color:#111;">Resend</span>
+        </div>
+        <div class="chaos-team">
+          <div class="chaos-team-name">Service Team</div>
+          <span class="chaos-vendor" style="background:rgba(16,16,16,0.08);color:#111;">OpenAI</span>
+          <span class="chaos-vendor" style="background:rgba(62,207,142,0.15);color:#1a7a4a;">Supabase</span>
+          <span class="chaos-vendor" style="background:rgba(16,16,16,0.08);color:#111;">Zendesk</span>
+        </div>
+        <div class="chaos-team">
+          <div class="chaos-team-name">Marketing Team</div>
+          <span class="chaos-vendor" style="background:rgba(24,119,242,0.12);color:#1265CC;">Meta API</span>
+          <span class="chaos-vendor" style="background:rgba(193,125,94,0.15);color:#8B4513;">Claude</span>
+          <span class="chaos-vendor" style="background:rgba(16,16,16,0.08);color:#111;">HubSpot</span>
+        </div>
+        <div class="chaos-team">
+          <div class="chaos-team-name">Analytics Team</div>
+          <span class="chaos-vendor" style="background:rgba(16,16,16,0.08);color:#111;">Gemini</span>
+          <span class="chaos-vendor" style="background:rgba(62,207,142,0.15);color:#1a7a4a;">BigQuery</span>
+          <span class="chaos-vendor" style="background:rgba(103,114,229,0.12);color:#3D45CC;">Stripe</span>
+        </div>
+        <div class="chaos-team">
+          <div class="chaos-team-name">Product Team</div>
+          <span class="chaos-vendor" style="background:rgba(16,16,16,0.08);color:#111;">OpenAI</span>
+          <span class="chaos-vendor" style="background:rgba(16,16,16,0.08);color:#111;">Vercel</span>
+          <span class="chaos-vendor" style="background:rgba(16,16,16,0.08);color:#111;">Firebase</span>
+        </div>
+        <div class="chaos-team">
+          <div class="chaos-team-name">Finance Team</div>
+          <span class="chaos-vendor" style="background:rgba(16,16,16,0.08);color:#111;">GPT-4o</span>
+          <span class="chaos-vendor" style="background:rgba(103,114,229,0.12);color:#3D45CC;">Stripe</span>
+          <span class="chaos-vendor" style="background:rgba(62,207,142,0.15);color:#1a7a4a;">Supabase</span>
+        </div>
+      </div>
+      <p style="font-size:12px;color:var(--amber);margin-top:10px;font-weight:600;">30+ AI vendors · 30 separate invoices · no shared data · no audit trail</p>
+    </div>
+
+    <div class="chaos-arrow">→</div>
+
+    <!-- Right: platform -->
+    <div class="chaos-side">
+      <div class="chaos-label" style="color:var(--green);">With a platform — where this goes</div>
+      <div class="platform-stack">
+        <div class="pstack-row" style="background:rgba(11,118,200,0.08);border:1px solid rgba(11,118,200,0.22);">
+          <img src="icon-data360.png" alt="">
+          <div>
+            <div class="pstack-name" style="color:#0B76C8;">Data Cloud</div>
+            <div class="pstack-desc" style="color:rgba(11,118,200,0.7);">One unified customer profile underneath every team</div>
+          </div>
+        </div>
+        <div class="pstack-row" style="background:rgba(1,179,207,0.08);border:1px solid rgba(1,179,207,0.25);">
+          <img src="icon-agentforce.png" alt="">
+          <div>
+            <div class="pstack-name" style="color:#0191A8;">Agentforce</div>
+            <div class="pstack-desc" style="color:rgba(1,145,168,0.72);">Governed AI orchestration — auditable, versioned, compliant</div>
+          </div>
+        </div>
+        <div class="pstack-row" style="background:rgba(247,154,46,0.08);border:1px solid rgba(247,154,46,0.25);">
+          <img src="icon-marketing.png" alt="">
+          <div>
+            <div class="pstack-name" style="color:#C97500;">Marketing Cloud</div>
+            <div class="pstack-desc" style="color:rgba(160,92,0,0.72);">One compliant comms channel — not 10 email vendors</div>
+          </div>
+        </div>
+        <div class="pstack-row" style="background:rgba(123,94,167,0.08);border:1px solid rgba(123,94,167,0.25);">
+          <img src="icon-platform.png" alt="">
+          <div>
+            <div class="pstack-name" style="color:#6039A0;">Einstein Studio</div>
+            <div class="pstack-desc" style="color:rgba(96,57,160,0.72);">Unified model governance — Claude, GPT-4o, Gemini in one place</div>
+          </div>
+        </div>
+      </div>
+      <p style="font-size:12px;color:var(--green);margin-top:10px;font-weight:600;">One platform · one data layer · one audit trail · one relationship</p>
+    </div>
+
+  </div>
 </div>
 
 
@@ -256,15 +478,14 @@
   <h1 class="t-hero">This is not an argument<br>to <span class="red">stop</span> building.</h1>
   <div class="rule r-green"></div>
   <h1 class="t-h1" style="color:var(--green);">It's an argument for<br>governed building.</h1>
-  <div style="margin-top:36px;display:flex;gap:48px;align-items:flex-start;text-align:left;">
-    <div>
+  <div style="margin-top:36px;display:flex;gap:40px;align-items:flex-start;text-align:left;">
+    <div style="border-radius:14px;padding:20px 24px;background:rgba(194,57,52,0.07);border:1px solid rgba(194,57,52,0.2);max-width:340px;">
       <p class="t-label" style="color:var(--red);margin-bottom:8px;">Wrong answer</p>
-      <p class="t-sm" style="font-size:17px;color:var(--dim);max-width:340px;">Lock it down. Run procurement first. Innovation stalls. Teams work around you. The shadow stack grows.</p>
+      <p style="font-size:16px;color:var(--dim);line-height:1.5;">Lock it down. Run procurement first. Innovation stalls. Teams work around you. The shadow stack grows.</p>
     </div>
-    <div style="width:1px;background:var(--bord);align-self:stretch;"></div>
-    <div>
+    <div style="border-radius:14px;padding:20px 24px;background:rgba(2,122,56,0.07);border:1px solid rgba(2,122,56,0.2);max-width:340px;">
       <p class="t-label" style="color:var(--green);margin-bottom:8px;">Right answer</p>
-      <p class="t-sm" style="font-size:17px;color:var(--dim);max-width:340px;">Build freely. Experiment fast. Deploy through a governed platform — with audit trails, observability, and one data layer.</p>
+      <p style="font-size:16px;color:var(--dim);line-height:1.5;">Build freely. Experiment fast. Deploy through a governed platform — with audit trails, observability, and one data layer.</p>
     </div>
   </div>
 </div>
@@ -272,53 +493,85 @@
 
 <!-- ⑨ THE PLATFORM -->
 <div class="slide">
-  <h1 class="t-h1">Where <span class="accent">Salesforce</span> fits.</h1>
-  <div class="rule r-blue"></div>
-  <div class="platform-list">
-    <div class="pl-item">
-      <div class="pl-name">Data Cloud</div>
-      <div class="pl-desc">One governed customer profile underneath every AI build. GDPR compliance is structural — not bolted on.</div>
+  <h1 class="t-h1" style="margin-bottom:28px;">Where <span class="accent">Salesforce</span> fits.</h1>
+  <div class="plat-grid">
+
+    <div class="plat-card pc-dc">
+      <div class="plat-head">
+        <div class="plat-icon"><img src="icon-data360.png" alt="Data Cloud"></div>
+        <div class="plat-name">Data Cloud</div>
+      </div>
+      <div class="plat-desc">The governed data layer underneath every AI build. One unified customer profile. GDPR compliance is structural — not bolted on.</div>
     </div>
-    <div class="pl-item">
-      <div class="pl-name">Agentforce</div>
-      <div class="pl-desc">Production AI orchestration. Audit trails, guardrails, and version control on every prompt.</div>
+
+    <div class="plat-card pc-af">
+      <div class="plat-head">
+        <div class="plat-icon"><img src="icon-agentforce.png" alt="Agentforce"></div>
+        <div class="plat-name">Agentforce</div>
+      </div>
+      <div class="plat-desc">Production AI orchestration. Audit trails, guardrails, and version control on every prompt. Enterprise-grade observability built in.</div>
     </div>
-    <div class="pl-item">
-      <div class="pl-name">Marketing Cloud</div>
-      <div class="pl-desc">Governed communications at scale. One compliant, measurable system of record — not 10 email vendors.</div>
+
+    <div class="plat-card pc-mc">
+      <div class="plat-head">
+        <div class="plat-icon"><img src="icon-marketing.png" alt="Marketing Cloud"></div>
+        <div class="plat-name">Marketing Cloud</div>
+      </div>
+      <div class="plat-desc">Governed customer communications at scale. Not 10 teams with 10 email vendors — one compliant, measurable system of record.</div>
     </div>
-    <div class="pl-item">
-      <div class="pl-name">Einstein Studio</div>
-      <div class="pl-desc">Manage Claude, GPT-4o, Gemini at enterprise scale. Unified billing and rate governance. One relationship.</div>
+
+    <div class="plat-card pc-es">
+      <div class="plat-head">
+        <div class="plat-icon"><img src="icon-platform.png" alt="Einstein Studio"></div>
+        <div class="plat-name">Einstein Studio</div>
+      </div>
+      <div class="plat-desc">Manage Claude, GPT-4o, and Gemini at enterprise scale. Unified billing, rate governance, cost visibility. One relationship — not thirty.</div>
     </div>
+
   </div>
 </div>
 
 
 <!-- ⑩ NBA DECISIONING -->
-<div class="slide" style="gap:0;">
-  <h1 class="t-h1" style="margin-bottom:20px;">Governed AI in practice.</h1>
-  <p class="t-sub" style="margin-bottom:28px;max-width:700px;">Next Best Action decisioning — running across millions of customers, with every decision auditable.</p>
+<div class="slide" style="gap:0;justify-content:center;">
+  <h1 class="t-h1" style="margin-bottom:8px;">Governed AI in practice.</h1>
+  <p class="t-sub" style="margin-bottom:24px;max-width:700px;">Next Best Action decisioning — running across millions of customers, every decision auditable.</p>
   <div class="flow">
-    <div class="fnode"><div class="fnode-t">Data Cloud</div><div class="fnode-s">Unified signals — behaviour, transactions, engagement. One source of truth.</div></div>
+    <div class="fnode fn-dc">
+      <div class="fnode-icon"><img src="icon-data360.png" alt=""></div>
+      <div class="fnode-t">Data Cloud</div>
+      <div class="fnode-s">Unified signals — behaviour, transactions, engagement. One source of truth.</div>
+    </div>
     <div class="farr">›</div>
-    <div class="fnode hl"><div class="fnode-t">Einstein Studio</div><div class="fnode-s">Model scores churn risk and NBA propensity in real time.</div></div>
+    <div class="fnode fn-es">
+      <div class="fnode-icon"><img src="icon-platform.png" alt=""></div>
+      <div class="fnode-t">Einstein Studio</div>
+      <div class="fnode-s">Model scores churn risk and NBA propensity in real time — per customer.</div>
+    </div>
     <div class="farr">›</div>
-    <div class="fnode hl"><div class="fnode-t">Agentforce · ARIA</div><div class="fnode-s">Reads signals. Detects conflicts. Picks one empathetic action.</div></div>
+    <div class="fnode fn-af">
+      <div class="fnode-icon"><img src="icon-agentforce.png" alt=""></div>
+      <div class="fnode-t">Agentforce · ARIA</div>
+      <div class="fnode-s">Reads signals. Detects conflicts. Picks one empathetic action. Writes rationale.</div>
+    </div>
     <div class="farr">›</div>
-    <div class="fnode"><div class="fnode-t">CRM Output</div><div class="fnode-s">Campaign created. Message sent. Outcome retrains the model.</div></div>
+    <div class="fnode fn-crm">
+      <div class="fnode-icon"><img src="sf-logo-cloud.png" alt=""></div>
+      <div class="fnode-t">CRM Output</div>
+      <div class="fnode-s">Campaign created. Message sent. Outcome retrains the model.</div>
+    </div>
   </div>
   <div class="modes">
-    <div class="mode">
-      <div class="mode-t" style="color:var(--blue);">Mode 1 — Flow (~85%)</div>
+    <div class="mode m-flow">
+      <div class="mode-t">Mode 1 — Flow (~85%)</div>
       <div class="mode-s">High-confidence signals. Salesforce Flow executes automatically. Fast, deterministic, scalable.</div>
     </div>
-    <div class="mode">
-      <div class="mode-t" style="color:#006D8F;">Mode 2 — Agentforce (~15%)</div>
+    <div class="mode m-af">
+      <div class="mode-t">Mode 2 — Agentforce (~15%)</div>
       <div class="mode-s">Conflicting signals. Agentforce reasons through the tension, selects the safest action, writes a rationale — audit-ready.</div>
     </div>
-    <div class="mode">
-      <div class="mode-t" style="color:var(--green);">Adaptive Loop</div>
+    <div class="mode m-loop">
+      <div class="mode-t">Adaptive Loop</div>
       <div class="mode-s">Every customer response retrains the model. The system improves with every interaction.</div>
     </div>
   </div>
@@ -328,18 +581,18 @@
 <!-- ⑪ LAUREN BELLAMY -->
 <div class="slide split">
   <h1 class="t-h1" style="margin-bottom:8px;">The same customer.<br><span class="accent">Two completely different outcomes.</span></h1>
-  <p class="t-sm" style="margin-bottom:24px;font-size:16px;">Lauren Bellamy — missed payment + $50,000 deposit. Same signals. Two systems. Two very different results.</p>
+  <p class="t-sm" style="font-size:16px;margin-bottom:22px;">Lauren Bellamy — missed payment + $50,000 deposit. Same signals. Two systems.</p>
   <div class="contrast">
     <div class="c-block bad">
       <div class="c-label" style="color:var(--red);">Legacy rules engine</div>
-      <div class="c-msg">"Your account has an overdue payment. Pay now to avoid a $35 late fee and protect your credit score." — SMS, 11:04 AM</div>
+      <div class="c-msg">"Your account has an overdue payment. Pay now to avoid a $35 late fee." — SMS, 11:04 AM</div>
       <div class="c-msg">"Congratulations on your recent deposit! Our Wealth Management team would love to put your $50,000 to work." — Email, 11:05 AM</div>
       <div class="c-outcome" style="color:var(--red);">Two triggers. Neither knows the other fired. Opposite messages within 60 seconds.</div>
     </div>
     <div class="c-block good">
       <div class="c-label" style="color:var(--green);">Agentforce · ARIA</div>
-      <div class="c-msg">"Hi Lauren — we noticed a missed payment and want to make sure everything is okay. Here are some options that might help." — One message, right channel.</div>
-      <div class="c-msg" style="background:rgba(2,122,56,0.07);border:1px solid rgba(2,122,56,0.18);">Wealth Management outreach suppressed. Conflict documented. Rationale logged. Model trained on the outcome.</div>
+      <div class="c-msg">"Hi Lauren — we noticed a missed payment and want to make sure everything is okay. Here are some options that might help."</div>
+      <div class="c-msg" style="background:rgba(2,122,56,0.08);border:1px solid rgba(2,122,56,0.18);">Wealth Management outreach suppressed. Conflict documented. Rationale logged. Model trained on the outcome.</div>
       <div class="c-outcome" style="color:var(--green);">One action. Customer protected. Relationship preserved.</div>
     </div>
   </div>
@@ -351,7 +604,7 @@
   <h1 class="t-hero" style="max-width:900px;">Don't discover your<br><span class="accent">shadow AI stack</span><br>in a compliance audit.</h1>
   <div class="rule r-blue"></div>
   <p class="t-sub" style="max-width:600px;">The builders in your business are already moving.<br>The conversation worth having is about what sits underneath what they deploy.</p>
-  <div style="margin-top:48px;display:flex;gap:40px;justify-content:center;align-items:center;">
+  <div style="margin-top:44px;display:flex;gap:36px;justify-content:center;align-items:center;">
     <div style="text-align:center;"><p class="t-label" style="margin-bottom:5px;">Framework</p><p style="font-size:15px;font-weight:600;color:var(--dim);">Perception · Context · Permission</p></div>
     <div style="width:1px;height:36px;background:var(--bord);"></div>
     <div style="text-align:center;"><p class="t-label" style="margin-bottom:5px;">Presenter</p><p style="font-size:15px;font-weight:600;color:var(--dim);">Stuart Dunlop · Salesforce</p></div>
