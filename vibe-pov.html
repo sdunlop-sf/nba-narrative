@@ -1,0 +1,927 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Vibe Code All You Want — Salesforce</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:     #CFE9FE;
+      --bg2:    #EAF5FE;
+      --blue:   #022AC0;
+      --blue2:  rgba(2,42,192,0.08);
+      --blue3:  rgba(2,42,192,0.14);
+      --royal:  #022AC0;
+      --teal:   #04E1CB;
+      --teal2:  rgba(4,225,203,0.12);
+      --text:   #002775;
+      --muted:  rgba(0,39,117,0.55);
+      --dim:    rgba(0,39,117,0.75);
+      --border: rgba(0,39,117,0.12);
+      --border2:rgba(0,39,117,0.20);
+      --card:   rgba(0,39,117,0.05);
+      --card2:  rgba(0,39,117,0.09);
+      --red:    #C23934;
+      --red2:   rgba(194,57,52,0.08);
+      --amber:  #B86B00;
+      --amber2: rgba(184,107,0,0.08);
+      --green:  #028A43;
+      --green2: rgba(2,138,67,0.08);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html, body {
+      width: 100%; height: 100%; overflow: hidden;
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--bg); color: var(--text);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── BACKGROUND ── */
+    .bg-base {
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background:
+        radial-gradient(ellipse 80% 60% at 100% 0%, rgba(2,42,192,0.06) 0%, transparent 55%),
+        radial-gradient(ellipse 60% 50% at 0% 100%, rgba(4,225,203,0.05) 0%, transparent 50%),
+        linear-gradient(165deg, #CFE9FE 0%, #D8EFFE 60%, #C8E5FD 100%);
+    }
+
+    /* ── NAV BAR ── */
+    .nav-bar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      height: 52px; background: rgba(207,233,254,0.88); backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border2);
+      display: flex; align-items: center; padding: 0 28px; gap: 20px;
+    }
+    .nav-brand { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+    .nav-sf-logo { height: 22px; }
+    .nav-divider { width: 1px; height: 18px; background: var(--border2); }
+    .nav-title { font-size: 12px; font-weight: 600; color: var(--muted); }
+    .nav-dots { display: flex; gap: 5px; margin: 0 auto; flex-wrap: wrap; justify-content: center; }
+    .dot {
+      width: 24px; height: 4px; border-radius: 2px;
+      background: var(--border2); border: none; cursor: pointer;
+      padding: 0; transition: all 0.2s;
+    }
+    .dot.active { background: var(--blue); width: 32px; }
+    .dot:hover:not(.active) { background: rgba(2,42,192,0.3); }
+    .nav-controls { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+    .nav-btn {
+      width: 30px; height: 30px; border-radius: 7px; border: 1px solid var(--border2);
+      background: var(--card); color: var(--blue); font-size: 16px; font-weight: 700;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      transition: all 0.15s; line-height: 1;
+    }
+    .nav-btn:hover:not(:disabled) { background: var(--blue2); border-color: var(--blue); }
+    .nav-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+    .nav-counter { font-size: 12px; font-weight: 600; color: var(--muted); min-width: 36px; text-align: center; }
+
+    /* ── SLIDE DECK ── */
+    #deck { position: fixed; inset: 0; top: 52px; z-index: 10; }
+
+    .slide {
+      position: absolute; inset: 0;
+      display: none; flex-direction: column;
+      padding: 44px 72px 40px;
+      opacity: 0; transform: translateY(12px);
+      transition: opacity 0.38s ease, transform 0.38s ease;
+    }
+    .slide.active { display: flex; }
+    .slide.active.in { opacity: 1; transform: translateY(0); }
+    .slide.exit { opacity: 0; transform: translateY(-8px); transition: opacity 0.24s ease, transform 0.24s ease; }
+
+    /* ── TOPBAR ── */
+    .topbar {
+      display: flex; align-items: center; justify-content: space-between;
+      padding-bottom: 28px; border-bottom: 1px solid var(--border);
+      margin-bottom: 36px; flex-shrink: 0;
+    }
+    .phase-chip {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.14em;
+      text-transform: uppercase; padding: 4px 13px; border-radius: 999px;
+    }
+    .chip-p { background: var(--blue2); color: var(--blue); border: 1px solid var(--border2); }
+    .chip-c { background: var(--amber2); color: var(--amber); border: 1px solid rgba(184,107,0,0.25); }
+    .chip-x { background: var(--green2); color: var(--green); border: 1px solid rgba(2,138,67,0.25); }
+    .chip-a { background: var(--teal2); color: #006D8F; border: 1px solid rgba(4,225,203,0.3); }
+    .slide-num { font-size: 11px; font-weight: 500; color: var(--muted); }
+
+    /* ── BODY ── */
+    .body { display: flex; flex-direction: column; justify-content: center; flex: 1; min-height: 0; }
+
+    /* ── FOOTER ── */
+    .foot {
+      display: flex; align-items: center; justify-content: space-between;
+      padding-top: 20px; border-top: 1px solid var(--border); margin-top: 20px; flex-shrink: 0;
+    }
+    .foot-label { font-size: 11px; font-weight: 600; color: var(--muted); }
+    .pcp-dots { display: flex; gap: 5px; }
+    .pcp-dot { width: 26px; height: 3px; border-radius: 2px; background: var(--border2); }
+    .dot-p { background: var(--blue); }
+    .dot-c { background: var(--amber); }
+    .dot-x { background: var(--green); }
+
+    /* ── TYPOGRAPHY ── */
+    .t-hero  { font-size: clamp(36px,4.2vw,56px); font-weight: 900; letter-spacing: -0.04em; line-height: 1.0; color: var(--text); }
+    .t-h1    { font-size: clamp(28px,3.2vw,44px); font-weight: 800; letter-spacing: -0.03em; line-height: 1.1; color: var(--text); }
+    .t-h2    { font-size: clamp(20px,2.2vw,30px); font-weight: 700; letter-spacing: -0.02em; line-height: 1.2; color: var(--text); }
+    .t-body  { font-size: clamp(15px,1.4vw,19px); line-height: 1.65; color: var(--dim); font-weight: 400; }
+    .t-sm    { font-size: clamp(12px,1.1vw,15px); line-height: 1.6; color: var(--muted); font-weight: 400; }
+    .t-label { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; }
+    .accent  { color: var(--blue); }
+    .t-teal  { color: #006D8F; }
+
+    /* ── RULE ── */
+    .rule { width: 44px; height: 3px; border-radius: 2px; margin: 18px 0 24px; background: var(--blue); }
+    .rule-teal  { background: var(--teal); }
+    .rule-amber { background: var(--amber); }
+    .rule-green { background: var(--green); }
+    .rule-red   { background: var(--red); }
+
+    /* ── GRIDS ── */
+    .g2  { display: grid; grid-template-columns: 1fr 1fr;        gap: 14px; }
+    .g3  { display: grid; grid-template-columns: 1fr 1fr 1fr;    gap: 12px; }
+    .g4  { display: grid; grid-template-columns: repeat(4,1fr);  gap: 10px; }
+    .col2 { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; }
+
+    /* ── CARDS ── */
+    .card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: 12px; padding: 18px 22px;
+    }
+    .card-blue  { background: var(--blue2); border-color: var(--border2); }
+    .card-amber { background: var(--amber2); border-color: rgba(184,107,0,0.2); }
+    .card-red   { background: var(--red2); border-color: rgba(194,57,52,0.2); }
+    .card-green { background: var(--green2); border-color: rgba(2,138,67,0.2); }
+    .card-teal  { background: var(--teal2); border-color: rgba(4,225,203,0.3); }
+
+    .card-title {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.1em;
+      text-transform: uppercase; margin-bottom: 8px;
+    }
+    .ct-blue  { color: var(--blue); }
+    .ct-amber { color: var(--amber); }
+    .ct-red   { color: var(--red); }
+    .ct-green { color: var(--green); }
+    .ct-teal  { color: #006D8F; }
+
+    /* ── PULL QUOTE ── */
+    .pq {
+      border-left: 4px solid var(--blue);
+      padding: 4px 0 4px 24px;
+      font-size: clamp(17px,1.7vw,24px);
+      font-weight: 600; line-height: 1.4; color: var(--text);
+    }
+    .pq-green { border-color: var(--green); }
+    .pq-amber { border-color: var(--amber); }
+    .pq-teal  { border-color: var(--teal); }
+
+    /* ── BIG NUM ── */
+    .bignum {
+      font-size: clamp(64px,8vw,96px); font-weight: 900;
+      letter-spacing: -0.05em; line-height: 1;
+      color: var(--blue);
+    }
+
+    /* ── CHECK LISTS ── */
+    .cklist { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+    .cklist li { display: flex; align-items: flex-start; gap: 10px; font-size: clamp(13px,1.2vw,16px); color: var(--dim); line-height: 1.5; }
+    .ck { width: 20px; height: 20px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 800; margin-top: 2px; }
+    .ck-y { background: var(--green2); color: var(--green); border: 1px solid rgba(2,138,67,0.3); }
+    .ck-n { background: var(--red2); color: var(--red); border: 1px solid rgba(194,57,52,0.3); }
+    .ck-w { background: var(--amber2); color: var(--amber); border: 1px solid rgba(184,107,0,0.3); }
+
+    /* ── ALERT ── */
+    .alert {
+      background: var(--amber2); border: 1px solid rgba(184,107,0,0.25);
+      border-radius: 10px; padding: 14px 18px; display: flex; gap: 12px; align-items: flex-start;
+    }
+    .alert p { font-size: clamp(13px,1.1vw,15px); color: var(--amber); line-height: 1.55; margin: 0; }
+
+    /* ── SF CARD ── */
+    .sfcard {
+      background: var(--blue2); border: 1px solid var(--border2);
+      border-radius: 12px; padding: 18px 22px;
+    }
+    .sfcard-lbl { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--blue); margin-bottom: 8px; }
+    .sfcard p { font-size: clamp(12px,1.1vw,14px); color: var(--dim); line-height: 1.55; margin: 0; }
+
+    /* ── ARCH DIAGRAM ── */
+    .arch { display: flex; flex-direction: column; gap: 6px; width: 100%; }
+    .arch-row { display: grid; gap: 8px; }
+    .arch-row-1 { grid-template-columns: 1fr; }
+    .arch-row-3 { grid-template-columns: 1fr 1fr 1fr; }
+    .arch-row-4 { grid-template-columns: 1fr 1fr 1fr 1fr; }
+    .arch-lbl { font-size: 9px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); padding-left: 2px; margin-top: 2px; }
+    .arch-arr { display: flex; justify-content: center; align-items: center; height: 14px; }
+    .arch-arr::before { content: ''; display: block; width: 1px; height: 12px; background: linear-gradient(180deg, var(--blue), rgba(2,42,192,0.2)); }
+    .anode { border-radius: 8px; padding: 10px 14px; border: 1px solid; display: flex; flex-direction: column; gap: 2px; }
+    .an-title { font-size: 12px; font-weight: 700; }
+    .an-sub   { font-size: 10px; color: var(--muted); line-height: 1.4; }
+    .an-dev   { background: var(--blue2); border-color: var(--border2); }
+    .an-dev   .an-title { color: var(--blue); }
+    .an-app   { background: var(--teal2); border-color: rgba(4,225,203,0.3); }
+    .an-app   .an-title { color: #006D8F; }
+    .an-data  { background: var(--green2); border-color: rgba(2,138,67,0.2); }
+    .an-data  .an-title { color: var(--green); }
+    .an-ai    { background: var(--blue2); border-color: var(--border2); }
+    .an-ai    .an-title { color: var(--blue); }
+    .an-int   { background: var(--amber2); border-color: rgba(184,107,0,0.2); }
+    .an-int   .an-title { color: var(--amber); }
+    .user-chips { display: flex; gap: 8px; justify-content: flex-start; }
+    .uchip { padding: 5px 16px; border-radius: 999px; font-size: 12px; font-weight: 600; background: var(--blue2); border: 1px solid var(--border2); color: var(--blue); }
+    .rchips { display: flex; gap: 5px; flex-wrap: wrap; }
+    .rchip { font-size: 10px; padding: 3px 10px; border-radius: 999px; background: var(--teal2); border: 1px solid rgba(4,225,203,0.3); color: #006D8F; font-weight: 600; }
+
+    /* ── NBA FLOW ── */
+    .nba-flow { display: flex; align-items: stretch; gap: 0; }
+    .nba-node {
+      flex: 1; border-radius: 12px; padding: 16px 18px;
+      background: var(--card); border: 1px solid var(--border);
+      display: flex; flex-direction: column; gap: 6px;
+    }
+    .nba-node-title { font-size: 12px; font-weight: 700; color: var(--blue); text-transform: uppercase; letter-spacing: 0.08em; }
+    .nba-node-sub   { font-size: 11px; color: var(--muted); line-height: 1.5; }
+    .nba-arrow { display: flex; align-items: center; padding: 0 6px; color: var(--blue); font-size: 16px; font-weight: 700; flex-shrink: 0; }
+    .nba-node.highlight { background: var(--blue2); border-color: var(--border2); }
+    .nba-node.highlight .nba-node-title { color: var(--blue); }
+
+    /* ── KEY HINT ── */
+    .key-hint {
+      position: fixed; bottom: 14px; left: 50%; transform: translateX(-50%);
+      font-size: 11px; color: var(--muted); z-index: 200;
+      display: flex; gap: 8px; align-items: center;
+    }
+    .key { background: var(--card); border: 1px solid var(--border2); border-radius: 4px; padding: 2px 7px; font-size: 10px; font-weight: 600; color: var(--blue); }
+
+    /* ── COVER SPECIAL ── */
+    .cover-center { display: flex; flex-direction: column; align-items: center; justify-content: center; flex: 1; text-align: center; }
+  </style>
+</head>
+<body>
+<div class="bg-base"></div>
+
+<!-- NAV -->
+<nav class="nav-bar">
+  <div class="nav-brand">
+    <img class="nav-sf-logo" src="sf-logo-cloud.png" alt="Salesforce">
+    <div class="nav-divider"></div>
+    <span class="nav-title">Vibe Code All You Want</span>
+  </div>
+  <div class="nav-dots" id="progress"></div>
+  <div class="nav-controls">
+    <button class="nav-btn" id="btn-prev" aria-label="Previous slide">‹</button>
+    <span class="nav-counter" id="counter">1 / 15</span>
+    <button class="nav-btn" id="btn-next" aria-label="Next slide">›</button>
+  </div>
+</nav>
+
+<!-- SLIDES -->
+<div id="deck">
+
+
+<!-- 1 · COVER -->
+<div class="slide">
+  <div class="cover-center">
+    <div class="phase-chip chip-p" style="margin-bottom:28px;">Stuart Dunlop · Salesforce · Data, AI &amp; Marketing Technology</div>
+    <h1 class="t-hero">Vibe code all you want.</h1>
+    <h1 class="t-hero accent" style="margin-top:6px;">Here's how to get it into your business.</h1>
+    <p class="t-body" style="margin-top:28px;max-width:540px;color:var(--muted);">A POV on shadow AI, enterprise governance,<br>and where the platform story actually wins.</p>
+    <div class="pcp-dots" style="margin-top:52px;">
+      <div class="pcp-dot dot-p"></div>
+      <div class="pcp-dot"></div>
+      <div class="pcp-dot"></div>
+    </div>
+    <p class="t-label" style="color:var(--muted);margin-top:12px;letter-spacing:0.18em;">PERCEPTION · CONTEXT · PERMISSION</p>
+  </div>
+</div>
+
+
+<!-- 2 · BARRIER GONE -->
+<div class="slide">
+  <div class="topbar">
+    <div class="phase-chip chip-p">Perception</div>
+    <span class="slide-num">02 / 15</span>
+  </div>
+  <div class="body">
+    <h1 class="t-h1">The barrier to building<br><span class="accent">has essentially disappeared.</span></h1>
+    <div class="rule"></div>
+    <div class="col2">
+      <div>
+        <p class="t-body">An AI coding assistant and a credit card is now a development team.</p>
+        <p class="t-body" style="margin-top:14px;">What used to take months and a budget now takes evenings and weekends.</p>
+        <p class="t-sm" style="margin-top:14px;">This isn't a future trend. It's what's happening right now — in your org, on your teams, without your visibility.</p>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        <div class="card">
+          <div class="card-title" style="color:var(--muted);">Then</div>
+          <p class="t-sm">4-person team &nbsp;·&nbsp; 3–4 months &nbsp;·&nbsp; £80k+ &nbsp;·&nbsp; dedicated DevOps &nbsp;·&nbsp; sprint planning</p>
+        </div>
+        <div class="card card-blue">
+          <div class="card-title ct-blue">Now</div>
+          <p class="t-sm">One person &nbsp;·&nbsp; AI coding assistant &nbsp;·&nbsp; six weeks of evenings &nbsp;·&nbsp; ~$200/month in tooling</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="foot">
+    <span class="foot-label">Better Game Golf — A Real Vibe-Coded Build</span>
+    <div class="pcp-dots"><div class="pcp-dot dot-p"></div><div class="pcp-dot"></div><div class="pcp-dot"></div></div>
+  </div>
+</div>
+
+
+<!-- 3 · THE PROOF -->
+<div class="slide">
+  <div class="topbar">
+    <div class="phase-chip chip-p">Perception · The Proof</div>
+    <span class="slide-num">03 / 15</span>
+  </div>
+  <div class="body">
+    <h1 class="t-h1">What one person built<br>in 6 weeks.</h1>
+    <div class="rule"></div>
+    <p class="t-body" style="margin-bottom:20px;"><strong>Better Game Golf</strong> — AI-powered golf mental game platform. Built solo, nights and weekends, holding a full-time job at Salesforce.</p>
+    <div class="g3">
+      <div class="card card-blue">
+        <div class="card-title ct-blue">AI Content Engine</div>
+        <p class="t-sm">SEO articles generated from raw author notes. Structured, published, and live in minutes.</p>
+      </div>
+      <div class="card card-blue">
+        <div class="card-title ct-blue">AI Caddie</div>
+        <p class="t-sm">24/7 conversational coaching trained on proprietary book content. Available to subscribers instantly.</p>
+      </div>
+      <div class="card card-blue">
+        <div class="card-title ct-blue">Social Publishing</div>
+        <p class="t-sm">Article triggers Instagram Reel + Facebook post. AI writes the caption. Fires on publish.</p>
+      </div>
+      <div class="card card-blue">
+        <div class="card-title ct-blue">Lead Nurture</div>
+        <p class="t-sm">PDF lead magnet, automated email sequences, trial-to-paid conversion — fully automated.</p>
+      </div>
+      <div class="card card-blue">
+        <div class="card-title ct-blue">Subscriptions</div>
+        <p class="t-sm">Full Stripe integration. Monthly + annual plans. Webhook-driven access control.</p>
+      </div>
+      <div class="card card-blue">
+        <div class="card-title ct-blue">AI Audio Generation</div>
+        <p class="t-sm">Voiceover on every article. Zero manual production. ElevenLabs under the hood.</p>
+      </div>
+    </div>
+  </div>
+  <div class="foot">
+    <span class="foot-label">Better Game Golf — A Real Vibe-Coded Build</span>
+    <div class="pcp-dots"><div class="pcp-dot dot-p"></div><div class="pcp-dot"></div><div class="pcp-dot"></div></div>
+  </div>
+</div>
+
+
+<!-- 4 · ARCHITECTURE -->
+<div class="slide" style="padding-top:36px;padding-bottom:28px;">
+  <div class="topbar" style="padding-bottom:18px;margin-bottom:18px;">
+    <div class="phase-chip chip-a">Architecture · Better Game Golf</div>
+    <span class="slide-num">04 / 15</span>
+  </div>
+  <div class="body" style="justify-content:flex-start;">
+    <p class="t-sm" style="margin-bottom:14px;">Every box below is a live production dependency — its own API keys, rate limits, pricing, data policy, and failure mode.</p>
+    <div class="arch">
+      <div class="arch-lbl">Users</div>
+      <div class="user-chips"><div class="uchip">Subscribers</div><div class="uchip">Leads</div><div class="uchip">Admin</div></div>
+      <div class="arch-arr"></div>
+      <div class="arch-lbl">Application &amp; Infrastructure</div>
+      <div class="arch-row arch-row-1">
+        <div class="anode an-app" style="flex-direction:row;align-items:center;justify-content:space-between;padding:12px 18px;">
+          <div>
+            <div class="an-title">Next.js 16 · React 19 · TypeScript → Vercel</div>
+            <div class="an-sub">Serverless functions · Edge caching · Cron jobs · CI/CD from GitHub</div>
+          </div>
+          <div class="rchips" style="flex-shrink:0;">
+            <div class="rchip">/learn</div><div class="rchip">/dashboard</div><div class="rchip">/admin</div><div class="rchip">/api/*</div>
+          </div>
+        </div>
+      </div>
+      <div class="arch-arr"></div>
+      <div class="arch-lbl">Core Services</div>
+      <div class="arch-row arch-row-4">
+        <div class="anode an-data"><div class="an-title">Supabase</div><div class="an-sub">Postgres · Auth · Storage · Row-Level Security</div></div>
+        <div class="anode an-ai"><div class="an-title">Anthropic Claude</div><div class="an-sub">Articles · Caddie · Teasers · Captions</div></div>
+        <div class="anode an-ai"><div class="an-title">OpenAI GPT-4o</div><div class="an-sub">Social copy · Scoring · Fallback model</div></div>
+        <div class="anode an-int"><div class="an-title">ElevenLabs</div><div class="an-sub">AI audio · Article voiceover</div></div>
+      </div>
+      <div class="arch-arr"></div>
+      <div class="arch-lbl">Integrations</div>
+      <div class="arch-row arch-row-3">
+        <div class="anode an-int"><div class="an-title">Stripe</div><div class="an-sub">Payments · Subscriptions · Webhooks · PCI scope</div></div>
+        <div class="anode an-int"><div class="an-title">Resend</div><div class="an-sub">Email delivery · Lead nurture · Trial sequences</div></div>
+        <div class="anode an-int"><div class="an-title">Meta Graph API</div><div class="an-sub">Instagram Reels · Facebook · Auto-publish</div></div>
+      </div>
+      <div class="arch-arr"></div>
+      <div class="arch-lbl">Build Layer</div>
+      <div class="arch-row arch-row-3">
+        <div class="anode an-dev"><div class="an-title">Claude Code</div><div class="an-sub">AI pair programmer · Built the entire stack</div></div>
+        <div class="anode an-dev"><div class="an-title">GitHub</div><div class="an-sub">Version control · Triggers Vercel on push</div></div>
+        <div class="anode an-dev"><div class="an-title">Vercel CI/CD</div><div class="an-sub">Auto-deploy · Edge config · Preview URLs</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="foot" style="margin-top:10px;">
+    <span class="foot-label">10+ Live Production Systems · One Developer · Six Weeks</span>
+    <div class="pcp-dots"><div class="pcp-dot dot-p"></div><div class="pcp-dot"></div><div class="pcp-dot"></div></div>
+  </div>
+</div>
+
+
+<!-- 5 · THE PIVOT -->
+<div class="slide">
+  <div class="body" style="max-width:800px;">
+    <div class="phase-chip chip-p" style="margin-bottom:28px;display:inline-flex;">Perception · The Pivot</div>
+    <div class="bignum">10+</div>
+    <p class="t-body" style="margin:10px 0 28px;">external systems. One person. Six weeks. In production right now.</p>
+    <div class="pq">
+      "Someone on your team has already built<br>something like this. You just don't know<br>about it yet."
+    </div>
+    <p class="t-body" style="margin-top:24px;max-width:600px;">Shadow AI is not a future risk. The question is not <em>whether</em> your teams are building with AI — it's whether you have any visibility into what they've deployed.</p>
+  </div>
+  <div class="foot" style="margin-top:auto;">
+    <span class="foot-label">Better Game Golf — A Real Vibe-Coded Build</span>
+    <div class="pcp-dots"><div class="pcp-dot dot-p"></div><div class="pcp-dot"></div><div class="pcp-dot"></div></div>
+  </div>
+</div>
+
+
+<!-- 6 · ENTERPRISE IT -->
+<div class="slide">
+  <div class="topbar">
+    <div class="phase-chip chip-c">Context · Enterprise IT</div>
+    <span class="slide-num">06 / 15</span>
+  </div>
+  <div class="body">
+    <h1 class="t-h1">Now try getting that stack<br>through enterprise IT.</h1>
+    <div class="rule rule-amber"></div>
+    <div class="col2">
+      <div>
+        <p class="t-label" style="color:var(--amber);margin-bottom:14px;">What every vendor needs:</p>
+        <ul class="cklist">
+          <li><div class="ck ck-w">!</div>Security questionnaire — 40–80 questions</li>
+          <li><div class="ck ck-w">!</div>Data Processing Agreement (DPA)</li>
+          <li><div class="ck ck-w">!</div>Infosec penetration test evidence</li>
+          <li><div class="ck ck-w">!</div>Legal review of ToS and data retention</li>
+          <li><div class="ck ck-w">!</div>Procurement and vendor onboarding</li>
+          <li><div class="ck ck-w">!</div>Risk committee sign-off</li>
+        </ul>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        <div class="card card-amber">
+          <div class="card-title ct-amber">6–12 months per vendor</div>
+          <p class="t-sm">Typical enterprise approval timeline — multiplied by every vendor in the stack.</p>
+        </div>
+        <div class="card card-amber">
+          <div class="card-title ct-amber">10 vendors × 9 months</div>
+          <p class="t-sm">7.5 years of approval cycles. For one side project. The technology will have moved on entirely.</p>
+        </div>
+        <div class="alert">
+          <span style="font-size:18px;flex-shrink:0;">⚠️</span>
+          <p>Meanwhile the team has already shipped v2 — using three new vendors you haven't heard of.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="foot">
+    <span class="foot-label">Better Game Golf — A Real Vibe-Coded Build</span>
+    <div class="pcp-dots"><div class="pcp-dot"></div><div class="pcp-dot dot-c"></div><div class="pcp-dot"></div></div>
+  </div>
+</div>
+
+
+<!-- 7 · COMPLIANCE -->
+<div class="slide">
+  <div class="topbar">
+    <div class="phase-chip chip-c">Context · Compliance</div>
+    <span class="slide-num">07 / 15</span>
+  </div>
+  <div class="body">
+    <h1 class="t-h1">The compliance questions<br>nobody can answer.</h1>
+    <div class="rule rule-amber"></div>
+    <div class="g2" style="margin-bottom:14px;">
+      <div class="card card-amber">
+        <div class="card-title ct-amber">Data Residency</div>
+        <p class="t-sm">Which model touched which customer data? Which country did inference happen in? Can you prove EU data stayed in the EU?</p>
+      </div>
+      <div class="card card-amber">
+        <div class="card-title ct-amber">Model Versioning</div>
+        <p class="t-sm">GPT-4o silently changes behaviour. Your outputs shift. Your compliance audit trail has no record it happened.</p>
+      </div>
+      <div class="card card-amber">
+        <div class="card-title ct-amber">Prompt Audit Trail</div>
+        <p class="t-sm">When did the prompt change? Who approved it? Can you reproduce a decision output from six months ago exactly?</p>
+      </div>
+      <div class="card card-amber">
+        <div class="card-title ct-amber">Right to Erasure</div>
+        <p class="t-sm">Customer invokes GDPR Article 17. Can you prove their data wasn't used to train a third-party model — in writing?</p>
+      </div>
+    </div>
+    <div class="alert">
+      <span style="font-size:18px;flex-shrink:0;">⚠️</span>
+      <p>In a vibe-coded stack, the honest answer to all four is: <strong>"We don't know."</strong> That is not an answer your legal team will accept.</p>
+    </div>
+  </div>
+  <div class="foot">
+    <span class="foot-label">Better Game Golf — A Real Vibe-Coded Build</span>
+    <div class="pcp-dots"><div class="pcp-dot"></div><div class="pcp-dot dot-c"></div><div class="pcp-dot"></div></div>
+  </div>
+</div>
+
+
+<!-- 8 · MONITORING -->
+<div class="slide">
+  <div class="topbar">
+    <div class="phase-chip chip-c">Context · IT Ops &amp; Monitoring</div>
+    <span class="slide-num">08 / 15</span>
+  </div>
+  <div class="body">
+    <h1 class="t-h1">The monitoring reality<br>of a vibe-coded stack.</h1>
+    <div class="rule rule-amber"></div>
+    <div class="col2">
+      <div>
+        <p class="t-label" style="color:var(--red);margin-bottom:14px;">What doesn't exist:</p>
+        <ul class="cklist">
+          <li><div class="ck ck-n">✗</div>SLAs on AI model availability</li>
+          <li><div class="ck ck-n">✗</div>Alerting on silent failures</li>
+          <li><div class="ck ck-n">✗</div>On-call rotation or escalation path</li>
+          <li><div class="ck ck-n">✗</div>Cost anomaly detection</li>
+          <li><div class="ck ck-n">✗</div>Rollback on bad model outputs</li>
+          <li><div class="ck ck-n">✗</div>Unified logging across vendors</li>
+        </ul>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:12px;">
+        <div class="card card-red">
+          <div class="card-title ct-red">Silent failure at 2am</div>
+          <p class="t-sm">The social publish job fails. Nothing fires. You find out Monday when someone asks why there was no post all weekend.</p>
+        </div>
+        <div class="card card-red">
+          <div class="card-title ct-red">Runaway spend</div>
+          <p class="t-sm">A prompt loop hits an edge case. 50,000 tokens in 4 minutes. You see it on the invoice — not on a dashboard.</p>
+        </div>
+        <div class="card card-red">
+          <div class="card-title ct-red">The builder moves on</div>
+          <p class="t-sm">The person who built it changes teams. Nobody else understands the system. It runs until it breaks.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="foot">
+    <span class="foot-label">Better Game Golf — A Real Vibe-Coded Build</span>
+    <div class="pcp-dots"><div class="pcp-dot"></div><div class="pcp-dot dot-c"></div><div class="pcp-dot"></div></div>
+  </div>
+</div>
+
+
+<!-- 9 · AT SCALE -->
+<div class="slide">
+  <div class="topbar">
+    <div class="phase-chip chip-c">Context · At Scale</div>
+    <span class="slide-num">09 / 15</span>
+  </div>
+  <div class="body">
+    <h1 class="t-h1">What happens when<br>10 teams do this?</h1>
+    <div class="rule rule-amber"></div>
+    <p class="t-body" style="margin-bottom:20px;">Content team builds a content engine. Service team builds a support bot. Marketing builds a lead scorer. Each one — a separate AI account, data store, and billing relationship.</p>
+    <div class="g3" style="margin-bottom:18px;">
+      <div class="card card-amber">
+        <div class="card-title ct-amber">No shared data layer</div>
+        <p class="t-sm">Each build has its own customer view. No single source of truth. Contradictory outputs in the same interaction.</p>
+      </div>
+      <div class="card card-amber">
+        <div class="card-title ct-amber">No cost visibility</div>
+        <p class="t-sm">10 teams × 3 AI vendors = 30 separate invoices. Finance can't see the total. Nobody can govern it.</p>
+      </div>
+      <div class="card card-amber">
+        <div class="card-title ct-amber">No institutional memory</div>
+        <p class="t-sm">Each build lives in the head of the person who made it. When they leave, so does the context.</p>
+      </div>
+    </div>
+    <div class="pq pq-amber">
+      "This is shadow IT — but faster, cheaper, and more capable than anything shadow IT has produced before."
+    </div>
+  </div>
+  <div class="foot">
+    <span class="foot-label">Better Game Golf — A Real Vibe-Coded Build</span>
+    <div class="pcp-dots"><div class="pcp-dot"></div><div class="pcp-dot dot-c"></div><div class="pcp-dot"></div></div>
+  </div>
+</div>
+
+
+<!-- 10 · PERMISSION REFRAME -->
+<div class="slide">
+  <div class="body" style="max-width:860px;">
+    <div class="phase-chip chip-x" style="margin-bottom:28px;display:inline-flex;">Permission</div>
+    <h1 class="t-hero" style="max-width:780px;">This is not an argument<br>to <span style="color:var(--red);">stop</span> building.</h1>
+    <div class="rule rule-green" style="margin-top:24px;"></div>
+    <div class="pq pq-green" style="margin-bottom:24px;">
+      "The question isn't whether to vibe code.<br>It's whether you can govern what you deploy."
+    </div>
+    <div class="g2">
+      <div class="card card-red">
+        <div class="card-title ct-red">Wrong answer</div>
+        <p class="t-sm">Lock it down. Run a procurement process before anyone builds anything. Innovation stalls. Teams work around you. The shadow stack grows.</p>
+      </div>
+      <div class="card card-green">
+        <div class="card-title ct-green">Right answer</div>
+        <p class="t-sm">Build freely. Experiment fast. Deploy through a governed platform — with audit trails, observability, and a single data layer underneath everything.</p>
+      </div>
+    </div>
+  </div>
+  <div class="foot" style="margin-top:auto;">
+    <span class="foot-label">Better Game Golf — A Real Vibe-Coded Build</span>
+    <div class="pcp-dots"><div class="pcp-dot"></div><div class="pcp-dot"></div><div class="pcp-dot dot-x"></div></div>
+  </div>
+</div>
+
+
+<!-- 11 · SALESFORCE FITS -->
+<div class="slide">
+  <div class="topbar">
+    <div class="phase-chip chip-x">Permission · The Platform</div>
+    <span class="slide-num">11 / 15</span>
+  </div>
+  <div class="body">
+    <h1 class="t-h1">Where <span class="accent">Salesforce</span> fits<br>in a vibe-coded world.</h1>
+    <div class="rule rule-green"></div>
+    <div class="g2">
+      <div class="sfcard">
+        <div class="sfcard-lbl">Data Cloud</div>
+        <p>The governed data layer underneath every AI build. One unified customer profile. Every model sees the same truth. GDPR compliance is structural — not bolted on.</p>
+      </div>
+      <div class="sfcard">
+        <div class="sfcard-lbl">Agentforce</div>
+        <p>Production AI orchestration with audit trails, guardrails, and version control on every prompt. Move from console.log monitoring to enterprise-grade observability.</p>
+      </div>
+      <div class="sfcard">
+        <div class="sfcard-lbl">Marketing Cloud + Personalisation</div>
+        <p>Governed customer communications at scale. Not 10 teams with 10 email vendors — one compliant, measurable system of record.</p>
+      </div>
+      <div class="sfcard">
+        <div class="sfcard-lbl">Model Management &amp; Consumption</div>
+        <p>Manage Claude, GPT-4o, and Gemini at enterprise scale through Einstein Studio. Unified billing, rate governance, cost visibility. One relationship — not thirty.</p>
+      </div>
+    </div>
+  </div>
+  <div class="foot">
+    <span class="foot-label">Better Game Golf — A Real Vibe-Coded Build</span>
+    <div class="pcp-dots"><div class="pcp-dot"></div><div class="pcp-dot"></div><div class="pcp-dot dot-x"></div></div>
+  </div>
+</div>
+
+
+<!-- 12 · NBA DECISIONING — WHAT IT LOOKS LIKE IN PRACTICE -->
+<div class="slide" style="padding-top:36px;padding-bottom:28px;">
+  <div class="topbar" style="padding-bottom:18px;margin-bottom:18px;">
+    <div class="phase-chip chip-x">Permission · Governed AI in Practice</div>
+    <span class="slide-num">12 / 15</span>
+  </div>
+  <div class="body" style="justify-content:flex-start;">
+    <h1 class="t-h1" style="margin-bottom:8px;">What governed AI actually<br>looks like at scale.</h1>
+    <p class="t-sm" style="margin-bottom:18px;">Next Best Action decisioning — the enterprise equivalent of BGG's lead nurture AI, but governed, audited, and running across millions of customers.</p>
+
+    <!-- NBA Flow -->
+    <div class="nba-flow" style="margin-bottom:16px;">
+      <div class="nba-node">
+        <div class="nba-node-title">Data Cloud</div>
+        <div class="nba-node-sub">Unified customer profile — behavioural signals, transactions, engagement history. Single source of truth.</div>
+      </div>
+      <div class="nba-arrow">›</div>
+      <div class="nba-node highlight">
+        <div class="nba-node-title">Einstein Studio</div>
+        <div class="nba-node-sub">Binary classification model. Scores churn risk, financial distress, NBA propensity — per customer, in real time.</div>
+      </div>
+      <div class="nba-arrow">›</div>
+      <div class="nba-node highlight">
+        <div class="nba-node-title">Agentforce · ARIA</div>
+        <div class="nba-node-sub">Reads signals. Detects conflicts. Applies compliance rules. Adjudicates and selects a single empathetic action.</div>
+      </div>
+      <div class="nba-arrow">›</div>
+      <div class="nba-node">
+        <div class="nba-node-title">CRM Output</div>
+        <div class="nba-node-sub">Campaign record created. Message drafted. Sent via the right channel. Outcome flows back to retrain the model.</div>
+      </div>
+    </div>
+
+    <div class="g3">
+      <div class="card card-blue">
+        <div class="card-title ct-blue">Mode 1 — Flow (~85%)</div>
+        <p class="t-sm">High-confidence signals. Einstein Studio score clears the threshold. Salesforce Flow executes automatically. Fast, deterministic, scalable.</p>
+      </div>
+      <div class="card card-teal">
+        <div class="card-title ct-teal">Mode 2 — Agentforce (~15%)</div>
+        <p class="t-sm">Conflicting signals. Edge cases. Agentforce reasons through the tension, picks the safest action, and writes a rationale — audit-ready.</p>
+      </div>
+      <div class="card card-green">
+        <div class="card-title ct-green">Adaptive Loop</div>
+        <p class="t-sm">Every customer response flows back to Data Cloud → Einstein Studio. The model improves with every accepted or rejected NBA.</p>
+      </div>
+    </div>
+  </div>
+  <div class="foot" style="margin-top:10px;">
+    <span class="foot-label">Meridian Bank · ARIA Adjudication Engine · Live Demo</span>
+    <div class="pcp-dots"><div class="pcp-dot"></div><div class="pcp-dot"></div><div class="pcp-dot dot-x"></div></div>
+  </div>
+</div>
+
+
+<!-- 13 · RULES ENGINE VS AI ADJUDICATION -->
+<div class="slide">
+  <div class="topbar">
+    <div class="phase-chip chip-x">Permission · The Difference It Makes</div>
+    <span class="slide-num">13 / 15</span>
+  </div>
+  <div class="body">
+    <h1 class="t-h1">The same customer.<br>Two completely different outcomes.</h1>
+    <div class="rule rule-green"></div>
+    <p class="t-sm" style="margin-bottom:18px;">Lauren Bellamy — missed payment + large deposit. Same signals. Two systems. Two responses.</p>
+    <div class="col2" style="gap:24px;margin-bottom:16px;">
+      <div>
+        <p class="t-label" style="color:var(--red);margin-bottom:12px;">Legacy rules engine — vibe-coded equivalent</p>
+        <div class="card card-red" style="margin-bottom:10px;">
+          <div class="card-title ct-red">📱 SMS — 11:04 AM</div>
+          <p class="t-sm">"MERIDIAN BANK: Your account has an overdue payment. Pay now to avoid a $35 late fee and protect your credit score."</p>
+        </div>
+        <div class="card card-red">
+          <div class="card-title ct-red">📧 Email — 11:05 AM</div>
+          <p class="t-sm">"Congratulations on your recent deposit! Our Wealth Management team would love to put your $50,000 to work. Book a call today."</p>
+        </div>
+        <p class="t-sm" style="margin-top:10px;color:var(--red);">Two automated triggers. Neither knows the other fired. Customer receives opposite messages within 60 seconds.</p>
+      </div>
+      <div>
+        <p class="t-label" style="color:var(--green);margin-bottom:12px;">Agentforce · ARIA — governed decisioning</p>
+        <div class="card card-green" style="margin-bottom:10px;">
+          <div class="card-title ct-green">Rule 1 — Empathy Protocol engaged</div>
+          <p class="t-sm">Distress signal detected. Wealth Management outreach suppressed. One single empathetic message drafted and sent via the appropriate channel.</p>
+        </div>
+        <div class="card card-green">
+          <div class="card-title ct-green">Audit trail written</div>
+          <p class="t-sm">Rationale logged. Signal conflict documented. Salesforce record created. Model trained on the outcome. Full compliance chain — end to end.</p>
+        </div>
+        <p class="t-sm" style="margin-top:10px;color:var(--green);">One action. One message. Customer protected. Bank relationship preserved.</p>
+      </div>
+    </div>
+  </div>
+  <div class="foot">
+    <span class="foot-label">Meridian Bank · ARIA Adjudication Engine · Live Demo</span>
+    <div class="pcp-dots"><div class="pcp-dot"></div><div class="pcp-dot"></div><div class="pcp-dot dot-x"></div></div>
+  </div>
+</div>
+
+
+<!-- 14 · TWO FUTURES -->
+<div class="slide">
+  <div class="topbar">
+    <div class="phase-chip chip-x">Permission · Two Futures</div>
+    <span class="slide-num">14 / 15</span>
+  </div>
+  <div class="body">
+    <h1 class="t-h1">The next 18 months.<br>Two versions.</h1>
+    <div class="rule rule-green"></div>
+    <div class="col2" style="gap:32px;">
+      <div>
+        <p class="t-label" style="color:var(--red);margin-bottom:14px;">Without a platform</p>
+        <ul class="cklist">
+          <li><div class="ck ck-n">✗</div>30 AI vendors across 10 teams, no consolidation</li>
+          <li><div class="ck ck-n">✗</div>First compliance audit surfaces 6 DPA gaps</li>
+          <li><div class="ck ck-n">✗</div>Model changes behaviour silently — nobody notices</li>
+          <li><div class="ck ck-n">✗</div>Customer data question hits legal. No answer.</li>
+          <li><div class="ck ck-n">✗</div>Contradictory messages sent to the same customer</li>
+          <li><div class="ck ck-n">✗</div>Leadership panics. Innovation freezes.</li>
+        </ul>
+      </div>
+      <div>
+        <p class="t-label" style="color:var(--green);margin-bottom:14px;">With a platform</p>
+        <ul class="cklist">
+          <li><div class="ck ck-y">✓</div>Teams build freely, deploy through one governed layer</li>
+          <li><div class="ck ck-y">✓</div>Every AI decision has a full audit trail and rationale</li>
+          <li><div class="ck ck-y">✓</div>Model versions logged, prompt changes reviewed</li>
+          <li><div class="ck ck-y">✓</div>Data residency provable on demand — in writing</li>
+          <li><div class="ck ck-y">✓</div>One message per customer. Always the right one.</li>
+          <li><div class="ck ck-y">✓</div>Innovation at speed. Compliance by design.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="foot">
+    <span class="foot-label">Better Game Golf — A Real Vibe-Coded Build</span>
+    <div class="pcp-dots"><div class="pcp-dot"></div><div class="pcp-dot"></div><div class="pcp-dot dot-x"></div></div>
+  </div>
+</div>
+
+
+<!-- 15 · CLOSE -->
+<div class="slide">
+  <div class="cover-center">
+    <div class="phase-chip chip-x" style="margin-bottom:28px;">Permission · The Ask</div>
+    <h1 class="t-hero" style="max-width:900px;">Don't discover your<br><span class="accent">shadow AI stack</span><br>in a compliance audit.</h1>
+    <p class="t-body" style="margin-top:24px;max-width:540px;color:var(--muted);">The builders in your business are already moving. The conversation worth having is about what sits underneath what they deploy.</p>
+    <div style="margin-top:44px;padding-top:28px;border-top:1px solid var(--border);width:700px;display:flex;gap:36px;justify-content:center;max-width:100%;">
+      <div style="text-align:center;">
+        <div class="t-label" style="color:var(--muted);margin-bottom:6px;">Built on</div>
+        <div style="font-size:14px;color:var(--dim);font-weight:600;">Better Game Golf</div>
+      </div>
+      <div style="width:1px;background:var(--border);"></div>
+      <div style="text-align:center;">
+        <div class="t-label" style="color:var(--muted);margin-bottom:6px;">Framework</div>
+        <div style="font-size:14px;color:var(--dim);font-weight:600;">Perception · Context · Permission</div>
+      </div>
+      <div style="width:1px;background:var(--border);"></div>
+      <div style="text-align:center;">
+        <div class="t-label" style="color:var(--muted);margin-bottom:6px;">Presenter</div>
+        <div style="font-size:14px;color:var(--dim);font-weight:600;">Stuart Dunlop · Salesforce</div>
+      </div>
+    </div>
+    <div class="pcp-dots" style="margin-top:24px;">
+      <div class="pcp-dot dot-p"></div>
+      <div class="pcp-dot dot-c"></div>
+      <div class="pcp-dot dot-x"></div>
+    </div>
+  </div>
+</div>
+
+
+</div><!-- /deck -->
+
+<div class="key-hint">
+  <span class="key">←→</span> navigate &nbsp;<span class="key">Space</span> advance
+</div>
+
+<script src="gate.js" data-page="Vibe POV"></script>
+
+<script>
+  var slides  = document.querySelectorAll('#deck > .slide');
+  var total   = slides.length;
+  var current = 0;
+  var busy    = false;
+  var prog    = document.getElementById('progress');
+
+  for (var i = 0; i < total; i++) {
+    var dot = document.createElement('button');
+    dot.className = 'dot' + (i === 0 ? ' active' : '');
+    dot.setAttribute('aria-label', 'Slide ' + (i + 1));
+    dot.addEventListener('click', (function(idx) { return function() { goTo(idx); }; })(i));
+    prog.appendChild(dot);
+  }
+
+  function goTo(idx) {
+    if (busy || idx === current || idx < 0 || idx >= total) return;
+    busy = true;
+    slides[current].classList.remove('in');
+    slides[current].classList.add('exit');
+    var prev = current;
+    current = idx;
+    setTimeout(function() {
+      slides[prev].classList.remove('active', 'exit');
+      slides[current].classList.add('active');
+      requestAnimationFrame(function() {
+        requestAnimationFrame(function() {
+          slides[current].classList.add('in');
+        });
+      });
+      updateUI();
+      setTimeout(function() { busy = false; }, 450);
+    }, 260);
+  }
+
+  function navigate(dir) { goTo(current + dir); }
+
+  function updateUI() {
+    document.getElementById('counter').textContent = (current + 1) + ' / ' + total;
+    document.getElementById('btn-prev').disabled = current === 0;
+    document.getElementById('btn-next').disabled = current === total - 1;
+    document.querySelectorAll('.dot').forEach(function(d, i) {
+      d.classList.toggle('active', i === current);
+    });
+  }
+
+  document.getElementById('btn-prev').addEventListener('click', function() { navigate(-1); });
+  document.getElementById('btn-next').addEventListener('click', function() { navigate(1); });
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') { e.preventDefault(); navigate(1); }
+    if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')                    { e.preventDefault(); navigate(-1); }
+  });
+
+  var tx = null;
+  document.addEventListener('touchstart', function(e) { tx = e.touches[0].clientX; });
+  document.addEventListener('touchend', function(e) {
+    if (tx === null) return;
+    if (Math.abs(e.changedTouches[0].clientX - tx) > 50) navigate(e.changedTouches[0].clientX - tx < 0 ? 1 : -1);
+    tx = null;
+  });
+
+  slides[0].classList.add('active');
+  requestAnimationFrame(function() {
+    requestAnimationFrame(function() { slides[0].classList.add('in'); });
+  });
+  updateUI();
+</script>
+</body>
+</html>
