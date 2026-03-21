@@ -249,6 +249,109 @@
 
     /* ── SPLIT LAYOUT ── */
     .split-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; width: 100%; }
+
+    /* ══════════════════════════════════════════════
+       MOBILE
+    ══════════════════════════════════════════════ */
+    @media (max-width: 768px) {
+
+      /* Slide canvas */
+      .slide {
+        padding: 56px 20px 64px;
+        justify-content: flex-start;
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+      }
+      .slide.left, .slide.split { align-items: flex-start; }
+
+      /* Type scale */
+      .t-super { font-size: 38px; }
+      .t-hero  { font-size: 32px; letter-spacing: -0.03em; }
+      .t-h1    { font-size: 26px; letter-spacing: -0.02em; }
+      .t-sub   { font-size: 16px; }
+      .t-sm    { font-size: 13px; }
+      .bignum  { font-size: 100px; }
+      .pq      { font-size: 20px; }
+      .pq-border { padding-left: 16px; }
+      .rule    { margin: 16px 0; }
+
+      /* SF mark */
+      .sf-mark { display: none; }
+
+      /* Nav */
+      .nav-dots { display: none; }
+      .nav-counter { min-width: 36px; }
+
+      /* Before/After */
+      .before-after {
+        grid-template-columns: 1fr;
+        gap: 0;
+        margin-top: 20px;
+      }
+      .ba-arrow { padding: 8px 0; font-size: 24px; text-align: center; }
+      .ba-stat  { font-size: 22px; }
+
+      /* Vendor strip */
+      .vendor-strip { gap: 7px; margin-top: 20px; }
+      .vbadge { font-size: 11px; padding: 5px 12px; }
+
+      /* Chaos diagram */
+      .chaos-wrap { grid-template-columns: 1fr; }
+      .chaos-arrow { display: none; }
+      .chaos-teams { grid-template-columns: 1fr; }
+
+      /* Platform grid */
+      .plat-grid { grid-template-columns: 1fr; gap: 12px; }
+      .plat-card { padding: 18px 20px; }
+      .plat-name { font-size: 17px; }
+      .plat-desc { font-size: 14px; }
+      .plat-icon { width: 36px; height: 36px; }
+      .plat-icon img { width: 24px; height: 24px; }
+
+      /* NBA flow — stack vertically */
+      .flow { flex-direction: column; max-width: 100%; }
+      .farr { padding: 4px 0; font-size: 18px; transform: rotate(90deg); align-self: center; }
+      .fnode { padding: 14px 16px; }
+      .fnode-icon { width: 26px; height: 26px; margin-bottom: 2px; }
+      .fnode-icon img { width: 18px; height: 18px; }
+      .fnode-t { font-size: 11px; }
+      .fnode-s { font-size: 12px; }
+
+      /* Modes */
+      .modes { grid-template-columns: 1fr; gap: 10px; margin-top: 14px; }
+      .mode { padding: 12px 14px; }
+
+      /* Contrast */
+      .contrast { grid-template-columns: 1fr; gap: 14px; }
+      .c-block { padding: 18px 20px; }
+      .c-msg { font-size: 13px; padding: 9px 12px; }
+
+      /* Reframe boxes */
+      .slide > div[style*="display:flex;gap:40px"] {
+        flex-direction: column;
+        gap: 12px !important;
+      }
+
+      /* Bridge slide grids (4-col → 2-col) */
+      .slide [style*="grid-template-columns:repeat(4,1fr)"] {
+        display: grid !important;
+        grid-template-columns: 1fr 1fr !important;
+        gap: 10px !important;
+      }
+
+      /* Close slide footer */
+      .slide > div[style*="display:flex;gap:36px"] {
+        flex-direction: column;
+        gap: 12px !important;
+        align-items: flex-start !important;
+      }
+
+      /* Pull quote border */
+      .pq-border { max-width: 100% !important; }
+
+      /* Key hint */
+      .key-hint { display: none; }
+    }
   </style>
 </head>
 <body>
