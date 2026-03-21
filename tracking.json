@@ -6526,5 +6526,17 @@
     "location": "Sydney, New South Wales, Australia",
     "ua": "Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.3 Mobile/15E148 Safari/604.1",
     "returning": "yes"
+  },
+  {
+    "timestamp": "Sat, 21 Mar 2026 05:28:51 GMT",
+    "name": "Stu",
+    "company": "SF",
+    "position": "SE",
+    "page": "Vibe POV Keynote",
+    "url": "https://sdunlop-sf.github.io/nba-narrative/vibe-pov-keynote.html",
+    "ip": "2405:6e00:429:ee4a:1426:a8ef:48bf:c73d",
+    "location": "Sydney, New South Wales, Australia",
+    "ua": "Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.3 Mobile/15E148 Safari/604.1",
+    "returning": "yes"
   }
 ]
