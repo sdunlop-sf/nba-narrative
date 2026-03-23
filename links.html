@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AI Decisioning — Asset Hub</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:      #f1f4fa;
+      --surface: #ffffff;
+      --border:  #e2e8f0;
+      --text:    #0f172a;
+      --muted:   #64748b;
+      --blue:    #022AC0;
+      --blue-lt: rgba(2,42,192,0.07);
+      --blue-bd: rgba(2,42,192,0.18);
+      --teal:    #007A72;
+      --teal-lt: rgba(0,122,114,0.07);
+      --teal-bd: rgba(0,122,114,0.2);
+      --orange:  #c05621;
+      --orange-lt: rgba(192,86,33,0.07);
+    }
+
+    body {
+      background: var(--bg);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      color: var(--text);
+      padding: 48px 24px 80px;
+      font-size: 14px;
+    }
+
+    .page { max-width: 960px; margin: 0 auto; }
+
+    /* Header */
+    .header { margin-bottom: 48px; }
+    .header-eyebrow {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.16em;
+      text-transform: uppercase; color: var(--blue); margin-bottom: 10px;
+    }
+    .header-title {
+      font-size: clamp(28px, 4vw, 44px); font-weight: 800;
+      letter-spacing: -0.02em; line-height: 1.1; margin-bottom: 10px;
+    }
+    .header-sub { font-size: 15px; color: var(--muted); max-width: 560px; line-height: 1.6; }
+
+    /* Category */
+    .category { margin-bottom: 44px; }
+    .category-header {
+      display: flex; align-items: center; gap: 12px;
+      margin-bottom: 16px; padding-bottom: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+    .category-icon {
+      width: 32px; height: 32px; border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px; flex-shrink: 0;
+    }
+    .category-title { font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.12em; }
+    .category-desc  { font-size: 13px; color: var(--muted); margin-left: auto; }
+
+    /* Grid */
+    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    .grid-2 { grid-template-columns: repeat(2, 1fr); }
+
+    /* Card */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 18px 20px;
+      text-decoration: none;
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      transition: box-shadow 0.15s, border-color 0.15s, transform 0.15s;
+    }
+
+    .card:hover {
+      box-shadow: 0 4px 16px rgba(0,39,117,0.1);
+      border-color: var(--blue-bd);
+      transform: translateY(-1px);
+    }
+
+    .card-tag {
+      font-size: 10px; font-weight: 800; letter-spacing: 0.14em;
+      text-transform: uppercase; margin-bottom: 2px;
+    }
+
+    .card-title { font-size: 14px; font-weight: 700; line-height: 1.3; }
+    .card-desc  { font-size: 12px; color: var(--muted); line-height: 1.5; flex: 1; }
+
+    .card-footer {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-top: 8px; padding-top: 10px; border-top: 1px solid var(--border);
+    }
+
+    .card-lock {
+      font-size: 11px; font-weight: 600; color: var(--muted);
+      display: flex; align-items: center; gap: 4px;
+    }
+
+    .card-arrow { font-size: 16px; color: var(--blue); }
+
+    /* Tag colours */
+    .tag-blue   { color: var(--blue); }
+    .tag-teal   { color: var(--teal); }
+    .tag-orange { color: var(--orange); }
+    .tag-muted  { color: var(--muted); }
+
+    /* Border accents */
+    .accent-blue   { border-top: 3px solid var(--blue); }
+    .accent-teal   { border-top: 3px solid var(--teal); }
+    .accent-orange { border-top: 3px solid var(--orange); }
+    .accent-muted  { border-top: 3px solid #94a3b8; }
+
+    /* Password badge */
+    .pw-badge {
+      display: inline-flex; align-items: center; gap: 4px;
+      font-size: 10px; font-weight: 700;
+      padding: 2px 8px; border-radius: 99px;
+      background: rgba(2,42,192,0.06);
+      color: var(--blue);
+      border: 1px solid var(--blue-bd);
+    }
+
+    @media (max-width: 680px) {
+      .grid, .grid-2 { grid-template-columns: 1fr; }
+      .category-desc { display: none; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <div class="header-eyebrow">Salesforce · AI Decisioning</div>
+    <h1 class="header-title">Asset Hub</h1>
+    <p class="header-sub">All POVs, demos, enablement tools and customer materials in one place. Categorised by audience and use.</p>
+  </div>
+
+
+  <!-- ══ INTERNAL ENABLEMENT ══ -->
+  <div class="category">
+    <div class="category-header">
+      <div class="category-icon" style="background: var(--blue-lt); border: 1px solid var(--blue-bd);">🎯</div>
+      <span class="category-title" style="color: var(--blue);">Internal Enablement</span>
+      <span class="category-desc">For AEs and SEs — prep, discovery, and talk tracks</span>
+    </div>
+    <div class="grid">
+      <a href="repdeck.html" class="card accent-blue">
+        <span class="card-tag tag-blue">Rep Deck</span>
+        <span class="card-title">AI Decisioning Rep Deck</span>
+        <span class="card-desc">8-slide presentation covering the market moment, governance answer, use cases, maturity model and business case. Walk through with reps in enablement sessions.</span>
+        <div class="card-footer">
+          <span class="pw-badge">🔒 SFNBA2026!</span>
+          <span class="card-arrow">→</span>
+        </div>
+      </a>
+      <a href="fieldguide.html" class="card accent-blue">
+        <span class="card-tag tag-blue">Field Guide</span>
+        <span class="card-title">AI Decisioning Field Guide</span>
+        <span class="card-desc">Discovery signals, qualifying questions, maturity model, A/B/C escalation guide, and BYO LLM talk track. Rep's ongoing cheat sheet — not for customer sharing.</span>
+        <div class="card-footer">
+          <span class="pw-badge">🔒 SFNBA2026!</span>
+          <span class="card-arrow">→</span>
+        </div>
+      </a>
+      <a href="slides-light-internal.html" class="card accent-blue">
+        <span class="card-tag tag-blue">Internal Slides</span>
+        <span class="card-title">Agentic Decisioning — Internal</span>
+        <span class="card-desc">Full internal narrative deck covering the agentic decisioning thesis, platform architecture and go-to-market story. Basis for customer-facing versions.</span>
+        <div class="card-footer">
+          <span class="pw-badge">🔒 Password protected</span>
+          <span class="card-arrow">→</span>
+        </div>
+      </a>
+    </div>
+  </div>
+
+
+  <!-- ══ STRATEGIC POVs ══ -->
+  <div class="category">
+    <div class="category-header">
+      <div class="category-icon" style="background: rgba(99,102,241,0.08); border: 1px solid rgba(99,102,241,0.2);">💡</div>
+      <span class="category-title" style="color: #4338ca;">Strategic POVs</span>
+      <span class="category-desc">Thought leadership and exec-level narrative</span>
+    </div>
+    <div class="grid grid-2">
+      <a href="vibe-pov-keynote.html" class="card" style="border-top: 3px solid #4338ca;">
+        <span class="card-tag" style="color: #4338ca;">Keynote</span>
+        <span class="card-title">Vibe Code All You Want — Keynote</span>
+        <span class="card-desc">The "why now, why Salesforce" narrative around vibe coding and AI in the enterprise. Use to close strategic conversations or open exec roundtables. Best after the Meridian demo.</span>
+        <div class="card-footer">
+          <span class="pw-badge">🔒 Password protected</span>
+          <span class="card-arrow">→</span>
+        </div>
+      </a>
+      <a href="vibe-pov.html" class="card" style="border-top: 3px solid #4338ca;">
+        <span class="card-tag" style="color: #4338ca;">POV</span>
+        <span class="card-title">Vibe Code All You Want — POV</span>
+        <span class="card-desc">Long-form written POV on AI decisioning and vibe coding. Good leave-behind for technical buyers or innovation leads who want to read rather than watch.</span>
+        <div class="card-footer">
+          <span class="pw-badge">🔒 Password protected</span>
+          <span class="card-arrow">→</span>
+        </div>
+      </a>
+    </div>
+  </div>
+
+
+  <!-- ══ CUSTOMER WORKSHOPS ══ -->
+  <div class="category">
+    <div class="category-header">
+      <div class="category-icon" style="background: var(--teal-lt); border: 1px solid var(--teal-bd);">🛠️</div>
+      <span class="category-title" style="color: var(--teal);">Customer Workshops</span>
+      <span class="category-desc">Interactive working sessions — run with customer teams</span>
+    </div>
+    <div class="grid grid-2">
+      <a href="xero-workshop.html" class="card accent-teal">
+        <span class="card-tag tag-teal">Workshop · Xero</span>
+        <span class="card-title">Agentic Decisioning — Xero Workshop</span>
+        <span class="card-desc">Full-day workshop format for the Xero team. Covers the art of the possible, 14 use cases across AB Partner Loyalty and Small Business, and a structured use case selection exercise.</span>
+        <div class="card-footer">
+          <span class="pw-badge">🔒 Xero2026!</span>
+          <span class="card-arrow">→</span>
+        </div>
+      </a>
+      <a href="slides-light.html" class="card accent-teal">
+        <span class="card-tag tag-teal">Slides · Customer</span>
+        <span class="card-title">Agentic Decisioning — Customer Deck</span>
+        <span class="card-desc">Customer-facing version of the agentic decisioning narrative. Use for discovery presentations and first meetings with digital or marketing leadership.</span>
+        <div class="card-footer">
+          <span class="pw-badge">🔒 Password protected</span>
+          <span class="card-arrow">→</span>
+        </div>
+      </a>
+    </div>
+  </div>
+
+
+  <!-- ══ CUSTOMER POVs ══ -->
+  <div class="category">
+    <div class="category-header">
+      <div class="category-icon" style="background: var(--orange-lt); border: 1px solid rgba(192,86,33,0.2);">📄</div>
+      <span class="category-title" style="color: var(--orange);">Customer POVs</span>
+      <span class="category-desc">Account-specific narratives and opportunity overviews</span>
+    </div>
+    <div class="grid">
+      <a href="xero.html" class="card accent-orange">
+        <span class="card-tag tag-orange">POV · Xero</span>
+        <span class="card-title">Next Best Action · Xero</span>
+        <span class="card-desc">Xero-specific NBA narrative covering loyalty, personalisation and agentic decisioning for the AB Partner and Small Business segments.</span>
+        <div class="card-footer">
+          <span class="pw-badge">🔒 Password protected</span>
+          <span class="card-arrow">→</span>
+        </div>
+      </a>
+      <a href="bunnings.html" class="card accent-orange">
+        <span class="card-tag tag-orange">POV · Bunnings</span>
+        <span class="card-title">Intelligent Decisioning · Bunnings</span>
+        <span class="card-desc">NBA and intelligent decisioning narrative for Bunnings. Covers personalisation, loyalty and trade customer experience opportunities.</span>
+        <div class="card-footer">
+          <span class="pw-badge">🔒 Password protected</span>
+          <span class="card-arrow">→</span>
+        </div>
+      </a>
+      <a href="westpac.html" class="card accent-orange">
+        <span class="card-tag tag-orange">POV · Westpac</span>
+        <span class="card-title">Next Best Action · Westpac</span>
+        <span class="card-desc">NBA and agentic decisioning POV for Westpac. Financial services lens — customer retention, cross-sell and personalised banking experiences.</span>
+        <div class="card-footer">
+          <span class="pw-badge">🔒 Password protected</span>
+          <span class="card-arrow">→</span>
+        </div>
+      </a>
+      <a href="iag.html" class="card accent-orange">
+        <span class="card-tag tag-orange">POV · IAG</span>
+        <span class="card-title">The Agentic Insurer · IAG</span>
+        <span class="card-desc">Agentic decisioning POV for IAG. Insurance-specific narrative around claims, underwriting and customer experience transformation.</span>
+        <div class="card-footer">
+          <span class="pw-badge">🔒 Password protected</span>
+          <span class="card-arrow">→</span>
+        </div>
+      </a>
+      <a href="asahi.html" class="card accent-orange">
+        <span class="card-tag tag-orange">POV · Asahi</span>
+        <span class="card-title">Smart Selling · Asahi Beverages</span>
+        <span class="card-desc">NBA and intelligent selling narrative for Asahi Beverages. Trade and retail channel lens — next best action for field sales and distributor management.</span>
+        <div class="card-footer">
+          <span class="pw-badge">🔒 Password protected</span>
+          <span class="card-arrow">→</span>
+        </div>
+      </a>
+      <a href="directconnect-slides.html" class="card accent-orange">
+        <span class="card-tag tag-orange">Slides · Direct Connect</span>
+        <span class="card-title">Conversion Intelligence · Direct Connect</span>
+        <span class="card-desc">Decisioning and conversion intelligence narrative for Direct Connect. Telco lens — NBA for retention, upgrade and customer value management.</span>
+        <div class="card-footer">
+          <span class="pw-badge">🔒 Password protected</span>
+          <span class="card-arrow">→</span>
+        </div>
+      </a>
+    </div>
+  </div>
+
+
+  <!-- ══ DEMOS & TOOLS ══ -->
+  <div class="category">
+    <div class="category-header">
+      <div class="category-icon" style="background: rgba(14,165,233,0.08); border: 1px solid rgba(14,165,233,0.2);">⚡</div>
+      <span class="category-title" style="color: #0369a1;">Demos &amp; Tools</span>
+      <span class="category-desc">Live demos, reels and supporting assets</span>
+    </div>
+    <div class="grid">
+      <a href="http://localhost:8081" class="card" style="border-top: 3px solid #0369a1;">
+        <span class="card-tag" style="color: #0369a1;">Live Demo · Local</span>
+        <span class="card-title">Meridian ARIA Demo</span>
+        <span class="card-desc">Full agentic NBA decisioning demo. Three scenarios: Lauren Bellamy (empathy), Marcus Reid (consolidation), Diana Torres (flight risk). Requires local server on port 8081.</span>
+        <div class="card-footer">
+          <span class="card-lock">⚠️ localhost only</span>
+          <span class="card-arrow">→</span>
+        </div>
+      </a>
+      <a href="nba-reel.html" class="card" style="border-top: 3px solid #0369a1;">
+        <span class="card-tag" style="color: #0369a1;">Reel</span>
+        <span class="card-title">Next Best Action · 60s</span>
+        <span class="card-desc">60-second NBA concept reel. Good for opening a meeting or setting context quickly before a deeper conversation.</span>
+        <div class="card-footer">
+          <span class="card-lock"></span>
+          <span class="card-arrow">→</span>
+        </div>
+      </a>
+      <a href="dashboard.html" class="card" style="border-top: 3px solid #0369a1;">
+        <span class="card-tag" style="color: #0369a1;">Dashboard</span>
+        <span class="card-title">Engagement Dashboard</span>
+        <span class="card-desc">Tracks who has accessed which pages across the NBA Narrative asset suite. Use to follow up after sharing links with customers or prospects.</span>
+        <div class="card-footer">
+          <span class="pw-badge">🔒 Password protected</span>
+          <span class="card-arrow">→</span>
+        </div>
+      </a>
+    </div>
+  </div>
+
+
+  <!-- ══ SUPPLEMENTARY ══ -->
+  <div class="category">
+    <div class="category-header">
+      <div class="category-icon" style="background: rgba(148,163,184,0.12); border: 1px solid rgba(148,163,184,0.25);">📎</div>
+      <span class="category-title" style="color: var(--muted);">Supplementary</span>
+      <span class="category-desc">Supporting assets and additional narratives</span>
+    </div>
+    <div class="grid">
+      <a href="ae-vision.html" class="card accent-muted">
+        <span class="card-tag tag-muted">Vision</span>
+        <span class="card-title">Armed to Win — Salesforce</span>
+        <span class="card-desc">AE-focused vision narrative. The broader Salesforce platform story for account teams building long-term account plans.</span>
+        <div class="card-footer">
+          <span class="card-lock"></span>
+          <span class="card-arrow">→</span>
+        </div>
+      </a>
+      <a href="bunnings-opportunity.html" class="card accent-muted">
+        <span class="card-tag tag-muted">Opportunity · Bunnings</span>
+        <span class="card-title">Bunnings · Phase 2 Opportunity</span>
+        <span class="card-desc">Phase 2 opportunity overview for the Bunnings account. Internal planning asset for the account team.</span>
+        <div class="card-footer">
+          <span class="card-lock"></span>
+          <span class="card-arrow">→</span>
+        </div>
+      </a>
+      <a href="master-flow.html" class="card accent-muted">
+        <span class="card-tag tag-muted">Architecture</span>
+        <span class="card-title">The Master Flow · NBA Decisioning Engine</span>
+        <span class="card-desc">Technical architecture overview of the NBA decisioning engine. Use with technical buyers or solution architects who want to understand the platform flow.</span>
+        <div class="card-footer">
+          <span class="card-lock"></span>
+          <span class="card-arrow">→</span>
+        </div>
+      </a>
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
