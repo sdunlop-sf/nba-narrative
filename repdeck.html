@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AI Decisioning · Rep Deck</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:      #f0f4fa;
+      --blue:    #022AC0;
+      --blue2:   #0176D3;
+      --teal:    #007A72;
+      --text:    #0f172a;
+      --muted:   #64748b;
+      --border:  #e2e8f0;
+      --surface: #ffffff;
+    }
+
+    html, body {
+      height: 100%;
+      overflow: hidden;
+      background: var(--bg);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      color: var(--text);
+    }
+
+    /* ── Deck ── */
+    .deck { width: 100%; height: 100vh; position: relative; }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 64px 100px 88px;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(20px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+
+    .slide.active {
+      opacity: 1;
+      pointer-events: all;
+      transform: translateY(0);
+    }
+
+    .slide.exit {
+      opacity: 0;
+      transform: translateY(-16px);
+      transition: opacity 0.24s ease, transform 0.24s ease;
+    }
+
+    /* ── Nav ── */
+    .nav-bar {
+      position: fixed;
+      bottom: 0; left: 0; right: 0;
+      height: 52px;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(16px);
+      border-top: 1px solid rgba(0,39,117,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 36px;
+      z-index: 100;
+    }
+
+    .nav-brand {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(2,42,192,0.5);
+    }
+
+    .nav-controls { display: flex; align-items: center; gap: 12px; }
+
+    .nav-btn {
+      width: 28px; height: 28px; border-radius: 50%;
+      border: 1px solid rgba(2,42,192,0.25);
+      background: none; cursor: pointer;
+      font-size: 16px; color: var(--blue);
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.15s;
+    }
+
+    .nav-btn:hover { background: rgba(2,42,192,0.06); }
+    .nav-btn:disabled { opacity: 0.25; cursor: default; }
+
+    .nav-counter {
+      font-size: 12px; font-weight: 600;
+      color: var(--muted); min-width: 48px; text-align: center;
+    }
+
+    .key-hint {
+      position: fixed;
+      bottom: 62px; right: 20px;
+      font-size: 11px; color: rgba(0,39,117,0.3);
+    }
+
+    /* ── Typography ── */
+    .eyebrow {
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--blue); margin-bottom: 12px;
+    }
+
+    .big {
+      font-size: clamp(28px, 3.5vw, 48px);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+    }
+
+    .hl { color: var(--blue); }
+    .hl-teal { color: var(--teal); }
+
+    .sub {
+      font-size: clamp(15px, 1.6vw, 19px);
+      color: var(--muted);
+      line-height: 1.65;
+      max-width: 580px;
+    }
+
+    .accent-line {
+      width: 36px; height: 3px;
+      background: var(--blue);
+      border-radius: 2px;
+      margin-bottom: 20px;
+    }
+
+    /* ── Cards ── */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 20px 22px;
+      box-shadow: 0 1px 4px rgba(0,39,117,0.06);
+    }
+
+    /* ── Cover bg ── */
+    .cover-bg {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, #010e3d 0%, #01173a 60%, #012a50 100%);
+      z-index: 0;
+    }
+
+    .cover-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(circle at 70% 40%, rgba(1,118,211,0.18) 0%, transparent 60%),
+                        radial-gradient(circle at 20% 80%, rgba(0,122,114,0.12) 0%, transparent 50%);
+    }
+
+    .cover-content { position: relative; z-index: 1; max-width: 760px; width: 100%; }
+  </style>
+</head>
+<body>
+
+<div class="deck" id="deck">
+
+  <!-- ① COVER -->
+  <section class="slide active">
+    <div class="cover-bg"></div>
+    <div class="cover-content">
+      <div style="font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(1,118,211,0.8); margin-bottom: 20px;">Salesforce · AI Decisioning</div>
+      <h1 style="font-size: clamp(28px, 4vw, 56px); font-weight: 800; letter-spacing: -0.02em; line-height: 1.15; color: #fff; margin-bottom: 20px;">
+        Your customers are already using AI.<br>
+        <span style="color: #0DB3FF;">Are you in the room?</span>
+      </h1>
+      <p style="font-size: clamp(15px, 1.6vw, 19px); color: rgba(255,255,255,0.55); max-width: 540px; line-height: 1.65;">How Salesforce turns AI ambition into governed, measurable outcomes — without starting from scratch.</p>
+    </div>
+  </section>
+
+  <!-- ② THE MOMENT -->
+  <section class="slide">
+    <div style="max-width: 840px; width: 100%;">
+      <div class="accent-line"></div>
+      <div class="eyebrow">What's happening right now</div>
+      <h2 class="big" style="margin-bottom: 20px;">Claude and ChatGPT are already<br>in your customer's building.</h2>
+      <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin-top: 32px;">
+        <div class="card">
+          <div style="font-size: 24px; margin-bottom: 10px;">🙈</div>
+          <div style="font-size: 14px; font-weight: 700; margin-bottom: 6px;">Without IT knowing</div>
+          <div style="font-size: 13px; color: var(--muted); line-height: 1.5;">Marketers, analysts and ops teams are using LLMs today — usually without governance or oversight.</div>
+        </div>
+        <div class="card">
+          <div style="font-size: 24px; margin-bottom: 10px;">⚠️</div>
+          <div style="font-size: 14px; font-weight: 700; margin-bottom: 6px;">Customer data at risk</div>
+          <div style="font-size: 13px; color: var(--muted); line-height: 1.5;">Direct API usage means customer data leaves the environment. No audit trail. Compliance will find out.</div>
+        </div>
+        <div class="card">
+          <div style="font-size: 24px; margin-bottom: 10px;">🏃</div>
+          <div style="font-size: 14px; font-weight: 700; margin-bottom: 6px;">Competitors are moving</div>
+          <div style="font-size: 13px; color: var(--muted); line-height: 1.5;">AI-native players like MoEngage are already doing personalised decisioning faster and cheaper than Pega ever did.</div>
+        </div>
+      </div>
+      <p style="margin-top: 24px; font-size: 15px; color: var(--muted);">The risk isn't AI adoption. It's <strong style="color: var(--text);">ungoverned</strong> AI adoption.</p>
+    </div>
+  </section>
+
+  <!-- ③ BYO LLM / GOVERNANCE -->
+  <section class="slide">
+    <div style="max-width: 860px; width: 100%;">
+      <div class="accent-line"></div>
+      <div class="eyebrow">The governance answer</div>
+      <h2 class="big" style="margin-bottom: 8px;">Bring your own LLM.<br><span class="hl">Salesforce provides the guardrails.</span></h2>
+      <p class="sub" style="margin-bottom: 28px;">When the customer says "we can't put customer data into an AI model" — this is the answer.</p>
+      <div style="display: grid; grid-template-columns: 1fr 56px 1.3fr 56px 1fr; align-items: center; gap: 0; background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 24px 20px; box-shadow: 0 1px 4px rgba(0,39,117,0.06);">
+        <div style="text-align: center;">
+          <div style="font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.12em; color: var(--blue); margin-bottom: 12px;">Your LLM</div>
+          <div style="display: flex; flex-direction: column; gap: 6px;">
+            <div style="background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 7px 10px; font-size: 12px; font-weight: 600;">Claude</div>
+            <div style="background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 7px 10px; font-size: 12px; font-weight: 600;">GPT-4</div>
+            <div style="background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 7px 10px; font-size: 12px; font-weight: 600;">Gemini</div>
+          </div>
+        </div>
+        <div style="text-align: center; color: var(--border); font-size: 22px; font-weight: 300;">→</div>
+        <div style="background: rgba(2,42,192,0.04); border: 1px solid rgba(2,42,192,0.15); border-radius: 12px; padding: 16px 14px; text-align: center;">
+          <div style="font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.12em; color: var(--blue); margin-bottom: 12px;">Agentforce + Data Cloud</div>
+          <div style="display: flex; flex-direction: column; gap: 6px; text-align: left;">
+            <div style="font-size: 12px; padding-left: 18px; position: relative;"><span style="position: absolute; left: 0;">🔒</span>Data stays in your org</div>
+            <div style="font-size: 12px; padding-left: 18px; position: relative;"><span style="position: absolute; left: 0;">📋</span>Every decision auditable</div>
+            <div style="font-size: 12px; padding-left: 18px; position: relative;"><span style="position: absolute; left: 0;">👤</span>Human-in-the-loop</div>
+            <div style="font-size: 12px; padding-left: 18px; position: relative;"><span style="position: absolute; left: 0;">⚡</span>Real-time at scale</div>
+          </div>
+        </div>
+        <div style="text-align: center; color: var(--border); font-size: 22px; font-weight: 300;">→</div>
+        <div style="text-align: center;">
+          <div style="font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.12em; color: var(--teal); margin-bottom: 12px;">Actions</div>
+          <div style="display: flex; flex-direction: column; gap: 6px;">
+            <div style="background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 7px 10px; font-size: 12px; font-weight: 600;">CRM update</div>
+            <div style="background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 7px 10px; font-size: 12px; font-weight: 600;">Email / SMS</div>
+            <div style="background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 7px 10px; font-size: 12px; font-weight: 600;">In-product</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ④ THE PROBLEM WE SOLVE -->
+  <section class="slide">
+    <div style="max-width: 840px; width: 100%;">
+      <div class="accent-line"></div>
+      <div class="eyebrow">The problem</div>
+      <h2 class="big" style="margin-bottom: 8px; font-size: clamp(24px, 3vw, 42px);">Every enterprise has a graveyard of <span class="hl">unfinished decisioning projects.</span></h2>
+      <p class="sub" style="margin-bottom: 32px;">Pega. Unica. SAS. Same ambition, every time. Multi-year. Millions spent. Never finished.</p>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+        <div class="card" style="border-left: 3px solid #dc2626;">
+          <div style="font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; color: #dc2626; margin-bottom: 12px;">The old way</div>
+          <div style="display: flex; flex-direction: column; gap: 8px;">
+            <div style="font-size: 13px; color: var(--muted); padding-left: 14px; position: relative;"><span style="position: absolute; left: 0;">·</span>18–36 month implementation</div>
+            <div style="font-size: 13px; color: var(--muted); padding-left: 14px; position: relative;"><span style="position: absolute; left: 0;">·</span>Dedicated data science team required</div>
+            <div style="font-size: 13px; color: var(--muted); padding-left: 14px; position: relative;"><span style="position: absolute; left: 0;">·</span>Expensive, brittle, hard to change</div>
+            <div style="font-size: 13px; color: var(--muted); padding-left: 14px; position: relative;"><span style="position: absolute; left: 0;">·</span>Rules-based — can't adapt at scale</div>
+            <div style="font-size: 13px; color: var(--muted); padding-left: 14px; position: relative;"><span style="position: absolute; left: 0;">·</span>Usually abandoned before value is seen</div>
+          </div>
+        </div>
+        <div class="card" style="border-left: 3px solid var(--teal);">
+          <div style="font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; color: var(--teal); margin-bottom: 12px;">This way</div>
+          <div style="display: flex; flex-direction: column; gap: 8px;">
+            <div style="font-size: 13px; color: var(--muted); padding-left: 14px; position: relative;"><span style="position: absolute; left: 0;">·</span>First use case live in weeks</div>
+            <div style="font-size: 13px; color: var(--muted); padding-left: 14px; position: relative;"><span style="position: absolute; left: 0;">·</span>Business-operated, not engineering-led</div>
+            <div style="font-size: 13px; color: var(--muted); padding-left: 14px; position: relative;"><span style="position: absolute; left: 0;">·</span>AI learns and improves continuously</div>
+            <div style="font-size: 13px; color: var(--muted); padding-left: 14px; position: relative;"><span style="position: absolute; left: 0;">·</span>Data never leaves your Salesforce org</div>
+            <div style="font-size: 13px; color: var(--muted); padding-left: 14px; position: relative;"><span style="position: absolute; left: 0;">·</span>80 people's work done with 5</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ⑤ TWO USE CASES -->
+  <section class="slide">
+    <div style="max-width: 860px; width: 100%;">
+      <div class="accent-line"></div>
+      <div class="eyebrow">Two ways in</div>
+      <h2 class="big" style="margin-bottom: 8px;">Start where the customer is.</h2>
+      <p class="sub" style="margin-bottom: 32px;">Not every customer needs the full stack on day one. There are two entry points — and both lead to the same place.</p>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+        <div class="card" style="border-top: 3px solid var(--blue2); padding: 24px;">
+          <div style="font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.12em; color: var(--blue2); margin-bottom: 12px;">Use case 1 · Embedded</div>
+          <div style="font-size: 20px; font-weight: 800; margin-bottom: 8px;">Little Brain</div>
+          <div style="font-size: 13px; color: var(--muted); line-height: 1.6; margin-bottom: 16px;">AI-personalised experiences across email, web and app — surfaced in the channels customers already use, with a line into Sales and Service workflows.</div>
+          <div style="display: flex; flex-direction: column; gap: 6px;">
+            <div style="font-size: 12px; color: var(--muted); padding-left: 14px; position: relative;"><span style="position: absolute; left: 0;">·</span>Personalised email, web and in-app content</div>
+            <div style="font-size: 12px; color: var(--muted); padding-left: 14px; position: relative;"><span style="position: absolute; left: 0;">·</span>Next best action in Sales and Service Cloud</div>
+            <div style="font-size: 12px; color: var(--muted); padding-left: 14px; position: relative;"><span style="position: absolute; left: 0;">·</span>Faster to land, shorter sales cycle</div>
+          </div>
+        </div>
+        <div class="card" style="border-top: 3px solid var(--teal); padding: 24px;">
+          <div style="font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.12em; color: var(--teal); margin-bottom: 12px;">Use case 2 · Enterprise</div>
+          <div style="font-size: 20px; font-weight: 800; margin-bottom: 8px;">Big Brain</div>
+          <div style="font-size: 13px; color: var(--muted); line-height: 1.6; margin-bottom: 16px;">Full decisioning stack with Data Cloud, Einstein Studio and BYO LLM. Real-time scoring, offer management, and agentic execution across every channel.</div>
+          <div style="display: flex; flex-direction: column; gap: 6px;">
+            <div style="font-size: 12px; color: var(--muted); padding-left: 14px; position: relative;"><span style="position: absolute; left: 0;">·</span>Real-time offer management</div>
+            <div style="font-size: 12px; color: var(--muted); padding-left: 14px; position: relative;"><span style="position: absolute; left: 0;">·</span>Next best action at enterprise scale</div>
+            <div style="font-size: 12px; color: var(--muted); padding-left: 14px; position: relative;"><span style="position: absolute; left: 0;">·</span>Strategic deal, higher ACV</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ⑥ MATURITY MODEL -->
+  <section class="slide">
+    <div style="max-width: 860px; width: 100%;">
+      <div class="accent-line"></div>
+      <div class="eyebrow">Where does your customer sit?</div>
+      <h2 class="big" style="margin-bottom: 8px;">The decisioning maturity curve.</h2>
+      <p class="sub" style="margin-bottom: 28px;">Most enterprises are stuck between layers 2 and 3. That's the conversation.</p>
+      <div style="display: grid; grid-template-columns: repeat(4,1fr); background: var(--surface); border: 1px solid var(--border); border-radius: 14px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,39,117,0.06);">
+        <div style="padding: 22px 18px; border-right: 1px solid var(--border);">
+          <div style="font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 10px;">Layer 1</div>
+          <div style="font-size: 28px; margin-bottom: 10px;">⚙️</div>
+          <div style="font-size: 15px; font-weight: 700; margin-bottom: 6px;">Automation</div>
+          <div style="font-size: 12px; color: var(--muted); line-height: 1.5;">Rules-based. Batch campaigns. Flows in place.</div>
+        </div>
+        <div style="padding: 22px 18px; border-right: 1px solid var(--border);">
+          <div style="font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 10px;">Layer 2</div>
+          <div style="font-size: 28px; margin-bottom: 10px;">🔗</div>
+          <div style="font-size: 15px; font-weight: 700; margin-bottom: 6px;">Unification</div>
+          <div style="font-size: 12px; color: var(--muted); line-height: 1.5;">Connecting data. Personalisation ambition. Usually stuck here.</div>
+        </div>
+        <div style="padding: 22px 18px; border-right: 1px solid var(--border); background: linear-gradient(160deg, rgba(2,42,192,0.06) 0%, rgba(2,42,192,0.02) 100%); border-top: 3px solid var(--blue);">
+          <div style="font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; color: var(--blue); margin-bottom: 10px;">Layer 3 · Entry point</div>
+          <div style="font-size: 28px; margin-bottom: 10px;">🧠</div>
+          <div style="font-size: 15px; font-weight: 700; margin-bottom: 6px;">AI Decisioning</div>
+          <div style="font-size: 12px; color: var(--muted); line-height: 1.5;">Next best action. Real-time offers. Propensity models. <strong style="color: var(--blue);">This is where we win.</strong></div>
+        </div>
+        <div style="padding: 22px 18px;">
+          <div style="font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 10px;">Layer 4</div>
+          <div style="font-size: 28px; margin-bottom: 10px;">🤖</div>
+          <div style="font-size: 15px; font-weight: 700; margin-bottom: 6px;">Agentic</div>
+          <div style="font-size: 12px; color: var(--muted); line-height: 1.5;">Autonomous agents acting on decisions. Near future. Plant the seed.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ⑦ BUSINESS CASE -->
+  <section class="slide">
+    <div style="max-width: 760px; width: 100%; text-align: center;">
+      <div class="accent-line" style="margin: 0 auto 20px;"></div>
+      <div class="eyebrow" style="text-align: center;">The business case</div>
+      <h2 class="big" style="margin-bottom: 16px; text-align: center; font-size: clamp(24px, 3vw, 42px);">The work that takes 80 people today can be done with <span class="hl">5.</span></h2>
+      <p class="sub" style="text-align: center; margin: 0 auto 36px;">Personalised decisioning at scale. In real time. Without a data science team. That's the CFO conversation — lead with outcomes, not architecture.</p>
+      <div style="display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; text-align: left;">
+        <div class="card" style="text-align: center;">
+          <div style="font-size: 36px; font-weight: 800; color: var(--blue); margin-bottom: 4px;">Weeks</div>
+          <div style="font-size: 13px; color: var(--muted);">to first use case live<br>(not months or years)</div>
+        </div>
+        <div class="card" style="text-align: center;">
+          <div style="font-size: 36px; font-weight: 800; color: var(--teal); margin-bottom: 4px;">0</div>
+          <div style="font-size: 13px; color: var(--muted);">data science hires needed<br>to run the platform</div>
+        </div>
+        <div class="card" style="text-align: center;">
+          <div style="font-size: 36px; font-weight: 800; color: var(--blue); margin-bottom: 4px;">1 org</div>
+          <div style="font-size: 13px; color: var(--muted);">data never leaves<br>your Salesforce environment</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ⑧ CLOSE / NEXT STEP -->
+  <section class="slide">
+    <div style="max-width: 700px; width: 100%; text-align: center;">
+      <div class="accent-line" style="margin: 0 auto 20px;"></div>
+      <div class="eyebrow" style="text-align: center;">Next step</div>
+      <h2 class="big" style="margin-bottom: 16px;">Two questions<br>before you leave this meeting.</h2>
+      <div style="display: flex; flex-direction: column; gap: 12px; text-align: left; margin-bottom: 32px;">
+        <div class="card" style="display: grid; grid-template-columns: 36px 1fr; gap: 14px; align-items: start;">
+          <div style="width: 36px; height: 36px; border-radius: 50%; background: rgba(2,42,192,0.08); border: 1px solid rgba(2,42,192,0.2); color: var(--blue); font-weight: 800; font-size: 14px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">1</div>
+          <div>
+            <div style="font-size: 14px; font-weight: 700; margin-bottom: 4px;">"What are you using AI for today — internally or customer-facing?"</div>
+            <div style="font-size: 13px; color: var(--muted);">If they're already using LLMs, the governance conversation is live. If they're not, find out why.</div>
+          </div>
+        </div>
+        <div class="card" style="display: grid; grid-template-columns: 36px 1fr; gap: 14px; align-items: start;">
+          <div style="width: 36px; height: 36px; border-radius: 50%; background: rgba(2,42,192,0.08); border: 1px solid rgba(2,42,192,0.2); color: var(--blue); font-weight: 800; font-size: 14px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">2</div>
+          <div>
+            <div style="font-size: 14px; font-weight: 700; margin-bottom: 4px;">"What's your biggest concern about moving faster?"</div>
+            <div style="font-size: 13px; color: var(--muted);">Data security, compliance, or resourcing — each one is a door in. All three lead to the same conversation.</div>
+          </div>
+        </div>
+      </div>
+      <p style="font-size: 14px; color: var(--muted);">Heard enough to qualify? Reach out to your specialist. <strong style="color: var(--text);">Don't try to run the full demo yourself.</strong></p>
+    </div>
+  </section>
+
+</div><!-- end deck -->
+
+<!-- Nav -->
+<nav class="nav-bar">
+  <span class="nav-brand">AI Decisioning · Rep Deck</span>
+  <div class="nav-controls">
+    <button class="nav-btn" id="btn-prev" disabled>‹</button>
+    <span class="nav-counter" id="counter">1 / 8</span>
+    <button class="nav-btn" id="btn-next">›</button>
+  </div>
+</nav>
+
+<div class="key-hint">← → navigate</div>
+
+<script>
+  var slides  = document.querySelectorAll('#deck > .slide');
+  var total   = slides.length;
+  var current = 0;
+  var busy    = false;
+
+  function goTo(idx) {
+    if (busy || idx === current || idx < 0 || idx >= total) return;
+    busy = true;
+    slides[current].classList.add('exit');
+    var prev = current;
+    current = idx;
+    setTimeout(function() {
+      slides[prev].classList.remove('active', 'exit');
+      slides[current].classList.add('active');
+      updateUI();
+      setTimeout(function() { busy = false; }, 400);
+    }, 240);
+  }
+
+  function updateUI() {
+    document.getElementById('counter').textContent = (current + 1) + ' / ' + total;
+    document.getElementById('btn-prev').disabled = current === 0;
+    document.getElementById('btn-next').disabled = current === total - 1;
+  }
+
+  document.getElementById('btn-prev').addEventListener('click', function() { goTo(current - 1); });
+  document.getElementById('btn-next').addEventListener('click', function() { goTo(current + 1); });
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); goTo(current + 1); }
+    if (e.key === 'ArrowLeft')                   { e.preventDefault(); goTo(current - 1); }
+  });
+
+  var tx = null;
+  document.addEventListener('touchstart', function(e) { tx = e.touches[0].clientX; });
+  document.addEventListener('touchend', function(e) {
+    if (tx === null) return;
+    var dx = e.changedTouches[0].clientX - tx;
+    if (Math.abs(dx) > 40) goTo(current + (dx < 0 ? 1 : -1));
+    tx = null;
+  });
+</script>
+
+  <script src="gate.js" data-page="AI Decisioning Rep Deck" data-password="SFNBA2026!"></script>
+</body>
+</html>
