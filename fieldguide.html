@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>AI Decisioning — Field Guide</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #f1f4fa;
+      --surface:   #ffffff;
+      --border:    #e2e8f0;
+      --text:      #0f172a;
+      --muted:     #64748b;
+      --blue:      #022AC0;
+      --blue-lt:   rgba(2,42,192,0.07);
+      --blue-bd:   rgba(2,42,192,0.18);
+      --teal:      #007A72;
+      --teal-lt:   rgba(0,122,114,0.07);
+      --teal-bd:   rgba(0,122,114,0.2);
+      --orange:    #c05621;
+      --orange-lt: rgba(192,86,33,0.07);
+      --orange-bd: rgba(192,86,33,0.2);
+      --red:       #991b1b;
+      --red-lt:    rgba(153,27,27,0.07);
+      --gold:      #92620a;
+      --gold-lt:   rgba(146,98,10,0.08);
+      --gold-bd:   rgba(146,98,10,0.2);
+    }
+
+    body {
+      background: var(--bg);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      color: var(--text);
+      padding: 40px 24px 80px;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .page { max-width: 920px; margin: 0 auto; }
+
+    /* ── Header ── */
+    .page-header { margin-bottom: 32px; }
+    .page-eyebrow {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.16em;
+      text-transform: uppercase; color: var(--blue); margin-bottom: 10px;
+    }
+    .page-title {
+      font-size: clamp(28px, 4vw, 42px); font-weight: 800;
+      letter-spacing: -0.02em; line-height: 1.15; margin-bottom: 10px;
+    }
+    .page-sub { font-size: 15px; color: var(--muted); max-width: 620px; }
+
+    /* ── Tabs ── */
+    .tab-bar {
+      display: flex; gap: 4px; margin-bottom: 36px;
+      border-bottom: 2px solid var(--border);
+    }
+    .tab-btn {
+      font-size: 13px; font-weight: 700; padding: 10px 20px;
+      border: none; background: none; cursor: pointer; color: var(--muted);
+      border-bottom: 2px solid transparent; margin-bottom: -2px;
+      border-radius: 6px 6px 0 0; transition: color 0.15s, border-color 0.15s;
+    }
+    .tab-btn:hover { color: var(--text); }
+    .tab-btn.active { color: var(--blue); border-bottom-color: var(--blue); background: var(--blue-lt); }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* ── Section ── */
+    .section { margin-bottom: 44px; }
+    .section-label {
+      font-size: 11px; font-weight: 800; letter-spacing: 0.16em;
+      text-transform: uppercase; color: var(--muted);
+      margin-bottom: 16px; padding-bottom: 8px; border-bottom: 1px solid var(--border);
+    }
+
+    /* ── Signal tags ── */
+    .signals { display: flex; flex-wrap: wrap; gap: 8px; }
+    .signal {
+      font-size: 13px; font-weight: 500; padding: 6px 14px;
+      border-radius: 99px; border: 1px solid var(--blue-bd);
+      background: var(--blue-lt); color: var(--blue);
+    }
+
+    /* ── Q cards ── */
+    .q-list { display: flex; flex-direction: column; gap: 10px; }
+    .q-card {
+      display: grid; grid-template-columns: 36px 1fr; gap: 16px;
+      align-items: start; background: var(--surface);
+      border: 1px solid var(--border); border-radius: 12px; padding: 18px 20px;
+    }
+    .q-num {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: var(--blue-lt); border: 1px solid var(--blue-bd);
+      color: var(--blue); font-weight: 800; font-size: 13px;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .q-text { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+    .q-why  { font-size: 13px; color: var(--muted); }
+
+    /* ── Maturity visual ── */
+    .maturity-visual {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+    }
+    .mat-step {
+      padding: 22px 18px;
+      position: relative;
+      border-right: 1px solid var(--border);
+    }
+    .mat-step:last-child { border-right: none; }
+    .mat-step.entry {
+      background: linear-gradient(160deg, rgba(2,42,192,0.05) 0%, rgba(2,42,192,0.02) 100%);
+    }
+    .mat-step-num {
+      font-size: 11px; font-weight: 800; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--muted); margin-bottom: 10px;
+    }
+    .mat-step.entry .mat-step-num { color: var(--blue); }
+    .mat-icon {
+      width: 36px; height: 36px; border-radius: 8px;
+      background: var(--bg); border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 10px; font-size: 18px;
+    }
+    .mat-step.entry .mat-icon {
+      background: var(--blue-lt); border-color: var(--blue-bd);
+    }
+    .mat-step-title {
+      font-size: 14px; font-weight: 700; margin-bottom: 6px;
+    }
+    .mat-step-desc {
+      font-size: 12px; color: var(--muted); line-height: 1.5;
+    }
+    .mat-arrow {
+      position: absolute; right: -10px; top: 50%;
+      transform: translateY(-50%);
+      width: 20px; height: 20px; border-radius: 50%;
+      background: var(--surface); border: 1px solid var(--border);
+      color: var(--muted); font-size: 11px; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      z-index: 2;
+    }
+    .mat-badge {
+      display: inline-flex; align-items: center; gap: 4px;
+      margin-top: 12px; font-size: 11px; font-weight: 700;
+      padding: 3px 10px; border-radius: 99px;
+      background: var(--blue); color: #fff;
+    }
+
+    /* ── Escalation ── */
+    .escalation { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+    .esc-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 12px; padding: 20px;
+      display: flex; flex-direction: column;
+    }
+    .esc-header {
+      display: flex; align-items: center; gap: 10px; margin-bottom: 14px;
+    }
+    .esc-badge {
+      font-size: 13px; font-weight: 800; width: 28px; height: 28px;
+      border-radius: 8px; display: flex; align-items: center; justify-content: center;
+    }
+    .esc-a .esc-badge { background: var(--blue-lt); color: var(--blue); }
+    .esc-b .esc-badge { background: var(--teal-lt); color: var(--teal); }
+    .esc-c .esc-badge { background: var(--orange-lt); color: var(--orange); }
+    .esc-title { font-size: 14px; font-weight: 700; }
+    .esc-list {
+      list-style: none; display: flex; flex-direction: column;
+      gap: 6px; flex: 1; margin-bottom: 16px;
+    }
+    .esc-list li {
+      font-size: 13px; color: var(--muted);
+      padding-left: 14px; position: relative;
+    }
+    .esc-list li::before { content: '·'; position: absolute; left: 0; }
+    .esc-action {
+      font-size: 12px; font-weight: 700; padding: 7px 14px;
+      border-radius: 8px; display: inline-block; text-align: center;
+    }
+    .esc-a .esc-action { background: var(--blue-lt); color: var(--blue); }
+    .esc-b .esc-action { background: var(--teal-lt); color: var(--teal); }
+    .esc-c .esc-action { background: var(--orange-lt); color: var(--orange); }
+
+    /* ── Talk track beats ── */
+    .narrative-beats { display: flex; flex-direction: column; gap: 10px; }
+    .beat {
+      display: grid; grid-template-columns: 40px 1fr; gap: 16px;
+      align-items: start; background: var(--surface);
+      border: 1px solid var(--border); border-radius: 12px; padding: 18px 20px;
+    }
+    .beat-num {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: var(--blue-lt); border: 1px solid var(--blue-bd);
+      color: var(--blue); font-weight: 800; font-size: 14px;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .beat-title { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+    .beat-body  { font-size: 13px; color: var(--muted); line-height: 1.6; }
+    .beat-body strong { color: var(--text); font-weight: 600; }
+
+    /* ── Objection cards ── */
+    .obj-num {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: var(--orange-lt); border: 1px solid var(--orange-bd);
+      color: var(--orange); font-size: 18px; font-weight: 400;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+
+    /* ── Pitch box ── */
+    .pitch-box {
+      background: var(--surface); border: 1px solid var(--blue-bd);
+      border-left: 4px solid var(--blue);
+      border-radius: 12px; padding: 20px 24px;
+    }
+    .pitch-box p {
+      font-size: 16px; font-style: italic; color: var(--text); line-height: 1.6;
+    }
+
+    @media (max-width: 700px) {
+      .maturity-visual { grid-template-columns: 1fr 1fr; }
+      .escalation      { grid-template-columns: 1fr; }
+      .mat-arrow       { display: none; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <div class="page-header">
+    <div class="page-eyebrow">Salesforce · AI Decisioning · Internal</div>
+    <h1 class="page-title">AI Decisioning<br>Field Guide</h1>
+    <p class="page-sub">For AEs and SEs. Use this to identify, qualify, and escalate — not to pitch or present verbatim.</p>
+  </div>
+
+  <div class="tab-bar">
+    <button class="tab-btn active" onclick="switchTab('field-guide', this)">Field Guide</button>
+    <button class="tab-btn" onclick="switchTab('talk-track', this)">BYO LLM Talk Track</button>
+  </div>
+
+
+  <!-- ══════════════════════════════════════
+       TAB 1 — FIELD GUIDE
+  ══════════════════════════════════════ -->
+  <div id="field-guide" class="tab-panel active">
+
+    <!-- Signals -->
+    <div class="section">
+      <div class="section-label">Words to listen for</div>
+      <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 20px 24px;">
+        <p style="font-size: 13px; color: var(--muted); margin-bottom: 16px;">If you hear any of these, note it and act on it. The opportunity is usually bigger than it first appears.</p>
+        <div class="signals">
+          <span class="signal">"We're looking at Claude / ChatGPT"</span>
+          <span class="signal">"Next best action"</span>
+          <span class="signal">"Personalisation at scale"</span>
+          <span class="signal">"Our Pega / Unica is a mess"</span>
+          <span class="signal">"How do we use AI with customer data safely"</span>
+          <span class="signal">"Real-time offers"</span>
+          <span class="signal">"AI governance"</span>
+          <span class="signal">"Decisioning"</span>
+          <span class="signal">"IT won't let us use AI"</span>
+          <span class="signal">"Vibe coding"</span>
+          <span class="signal">"Agentic"</span>
+          <span class="signal">"We're evaluating LLMs"</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Discovery Qs -->
+    <div class="section">
+      <div class="section-label">Three questions to ask</div>
+      <div class="q-list">
+        <div class="q-card">
+          <div class="q-num">1</div>
+          <div>
+            <div class="q-text">"What are you using AI for today — internally or customer-facing?"</div>
+            <div class="q-why">Uncovers LLM usage, governance gaps, and where decisions are being made without IT sign-off. Most customers are doing more than they admit.</div>
+          </div>
+        </div>
+        <div class="q-card">
+          <div class="q-num">2</div>
+          <div>
+            <div class="q-text">"How are you thinking about personalisation or next best action at scale?"</div>
+            <div class="q-why">Places them on the maturity model. "We're not there yet" is an opening. "We tried Pega" is a hot lead.</div>
+          </div>
+        </div>
+        <div class="q-card">
+          <div class="q-num">3</div>
+          <div>
+            <div class="q-text">"What's your biggest concern about moving faster on AI?"</div>
+            <div class="q-why">Surfaces the real blocker — usually data security, compliance, or lack of expertise. This is exactly what the Salesforce platform solves.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Maturity Model -->
+    <div class="section">
+      <div class="section-label">Where does this customer sit?</div>
+      <div class="maturity-visual">
+        <div class="mat-step">
+          <div class="mat-step-num">Layer 1</div>
+          <div class="mat-icon">⚙️</div>
+          <div class="mat-step-title">Automation</div>
+          <div class="mat-step-desc">Rules-based triggers. Batch campaigns. Flows and journeys in place. Most enterprises are here.</div>
+          <div class="mat-arrow">›</div>
+        </div>
+        <div class="mat-step">
+          <div class="mat-step-num">Layer 2</div>
+          <div class="mat-icon">🔗</div>
+          <div class="mat-step-title">Unification &amp; Personalisation</div>
+          <div class="mat-step-desc">Connecting data sources. Segment-of-one ambition. Most are stuck here longer than they expected.</div>
+          <div class="mat-arrow">›</div>
+        </div>
+        <div class="mat-step entry">
+          <div class="mat-step-num">Layer 3</div>
+          <div class="mat-icon">🧠</div>
+          <div class="mat-step-title">AI Decisioning</div>
+          <div class="mat-step-desc">Propensity models. Next best action. Real-time offer management. This is the play — and where we win.</div>
+          <div class="mat-badge">↑ Entry point</div>
+          <div class="mat-arrow">›</div>
+        </div>
+        <div class="mat-step">
+          <div class="mat-step-num">Layer 4</div>
+          <div class="mat-icon">🤖</div>
+          <div class="mat-step-title">Agentic</div>
+          <div class="mat-step-desc">Autonomous agents acting on decisions. Mode 2. Near future — plant the seed now.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Escalation -->
+    <div class="section">
+      <div class="section-label">How to engage — A / B / C</div>
+      <div class="escalation">
+        <div class="esc-card esc-a">
+          <div class="esc-header">
+            <div class="esc-badge">A</div>
+            <div class="esc-title">Strategic pursuit · 1:1</div>
+          </div>
+          <ul class="esc-list">
+            <li>Actively evaluating decisioning or agents</li>
+            <li>Has a data platform (D360, Snowflake, etc.)</li>
+            <li>Mentioned LLMs, NBA, or AI governance</li>
+            <li>Complex existing stack (Pega / Unica / SAS)</li>
+          </ul>
+          <span class="esc-action">Bring in Stuart directly</span>
+        </div>
+        <div class="esc-card esc-b">
+          <div class="esc-header">
+            <div class="esc-badge">B</div>
+            <div class="esc-title">Roundtable · 1:few</div>
+          </div>
+          <ul class="esc-list">
+            <li>Interested but early-stage</li>
+            <li>Wants to understand what's possible</li>
+            <li>Right seniority but not yet bought in</li>
+            <li>Would benefit from peer discussion</li>
+          </ul>
+          <span class="esc-action">Invite to working session</span>
+        </div>
+        <div class="esc-card esc-c">
+          <div class="esc-header">
+            <div class="esc-badge">C</div>
+            <div class="esc-title">Awareness · Seed</div>
+          </div>
+          <ul class="esc-list">
+            <li>Heard the signal words but not active</li>
+            <li>Not the right person yet</li>
+            <li>Early in their AI journey</li>
+            <li>No urgency but good long-term fit</li>
+          </ul>
+          <span class="esc-action">Leave this guide · Log in Salesforce</span>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end field-guide -->
+
+
+  <!-- ══════════════════════════════════════
+       TAB 2 — BYO LLM TALK TRACK
+  ══════════════════════════════════════ -->
+  <div id="talk-track" class="tab-panel">
+
+    <div class="page-header" style="margin-bottom: 32px;">
+      <div class="page-eyebrow">Talk Track · Not for customer distribution</div>
+      <h2 style="font-size: clamp(22px, 3vw, 34px); font-weight: 800; letter-spacing: -0.02em; line-height: 1.2; margin-bottom: 10px;">Bring Your Own LLM.<br>Salesforce provides the guardrails.</h2>
+      <p class="page-sub">Use this when the customer is already talking to Anthropic or OpenAI — or when data security and governance are the objection.</p>
+    </div>
+
+    <!-- Pitch -->
+    <div class="section">
+      <div class="section-label">The one-sentence pitch</div>
+      <div class="pitch-box">
+        <p>"Your teams are already using Claude and ChatGPT. We help you bring that into a platform with the governance, data security, and CRM integration that makes it safe to scale."</p>
+      </div>
+    </div>
+
+    <!-- Architecture diagram -->
+    <div class="section">
+      <div class="section-label">How it works — the architecture</div>
+      <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 28px 24px;">
+
+        <!-- Outer label -->
+        <div style="text-align: center; font-size: 11px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: var(--blue); margin-bottom: 20px;">Salesforce Platform — Governance Wrapper</div>
+
+        <div style="display: grid; grid-template-columns: 1fr 40px 1.4fr 40px 1fr; gap: 0; align-items: center;">
+
+          <!-- Column 1: LLM -->
+          <div style="background: rgba(2,42,192,0.04); border: 1.5px dashed var(--blue-bd); border-radius: 12px; padding: 18px 16px;">
+            <div style="font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.12em; color: var(--blue); margin-bottom: 14px;">Your LLM</div>
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+              <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 8px 12px; font-size: 13px; font-weight: 600;">Claude (Anthropic)</div>
+              <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 8px 12px; font-size: 13px; font-weight: 600;">GPT-4 (OpenAI)</div>
+              <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 8px 12px; font-size: 13px; font-weight: 600;">Gemini (Google)</div>
+            </div>
+            <div style="margin-top: 12px; font-size: 11px; color: var(--muted);">Reasoning engine — plug in whatever model you prefer or already use.</div>
+          </div>
+
+          <!-- Arrow 1 -->
+          <div style="display: flex; flex-direction: column; align-items: center; gap: 4px;">
+            <svg width="40" height="24" viewBox="0 0 40 24" fill="none">
+              <path d="M4 12 H32 M26 6 L36 12 L26 18" stroke="#022AC0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+
+          <!-- Column 2: Agentforce -->
+          <div style="background: linear-gradient(160deg, rgba(2,42,192,0.07) 0%, rgba(2,42,192,0.03) 100%); border: 1.5px solid var(--blue-bd); border-radius: 12px; padding: 18px 16px; position: relative;">
+            <div style="font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.12em; color: var(--blue); margin-bottom: 14px;">Agentforce · Data Cloud</div>
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+              <div style="display: flex; align-items: center; gap: 8px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 8px 12px;">
+                <span style="font-size: 15px;">🔒</span>
+                <div>
+                  <div style="font-size: 12px; font-weight: 700;">Data masking &amp; security</div>
+                  <div style="font-size: 11px; color: var(--muted);">Customer data never leaves your org</div>
+                </div>
+              </div>
+              <div style="display: flex; align-items: center; gap: 8px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 8px 12px;">
+                <span style="font-size: 15px;">📋</span>
+                <div>
+                  <div style="font-size: 12px; font-weight: 700;">Audit trail &amp; compliance</div>
+                  <div style="font-size: 11px; color: var(--muted);">Every decision logged and reviewable</div>
+                </div>
+              </div>
+              <div style="display: flex; align-items: center; gap: 8px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 8px 12px;">
+                <span style="font-size: 15px;">👤</span>
+                <div>
+                  <div style="font-size: 12px; font-weight: 700;">Human in the loop</div>
+                  <div style="font-size: 11px; color: var(--muted);">Approvals and overrides where required</div>
+                </div>
+              </div>
+              <div style="display: flex; align-items: center; gap: 8px; background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 8px 12px;">
+                <span style="font-size: 15px;">⚡</span>
+                <div>
+                  <div style="font-size: 12px; font-weight: 700;">Real-time decisioning</div>
+                  <div style="font-size: 11px; color: var(--muted);">Scores, decisions, actions at scale</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Arrow 2 -->
+          <div style="display: flex; flex-direction: column; align-items: center; gap: 4px;">
+            <svg width="40" height="24" viewBox="0 0 40 24" fill="none">
+              <path d="M4 12 H32 M26 6 L36 12 L26 18" stroke="#022AC0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+
+          <!-- Column 3: Outputs -->
+          <div style="background: rgba(0,122,114,0.04); border: 1.5px dashed var(--teal-bd); border-radius: 12px; padding: 18px 16px;">
+            <div style="font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.12em; color: var(--teal); margin-bottom: 14px;">Actions &amp; Channels</div>
+            <div style="display: flex; flex-direction: column; gap: 8px;">
+              <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 8px 12px; font-size: 13px; font-weight: 600;">CRM update</div>
+              <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 8px 12px; font-size: 13px; font-weight: 600;">Email / SMS / push</div>
+              <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 8px 12px; font-size: 13px; font-weight: 600;">In-product surface</div>
+              <div style="background: var(--surface); border: 1px solid var(--border); border-radius: 8px; padding: 8px 12px; font-size: 13px; font-weight: 600;">3rd party via MuleSoft</div>
+            </div>
+            <div style="margin-top: 12px; font-size: 11px; color: var(--muted);">Channel-agnostic. The decision fires wherever the customer is.</div>
+          </div>
+
+        </div>
+
+        <!-- Data sources row -->
+        <div style="margin-top: 20px; padding-top: 20px; border-top: 1px dashed var(--border);">
+          <div style="font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.12em; color: var(--muted); margin-bottom: 12px; text-align: center;">Data feeding in</div>
+          <div style="display: flex; gap: 8px; justify-content: center; flex-wrap: wrap;">
+            <div style="background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 6px 14px; font-size: 12px; font-weight: 600;">CRM / Salesforce</div>
+            <div style="background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 6px 14px; font-size: 12px; font-weight: 600;">Data Cloud (D360)</div>
+            <div style="background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 6px 14px; font-size: 12px; font-weight: 600;">Behavioural signals</div>
+            <div style="background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 6px 14px; font-size: 12px; font-weight: 600;">Transaction history</div>
+            <div style="background: var(--bg); border: 1px solid var(--border); border-radius: 8px; padding: 6px 14px; font-size: 12px; font-weight: 600;">Firmographic data</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Five beats -->
+    <div class="section">
+      <div class="section-label">Five-beat narrative</div>
+      <div class="narrative-beats">
+        <div class="beat">
+          <div class="beat-num">1</div>
+          <div>
+            <div class="beat-title">The market moment</div>
+            <div class="beat-body">Claude and ChatGPT are already in the building. <strong>Marketers, analysts, ops teams are using them today</strong> — often without IT knowing. The risk isn't AI adoption. It's ungoverned AI adoption. This is a now conversation, not a future one.</div>
+          </div>
+        </div>
+        <div class="beat">
+          <div class="beat-num">2</div>
+          <div>
+            <div class="beat-title">The problem with going direct</div>
+            <div class="beat-body">You can wire Claude or GPT straight into your stack via API. But <strong>you own the risk</strong> — no audit trail, customer data in a model you don't control, no human-in-the-loop. Compliance will shut it down the moment they find out. And they will find out.</div>
+          </div>
+        </div>
+        <div class="beat">
+          <div class="beat-num">3</div>
+          <div>
+            <div class="beat-title">The Salesforce answer</div>
+            <div class="beat-body"><strong>Bring your own model.</strong> Salesforce becomes the governance wrapper. Data stays in your org. Agentforce is the front end — your CRM, your channels, your rules. The LLM is the engine. Salesforce is the chassis. Anthropic's interests are aligned here — enterprise adoption through a governed platform is their path too.</div>
+          </div>
+        </div>
+        <div class="beat">
+          <div class="beat-num">4</div>
+          <div>
+            <div class="beat-title">The Pega contrast</div>
+            <div class="beat-body">Every enterprise has a graveyard of Pega, Unica, or SAS implementations — <strong>expensive, multi-year, never finished</strong>. Same ambition. AI-native competitors like MoEngage are already doing this faster and cheaper. The question isn't whether your customers move. It's whether Salesforce is the platform they move on.</div>
+          </div>
+        </div>
+        <div class="beat">
+          <div class="beat-num">5</div>
+          <div>
+            <div class="beat-title">The business case closer</div>
+            <div class="beat-body">This is a <strong>digital labour story</strong>. The work that takes 80 people today can be done with 5. Personalised decisioning at scale, in real time, without a data science team. That's the CFO conversation. Lead with outcomes, not architecture.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Objections -->
+    <div class="section">
+      <div class="section-label">Common objections</div>
+      <div class="q-list">
+        <div class="q-card">
+          <div class="obj-num">?</div>
+          <div>
+            <div class="q-text">"We're already talking to Anthropic / OpenAI directly."</div>
+            <div class="q-why">Good — they're doing the market education for us. The question isn't which LLM, it's how they govern it, connect it to their CRM, and get it into the hands of the business safely. That's the gap we fill.</div>
+          </div>
+        </div>
+        <div class="q-card">
+          <div class="obj-num">?</div>
+          <div>
+            <div class="q-text">"Our data can't go into an AI model."</div>
+            <div class="q-why">Correct — and it doesn't have to. Data stays in the Salesforce org. The LLM reasons on what it's given, not on raw customer data. We can show exactly how the masking and data flow works in a sandbox with anonymised data.</div>
+          </div>
+        </div>
+        <div class="q-card">
+          <div class="obj-num">?</div>
+          <div>
+            <div class="q-text">"We don't have the data science resources to build this."</div>
+            <div class="q-why">That's the point. This doesn't require a data science team. Einstein Studio, Data Cloud, and the decisioning layer are built to be operated by the business — not by engineers. We can pair with SF services to get the first use case live fast.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- end talk-track -->
+
+</div>
+
+<script>
+  function switchTab(id, btn) {
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    btn.classList.add('active');
+    window.scrollTo(0, 0);
+  }
+</script>
+
+  <script src="gate.js" data-page="AI Decisioning Field Guide" data-password="SFNBA2026!"></script>
+</body>
+</html>
