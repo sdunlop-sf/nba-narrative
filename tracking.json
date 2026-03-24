@@ -7690,5 +7690,17 @@
     "location": "Toronto, Ontario, Canada",
     "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36",
     "returning": "no"
+  },
+  {
+    "timestamp": "Tue, 24 Mar 2026 00:28:11 GMT",
+    "name": "Roger McNaughton",
+    "company": "Salesforce",
+    "position": "DigitalAE",
+    "page": "AI Decisioning Rep Deck",
+    "url": "https://sdunlop-sf.github.io/nba-narrative/repdeck.html",
+    "ip": "136.226.77.4",
+    "location": "Toronto, Ontario, Canada",
+    "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36",
+    "returning": "yes"
   }
 ]
