@@ -8146,5 +8146,17 @@
     "location": "Toronto, Ontario, Canada",
     "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36",
     "returning": "no"
+  },
+  {
+    "timestamp": "Wed, 25 Mar 2026 18:45:30 GMT",
+    "name": "Stu",
+    "company": "SF",
+    "position": "AE",
+    "page": "NBA Narrative · Slides Light Internal",
+    "url": "https://sdunlop-sf.github.io/nba-narrative/slides-light-internal.html",
+    "ip": "122.107.179.17",
+    "location": "Sydney, New South Wales, Australia",
+    "ua": "Mozilla/5.0 (iPhone; CPU iPhone OS 26_3_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) CriOS/146.0.7680.151 Mobile/15E148 Safari/604.1",
+    "returning": "no"
   }
 ]
