@@ -8302,5 +8302,17 @@
     "location": "Melbourne, Victoria, Australia",
     "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36",
     "returning": "yes"
+  },
+  {
+    "timestamp": "Thu, 26 Mar 2026 03:25:21 GMT",
+    "name": "Stuart Dunlop",
+    "company": "Salesforce",
+    "position": "Solutions",
+    "page": "Vibe POV Keynote",
+    "url": "https://sdunlop-sf.github.io/nba-narrative/vibe-pov-keynote.html",
+    "ip": "147.161.214.184",
+    "location": "Sydney, New South Wales, Australia",
+    "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36",
+    "returning": "yes"
   }
 ]
