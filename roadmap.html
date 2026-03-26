@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Roadmap to Agentic Decisioning — Salesforce</title>
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --blue:    #022AC0;
+            --blue2:   #0176D3;
+            --navy:    #001B6E;
+            --bg:      #EEF4FC;
+            --bg2:     #F5F9FE;
+            --text:    #001B6E;
+            --muted:   rgba(0, 27, 110, 0.55);
+            --border:  rgba(0, 27, 110, 0.13);
+            --card:    rgba(0, 27, 110, 0.05);
+            --optus:   #FDDA24;
+            --optus-d: #C9A800;
+            --green:   #2E7D32;
+            --green-lt:#E8F5E9;
+            --amber:   #E65100;
+            --amber-lt:#FFF3E0;
+            --grey:    #90A4C0;
+            --grey-lt: #F0F4F8;
+        }
+
+        html, body {
+            width: 100%; height: 100%;
+            overflow: hidden;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .bg-base {
+            position: fixed; inset: 0; z-index: 0; pointer-events: none;
+            background:
+                radial-gradient(ellipse 80% 60% at 100% 0%, rgba(2,42,192,0.06) 0%, transparent 55%),
+                radial-gradient(ellipse 50% 40% at 0% 100%, rgba(253,218,36,0.05) 0%, transparent 50%),
+                linear-gradient(170deg, #EEF4FC 0%, #F2F7FD 60%, #EEF4FC 100%);
+        }
+
+        .deck { width: 100%; height: 100vh; position: relative; z-index: 1; }
+
+        .slide {
+            position: absolute; inset: 0;
+            display: flex; align-items: center; justify-content: center;
+            padding: 60px 100px 84px;
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.45s cubic-bezier(0.4,0,0.2,1), transform 0.45s cubic-bezier(0.4,0,0.2,1);
+            transform: translateY(22px);
+        }
+        .slide.active { opacity: 1; pointer-events: all; transform: translateY(0); }
+        .slide.exit   { opacity: 0; transform: translateY(-18px); transition: opacity 0.26s ease, transform 0.26s ease; }
+
+        /* Nav */
+        .mtm-row { display: flex; align-items: center; gap: 56px; max-width: 1060px; width: 100%; }
+        .mtm-text { flex: 0 0 340px; display: flex; flex-direction: column; }
+        .mtm-text .big { font-size: clamp(26px, 2.6vw, 38px); }
+        .mtm-diagram { flex: 1; display: flex; align-items: center; justify-content: center; min-width: 0; }
+        .mtm-diagram img { width: 100%; max-height: calc(100vh - 140px); object-fit: contain; }
+
+        .nav-bar {
+            position: fixed; bottom: 0; left: 0; right: 0; z-index: 100;
+            height: 54px; display: flex; align-items: center; justify-content: space-between;
+            padding: 0 40px;
+            background: rgba(255,255,255,0.93); backdrop-filter: blur(20px);
+            border-top: 1px solid var(--border);
+        }
+        .nav-brand { display: flex; align-items: center; gap: 14px; }
+        .nav-sf-logo { width: 26px; height: 26px; }
+        .nav-label { font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
+        .nav-controls { display: flex; align-items: center; gap: 10px; }
+        .nav-btn {
+            width: 28px; height: 28px; border-radius: 50%;
+            border: 1px solid var(--border); background: none; cursor: pointer;
+            font-size: 16px; color: var(--blue);
+            display: flex; align-items: center; justify-content: center;
+            transition: background 0.15s;
+        }
+        .nav-btn:hover { background: var(--card); }
+        .nav-btn:disabled { opacity: 0.25; cursor: default; }
+        .nav-counter { font-size: 12px; font-weight: 600; color: var(--muted); min-width: 44px; text-align: center; }
+
+        /* Typography */
+        .eyebrow {
+            font-size: 11px; font-weight: 700; letter-spacing: 0.16em;
+            text-transform: uppercase; color: var(--blue); margin-bottom: 12px;
+        }
+        .big {
+            font-size: clamp(26px, 3vw, 44px);
+            font-weight: 800; letter-spacing: -0.02em; line-height: 1.12;
+        }
+        .hl  { color: var(--blue); }
+        .hl-o { color: var(--optus-d); }
+        .sub {
+            font-size: clamp(14px, 1.5vw, 17px);
+            color: var(--muted); line-height: 1.7;
+        }
+        .accent-line {
+            width: 36px; height: 3px;
+            background: var(--blue); border-radius: 2px; margin-bottom: 18px;
+        }
+
+        /* Cards */
+        .card {
+            background: #fff; border: 1px solid var(--border);
+            border-radius: 12px; padding: 18px 20px;
+            box-shadow: 0 1px 3px rgba(0,27,110,0.06), 0 4px 16px rgba(0,27,110,0.05);
+        }
+
+        /* Flow */
+        .flow { display: flex; align-items: stretch; gap: 0; }
+        .flow-step {
+            flex: 1; background: #fff; border: 1px solid var(--border);
+            border-radius: 0; padding: 18px 14px; text-align: center;
+            display: flex; flex-direction: column; align-items: center; gap: 6px;
+        }
+        .flow-step:first-child { border-radius: 12px 0 0 12px; }
+        .flow-step:last-child  { border-radius: 0 12px 12px 0; }
+        .flow-step + .flow-step { border-left: none; }
+        .flow-num {
+            font-size: 10px; font-weight: 800; letter-spacing: 0.14em;
+            text-transform: uppercase; color: var(--muted);
+        }
+        .flow-label { font-size: 15px; font-weight: 800; color: var(--text); }
+        .flow-prod  { font-size: 11px; font-weight: 600; color: var(--blue); }
+        .flow-desc  { font-size: 11px; color: var(--muted); line-height: 1.4; }
+        .flow-arrow {
+            display: flex; align-items: center; padding: 0 6px;
+            font-size: 18px; color: var(--border); flex-shrink: 0;
+        }
+
+        /* Status pills */
+        .pill-now  { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; background: var(--green-lt); color: var(--green); border: 1px solid rgba(46,125,50,0.25); }
+        .pill-next { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; background: rgba(2,42,192,0.08); color: var(--blue); border: 1px solid rgba(2,42,192,0.25); }
+        .pill-future { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 11px; font-weight: 700; background: var(--grey-lt); color: var(--grey); border: 1px solid rgba(144,164,192,0.35); }
+
+        /* Flow component */
+        .flow { display: flex; align-items: stretch; }
+        .flow-step {
+            flex: 1; background: #fff; border: 1px solid var(--border);
+            padding: 20px 14px; text-align: center;
+            display: flex; flex-direction: column; align-items: center; gap: 8px;
+        }
+        .flow-step:first-child { border-radius: 12px 0 0 12px; }
+        .flow-step:last-child  { border-radius: 0 12px 12px 0; }
+        .flow-step + .flow-step { border-left: none; }
+        .flow-icon { width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; }
+        .flow-icon img { width: 28px; height: 28px; object-fit: contain; opacity: 0.75; }
+        .flow-step-num { font-size: 10px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); }
+        .flow-step-title { font-size: 15px; font-weight: 800; color: var(--text); }
+        .flow-step-desc { font-size: 11px; color: var(--muted); line-height: 1.4; }
+        .flow-arrow { display: flex; align-items: center; padding: 0 4px; font-size: 18px; color: var(--border); flex-shrink: 0; background: var(--bg2); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+
+        /* Responsive */
+        @media (max-width: 900px) {
+            .slide { padding: 40px 48px 80px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="bg-base"></div>
+
+<div class="deck" id="deck">
+
+    <!-- ① TITLE -->
+    <section class="slide active">
+        <div style="max-width: 760px; width: 100%;">
+            <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 48px;">
+                <img src="sf-logo-cloud.png" alt="Salesforce" style="height: 32px; width: auto;">
+            </div>
+
+            <div class="eyebrow" style="margin-bottom: 16px;">Salesforce · March 2026</div>
+            <h1 class="big" style="font-size: clamp(30px, 4vw, 54px); margin-bottom: 20px;">
+                A Roadmap to<br><span class="hl">Agentic Decisioning</span>
+            </h1>
+            <div style="width: 48px; height: 3px; background: var(--blue); border-radius: 2px; margin-bottom: 20px;"></div>
+            <p class="sub" style="max-width: 520px;">
+                How a decisioning layer connects your data and your customers —
+                and the two modes that get you there.
+            </p>
+        </div>
+    </section>
+
+    <!-- ② WHY THE DECISIONING LAYER MATTERS -->
+    <!-- ② MOMENTS THAT MATTER -->
+    <section class="slide">
+        <div class="mtm-row">
+            <div class="mtm-text">
+                <div class="accent-line" style="margin-bottom: 16px;"></div>
+                <div class="eyebrow">The Moments That Matter</div>
+                <h2 class="big" style="margin-bottom: 16px;">Every touchpoint fires a signal.<br><span class="hl">Most go unanswered.</span></h2>
+                <p class="sub">The decisioning layer sits at the centre — connecting signals from every channel into one intelligent response, at the right moment for each customer.</p>
+            </div>
+            <div class="mtm-diagram">
+                <img src="moments-light.svg" alt="Moments That Matter">
+            </div>
+        </div>
+    </section>
+
+    <!-- AotP: Anatomy of Modern Decisioning -->
+    <section class="slide">
+        <div style="max-width: 960px; width: 100%;">
+            <div style="text-align: center; margin-bottom: 28px;">
+                <div class="eyebrow" style="margin-bottom: 10px;">The Framework</div>
+                <h2 class="big" style="font-size: clamp(22px, 2.8vw, 38px);">The Anatomy of <span class="hl">Modern Decisioning</span></h2>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 10px;">
+                <div style="display: grid; grid-template-columns: 56px 200px 1fr; align-items: center; background: #002060; border-radius: 14px; padding: 18px 28px; min-height: 72px;">
+                    <div style="display:flex;align-items:center;justify-content:center;"><svg width="32" height="32" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="10" r="5" stroke="white" stroke-width="2"/><path d="M6 26c0-5.523 4.477-10 10-10s10 4.477 10 10" stroke="white" stroke-width="2" stroke-linecap="round"/></svg></div>
+                    <div style="font-size:17px;font-weight:800;color:#fff;padding-left:16px;border-right:1px solid rgba(255,255,255,0.2);margin-right:24px;">Customer<br>Experience</div>
+                    <div style="font-size:14px;color:rgba(255,255,255,0.85);line-height:1.55;font-style:italic;">The outcome — a consistent, contextual experience delivered across every channel</div>
+                </div>
+                <div style="display: grid; grid-template-columns: 56px 200px 1fr; align-items: center; background: #A8D8F0; border-radius: 14px; padding: 18px 28px; min-height: 72px;">
+                    <div style="display:flex;align-items:center;justify-content:center;"><svg width="32" height="32" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="6" stroke="#002060" stroke-width="2"/><path d="M16 4v4M16 24v4M4 16h4M24 16h4M7.5 7.5l2.8 2.8M21.7 21.7l2.8 2.8M7.5 24.5l2.8-2.8M21.7 10.3l2.8-2.8" stroke="#002060" stroke-width="2" stroke-linecap="round"/></svg></div>
+                    <div style="font-size:17px;font-weight:800;color:#002060;padding-left:16px;border-right:1px solid rgba(0,32,96,0.2);margin-right:24px;">Intelligence</div>
+                    <div style="font-size:14px;color:#003070;line-height:1.55;font-style:italic;">Determines the right action for each customer — the offer, message, or intervention — and when to make it</div>
+                </div>
+                <div style="display: grid; grid-template-columns: 56px 200px 1fr; align-items: center; background: #F5B800; border-radius: 14px; padding: 18px 28px; min-height: 72px;">
+                    <div style="display:flex;align-items:center;justify-content:center;"><svg width="32" height="32" viewBox="0 0 32 32" fill="none"><circle cx="10" cy="9" r="4" stroke="white" stroke-width="2"/><circle cx="22" cy="9" r="4" stroke="white" stroke-width="2"/><path d="M4 26c0-3.314 2.686-6 6-6h3" stroke="white" stroke-width="2" stroke-linecap="round"/><path d="M28 26c0-3.314-2.686-6-6-6h-3" stroke="white" stroke-width="2" stroke-linecap="round"/><path d="M13 20h6" stroke="white" stroke-width="2" stroke-linecap="round"/></svg></div>
+                    <div style="font-size:17px;font-weight:800;color:#fff;padding-left:16px;border-right:1px solid rgba(255,255,255,0.35);margin-right:24px;">Value Engine</div>
+                    <div style="font-size:14px;color:rgba(255,255,255,0.95);line-height:1.55;font-style:italic;">The catalogue of available actions — offers, incentives, partner benefits, and lifecycle interventions</div>
+                </div>
+                <div style="display: grid; grid-template-columns: 56px 200px 1fr; align-items: center; background: #0076D6; border-radius: 14px; padding: 18px 28px; min-height: 72px;">
+                    <div style="display:flex;align-items:center;justify-content:center;"><svg width="32" height="32" viewBox="0 0 32 32" fill="none"><ellipse cx="16" cy="9" rx="10" ry="4" stroke="white" stroke-width="2"/><path d="M6 9v7c0 2.21 4.477 4 10 4s10-1.79 10-4V9" stroke="white" stroke-width="2"/><path d="M6 16v7c0 2.21 4.477 4 10 4s10-1.79 10-4v-7" stroke="white" stroke-width="2"/></svg></div>
+                    <div style="font-size:17px;font-weight:800;color:#fff;padding-left:16px;border-right:1px solid rgba(255,255,255,0.25);margin-right:24px;">Data</div>
+                    <div style="font-size:14px;color:rgba(255,255,255,0.9);line-height:1.55;font-style:italic;">Unified customer profile and real-time signals — the foundation every decision is built on</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ⑤ WHAT OPTUS HAS TODAY -->
+    <section class="slide">
+        <div style="max-width: 980px; width: 100%;">
+            <div class="accent-line"></div>
+            <div class="eyebrow">Where you are today</div>
+            <h2 class="big" style="margin-bottom: 8px;">The foundation is already <span class="hl">being built.</span></h2>
+            <p class="sub" style="margin-bottom: 28px; max-width: 640px;">This isn't a future-state concept. Most organisations are already investing in the core components. The decisioning layer grows naturally from what's already in place.</p>
+
+            <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; background: #fff; border: 1px solid var(--border); border-radius: 14px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,27,110,0.06), 0 4px 18px rgba(0,27,110,0.05);">
+
+                <!-- Signal -->
+                <div style="padding: 20px 18px; border-right: 1px solid var(--border);">
+                    <div style="font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.14em; color: var(--muted); margin-bottom: 12px;">Signal</div>
+                    <div style="display: flex; flex-direction: column; gap: 10px;">
+                        <div style="padding: 10px 12px; border-radius: 8px; border: 1px solid rgba(46,125,50,0.2); background: var(--green-lt);">
+                            <div style="font-size: 12px; font-weight: 700; color: #1B5E20; margin-bottom: 2px;">Data 360</div>
+                            <div style="font-size: 11px; color: #388E3C;">Unified customer data &amp; real-time signals</div>
+                            <span class="pill-now" style="margin-top: 6px; display: inline-block;">In place / underway</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Decide -->
+                <div style="padding: 20px 18px; border-right: 1px solid var(--border);">
+                    <div style="font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.14em; color: var(--muted); margin-bottom: 12px;">Decide</div>
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                        <div style="padding: 10px 12px; border-radius: 8px; border: 1px solid rgba(46,125,50,0.2); background: var(--green-lt);">
+                            <div style="font-size: 12px; font-weight: 700; color: #1B5E20; margin-bottom: 2px;">Segmentation &amp; Eligibility</div>
+                            <div style="font-size: 11px; color: #388E3C;">Rules-based audience logic</div>
+                            <span class="pill-now" style="margin-top: 6px; display: inline-block;">In place / underway</span>
+                        </div>
+                        <div style="padding: 10px 12px; border-radius: 8px; border: 1px solid rgba(2,42,192,0.2); background: rgba(2,42,192,0.05);">
+                            <div style="font-size: 12px; font-weight: 700; color: var(--blue); margin-bottom: 2px;">RTOM</div>
+                            <div style="font-size: 11px; color: var(--blue);">AI offer management</div>
+                            <span class="pill-next" style="margin-top: 6px; display: inline-block;">Next</span>
+                        </div>
+                        <div style="padding: 10px 12px; border-radius: 8px; border: 1px solid rgba(144,164,192,0.3); background: var(--grey-lt);">
+                            <div style="font-size: 12px; font-weight: 700; color: var(--grey); margin-bottom: 2px;">Einstein Studio</div>
+                            <div style="font-size: 11px; color: var(--grey);">Predictive models</div>
+                            <span class="pill-future" style="margin-top: 6px; display: inline-block;">Future state</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Act -->
+                <div style="padding: 20px 18px; border-right: 1px solid var(--border);">
+                    <div style="font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.14em; color: var(--muted); margin-bottom: 12px;">Omni-channel · Act</div>
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                        <div style="padding: 10px 12px; border-radius: 8px; border: 1px solid rgba(46,125,50,0.2); background: var(--green-lt);">
+                            <div style="font-size: 12px; font-weight: 700; color: #1B5E20; margin-bottom: 2px;">Marketing Cloud</div>
+                            <div style="font-size: 11px; color: #388E3C;">Email, SMS, push</div>
+                            <span class="pill-now" style="margin-top: 6px; display: inline-block;">In place / underway</span>
+                        </div>
+                        <div style="padding: 10px 12px; border-radius: 8px; border: 1px solid rgba(2,42,192,0.2); background: rgba(2,42,192,0.05);">
+                            <div style="font-size: 12px; font-weight: 700; color: var(--blue); margin-bottom: 2px;">Personalization</div>
+                            <div style="font-size: 11px; color: var(--blue);">Omni-channel</div>
+                            <span class="pill-next" style="margin-top: 6px; display: inline-block;">Next</span>
+                        </div>
+                        <div style="padding: 10px 12px; border-radius: 8px; border: 1px solid rgba(144,164,192,0.3); background: var(--grey-lt);">
+                            <div style="font-size: 12px; font-weight: 700; color: var(--grey); margin-bottom: 2px;">Agentforce</div>
+                            <div style="font-size: 11px; color: var(--grey);">Agentic execution</div>
+                            <span class="pill-future" style="margin-top: 6px; display: inline-block;">Future state</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Learn -->
+                <div style="padding: 20px 18px;">
+                    <div style="font-size: 10px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.14em; color: var(--muted); margin-bottom: 12px;">Learn</div>
+                    <div style="display: flex; flex-direction: column; gap: 8px;">
+                        <div style="padding: 10px 12px; border-radius: 8px; border: 1px solid rgba(2,42,192,0.2); background: rgba(2,42,192,0.05);">
+                            <div style="font-size: 12px; font-weight: 700; color: var(--blue); margin-bottom: 2px;">Marketing Intelligence</div>
+                            <div style="font-size: 11px; color: var(--blue);">Reporting &amp; visibility</div>
+                            <span class="pill-next" style="margin-top: 6px; display: inline-block;">Next</span>
+                        </div>
+                        <div style="padding: 10px 12px; border-radius: 8px; border: 1px solid rgba(144,164,192,0.3); background: var(--grey-lt);">
+                            <div style="font-size: 12px; font-weight: 700; color: var(--grey); margin-bottom: 2px;">Closed-loop AI</div>
+                            <div style="font-size: 11px; color: var(--grey);">Automated optimisation</div>
+                            <span class="pill-future" style="margin-top: 6px; display: inline-block;">Future state</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Legend -->
+            <div style="display: flex; gap: 20px; margin-top: 16px; justify-content: center;">
+                <div style="display: flex; align-items: center; gap: 6px;"><span class="pill-now">In place / underway</span><span style="font-size:12px;color:var(--muted);">Already invested</span></div>
+                <div style="display: flex; align-items: center; gap: 6px;"><span class="pill-next">Next</span><span style="font-size:12px;color:var(--muted);">Near-term roadmap</span></div>
+                <div style="display: flex; align-items: center; gap: 6px;"><span class="pill-future">Future state</span><span style="font-size:12px;color:var(--muted);">Longer-term capability</span></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ⑥ OPTUS JOURNEY -->
+    <section class="slide">
+        <div style="max-width: 980px; width: 100%;">
+            <div class="accent-line"></div>
+            <div class="eyebrow">The journey</div>
+            <h2 class="big" style="margin-bottom: 8px;"><span class="hl">Two layers.</span></h2>
+            <p class="sub" style="margin-bottom: 32px; max-width: 620px;">Mode 1 manages the offer and personalisation layer. Mode 2 sits above it, deciding when an offer is even the right action. The infrastructure built in Mode 1 is what Mode 2 draws from.</p>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px;">
+
+                <div class="card" style="border-top: 4px solid var(--green); position: relative;">
+                    <div style="position: absolute; top: -14px; left: 18px; width: 24px; height: 24px; border-radius: 50%; background: var(--green); color: #fff; font-size: 12px; font-weight: 800; display: flex; align-items: center; justify-content: center;">1</div>
+                    <div style="margin-top: 10px;">
+                        <div style="font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.12em; color: var(--green); margin-bottom: 6px;">Foundation · Now</div>
+                        <div style="font-size: 16px; font-weight: 800; color: var(--text); margin-bottom: 6px;">Unify &amp; orchestrate</div>
+                        <div style="font-size: 12px; color: var(--muted); margin-bottom: 10px; line-height: 1.5;">One customer profile. One view of every interaction. The layer everything else runs on.</div>
+                        <div style="display: flex; flex-direction: column; gap: 6px;">
+                            <div style="font-size: 12px; color: var(--muted); padding-left: 12px; position: relative;"><span style="position:absolute;left:0;color:var(--green);">·</span>Data 360</div>
+                            <div style="font-size: 12px; color: var(--muted); padding-left: 12px; position: relative;"><span style="position:absolute;left:0;color:var(--green);">·</span>Marketing Cloud</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card" style="border-top: 4px solid var(--blue); position: relative;">
+                    <div style="position: absolute; top: -14px; left: 18px; width: 24px; height: 24px; border-radius: 50%; background: var(--blue); color: #fff; font-size: 12px; font-weight: 800; display: flex; align-items: center; justify-content: center;">2</div>
+                    <div style="margin-top: 10px;">
+                        <div style="font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.12em; color: var(--blue); margin-bottom: 6px;">Mode 1 · Next</div>
+                        <div style="font-size: 16px; font-weight: 800; color: var(--text); margin-bottom: 6px;">Personalisation</div>
+                        <div style="font-size: 12px; color: var(--muted); margin-bottom: 10px; line-height: 1.5;"><em>What should this person see? What offer should they get?</em> Right experience, right surface, right moment.</div>
+                        <div style="display: flex; flex-direction: column; gap: 6px;">
+                            <div style="font-size: 12px; color: var(--muted); padding-left: 12px; position: relative;"><span style="position:absolute;left:0;color:var(--blue);">·</span>Salesforce Personalization</div>
+                            <div style="font-size: 12px; color: var(--muted); padding-left: 12px; position: relative;"><span style="position:absolute;left:0;color:var(--blue);">·</span>RTOM</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card" style="border-top: 4px solid var(--optus-d); position: relative;">
+                    <div style="position: absolute; top: -14px; left: 18px; width: 24px; height: 24px; border-radius: 50%; background: var(--optus-d); color: #fff; font-size: 12px; font-weight: 800; display: flex; align-items: center; justify-content: center;">3</div>
+                    <div style="margin-top: 10px;">
+                        <div style="font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.12em; color: var(--optus-d); margin-bottom: 6px;">Mode 2 · Future</div>
+                        <div style="font-size: 16px; font-weight: 800; color: var(--text); margin-bottom: 6px;">Agentic Decisioning</div>
+                        <div style="font-size: 12px; color: var(--muted); margin-bottom: 10px; line-height: 1.5;"><em>What's the best action for this person?</em> Any action. Self-optimising. Learns from every outcome.</div>
+                        <div style="display: flex; flex-direction: column; gap: 6px;">
+                            <div style="font-size: 12px; color: var(--muted); padding-left: 12px; position: relative;"><span style="position:absolute;left:0;color:var(--optus-d);">·</span>Einstein Studio</div>
+                            <div style="font-size: 12px; color: var(--muted); padding-left: 12px; position: relative;"><span style="position:absolute;left:0;color:var(--optus-d);">·</span>Agentforce</div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div style="margin-top: 22px; background: rgba(2,42,192,0.05); border: 1px solid var(--border); border-left: 3px solid var(--blue); border-radius: 8px; padding: 14px 18px;">
+                <p style="font-size: 13px; color: var(--text); line-height: 1.65;">When Mode 2 decides an offer is the right action, it draws from the catalogue RTOM manages. Personalisation delivers what Mode 2 decides. Mode 1 doesn't get replaced — it becomes the layer Mode 2 runs on.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- AotP: Two ways in -->
+    <section class="slide">
+        <div style="max-width: 920px; width: 100%;">
+            <div class="accent-line" style="margin: 0 auto 14px;"></div>
+            <div class="eyebrow" style="text-align: center; margin-bottom: 10px;">The Platform</div>
+            <h2 class="big" style="text-align: center; font-size: clamp(22px, 2.8vw, 40px); margin-bottom: 8px;">Two layers.<br><span class="hl">One builds on the other.</span></h2>
+            <p style="text-align: center; font-size: 15px; color: var(--muted); max-width: 560px; margin: 0 auto 32px; line-height: 1.6;">Mode 1 is the offer and personalisation layer. Mode 2 is the action decisioning layer above it. Mode 2 doesn't replace Mode 1 — it draws from it.</p>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 18px;">
+                <div style="background:#fff;border:1px solid var(--border);border-top:3px solid var(--blue2);border-radius:14px;padding:26px 24px;box-shadow:0 1px 3px rgba(0,27,110,0.06),0 4px 18px rgba(0,27,110,0.06);">
+                    <div style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.14em;color:var(--blue2);margin-bottom:10px;">Mode 1 · Personalisation</div>
+                    <div style="font-size:22px;font-weight:800;color:var(--text);margin-bottom:6px;">Mode 1</div>
+                    <div style="font-size:13px;font-style:italic;color:var(--blue2);font-weight:600;margin-bottom:14px;">What should this person see? What offer should they get?</div>
+                    <div style="font-size:14px;color:var(--muted);line-height:1.65;margin-bottom:18px;">Right experience, right surface, right moment. Perso serves recommendations across web, app, and email. RTOM manages the promotional offer lifecycle — creation, personalisation, deployment, analytics.</div>
+                    <div style="display:flex;flex-direction:column;gap:7px;margin-bottom:20px;">
+                        <div style="font-size:13px;color:var(--muted);padding-left:14px;position:relative;"><span style="position:absolute;left:0;color:var(--blue2);font-weight:700;">·</span>Salesforce Personalization — web, app, email recommendations</div>
+                        <div style="font-size:13px;color:var(--muted);padding-left:14px;position:relative;"><span style="position:absolute;left:0;color:var(--blue2);font-weight:700;">·</span>RTOM — promotional offer management end-to-end</div>
+                    </div>
+                    <span style="display:inline-block;padding:5px 12px;border-radius:20px;background:rgba(2,42,192,0.08);border:1px solid rgba(2,42,192,0.25);font-size:13px;font-weight:700;color:var(--blue2);">Faster to land</span>
+                </div>
+                <div style="background:#fff;border:1px solid var(--border);border-top:3px solid var(--optus-d);border-radius:14px;padding:26px 24px;box-shadow:0 1px 3px rgba(0,27,110,0.06),0 4px 18px rgba(0,27,110,0.06);">
+                    <div style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:0.14em;color:var(--optus-d);margin-bottom:10px;">Mode 2 · Agentic Decisioning</div>
+                    <div style="font-size:22px;font-weight:800;color:var(--text);margin-bottom:6px;">Mode 2</div>
+                    <div style="font-size:13px;font-style:italic;color:var(--optus-d);font-weight:600;margin-bottom:14px;">What's the best action for this person?</div>
+                    <div style="font-size:14px;color:var(--muted);line-height:1.65;margin-bottom:18px;">An action can be anything — an offer, a retention intervention, a service task, an outbound call. Einstein Studio scores every option. Agentforce executes it. Every outcome feeds back to improve the next decision.</div>
+                    <div style="display:flex;flex-direction:column;gap:7px;margin-bottom:20px;">
+                        <div style="font-size:13px;color:var(--muted);padding-left:14px;position:relative;"><span style="position:absolute;left:0;color:var(--optus-d);font-weight:700;">·</span>Einstein Studio — model per action, self-optimising</div>
+                        <div style="font-size:13px;color:var(--muted);padding-left:14px;position:relative;"><span style="position:absolute;left:0;color:var(--optus-d);font-weight:700;">·</span>Agentforce — governed execution across any channel</div>
+                    </div>
+                    <span style="display:inline-block;padding:5px 12px;border-radius:20px;background:rgba(201,168,0,0.1);border:1px solid rgba(201,168,0,0.3);font-size:13px;font-weight:700;color:var(--optus-d);">Higher prize</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AotP: Overview (3 cards) -->
+    <section class="slide">
+        <div style="max-width: 980px; width: 100%;">
+            <div class="accent-line" style="margin: 0 auto 14px;"></div>
+            <div class="eyebrow" style="text-align: center; margin-bottom: 12px;">Capabilities</div>
+            <h2 class="big" style="text-align: center; font-size: clamp(22px, 2.6vw, 36px); margin-bottom: 28px;">Two modes.<br><span class="hl">One connected platform.</span></h2>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px;">
+                <div style="background:#fff;border:1px solid var(--border);border-radius:16px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 1px 3px rgba(0,27,110,0.07),0 4px 18px rgba(0,27,110,0.07);">
+                    <div style="border-bottom:1px solid var(--border);height:160px;background:linear-gradient(135deg,#EFF6FF 0%,#DBEAFE 100%);display:flex;align-items:center;justify-content:center;gap:24px;">
+                        <img src="xero-perso-icon.png" style="height:80px;width:auto;object-fit:contain;opacity:0.85;">
+                        <img src="xero-rtom-icon.png" style="height:88px;width:auto;object-fit:contain;">
+                    </div>
+                    <div style="padding:22px 22px;display:flex;flex-direction:column;flex:1;">
+                        <div style="font-size:11px;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;color:var(--blue2);margin-bottom:6px;">Mode 1 · Personalisation</div>
+                        <div style="font-size:18px;font-weight:800;color:var(--text);margin-bottom:4px;line-height:1.3;">What should this person see?<br>What offer should they get?</div>
+                        <div style="font-size:12px;font-style:italic;color:var(--blue2);margin-bottom:12px;">Salesforce Personalization + RTOM</div>
+                        <div style="font-size:14px;color:var(--muted);line-height:1.65;flex:1;">Perso serves ML-driven recommendations omni-channel. RTOM manages the promotional offer lifecycle — creation, personalisation, deployment, analytics. Both built on Data 360.</div>
+                        <div style="margin-top:16px;"><span style="display:inline-block;padding:5px 12px;border-radius:20px;background:rgba(2,42,192,0.08);border:1px solid rgba(2,42,192,0.25);font-size:13px;font-weight:700;color:var(--blue2);">Faster to land</span></div>
+                    </div>
+                </div>
+                <div style="background:#fff;border:1px solid var(--border);border-radius:16px;overflow:hidden;display:flex;flex-direction:column;box-shadow:0 1px 3px rgba(0,27,110,0.07),0 4px 18px rgba(0,27,110,0.07);">
+                    <div style="border-bottom:1px solid var(--border);height:160px;background:linear-gradient(135deg,#FFF7ED 0%,#FED7AA 100%);display:flex;align-items:center;justify-content:center;">
+                        <img src="xero-einstein-icon.png" style="height:100px;width:auto;object-fit:contain;">
+                    </div>
+                    <div style="padding:22px 22px;display:flex;flex-direction:column;flex:1;">
+                        <div style="font-size:11px;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;color:var(--optus-d);margin-bottom:6px;">Mode 2 · Agentic Decisioning</div>
+                        <div style="font-size:18px;font-weight:800;color:var(--text);margin-bottom:4px;line-height:1.3;">What's the best action<br>for this person?</div>
+                        <div style="font-size:12px;font-style:italic;color:var(--optus-d);margin-bottom:12px;">Einstein Studio + Agentforce</div>
+                        <div style="font-size:14px;color:var(--muted);line-height:1.65;flex:1;">An action can be anything — an offer, a retention intervention, a service task, an outbound call. Einstein Studio scores every option. Agentforce executes it. Every outcome feeds back to improve the next decision.</div>
+                        <div style="margin-top:16px;"><span style="display:inline-block;padding:5px 12px;border-radius:20px;background:rgba(201,168,0,0.1);border:1px solid rgba(201,168,0,0.3);font-size:13px;font-weight:700;color:var(--optus-d);">Higher prize</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- AotP: RTOM deep dive -->
+    <section class="slide">
+        <div style="max-width: 960px; width: 100%; display: flex; flex-direction: column; align-items: center;">
+            <div class="accent-line" style="margin: 0 auto 6px;"></div>
+            <div class="eyebrow" style="text-align: center; margin-bottom: 16px;">Real-Time Offer Management</div>
+            <img src="xero-rtom-slide.png" style="width:100%;border-radius:16px;box-shadow:0 4px 32px rgba(0,27,110,0.13);border:1px solid var(--border);">
+        </div>
+    </section>
+
+    <!-- AotP: RTOM ONE-PAGER -->
+    <section class="slide">
+        <div style="max-width: 980px; width: 100%;">
+            <div class="accent-line"></div>
+            <div class="eyebrow">Mode 1 · Real-Time Offer Management</div>
+            <h2 class="big" style="margin-bottom: 28px; font-size: clamp(22px, 2.6vw, 36px);">The promotional offer lifecycle —<br><span class="hl">end to end.</span></h2>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 18px;">
+
+                <!-- Left col -->
+                <div style="display: flex; flex-direction: column; gap: 14px;">
+
+                    <div class="card" style="border-left: 3px solid var(--blue);">
+                        <div style="font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.12em; color: var(--blue); margin-bottom: 8px;">What is RTOM?</div>
+                        <p style="font-size: 13px; color: var(--muted); line-height: 1.65;">Real-Time Offer Management is Salesforce's AI-powered solution for offer creation, personalisation, deployment and analytics. It determines which offer — out of your full catalogue — is the right one for each individual customer, at each individual moment.</p>
+                    </div>
+
+                    <div class="card" style="border-left: 3px solid var(--optus);">
+                        <div style="font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.12em; color: var(--optus-d); margin-bottom: 8px;">Where does it fit?</div>
+                        <p style="font-size: 13px; color: var(--muted); line-height: 1.65;">RTOM is the system of record for promotional offers. Data 360 provides the unified customer profile. RTOM selects the right offer from the catalogue and deploys it via Marketing Cloud. In a Mode 2 architecture, its offer catalogue becomes one input to the broader action engine.</p>
+                        <p style="font-size: 13px; color: var(--muted); line-height: 1.65; margin-top: 10px;">RTOM also enriches Personalization's item graph — so the same offer surfaces consistently whether the customer receives an outbound campaign, visits the website, or opens the app. RTOM and Perso work hand in hand.</p>
+                        <div style="display: flex; align-items: center; gap: 8px; margin-top: 12px; font-size: 12px; font-weight: 600; color: var(--muted); flex-wrap: wrap;">
+                            <span style="background: var(--green-lt); padding: 3px 8px; border-radius: 6px; color: #2E7D32;">Data 360</span>
+                            <span>→</span>
+                            <span style="background: rgba(2,42,192,0.08); padding: 3px 8px; border-radius: 6px; color: var(--blue); border: 1px solid rgba(2,42,192,0.2);">RTOM</span>
+                            <span>↔</span>
+                            <span style="background: rgba(2,42,192,0.08); padding: 3px 8px; border-radius: 6px; color: var(--blue); border: 1px solid rgba(2,42,192,0.2);">Perso</span>
+                            <span>→</span>
+                            <span style="background: var(--green-lt); padding: 3px 8px; border-radius: 6px; color: #2E7D32;">Channels</span>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Right col -->
+                <div class="card" style="border-left: 3px solid var(--green);">
+                    <div style="font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.12em; color: var(--green); margin-bottom: 12px;">What it means for you</div>
+                    <div style="display: flex; flex-direction: column; gap: 10px;">
+                        <div style="display: flex; gap: 10px; align-items: flex-start;">
+                            <div style="width: 20px; height: 20px; border-radius: 50%; background: var(--green-lt); border: 1px solid rgba(46,125,50,0.25); display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px;">
+                                <span style="color: var(--green); font-size: 11px; font-weight: 800;">✓</span>
+                            </div>
+                            <div>
+                                <div style="font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 2px;">More relevant, timely offers</div>
+                                <div style="font-size: 12px; color: var(--muted); line-height: 1.5;">Every customer sees the offer most likely to be right for them — not the one scheduled for their segment</div>
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 10px; align-items: flex-start;">
+                            <div style="width: 20px; height: 20px; border-radius: 50%; background: var(--green-lt); border: 1px solid rgba(46,125,50,0.25); display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px;">
+                                <span style="color: var(--green); font-size: 11px; font-weight: 800;">✓</span>
+                            </div>
+                            <div>
+                                <div style="font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 2px;">Decisioning across channels</div>
+                                <div style="font-size: 12px; color: var(--muted); line-height: 1.5;">One engine governs the offer across email, web, app, and contact centre interactions</div>
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 10px; align-items: flex-start;">
+                            <div style="width: 20px; height: 20px; border-radius: 50%; background: var(--green-lt); border: 1px solid rgba(46,125,50,0.25); display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px;">
+                                <span style="color: var(--green); font-size: 11px; font-weight: 800;">✓</span>
+                            </div>
+                            <div>
+                                <div style="font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 2px;">Less reliance on manual offer logic</div>
+                                <div style="font-size: 12px; color: var(--muted); line-height: 1.5;">AI replaces brittle rules. Offer management becomes operationally lighter and more adaptive</div>
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 10px; align-items: flex-start;">
+                            <div style="width: 20px; height: 20px; border-radius: 50%; background: var(--green-lt); border: 1px solid rgba(46,125,50,0.25); display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px;">
+                                <span style="color: var(--green); font-size: 11px; font-weight: 800;">✓</span>
+                            </div>
+                            <div>
+                                <div style="font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 2px;">Faster execution and adaptation</div>
+                                <div style="font-size: 12px; color: var(--muted); line-height: 1.5;">Launch offers faster. Update logic without engineering. React to market changes in hours, not weeks</div>
+                            </div>
+                        </div>
+                        <div style="display: flex; gap: 10px; align-items: flex-start;">
+                            <div style="width: 20px; height: 20px; border-radius: 50%; background: var(--green-lt); border: 1px solid rgba(46,125,50,0.25); display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px;">
+                                <span style="color: var(--green); font-size: 11px; font-weight: 800;">✓</span>
+                            </div>
+                            <div>
+                                <div style="font-size: 13px; font-weight: 700; color: var(--text); margin-bottom: 2px;">A clearer path to intelligent CX</div>
+                                <div style="font-size: 12px; color: var(--muted); line-height: 1.5;">RTOM is the decisive next step on the journey from orchestration to fully adaptive, AI-driven customer engagement</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ⑧ THE PLATFORM -->
+    <section class="slide">
+        <div style="max-width: 980px; width: 100%;">
+            <div class="accent-line" style="margin: 0 auto 12px;"></div>
+            <div class="eyebrow" style="text-align: center; margin-bottom: 8px;">Mode 2</div>
+            <h2 class="big" style="text-align: center; font-size: clamp(24px, 2.8vw, 40px); margin-bottom: 22px;">Agentic <span class="hl">Decisioning</span></h2>
+
+            <div style="display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 16px;">
+
+                <!-- 01 Action Catalogue -->
+                <div style="background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 18px 16px; display: flex; flex-direction: column; gap: 12px; position: relative; overflow: hidden;">
+                    <div style="position: absolute; top: 10px; right: 14px; font-size: 36px; font-weight: 900; color: rgba(0,27,110,0.05); line-height: 1; pointer-events: none;">01</div>
+                    <div style="width: 36px; height: 36px; border-radius: 10px; background: rgba(2,42,192,0.08); border: 1px solid rgba(2,42,192,0.14); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3 5h12M3 9h8M3 13h5" stroke="#022AC0" stroke-width="1.6" stroke-linecap="round"/><circle cx="14" cy="12" r="3" stroke="#022AC0" stroke-width="1.6"/></svg>
+                    </div>
+                    <div>
+                        <div style="font-size: 14px; font-weight: 700; color: var(--text); line-height: 1.3; margin-bottom: 5px;">Action Catalogue</div>
+                        <div style="font-size: 13px; color: var(--muted); line-height: 1.55;">The catalogue — every possible action available to the engine</div>
+                    </div>
+                </div>
+
+                <!-- 02 Data 360 -->
+                <div style="background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 18px 16px; display: flex; flex-direction: column; gap: 12px; position: relative; overflow: hidden;">
+                    <div style="position: absolute; top: 10px; right: 14px; font-size: 36px; font-weight: 900; color: rgba(0,27,110,0.05); line-height: 1; pointer-events: none;">02</div>
+                    <div style="width: 36px; height: 36px; border-radius: 10px; background: rgba(2,42,192,0.08); border: 1px solid rgba(2,42,192,0.14); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><ellipse cx="9" cy="5" rx="6" ry="2.5" stroke="#022AC0" stroke-width="1.6"/><path d="M3 5v4c0 1.38 2.686 2.5 6 2.5S15 10.38 15 9V5" stroke="#022AC0" stroke-width="1.6"/><path d="M3 9v4c0 1.38 2.686 2.5 6 2.5S15 14.38 15 13V9" stroke="#022AC0" stroke-width="1.6"/></svg>
+                    </div>
+                    <div>
+                        <div style="font-size: 14px; font-weight: 700; color: var(--text); line-height: 1.3; margin-bottom: 5px;">Data 360</div>
+                        <div style="font-size: 13px; color: var(--muted); line-height: 1.55;">The signal — unified customer profile, real time</div>
+                    </div>
+                </div>
+
+                <!-- 03 Einstein + Agentforce (highlighted) -->
+                <div style="background: rgba(2,42,192,0.05); border: 1px solid rgba(2,42,192,0.2); border-top: 3px solid var(--blue); border-radius: 14px; padding: 18px 16px; display: flex; flex-direction: column; gap: 12px; position: relative; overflow: hidden;">
+                    <div style="position: absolute; top: 10px; right: 14px; font-size: 36px; font-weight: 900; color: rgba(2,42,192,0.07); line-height: 1; pointer-events: none;">03</div>
+                    <div style="display: flex; gap: 6px; align-items: center; flex-shrink: 0;">
+                        <div style="width: 36px; height: 36px; border-radius: 10px; background: rgba(2,42,192,0.12); border: 1px solid rgba(2,42,192,0.2); display: flex; align-items: center; justify-content: center;">
+                            <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="3.5" stroke="#022AC0" stroke-width="1.6"/><path d="M9 2v2M9 14v2M2 9h2M14 9h2M3.9 3.9l1.4 1.4M12.7 12.7l1.4 1.4M3.9 14.1l1.4-1.4M12.7 5.3l1.4-1.4" stroke="#022AC0" stroke-width="1.5" stroke-linecap="round"/></svg>
+                        </div>
+                        <div style="width: 36px; height: 36px; border-radius: 10px; background: rgba(2,42,192,0.12); border: 1px solid rgba(2,42,192,0.2); display: flex; align-items: center; justify-content: center;">
+                            <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 3L4 8h3v7h4V8h3L9 3z" stroke="#022AC0" stroke-width="1.6" stroke-linejoin="round"/></svg>
+                        </div>
+                    </div>
+                    <div>
+                        <div style="font-size: 14px; font-weight: 700; color: var(--text); line-height: 1.3; margin-bottom: 5px;">Einstein Studio + Flow <span style="font-weight: 500; color: var(--muted);">or</span> Agentforce</div>
+                        <div style="font-size: 13px; color: var(--muted); line-height: 1.55;">The brain — ML scoring at scale, or agentic reasoning for complex decisions</div>
+                    </div>
+                    <div style="display: flex; gap: 4px; flex-wrap: wrap; margin-top: -4px;">
+                        <span style="font-size: 10px; font-weight: 700; letter-spacing: 0.08em; padding: 3px 7px; border-radius: 4px; background: rgba(2,42,192,0.1); color: var(--blue);">ML · SCALE</span>
+                        <span style="font-size: 10px; font-weight: 700; letter-spacing: 0.08em; padding: 3px 7px; border-radius: 4px; background: rgba(46,125,50,0.1); color: #2E7D32;">AGENTIC · REASONING</span>
+                    </div>
+                </div>
+
+                <!-- 04 Agentforce Marketing & Personalization -->
+                <div style="background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 18px 16px; display: flex; flex-direction: column; gap: 12px; position: relative; overflow: hidden;">
+                    <div style="position: absolute; top: 10px; right: 14px; font-size: 36px; font-weight: 900; color: rgba(0,27,110,0.05); line-height: 1; pointer-events: none;">04</div>
+                    <div style="width: 36px; height: 36px; border-radius: 10px; background: rgba(2,42,192,0.08); border: 1px solid rgba(2,42,192,0.14); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M2 4h14v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V4z" stroke="#022AC0" stroke-width="1.6"/><path d="M2 4l7 5 7-5" stroke="#022AC0" stroke-width="1.6" stroke-linecap="round"/></svg>
+                    </div>
+                    <div>
+                        <div style="font-size: 14px; font-weight: 700; color: var(--text); line-height: 1.3; margin-bottom: 5px;">Agentforce Marketing &amp; Personalization</div>
+                        <div style="font-size: 13px; color: var(--muted); line-height: 1.55;">The execution — agentic two-way communication and real-time in-channel personalisation, at scale</div>
+                    </div>
+                </div>
+
+                <!-- 05 Feedback Loop -->
+                <div style="background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 18px 16px; display: flex; flex-direction: column; gap: 12px; position: relative; overflow: hidden;">
+                    <div style="position: absolute; top: 10px; right: 14px; font-size: 36px; font-weight: 900; color: rgba(0,27,110,0.05); line-height: 1; pointer-events: none;">05</div>
+                    <div style="width: 36px; height: 36px; border-radius: 10px; background: rgba(2,42,192,0.08); border: 1px solid rgba(2,42,192,0.14); display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                        <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3 9a6 6 0 0 1 6-6 6 6 0 0 1 4.24 1.76L15 7" stroke="#022AC0" stroke-width="1.6" stroke-linecap="round"/><path d="M15 3v4h-4" stroke="#022AC0" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 9a6 6 0 0 1-6 6 6 6 0 0 1-4.24-1.76L3 11" stroke="#022AC0" stroke-width="1.6" stroke-linecap="round"/><path d="M3 15v-4h4" stroke="#022AC0" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </div>
+                    <div>
+                        <div style="font-size: 14px; font-weight: 700; color: var(--text); line-height: 1.3; margin-bottom: 5px;">Feedback Loop</div>
+                        <div style="font-size: 13px; color: var(--muted); line-height: 1.55;">The learning — every outcome improves the model</div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Two modes bar -->
+            <div style="display: flex; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 14px; background: rgba(255,255,255,0.6);">
+                <div style="flex: 1; padding: 14px 18px; border-right: 1px solid var(--border);">
+                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+                        <div style="width: 8px; height: 8px; border-radius: 50%; background: var(--blue); flex-shrink: 0;"></div>
+                        <div style="font-size: 12px; font-weight: 800; letter-spacing: 0.13em; text-transform: uppercase; color: var(--blue);">ML at Scale</div>
+                    </div>
+                    <div style="font-size: 13px; color: var(--muted); line-height: 1.55; padding-left: 16px;">Einstein Studio + Flow — ML model scores every action, Flow arbitrates the winner. Fast, deterministic, auditable across millions of customers.</div>
+                </div>
+                <div style="flex: 1; padding: 14px 18px;">
+                    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 4px;">
+                        <div style="width: 8px; height: 8px; border-radius: 50%; background: #2E7D32; flex-shrink: 0;"></div>
+                        <div style="font-size: 12px; font-weight: 800; letter-spacing: 0.13em; text-transform: uppercase; color: #2E7D32;">Agentic Reasoning</div>
+                    </div>
+                    <div style="font-size: 13px; color: var(--muted); line-height: 1.55; padding-left: 16px;">Agentforce — an AI agent evaluates using live context and reasoning. For edge cases and nuance that rules can't resolve. Both approaches work in tandem.</div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+</div><!-- end deck -->
+
+<!-- Nav -->
+<nav class="nav-bar">
+    <div class="nav-brand">
+        <img src="sf-logo-cloud.png" alt="Salesforce" style="height: 26px; width: auto;">
+        <span class="nav-label">Salesforce · A Roadmap to Agentic Decisioning</span>
+    </div>
+    <div class="nav-controls">
+        <button class="nav-btn" id="btn-prev" disabled>‹</button>
+        <span class="nav-counter" id="counter">1 / 8</span>
+        <button class="nav-btn" id="btn-next">›</button>
+    </div>
+</nav>
+
+<script>
+    var slides  = document.querySelectorAll('#deck > .slide');
+    var total   = slides.length;
+    var current = 0;
+    var busy    = false;
+
+    function goTo(idx) {
+        if (busy || idx === current || idx < 0 || idx >= total) return;
+        busy = true;
+        slides[current].classList.add('exit');
+        var prev = current;
+        current = idx;
+        setTimeout(function() {
+            slides[prev].classList.remove('active', 'exit');
+            slides[current].classList.add('active');
+            updateUI();
+            setTimeout(function() { busy = false; }, 400);
+        }, 240);
+    }
+
+    function updateUI() {
+        document.getElementById('counter').textContent = (current + 1) + ' / ' + total;
+        document.getElementById('btn-prev').disabled = current === 0;
+        document.getElementById('btn-next').disabled = current === total - 1;
+    }
+
+    document.getElementById('btn-prev').addEventListener('click', function() { goTo(current - 1); });
+    document.getElementById('btn-next').addEventListener('click', function() { goTo(current + 1); });
+
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); goTo(current + 1); }
+        if (e.key === 'ArrowLeft')                   { e.preventDefault(); goTo(current - 1); }
+    });
+
+    var tx = null;
+    document.addEventListener('touchstart', function(e) { tx = e.touches[0].clientX; });
+    document.addEventListener('touchend', function(e) {
+        if (tx === null) return;
+        var dx = e.changedTouches[0].clientX - tx;
+        if (Math.abs(dx) > 40) goTo(current + (dx < 0 ? 1 : -1));
+        tx = null;
+    });
+</script>
+
+</body>
+</html>
