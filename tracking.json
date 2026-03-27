@@ -8518,5 +8518,17 @@
     "location": "Atlanta, Georgia, United States",
     "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36",
     "returning": "yes"
+  },
+  {
+    "timestamp": "Fri, 27 Mar 2026 01:04:13 GMT",
+    "name": "Stuart Dunlop",
+    "company": "Salesforce",
+    "position": "Solutions",
+    "page": "NBA Narrative · Slides Light Internal",
+    "url": "https://sdunlop-sf.github.io/nba-narrative/slides-light-internal.html",
+    "ip": "165.225.233.20",
+    "location": "Sydney, New South Wales, Australia",
+    "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36",
+    "returning": "yes"
   }
 ]
