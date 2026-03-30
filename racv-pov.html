@@ -337,102 +337,9 @@
       min-height: 16px;
     }
 
-    /* Comments */
-    .comments-section {
-      margin-top: 48px;
-      border-top: 1px solid var(--border);
-      padding-top: 32px;
-    }
-
-    .comments-section .section-label {
-      margin-bottom: 16px;
-    }
-
-    .comment-form {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      margin-bottom: 28px;
-    }
-
-    .comment-form input,
-    .comment-form textarea {
-      font-family: 'Inter', sans-serif;
-      font-size: 14px;
-      padding: 10px 14px;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      background: var(--light);
-      color: var(--text);
-      outline: none;
-      resize: none;
-    }
-
-    .comment-form input:focus,
-    .comment-form textarea:focus {
-      border-color: var(--blue);
-    }
-
-    .comment-form textarea {
-      min-height: 90px;
-    }
-
-    .comment-submit {
-      align-self: flex-end;
-      background: var(--blue);
-      color: #fff;
-      border: none;
-      border-radius: 8px;
-      padding: 10px 22px;
-      font-family: 'Inter', sans-serif;
-      font-size: 13px;
-      font-weight: 600;
-      cursor: pointer;
-    }
-
-    .comment-submit:hover { background: #0165b8; }
-
-    .comment-list {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-
-    .comment-item {
-      background: var(--light);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 14px 18px;
-    }
-
-    .comment-meta {
-      font-size: 12px;
-      font-weight: 600;
-      color: var(--text);
-      margin-bottom: 4px;
-    }
-
-    .comment-meta span {
-      font-weight: 400;
-      color: var(--muted);
-      margin-left: 8px;
-    }
-
-    .comment-body {
-      font-size: 14px;
-      color: var(--muted);
-      line-height: 1.6;
-    }
-
-    .no-comments {
-      font-size: 13px;
-      color: #aaa;
-      font-style: italic;
-    }
-
     @media print {
       .page { padding: 40px 36px; }
-      .gate, .comments-section { display: none; }
+      .gate { display: none; }
     }
   </style>
 </head>
@@ -566,6 +473,11 @@
           <div class="ref-title">Booking.com</div>
           <p>Data Cloud enabling personalised partner engagement at scale, with unified data powering partner acquisition, upselling, and loyalty across an accommodation partner network. $1.3M ACV expansion.</p>
         </div>
+        <div class="ref-card">
+          <div class="ref-tag">Travel &amp; Leisure · Australia</div>
+          <div class="ref-title">Flight Centre World360</div>
+          <p>Built on Salesforce Loyalty Management, World360 powers a broad partner ecosystem spanning travel, retail, dining, and entertainment. A local reference for how a loyalty program becomes the connective tissue across a multi-partner network at scale.</p>
+        </div>
       </div>
     </div>
 
@@ -606,23 +518,9 @@
       <span>Stuart Dunlop · <strong>sdunlop@salesforce.com</strong></span>
     </div>
 
-    <!-- Comments -->
-    <div class="comments-section">
-      <div class="section-label">Comments</div>
-      <div class="comment-form">
-        <input type="text" id="comment-name" placeholder="Your name">
-        <textarea id="comment-text" placeholder="Leave a comment or question..."></textarea>
-        <button class="comment-submit" onclick="submitComment()">Post comment</button>
-      </div>
-      <div class="comment-list" id="comment-list">
-        <div class="no-comments" id="no-comments">No comments yet.</div>
-      </div>
-    </div>
-
   </div>
 
 <script>
-  // Password gate
   function checkPassword() {
     const val = document.getElementById('gate-input').value;
     if (val === 'RACV2026') {
@@ -634,41 +532,6 @@
       document.getElementById('gate-input').focus();
     }
   }
-
-  // Comments — stored in localStorage so they persist across reloads
-  const STORAGE_KEY = 'racv-pov-comments';
-
-  function loadComments() {
-    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-    const list = document.getElementById('comment-list');
-    const none = document.getElementById('no-comments');
-    if (saved.length === 0) { none.style.display = 'block'; return; }
-    none.style.display = 'none';
-    saved.forEach(c => list.appendChild(buildComment(c)));
-  }
-
-  function buildComment(c) {
-    const div = document.createElement('div');
-    div.className = 'comment-item';
-    div.innerHTML = `<div class="comment-meta">${c.name}<span>${c.date}</span></div><div class="comment-body">${c.text}</div>`;
-    return div;
-  }
-
-  function submitComment() {
-    const name = document.getElementById('comment-name').value.trim();
-    const text = document.getElementById('comment-text').value.trim();
-    if (!name || !text) return;
-    const comment = { name, text, date: new Date().toLocaleDateString('en-AU', { day: 'numeric', month: 'short', year: 'numeric' }) };
-    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
-    saved.push(comment);
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(saved));
-    document.getElementById('no-comments').style.display = 'none';
-    document.getElementById('comment-list').appendChild(buildComment(comment));
-    document.getElementById('comment-name').value = '';
-    document.getElementById('comment-text').value = '';
-  }
-
-  loadComments();
 </script>
 
 </body>
