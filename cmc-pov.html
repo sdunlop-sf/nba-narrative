@@ -278,7 +278,7 @@
     <div class="section">
       <div class="section-label">A Note First</div>
       <p>Thank you for the rigour and transparency you brought to the CDP evaluation. The process was well-run, the feedback was direct, and we genuinely appreciated the opportunity.</p>
-      <p>We respect the decision and we're not writing to re-open it. What we did want to share — now that we've had time to reflect properly — is a conversation we didn't have during the process. Not a feature we missed. A different problem entirely.</p>
+      <p>We respect the decision and we're not writing to re-open it. What we did want to share, now that we've had time to reflect properly, is a conversation we didn't have during the process. Not a feature we missed. A different problem entirely.</p>
     </div>
 
     <hr class="divider">
@@ -286,11 +286,11 @@
     <!-- The Reframe -->
     <div class="section">
       <div class="section-label">The Conversation We Didn't Have</div>
-      <p>The CDP evaluation was about data routing — moving event data reliably from your app to Braze, AppsFlyer, and your analytics stack. On that question, a purpose-built CDP is the right answer, and the decision makes sense.</p>
-      <p>The conversation we didn't have is what happens after the data arrives. Which clients do you act on, and how do you decide? That's not a CDP problem. That's a decisioning problem — and the data you need to solve it isn't in your marketing stack.</p>
+      <p>The CDP evaluation was about data routing: moving event data reliably from your app to Braze, AppsFlyer, and your analytics stack. On that question, a purpose-built CDP is the right answer, and the decision makes sense.</p>
+      <p>The conversation we didn't have is what happens after the data arrives. Which clients do you act on, and how do you decide? That's not a CDP problem. That's a decisioning problem, and the data you need to solve it isn't in your marketing stack.</p>
 
       <div class="highlight">
-        It's in Financial Services Cloud. Your client data — trading behaviour, account activity, service history, relationship status — is already in Salesforce. You don't need to move it, migrate it, or rebuild it. You just need to make it intelligent.
+        It's in Financial Services Cloud. Your client data: trading behaviour, account activity, service history, relationship status. It's already in Salesforce. You don't need to move it, migrate it, or rebuild it. You just need to make it intelligent.
       </div>
 
       <p>Today, the decisioning logic that acts on your clients lives in Braze: segments, journey conditions, send rules — built and maintained by the marketing team. It works. But it only sees campaign data. It doesn't see that a client's trading frequency has dropped for three consecutive weeks, that they raised a support case last month, or that their account balance has declined below a threshold that historically precedes churn. Those signals are in FSC. They're not reaching the decisioning layer.</p>
@@ -301,8 +301,8 @@
     <!-- The Opportunity -->
     <div class="section">
       <div class="section-label">What Intelligent Looks Like</div>
-      <p>Einstein Studio, trained on CMC's own client outcome data inside FSC, scores every client continuously — churn risk, propensity to increase activity, likelihood to respond to an intervention. Those scores don't just change what Braze sends. They determine whether a client gets a campaign, a call from a relationship manager, or a service workflow — all triggered from the same model, on the same client record.</p>
-      <p>The model learns from commercial outcomes, not campaign opens. Every client who churned after a signal was missed, every intervention that worked, becomes a training signal. The next recommendation is better than the last. That's the compounding return that rules-based logic — and any tool that only sees your marketing data — cannot deliver.</p>
+      <p>Einstein Studio, trained on CMC's own client outcome data inside FSC, scores every client continuously: churn risk, propensity to increase activity, likelihood to respond to an intervention. Those scores don't just change what Braze sends. They determine whether a client gets a campaign, a call from a relationship manager, or a service workflow, all triggered from the same model on the same client record.</p>
+      <p>The model learns from commercial outcomes, not campaign opens. Every client who churned after a signal was missed, every intervention that worked, becomes a training signal. The next recommendation is better than the last. That's the compounding return that rules-based logic, or any tool that only sees your marketing data, cannot deliver.</p>
 
       <table class="arch-table">
         <thead>
@@ -314,19 +314,19 @@
         <tbody>
           <tr>
             <td>FSC</td>
-            <td>The signal source — trading activity, service history, relationship data, account status. Already captured. Already governed.</td>
+            <td>The signal source: trading activity, service history, relationship data, account status. Already captured. Already governed.</td>
           </tr>
           <tr>
             <td>Einstein Studio</td>
-            <td>The decisioning engine — trained on CMC's own outcome data. Scores every client on churn risk, activity propensity, intervention priority. Learns continuously.</td>
+            <td>The decisioning engine, trained on CMC's own outcome data. Scores every client on churn risk, activity propensity, intervention priority. Learns continuously.</td>
           </tr>
           <tr>
             <td>Agentforce</td>
-            <td>The action layer — triggers the right response. A campaign in Braze, a task for a relationship manager, a service workflow. Auditable, explainable, governed.</td>
+            <td>The action layer. Triggers the right response: a campaign in Braze, a task for a relationship manager, a service workflow. Auditable, explainable, governed.</td>
           </tr>
           <tr>
             <td>mParticle / Braze</td>
-            <td>Unchanged. The decisioning output flows in as a signal — same tools, better instructions.</td>
+            <td>Unchanged. The decisioning output flows in as a signal. Same tools, better instructions.</td>
           </tr>
         </tbody>
       </table>
@@ -337,8 +337,8 @@
     <!-- Competitive -->
     <div class="section">
       <div class="section-label">A Word on Braze AI</div>
-      <p>Braze's acquisition of OfferFit gives them a strong native AI layer — reinforcement learning that continuously optimises which message, offer, and timing performs best for each individual inside the Braze platform. It's genuinely good at what it does.</p>
-      <p>What it sees is campaign data. What it optimises is marketing actions. It doesn't have visibility of trading behaviour, account status, service interactions, or relationship history — and it can't trigger a relationship manager workflow or create a case in FSC.</p>
+      <p>Braze's BrazeAI Decisioning Studio (formerly OfferFit) gives them a strong native AI layer: reinforcement learning that continuously optimises which message, offer, and timing performs best for each individual inside the Braze platform. It's genuinely good at what it does.</p>
+      <p>What it sees is campaign data. What it optimises is marketing actions. It doesn't have visibility of trading behaviour, account status, service interactions, or relationship history, and it can't trigger a relationship manager workflow or create a case in FSC.</p>
       <p>Braze AI makes your campaigns smarter. Salesforce decisioning makes your client relationships smarter. For a trading platform where the decisions that matter most happen outside the marketing stack, that distinction is significant.</p>
     </div>
 
@@ -348,19 +348,19 @@
       <div class="why-grid">
         <div class="why-card">
           <div class="why-title">No migration required</div>
-          <p>The data foundation is FSC — already live, already governed. This is not a platform replacement. It's an intelligence layer on top of what you already run.</p>
+          <p>The data foundation is FSC, already live and already governed. This is not a platform replacement. It's an intelligence layer on top of what you already run.</p>
         </div>
         <div class="why-card">
           <div class="why-title">Different buyer, different budget</div>
-          <p>This is a retention and commercial conversation — not a marketing infrastructure one. Different stakeholders, different value case, different approval path.</p>
+          <p>This is a retention and commercial conversation, not a marketing infrastructure one. Different stakeholders, different value case, different approval path.</p>
         </div>
         <div class="why-card">
           <div class="why-title">Proof before commitment</div>
-          <p>A single use case — client churn risk scoring — can be scoped as a POC with an agreed success metric before any broader platform decision is made.</p>
+          <p>A single use case, client churn risk scoring, can be scoped as a POC with an agreed success metric before any broader platform decision is made.</p>
         </div>
         <div class="why-card">
           <div class="why-title">Runs alongside mParticle</div>
-          <p>This doesn't compete with the CDP decision. It operates above it — and the output feeds directly into Braze as a decisioning signal.</p>
+          <p>This doesn't compete with the CDP decision. It operates above it, and the output feeds directly into Braze as a decisioning signal.</p>
         </div>
       </div>
     </div>
@@ -372,7 +372,7 @@
         <li>
           <div class="step-content">
             <strong>A scoping conversation</strong>
-            <span>Walk through what a decisioning POC looks like for CMC specifically — what data, what outcome, what good looks like. No proposal, no commitment.</span>
+            <span>Walk through what a decisioning POC looks like for CMC specifically: what data, what outcome, what good looks like. No proposal, no commitment.</span>
           </div>
         </li>
         <li>
