@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CMC Markets · AI Decisioning POV</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --blue: #0176D3;
+      --blue-dark: #014486;
+      --blue-lt: #EAF4FF;
+      --blue-bd: #C5E0FA;
+      --text: #181818;
+      --muted: #555;
+      --light: #F7F9FB;
+      --border: #E0E7EF;
+      --amber: #E8680A;
+      --amber-lt: #FEF3EA;
+    }
+
+    body {
+      font-family: 'Inter', -apple-system, sans-serif;
+      background: #fff;
+      color: var(--text);
+      font-size: 15px;
+      line-height: 1.7;
+      padding: 0;
+    }
+
+    .page {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 60px 48px 80px;
+    }
+
+    /* Header */
+    .doc-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      padding-bottom: 28px;
+      border-bottom: 2px solid var(--blue);
+      margin-bottom: 40px;
+    }
+
+    .doc-header-left .label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 8px;
+    }
+
+    .doc-header-left h1 {
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--text);
+      line-height: 1.2;
+      letter-spacing: -0.02em;
+    }
+
+    .doc-header-left h1 span {
+      color: var(--blue);
+    }
+
+    .doc-header-right {
+      text-align: right;
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.8;
+      padding-top: 4px;
+    }
+
+    .doc-header-right strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    /* Sections */
+    .section {
+      margin-bottom: 36px;
+    }
+
+    .section-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 10px;
+    }
+
+    .section h2 {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 12px;
+      letter-spacing: -0.01em;
+    }
+
+    .section p {
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+
+    .section p:last-child {
+      margin-bottom: 0;
+    }
+
+    /* Pull quote / highlight box */
+    .highlight {
+      background: var(--blue-lt);
+      border-left: 3px solid var(--blue);
+      border-radius: 0 8px 8px 0;
+      padding: 16px 20px;
+      margin: 20px 0;
+      font-size: 15px;
+      color: var(--text);
+      font-weight: 500;
+      line-height: 1.6;
+    }
+
+    /* Architecture table */
+    .arch-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 16px;
+      font-size: 14px;
+    }
+
+    .arch-table thead th {
+      background: var(--blue);
+      color: #fff;
+      font-weight: 600;
+      padding: 10px 16px;
+      text-align: left;
+      font-size: 12px;
+      letter-spacing: 0.04em;
+    }
+
+    .arch-table thead th:first-child { border-radius: 6px 0 0 0; }
+    .arch-table thead th:last-child { border-radius: 0 6px 0 0; }
+
+    .arch-table tbody tr {
+      border-bottom: 1px solid var(--border);
+    }
+
+    .arch-table tbody tr:last-child { border-bottom: none; }
+
+    .arch-table tbody tr:nth-child(even) {
+      background: var(--light);
+    }
+
+    .arch-table td {
+      padding: 12px 16px;
+      vertical-align: top;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .arch-table td:first-child {
+      font-weight: 700;
+      color: var(--text);
+      white-space: nowrap;
+      width: 180px;
+    }
+
+    /* Why now grid */
+    .why-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 16px;
+    }
+
+    .why-card {
+      background: var(--light);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 16px 18px;
+    }
+
+    .why-card .why-title {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+
+    .why-card p {
+      font-size: 13px;
+      color: var(--muted);
+      margin: 0;
+    }
+
+    /* Next steps */
+    .steps {
+      counter-reset: steps;
+      list-style: none;
+      margin-top: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .steps li {
+      counter-increment: steps;
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+    }
+
+    .steps li::before {
+      content: counter(steps);
+      background: var(--blue);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 700;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    .step-content strong {
+      display: block;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 2px;
+    }
+
+    .step-content span {
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    /* Divider */
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 36px 0;
+    }
+
+    /* Footer */
+    .doc-footer {
+      border-top: 1px solid var(--border);
+      padding-top: 20px;
+      margin-top: 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      color: #aaa;
+    }
+
+    .doc-footer strong {
+      color: var(--muted);
+    }
+
+    @media print {
+      .page { padding: 40px 36px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+
+    <!-- Header -->
+    <div class="doc-header">
+      <div class="doc-header-left">
+        <div class="label">Food for Thought · Confidential</div>
+        <h1>Beyond the CDP:<br><span>A Decisioning POV for CMC Markets</span></h1>
+      </div>
+      <div class="doc-header-right">
+        <strong>Prepared by Salesforce</strong><br>
+        March 2026<br>
+        Stuart Dunlop<br>
+        Strategic Solution Specialist
+      </div>
+    </div>
+
+    <!-- Opening -->
+    <div class="section">
+      <div class="section-label">A Note First</div>
+      <p>Thank you for the time and transparency you gave us during the CDP evaluation. The process was well-run, the feedback was direct, and we genuinely appreciated the opportunity to be considered.</p>
+      <p>We respect the decision. We're not writing to re-open it.</p>
+      <p>What we did want to share — now that we've had time to reflect on the evaluation properly — is something we don't think we surfaced well enough during the process. Not a feature we missed. A different conversation entirely.</p>
+    </div>
+
+    <hr class="divider">
+
+    <!-- The Reframe -->
+    <div class="section">
+      <div class="section-label">The Conversation We Should Have Had</div>
+      <p>The CDP evaluation was framed around data routing — how do we move event data from our app to Braze, AppsFlyer, and our analytics stack with minimal engineering lift. On that question, a purpose-built CDP is the right answer, and we understand why the decision went the way it did.</p>
+      <p>The conversation we didn't have — and wish we had — is what happens after the data arrives. Which customers do you act on, and how do you decide? That's not a CDP question. That's a decisioning question, and it's a different problem with a different solution.</p>
+      <div class="highlight">
+        For a trading platform, the decisions that drive revenue are not about data routing. They're about knowing — in real time — which clients are at risk of going dormant, which are ready to increase activity, and which need intervention before it's too late to act.
+      </div>
+      <p>Today, that logic lives in Braze. Rules, segments, journey conditions — built by the marketing team, manually maintained, and limited by what a rules engine can express. It works. But it doesn't learn, it doesn't adapt, and it doesn't tell you what you don't already know to look for.</p>
+    </div>
+
+    <!-- The Opportunity -->
+    <div class="section">
+      <div class="section-label">The Opportunity</div>
+      <p>A decisioning layer sits above the CDP and the activation tools. It doesn't replace them — it tells them what to do. Einstein Studio, trained on CMC's own client outcome data, scores every client continuously: likelihood to churn, propensity to increase trading volume, risk of going dormant after a loss event. Those scores flow into whatever activation stack you're running — Braze, direct, in-app — as the signal that determines what fires and when.</p>
+      <p>The result is not better segments. It's better decisions. The model learns from every outcome — every client who churned after a signal was missed, every intervention that worked — and the next recommendation is better than the last. That's the compounding return that rules-based logic can't deliver.</p>
+      <p>Critically, this is not a platform rip-and-replace. It runs alongside mParticle and Braze. It doesn't compete with the CDP decision — it builds on top of it.</p>
+    </div>
+
+    <hr class="divider">
+
+    <!-- What It Looks Like -->
+    <div class="section">
+      <div class="section-label">What It Looks Like in Practice</div>
+      <table class="arch-table">
+        <thead>
+          <tr>
+            <th>Layer</th>
+            <th>Role</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>mParticle</td>
+            <td>Data routing — event collection, connector management, feeding Braze and analytics. Unchanged.</td>
+          </tr>
+          <tr>
+            <td>Einstein Studio</td>
+            <td>Decisioning engine — trained on CMC's own client outcome data. Scores every client on churn risk, activity propensity, intervention priority. Updated continuously.</td>
+          </tr>
+          <tr>
+            <td>Data Cloud</td>
+            <td>Unified client profile — connects CRM, trading activity, behavioural signals into a single view that feeds the decisioning model.</td>
+          </tr>
+          <tr>
+            <td>Braze / existing channels</td>
+            <td>Activation — receives the decisioning output as a trigger signal. Same tools, better instructions.</td>
+          </tr>
+        </tbody>
+      </table>
+      <p style="margin-top: 14px; font-size: 13px;">The first use case — churn risk scoring on the active client book — can be scoped as a proof of concept with a defined success metric before any broader commitment is made.</p>
+    </div>
+
+    <hr class="divider">
+
+    <!-- Why This Is Different -->
+    <div class="section">
+      <div class="section-label">Why This Is a Different Conversation</div>
+      <div class="why-grid">
+        <div class="why-card">
+          <div class="why-title">Different buyer</div>
+          <p>The CDP evaluation was owned by Marketing. Decisioning is a commercial and retention conversation — RMs, trading desk, client success. Different stakeholders, different value case.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-title">Different BOM</div>
+          <p>No Mule. No full platform migration. A decisioning POC scoped to a single outcome — client churn — is a fraction of the commercial footprint of the CDP proposal.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-title">Different risk profile</div>
+          <p>This doesn't touch the activation stack or require a migration. It sits on top of what's already running. The downside of a POC is a few weeks of effort. The upside is measurable.</p>
+        </div>
+        <div class="why-card">
+          <div class="why-title">Proven in financial services</div>
+          <p>The use case — client decisioning on a transactional book — is well-established in retail banking and wealth management. The patterns transfer directly to a trading platform context.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Next Steps -->
+    <div class="section">
+      <div class="section-label">If This Is Worth a Conversation</div>
+      <ul class="steps">
+        <li>
+          <div class="step-content">
+            <strong>30-minute scoping call</strong>
+            <span>Walk through what a decisioning POC would look like for CMC specifically — what data, what outcome, what success looks like. No commitment, no proposal.</span>
+          </div>
+        </li>
+        <li>
+          <div class="step-content">
+            <strong>Define one use case</strong>
+            <span>Agree on a single, measurable outcome — client churn risk is the natural starting point. Scope the POC before any platform conversation begins.</span>
+          </div>
+        </li>
+        <li>
+          <div class="step-content">
+            <strong>Prove it, then decide</strong>
+            <span>A working model against a defined metric before any broader commitment. If it doesn't move the number, there's no case to make.</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Footer -->
+    <div class="doc-footer">
+      <span>Salesforce · Confidential · March 2026</span>
+      <span>Stuart Dunlop · <strong>stuart.dunlop@salesforce.com</strong></span>
+    </div>
+
+  </div>
+</body>
+</html>
