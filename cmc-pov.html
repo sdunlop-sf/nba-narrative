@@ -38,7 +38,6 @@
       padding: 60px 48px 80px;
     }
 
-    /* Header */
     .doc-header {
       display: flex;
       justify-content: space-between;
@@ -82,7 +81,6 @@
       font-weight: 600;
     }
 
-    /* Sections */
     .section {
       margin-bottom: 36px;
     }
@@ -96,14 +94,6 @@
       margin-bottom: 10px;
     }
 
-    .section h2 {
-      font-size: 18px;
-      font-weight: 700;
-      color: var(--text);
-      margin-bottom: 12px;
-      letter-spacing: -0.01em;
-    }
-
     .section p {
       color: var(--muted);
       margin-bottom: 12px;
@@ -113,20 +103,18 @@
       margin-bottom: 0;
     }
 
-    /* Pull quote / highlight box */
     .highlight {
       background: var(--blue-lt);
       border-left: 3px solid var(--blue);
       border-radius: 0 8px 8px 0;
       padding: 16px 20px;
       margin: 20px 0;
-      font-size: 15px;
+      font-size: 16px;
       color: var(--text);
-      font-weight: 500;
+      font-weight: 600;
       line-height: 1.6;
     }
 
-    /* Architecture table */
     .arch-table {
       width: 100%;
       border-collapse: collapse;
@@ -171,7 +159,6 @@
       width: 180px;
     }
 
-    /* Why now grid */
     .why-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -199,7 +186,6 @@
       margin: 0;
     }
 
-    /* Next steps */
     .steps {
       counter-reset: steps;
       list-style: none;
@@ -245,14 +231,12 @@
       color: var(--muted);
     }
 
-    /* Divider */
     .divider {
       border: none;
       border-top: 1px solid var(--border);
       margin: 36px 0;
     }
 
-    /* Footer */
     .doc-footer {
       border-top: 1px solid var(--border);
       padding-top: 20px;
@@ -280,7 +264,7 @@
     <div class="doc-header">
       <div class="doc-header-left">
         <div class="label">Food for Thought · Confidential</div>
-        <h1>Beyond the CDP:<br><span>A Decisioning POV for CMC Markets</span></h1>
+        <h1>Your Data Is Already There.<br><span>You Just Need to Make It Intelligent.</span></h1>
       </div>
       <div class="doc-header-right">
         <strong>Prepared by Salesforce</strong><br>
@@ -293,37 +277,33 @@
     <!-- Opening -->
     <div class="section">
       <div class="section-label">A Note First</div>
-      <p>Thank you for the time and transparency you gave us during the CDP evaluation. The process was well-run, the feedback was direct, and we genuinely appreciated the opportunity to be considered.</p>
-      <p>We respect the decision. We're not writing to re-open it.</p>
-      <p>What we did want to share — now that we've had time to reflect on the evaluation properly — is something we don't think we surfaced well enough during the process. Not a feature we missed. A different conversation entirely.</p>
+      <p>Thank you for the rigour and transparency you brought to the CDP evaluation. The process was well-run, the feedback was direct, and we genuinely appreciated the opportunity.</p>
+      <p>We respect the decision and we're not writing to re-open it. What we did want to share — now that we've had time to reflect properly — is a conversation we didn't have during the process. Not a feature we missed. A different problem entirely.</p>
     </div>
 
     <hr class="divider">
 
     <!-- The Reframe -->
     <div class="section">
-      <div class="section-label">The Conversation We Should Have Had</div>
-      <p>The CDP evaluation was framed around data routing — how do we move event data from our app to Braze, AppsFlyer, and our analytics stack with minimal engineering lift. On that question, a purpose-built CDP is the right answer, and we understand why the decision went the way it did.</p>
-      <p>The conversation we didn't have — and wish we had — is what happens after the data arrives. Which customers do you act on, and how do you decide? That's not a CDP question. That's a decisioning question, and it's a different problem with a different solution.</p>
-      <div class="highlight">
-        For a trading platform, the decisions that drive revenue are not about data routing. They're about knowing — in real time — which clients are at risk of going dormant, which are ready to increase activity, and which need intervention before it's too late to act.
-      </div>
-      <p>Today, that logic lives in Braze. Rules, segments, journey conditions — built by the marketing team, manually maintained, and limited by what a rules engine can express. It works. But it doesn't learn, it doesn't adapt, and it doesn't tell you what you don't already know to look for.</p>
-    </div>
+      <div class="section-label">The Conversation We Didn't Have</div>
+      <p>The CDP evaluation was about data routing — moving event data reliably from your app to Braze, AppsFlyer, and your analytics stack. On that question, a purpose-built CDP is the right answer, and the decision makes sense.</p>
+      <p>The conversation we didn't have is what happens after the data arrives. Which clients do you act on, and how do you decide? That's not a CDP problem. That's a decisioning problem — and the data you need to solve it isn't in your marketing stack.</p>
 
-    <!-- The Opportunity -->
-    <div class="section">
-      <div class="section-label">The Opportunity</div>
-      <p>A decisioning layer sits above the CDP and the activation tools. It doesn't replace them — it tells them what to do. Einstein Studio, trained on CMC's own client outcome data, scores every client continuously: likelihood to churn, propensity to increase trading volume, risk of going dormant after a loss event. Those scores flow into whatever activation stack you're running — Braze, direct, in-app — as the signal that determines what fires and when.</p>
-      <p>The result is not better segments. It's better decisions. The model learns from every outcome — every client who churned after a signal was missed, every intervention that worked — and the next recommendation is better than the last. That's the compounding return that rules-based logic can't deliver.</p>
-      <p>Critically, this is not a platform rip-and-replace. It runs alongside mParticle and Braze. It doesn't compete with the CDP decision — it builds on top of it.</p>
+      <div class="highlight">
+        It's in Financial Services Cloud. Your client data — trading behaviour, account activity, service history, relationship status — is already in Salesforce. You don't need to move it, migrate it, or rebuild it. You just need to make it intelligent.
+      </div>
+
+      <p>Today, the decisioning logic that acts on your clients lives in Braze: segments, journey conditions, send rules — built and maintained by the marketing team. It works. But it only sees campaign data. It doesn't see that a client's trading frequency has dropped for three consecutive weeks, that they raised a support case last month, or that their account balance has declined below a threshold that historically precedes churn. Those signals are in FSC. They're not reaching the decisioning layer.</p>
     </div>
 
     <hr class="divider">
 
-    <!-- What It Looks Like -->
+    <!-- The Opportunity -->
     <div class="section">
-      <div class="section-label">What It Looks Like in Practice</div>
+      <div class="section-label">What Intelligent Looks Like</div>
+      <p>Einstein Studio, trained on CMC's own client outcome data inside FSC, scores every client continuously — churn risk, propensity to increase activity, likelihood to respond to an intervention. Those scores don't just change what Braze sends. They determine whether a client gets a campaign, a call from a relationship manager, or a service workflow — all triggered from the same model, on the same client record.</p>
+      <p>The model learns from commercial outcomes, not campaign opens. Every client who churned after a signal was missed, every intervention that worked, becomes a training signal. The next recommendation is better than the last. That's the compounding return that rules-based logic — and any tool that only sees your marketing data — cannot deliver.</p>
+
       <table class="arch-table">
         <thead>
           <tr>
@@ -333,71 +313,78 @@
         </thead>
         <tbody>
           <tr>
-            <td>mParticle</td>
-            <td>Data routing — event collection, connector management, feeding Braze and analytics. Unchanged.</td>
+            <td>FSC</td>
+            <td>The signal source — trading activity, service history, relationship data, account status. Already captured. Already governed.</td>
           </tr>
           <tr>
             <td>Einstein Studio</td>
-            <td>Decisioning engine — trained on CMC's own client outcome data. Scores every client on churn risk, activity propensity, intervention priority. Updated continuously.</td>
+            <td>The decisioning engine — trained on CMC's own outcome data. Scores every client on churn risk, activity propensity, intervention priority. Learns continuously.</td>
           </tr>
           <tr>
-            <td>Data Cloud</td>
-            <td>Unified client profile — connects CRM, trading activity, behavioural signals into a single view that feeds the decisioning model.</td>
+            <td>Agentforce</td>
+            <td>The action layer — triggers the right response. A campaign in Braze, a task for a relationship manager, a service workflow. Auditable, explainable, governed.</td>
           </tr>
           <tr>
-            <td>Braze / existing channels</td>
-            <td>Activation — receives the decisioning output as a trigger signal. Same tools, better instructions.</td>
+            <td>mParticle / Braze</td>
+            <td>Unchanged. The decisioning output flows in as a signal — same tools, better instructions.</td>
           </tr>
         </tbody>
       </table>
-      <p style="margin-top: 14px; font-size: 13px;">The first use case — churn risk scoring on the active client book — can be scoped as a proof of concept with a defined success metric before any broader commitment is made.</p>
     </div>
 
     <hr class="divider">
 
-    <!-- Why This Is Different -->
+    <!-- Competitive -->
+    <div class="section">
+      <div class="section-label">A Word on Braze AI</div>
+      <p>Braze's acquisition of OfferFit gives them a strong native AI layer — reinforcement learning that continuously optimises which message, offer, and timing performs best for each individual inside the Braze platform. It's genuinely good at what it does.</p>
+      <p>What it sees is campaign data. What it optimises is marketing actions. It doesn't have visibility of trading behaviour, account status, service interactions, or relationship history — and it can't trigger a relationship manager workflow or create a case in FSC.</p>
+      <p>Braze AI makes your campaigns smarter. Salesforce decisioning makes your client relationships smarter. For a trading platform where the decisions that matter most happen outside the marketing stack, that distinction is significant.</p>
+    </div>
+
+    <!-- Why Now -->
     <div class="section">
       <div class="section-label">Why This Is a Different Conversation</div>
       <div class="why-grid">
         <div class="why-card">
-          <div class="why-title">Different buyer</div>
-          <p>The CDP evaluation was owned by Marketing. Decisioning is a commercial and retention conversation — RMs, trading desk, client success. Different stakeholders, different value case.</p>
+          <div class="why-title">No migration required</div>
+          <p>The data foundation is FSC — already live, already governed. This is not a platform replacement. It's an intelligence layer on top of what you already run.</p>
         </div>
         <div class="why-card">
-          <div class="why-title">Different BOM</div>
-          <p>No Mule. No full platform migration. A decisioning POC scoped to a single outcome — client churn — is a fraction of the commercial footprint of the CDP proposal.</p>
+          <div class="why-title">Different buyer, different budget</div>
+          <p>This is a retention and commercial conversation — not a marketing infrastructure one. Different stakeholders, different value case, different approval path.</p>
         </div>
         <div class="why-card">
-          <div class="why-title">Different risk profile</div>
-          <p>This doesn't touch the activation stack or require a migration. It sits on top of what's already running. The downside of a POC is a few weeks of effort. The upside is measurable.</p>
+          <div class="why-title">Proof before commitment</div>
+          <p>A single use case — client churn risk scoring — can be scoped as a POC with an agreed success metric before any broader platform decision is made.</p>
         </div>
         <div class="why-card">
-          <div class="why-title">Proven in financial services</div>
-          <p>The use case — client decisioning on a transactional book — is well-established in retail banking and wealth management. The patterns transfer directly to a trading platform context.</p>
+          <div class="why-title">Runs alongside mParticle</div>
+          <p>This doesn't compete with the CDP decision. It operates above it — and the output feeds directly into Braze as a decisioning signal.</p>
         </div>
       </div>
     </div>
 
     <!-- Next Steps -->
     <div class="section">
-      <div class="section-label">If This Is Worth a Conversation</div>
+      <div class="section-label">If This Is Worth 30 Minutes</div>
       <ul class="steps">
         <li>
           <div class="step-content">
-            <strong>30-minute scoping call</strong>
-            <span>Walk through what a decisioning POC would look like for CMC specifically — what data, what outcome, what success looks like. No commitment, no proposal.</span>
+            <strong>A scoping conversation</strong>
+            <span>Walk through what a decisioning POC looks like for CMC specifically — what data, what outcome, what good looks like. No proposal, no commitment.</span>
           </div>
         </li>
         <li>
           <div class="step-content">
-            <strong>Define one use case</strong>
-            <span>Agree on a single, measurable outcome — client churn risk is the natural starting point. Scope the POC before any platform conversation begins.</span>
+            <strong>Agree one use case</strong>
+            <span>Client churn risk is the natural starting point. Define the success metric before anything else. If the model doesn't move the number, there's no case to make.</span>
           </div>
         </li>
         <li>
           <div class="step-content">
             <strong>Prove it, then decide</strong>
-            <span>A working model against a defined metric before any broader commitment. If it doesn't move the number, there's no case to make.</span>
+            <span>A working model against a defined outcome before any broader platform conversation begins.</span>
           </div>
         </li>
       </ul>
