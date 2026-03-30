@@ -256,13 +256,201 @@
       color: var(--muted);
     }
 
+    /* Password gate */
+    .gate {
+      position: fixed;
+      inset: 0;
+      background: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+    }
+
+    .gate-box {
+      max-width: 360px;
+      width: 100%;
+      padding: 40px;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      text-align: center;
+    }
+
+    .gate-box .label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 12px;
+    }
+
+    .gate-box h2 {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+
+    .gate-box p {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 24px;
+    }
+
+    .gate-box input {
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      padding: 11px 16px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      width: 100%;
+      outline: none;
+      text-align: center;
+      letter-spacing: 0.1em;
+      margin-bottom: 12px;
+    }
+
+    .gate-box input:focus {
+      border-color: var(--blue);
+    }
+
+    .gate-box button {
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      font-weight: 600;
+      background: var(--blue);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 11px 24px;
+      width: 100%;
+      cursor: pointer;
+    }
+
+    .gate-box button:hover { background: #0165b8; }
+
+    .gate-error {
+      font-size: 12px;
+      color: #c0392b;
+      margin-top: 8px;
+      min-height: 16px;
+    }
+
+    /* Comments */
+    .comments-section {
+      margin-top: 48px;
+      border-top: 1px solid var(--border);
+      padding-top: 32px;
+    }
+
+    .comments-section .section-label {
+      margin-bottom: 16px;
+    }
+
+    .comment-form {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 28px;
+    }
+
+    .comment-form input,
+    .comment-form textarea {
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      padding: 10px 14px;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      background: var(--light);
+      color: var(--text);
+      outline: none;
+      resize: none;
+    }
+
+    .comment-form input:focus,
+    .comment-form textarea:focus {
+      border-color: var(--blue);
+    }
+
+    .comment-form textarea {
+      min-height: 90px;
+    }
+
+    .comment-submit {
+      align-self: flex-end;
+      background: var(--blue);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 22px;
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .comment-submit:hover { background: #0165b8; }
+
+    .comment-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .comment-item {
+      background: var(--light);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px 18px;
+    }
+
+    .comment-meta {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+
+    .comment-meta span {
+      font-weight: 400;
+      color: var(--muted);
+      margin-left: 8px;
+    }
+
+    .comment-body {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .no-comments {
+      font-size: 13px;
+      color: #aaa;
+      font-style: italic;
+    }
+
     @media print {
       .page { padding: 40px 36px; }
+      .gate, .comments-section { display: none; }
     }
   </style>
 </head>
 <body>
-  <div class="page">
+
+  <!-- Password gate -->
+  <div class="gate" id="gate">
+    <div class="gate-box">
+      <div class="label">Salesforce · Confidential</div>
+      <h2>RACV Loyalty POV</h2>
+      <p>This document is password protected. Please enter the access code to continue.</p>
+      <input type="password" id="gate-input" placeholder="Enter password" onkeydown="if(event.key==='Enter')checkPassword()">
+      <button onclick="checkPassword()">View Document</button>
+      <div class="gate-error" id="gate-error"></div>
+    </div>
+  </div>
+
+  <div class="page" id="main-content" style="display:none;">
 
     <!-- Header -->
     <div class="doc-header">
@@ -284,15 +472,15 @@
       <p>2.29 million members. $576 million in member benefits delivered last year. A leisure portfolio spanning eight resorts, two clubs, and a growing ecosystem of energy, home, travel, and finance products. RACV has something most organisations spend decades trying to build: a trusted, recurring relationship with the majority of Victorian households.</p>
       <p>The question is not how to attract members. It's how to deepen what already exists. And right now, the depth of that relationship depends heavily on which division a member happens to interact with and how manually that interaction is managed.</p>
       <div class="highlight">
-        The members who stay with RACV for life don't stay because of the points. They stay because RACV knows them. The opportunity is to make that true at scale — across every touchpoint, every business unit, and every partner in the ecosystem.
+        The members who stay with RACV for life don't stay because of the points. They stay because RACV knows them. The opportunity is to make that true at scale: across every touchpoint, every business unit, and every partner in the ecosystem.
       </div>
     </div>
 
     <!-- The Reference -->
     <div class="section">
       <div class="section-label">A Reference Worth Paying Attention To</div>
-      <p>CBA is pursuing a strategy of owning all customer transactions across the home: mortgage, everyday banking, insurance, energy, and wealth in a single relationship. The logic is straightforward — the more of a customer's life that flows through one trusted provider, the harder it becomes to leave and the more each interaction teaches you about the next one.</p>
-      <p>For RACV, the equivalent isn't financial. It's the moments that matter most across a member's life: getting home when the car breaks down, a weekend away with the family, insuring the house, switching to solar, planning a trip abroad. RACV already touches most of these. The gap is that each one happens in isolation — a separate interaction, a separate dataset, a separate opportunity that doesn't inform the next.</p>
+      <p>CBA is pursuing a strategy of owning all customer transactions across the home: mortgage, everyday banking, insurance, energy, and wealth in a single relationship. The logic is straightforward: the more of a customer's life that flows through one trusted provider, the harder it becomes to leave and the more each interaction teaches you about the next one.</p>
+      <p>For RACV, the equivalent isn't financial. It's the moments that matter most across a member's life: getting home when the car breaks down, a weekend away with the family, insuring the house, switching to solar, planning a trip abroad. RACV already touches most of these. The gap is that each one happens in isolation. A separate interaction, a separate dataset, a separate opportunity that doesn't inform the next.</p>
       <p>The loyalty program is the connective tissue. Not a points balance. A system that recognises a member across all of those moments, rewards the breadth of the relationship, and uses what it knows to determine what comes next.</p>
     </div>
 
@@ -301,9 +489,9 @@
     <!-- The Opportunity -->
     <div class="section">
       <div class="section-label">Where the Opportunity Is</div>
-      <p>RACV Leisure is the underutilised asset in this picture. 196,000 members visited RACV resorts last year — but 177,000 visitors were non-members. Leisure is both a retention tool for existing members and an acquisition channel for new ones. It's also where the emotional connection to the RACV brand is strongest: a family holiday, a golf weekend, a spa day. Those experiences create loyalty that a roadside assistance renewal never can.</p>
-      <p>The partner network extends this further. A loyalty program that only rewards RACV products is inherently limited by RACV's own footprint. A partner ecosystem — fuel, retail, dining, entertainment — creates daily interaction with the loyalty program across moments RACV doesn't own. Every partner interaction is a signal. Every signal teaches the decisioning system something about what that member needs next.</p>
-      <p>This is the model Marriott built with Bonvoy. Not a hotel loyalty program — a lifestyle membership that earns and redeems across a global partner ecosystem, powered by unified data that makes every interaction more relevant than the last.</p>
+      <p>RACV Leisure is the underutilised asset in this picture. 196,000 members visited RACV resorts last year, but 177,000 visitors were non-members. Leisure is both a retention tool for existing members and an acquisition channel for new ones. It's also where the emotional connection to the RACV brand is strongest: a family holiday, a golf weekend, a spa day. Those experiences create loyalty that a roadside assistance renewal never can.</p>
+      <p>The partner network extends this further. A loyalty program that only rewards RACV products is inherently limited by RACV's own footprint. A partner ecosystem (fuel, retail, dining, entertainment) creates daily interaction with the loyalty program across moments RACV doesn't own. Every partner interaction is a signal. Every signal teaches the decisioning system something about what that member needs next.</p>
+      <p>This is the model Marriott built with Bonvoy. Not a hotel loyalty program, a lifestyle membership that earns and redeems across a global partner ecosystem, powered by unified data that makes every interaction more relevant than the last.</p>
     </div>
 
     <!-- The Vision -->
@@ -333,7 +521,7 @@
           </tr>
           <tr>
             <td>Data Cloud + Snowflake</td>
-            <td>The unified member profile. Connects resort stays, insurance products, roadside events, partner transactions, and digital behaviour into one view of each member — updated continuously, not in batch.</td>
+            <td>The unified member profile. Connects resort stays, insurance products, roadside events, partner transactions, and digital behaviour into one view of each member, updated continuously rather than in batch.</td>
           </tr>
           <tr>
             <td>Einstein Studio</td>
@@ -341,7 +529,7 @@
           </tr>
           <tr>
             <td>Marketing Cloud Next</td>
-            <td>The delivery layer. Executes the next best interaction across email, SMS, app, and web. Already in implementation — the decisioning layer determines what fires and when.</td>
+            <td>The delivery layer. Executes the next best interaction across email, SMS, app, and web. Already in implementation. The decisioning layer determines what fires and when.</td>
           </tr>
           <tr>
             <td>Agentforce</td>
@@ -349,7 +537,7 @@
           </tr>
         </tbody>
       </table>
-      <p style="margin-top: 14px; font-size: 13px;">This is not a greenfield build. The Salesforce foundation is already in place. The loyalty and decisioning layers sit on top of infrastructure RACV is actively investing in — they accelerate the roadmap rather than extend it.</p>
+      <p style="margin-top: 14px; font-size: 13px;">This is not a greenfield build. The Salesforce foundation is already in place. The loyalty and decisioning layers sit on top of infrastructure RACV is actively investing in — they accelerate the roadmap rather than adding to it.</p>
     </div>
 
     <hr class="divider">
@@ -376,7 +564,7 @@
         <div class="ref-card">
           <div class="ref-tag">Partner Network</div>
           <div class="ref-title">Booking.com</div>
-          <p>Data Cloud enabling personalised partner engagement at scale — unified data powering partner acquisition, upselling, and loyalty across an accommodation partner network. $1.3M ACV expansion.</p>
+          <p>Data Cloud enabling personalised partner engagement at scale, with unified data powering partner acquisition, upselling, and loyalty across an accommodation partner network. $1.3M ACV expansion.</p>
         </div>
       </div>
     </div>
@@ -418,6 +606,70 @@
       <span>Stuart Dunlop · <strong>sdunlop@salesforce.com</strong></span>
     </div>
 
+    <!-- Comments -->
+    <div class="comments-section">
+      <div class="section-label">Comments</div>
+      <div class="comment-form">
+        <input type="text" id="comment-name" placeholder="Your name">
+        <textarea id="comment-text" placeholder="Leave a comment or question..."></textarea>
+        <button class="comment-submit" onclick="submitComment()">Post comment</button>
+      </div>
+      <div class="comment-list" id="comment-list">
+        <div class="no-comments" id="no-comments">No comments yet.</div>
+      </div>
+    </div>
+
   </div>
+
+<script>
+  // Password gate
+  function checkPassword() {
+    const val = document.getElementById('gate-input').value;
+    if (val === 'RACV2026') {
+      document.getElementById('gate').style.display = 'none';
+      document.getElementById('main-content').style.display = 'block';
+    } else {
+      document.getElementById('gate-error').textContent = 'Incorrect password. Please try again.';
+      document.getElementById('gate-input').value = '';
+      document.getElementById('gate-input').focus();
+    }
+  }
+
+  // Comments — stored in localStorage so they persist across reloads
+  const STORAGE_KEY = 'racv-pov-comments';
+
+  function loadComments() {
+    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+    const list = document.getElementById('comment-list');
+    const none = document.getElementById('no-comments');
+    if (saved.length === 0) { none.style.display = 'block'; return; }
+    none.style.display = 'none';
+    saved.forEach(c => list.appendChild(buildComment(c)));
+  }
+
+  function buildComment(c) {
+    const div = document.createElement('div');
+    div.className = 'comment-item';
+    div.innerHTML = `<div class="comment-meta">${c.name}<span>${c.date}</span></div><div class="comment-body">${c.text}</div>`;
+    return div;
+  }
+
+  function submitComment() {
+    const name = document.getElementById('comment-name').value.trim();
+    const text = document.getElementById('comment-text').value.trim();
+    if (!name || !text) return;
+    const comment = { name, text, date: new Date().toLocaleDateString('en-AU', { day: 'numeric', month: 'short', year: 'numeric' }) };
+    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+    saved.push(comment);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(saved));
+    document.getElementById('no-comments').style.display = 'none';
+    document.getElementById('comment-list').appendChild(buildComment(comment));
+    document.getElementById('comment-name').value = '';
+    document.getElementById('comment-text').value = '';
+  }
+
+  loadComments();
+</script>
+
 </body>
 </html>
