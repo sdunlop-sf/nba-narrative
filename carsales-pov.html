@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CMC Markets · AI Decisioning POV</title>
+  <title>CAR Group · AI Decisioning POV</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -38,6 +38,7 @@
       padding: 60px 48px 80px;
     }
 
+    /* Header */
     .doc-header {
       display: flex;
       justify-content: space-between;
@@ -81,6 +82,7 @@
       font-weight: 600;
     }
 
+    /* Sections */
     .section {
       margin-bottom: 36px;
     }
@@ -94,6 +96,14 @@
       margin-bottom: 10px;
     }
 
+    .section h2 {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 12px;
+      letter-spacing: -0.01em;
+    }
+
     .section p {
       color: var(--muted);
       margin-bottom: 12px;
@@ -103,18 +113,20 @@
       margin-bottom: 0;
     }
 
+    /* Pull quote / highlight box */
     .highlight {
       background: var(--blue-lt);
       border-left: 3px solid var(--blue);
       border-radius: 0 8px 8px 0;
       padding: 16px 20px;
       margin: 20px 0;
-      font-size: 16px;
+      font-size: 15px;
       color: var(--text);
-      font-weight: 600;
+      font-weight: 500;
       line-height: 1.6;
     }
 
+    /* Architecture table */
     .arch-table {
       width: 100%;
       border-collapse: collapse;
@@ -159,6 +171,7 @@
       width: 180px;
     }
 
+    /* Why now grid */
     .why-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -186,6 +199,7 @@
       margin: 0;
     }
 
+    /* Next steps */
     .steps {
       counter-reset: steps;
       list-style: none;
@@ -231,12 +245,14 @@
       color: var(--muted);
     }
 
+    /* Divider */
     .divider {
       border: none;
       border-top: 1px solid var(--border);
       margin: 36px 0;
     }
 
+    /* Footer */
     .doc-footer {
       border-top: 1px solid var(--border);
       padding-top: 20px;
@@ -263,8 +279,8 @@
     <!-- Header -->
     <div class="doc-header">
       <div class="doc-header-left">
-        <div class="label">Food for Thought · Confidential</div>
-        <h1>Your Data Is Already There.<br><span>You Just Need to Make It Intelligent.</span></h1>
+        <div class="label">Point of View · Confidential</div>
+        <h1>From Enquiry to Conversion:<br><span>AI Decisioning for CAR Group</span></h1>
       </div>
       <div class="doc-header-right">
         <strong>Prepared by Salesforce</strong><br>
@@ -274,117 +290,110 @@
       </div>
     </div>
 
-    <!-- Opening -->
+    <!-- The Situation -->
     <div class="section">
-      <div class="section-label">A Note First</div>
-      <p>Thank you for the rigour and transparency you brought to the CDP evaluation. The process was well-run, the feedback was direct, and we genuinely appreciated the opportunity.</p>
-      <p>We respect the decision and we're not writing to re-open it. What we did want to share, now that we've had time to reflect properly, is a conversation we didn't have during the process. Not a feature we missed. A different problem entirely.</p>
-    </div>
-
-    <hr class="divider">
-
-    <!-- The Reframe -->
-    <div class="section">
-      <div class="section-label">The Conversation We Didn't Have</div>
-      <p>The CDP evaluation was about data routing: moving event data reliably from your app to Braze, AppsFlyer, and your analytics stack. On that question, a purpose-built CDP is the right answer, and the decision makes sense.</p>
-      <p>The conversation we didn't have is what happens after the data arrives. Which clients do you act on, and how do you decide? That's not a CDP problem. That's a decisioning problem, and the data you need to solve it isn't in your marketing stack.</p>
-
+      <div class="section-label">The Situation</div>
+      <p>CAR Group sends approximately <strong style="color: var(--text);">250 million transactional emails annually</strong> — enquiry confirmations, dealer responses, listing alerts. These arrive at the exact moment a buyer is most engaged: high intent, active in the funnel, ready to act.</p>
+      <p>Today, they deliver no intelligence. No recommendations. No next best action. No reporting. No ownership. They confirm. Nothing more.</p>
       <div class="highlight">
-        It's in Financial Services Cloud. Your client data: trading behaviour, account activity, service history, relationship status. It's already in Salesforce. You don't need to move it, migrate it, or rebuild it. You just need to make it intelligent.
+        The data foundation is done. Snowflake is implemented. Years of buyer behaviour, inventory signals, and engagement history are clean and primed. The infrastructure is ready. The activation layer is missing.
       </div>
-
-      <p>Today, the decisioning logic that acts on your clients lives in Braze: segments, journey conditions, send rules — built and maintained by the marketing team. It works. But it only sees campaign data. It doesn't see that a client's trading frequency has dropped for three consecutive weeks, that they raised a support case last month, or that their account balance has declined below a threshold that historically precedes churn. Those signals are in FSC. They're not reaching the decisioning layer.</p>
     </div>
-
-    <hr class="divider">
 
     <!-- The Opportunity -->
     <div class="section">
-      <div class="section-label">What Intelligent Looks Like</div>
-      <p>Einstein Studio, trained on CMC's own client outcome data inside FSC, scores every client continuously: churn risk, propensity to increase activity, likelihood to respond to an intervention. Those scores don't just change what Braze sends. They determine whether a client gets a campaign, a call from a relationship manager, or a service workflow, all triggered from the same model on the same client record.</p>
-      <p>The model learns from commercial outcomes, not campaign opens. Every client who churned after a signal was missed, every intervention that worked, becomes a training signal. The next recommendation is better than the last. That's the compounding return that rules-based logic, or any tool that only sees your marketing data, cannot deliver.</p>
+      <div class="section-label">The Opportunity</div>
+      <p>The highest-ROI move available to CAR Group right now is not a new campaign or a new channel. It's turning 250 million transactional emails into <strong style="color: var(--text);">250 million intelligent decisioning moments</strong>.</p>
+      <p>An enquiry email sent to a buyer who has searched SUVs in a specific price range, visited three listings, and engaged twice in the last seven days is not a generic confirmation. It's an opportunity — to surface the next most relevant listing, offer a finance prompt, or trigger the right dealer follow-up — determined by a decisioning engine that understands this customer, this moment, and this context.</p>
+      <p>Done at scale, the impact compounds. Every click, conversion, and bounce becomes a training signal. The model learns. The next recommendation is better than the last.</p>
+    </div>
 
+    <hr class="divider">
+
+    <!-- The Vision -->
+    <div class="section">
+      <div class="section-label">The Vision</div>
+      <p>CAR Group becomes a business where every customer touchpoint — from the first enquiry email to the next app notification — is determined by intelligence, not a template.</p>
+      <p>The decisioning layer runs across web, app, and comms, unified by a single customer profile. Marketing owns the logic. Engineering doesn't own every change. Updates take hours, not months. And every action is auditable — you can explain why that recommendation was made to that customer at that moment.</p>
+    </div>
+
+    <!-- Architecture -->
+    <div class="section">
+      <div class="section-label">How Salesforce Enables It</div>
       <table class="arch-table">
         <thead>
           <tr>
             <th>Layer</th>
-            <th>Role</th>
+            <th>What it does</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <td>FSC</td>
-            <td>The signal source: trading activity, service history, relationship data, account status. Already captured. Already governed.</td>
+            <td>Data Cloud</td>
+            <td>Unifies Snowflake data with real-time behavioural signals into one customer profile across every touchpoint — one view of each buyer, updated in real time</td>
           </tr>
           <tr>
             <td>Einstein Studio</td>
-            <td>The decisioning engine, trained on CMC's own outcome data. Scores every client on churn risk, activity propensity, intervention priority. Learns continuously.</td>
+            <td>Runs the decisioning model — trained on CAR Group's own outcome data, improving with every interaction. No black box. No generic model.</td>
+          </tr>
+          <tr>
+            <td>Marketing Cloud</td>
+            <td>Delivers the action — the recommendation, the offer, the next best message — at the right moment in the right channel</td>
           </tr>
           <tr>
             <td>Agentforce</td>
-            <td>The action layer. Triggers the right response: a campaign in Braze, a task for a relationship manager, a service workflow. Auditable, explainable, governed.</td>
-          </tr>
-          <tr>
-            <td>mParticle / Braze</td>
-            <td>Unchanged. The decisioning output flows in as a signal. Same tools, better instructions.</td>
+            <td>Governed execution layer — auditable, explainable, and scalable without engineering dependency</td>
           </tr>
         </tbody>
       </table>
+      <p style="margin-top: 14px; font-size: 13px;">This is not a greenfield build. The Snowflake foundation maps directly into Data Cloud. The first use case — recommendations in transactional emails — can be live fast, with a defined success metric, before any broader platform commitment is made.</p>
     </div>
 
     <hr class="divider">
 
-    <!-- Competitive -->
-    <div class="section">
-      <div class="section-label">A Word on Braze AI</div>
-      <p>Braze's BrazeAI Decisioning Studio (formerly OfferFit) gives them a strong native AI layer: reinforcement learning that continuously optimises which message, offer, and timing performs best for each individual inside the Braze platform. It's genuinely good at what it does.</p>
-      <p>What it sees is campaign data. What it optimises is marketing actions. It doesn't have visibility of trading behaviour, account status, service interactions, or relationship history, and it can't trigger a relationship manager workflow or create a case in FSC.</p>
-      <p>Braze AI makes your campaigns smarter. Salesforce decisioning makes your client relationships smarter. For a trading platform where the decisions that matter most happen outside the marketing stack, that distinction is significant.</p>
-    </div>
-
     <!-- Why Now -->
     <div class="section">
-      <div class="section-label">Why This Is a Different Conversation</div>
+      <div class="section-label">Why Now</div>
       <div class="why-grid">
         <div class="why-card">
-          <div class="why-title">No migration required</div>
-          <p>The data foundation is FSC, already live and already governed. This is not a platform replacement. It's an intelligence layer on top of what you already run.</p>
+          <div class="why-title">The data is ready</div>
+          <p>Most organisations spend two years getting to where CAR Group already is. That's not a small advantage — it's months of time to value, available now.</p>
         </div>
         <div class="why-card">
-          <div class="why-title">Different buyer, different budget</div>
-          <p>This is a retention and commercial conversation, not a marketing infrastructure one. Different stakeholders, different value case, different approval path.</p>
+          <div class="why-title">The personalization stack is open</div>
+          <p>The Adobe layer hasn't delivered. The window to define a new architecture is open — but it won't stay that way as existing vendors move to retain the relationship.</p>
         </div>
         <div class="why-card">
-          <div class="why-title">Proof before commitment</div>
-          <p>A single use case, client churn risk scoring, can be scoped as a POC with an agreed success metric before any broader platform decision is made.</p>
+          <div class="why-title">The AI mandate is live</div>
+          <p>A global AI team is established and evaluating architecture now. The decisioning foundation needs to be set before that team lands on a fragmented, point-solution approach.</p>
         </div>
         <div class="why-card">
-          <div class="why-title">Runs alongside mParticle</div>
-          <p>This doesn't compete with the CDP decision. It operates above it, and the output feeds directly into Braze as a decisioning signal.</p>
+          <div class="why-title">The ROI is quantifiable</div>
+          <p>250 million emails. A 1% improvement in recommendation conversion is not a rounding error — it's a material revenue number, measurable from day one.</p>
         </div>
       </div>
     </div>
 
     <!-- Next Steps -->
     <div class="section">
-      <div class="section-label">If This Is Worth 30 Minutes</div>
+      <div class="section-label">Recommended Next Steps</div>
       <ul class="steps">
         <li>
           <div class="step-content">
-            <strong>A scoping conversation</strong>
-            <span>Walk through what a decisioning POC looks like for CMC specifically: what data, what outcome, what good looks like. No proposal, no commitment.</span>
+            <strong>Architecture session</strong>
+            <span>Data Cloud and Einstein Studio mapped to the transactional comms use case. Gus, Chu, and Bianca in the room.</span>
           </div>
         </li>
         <li>
           <div class="step-content">
-            <strong>Agree one use case</strong>
-            <span>Client churn risk is the natural starting point. Define the success metric before anything else. If the model doesn't move the number, there's no case to make.</span>
+            <strong>Proof of concept</strong>
+            <span>Recommendations in enquiry emails using existing Snowflake data. Agreed success metric defined before we start.</span>
           </div>
         </li>
         <li>
           <div class="step-content">
-            <strong>Prove it, then decide</strong>
-            <span>A working model against a defined outcome before any broader platform conversation begins.</span>
+            <strong>Vision session</strong>
+            <span>Lifecycle messaging and cross-channel personalisation roadmap for Rafael and the EGM team.</span>
           </div>
         </li>
       </ul>
