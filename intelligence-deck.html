@@ -439,12 +439,13 @@
       row-gap: 14px;
     }
 
-    /* Row 1: graphic | + | actions */
+    /* Row 1: graphic | + | actions — all bottom-aligned */
     .s2-graphic {
       grid-column: 1;
       grid-row: 1;
+      align-self: end;
       display: flex;
-      align-items: center;
+      align-items: flex-end;
       padding-right: 8px;
     }
 
@@ -464,12 +465,13 @@
       justify-content: center;
     }
 
-    .s2-op.plus { grid-column: 2; grid-row: 1; align-self: center; }
-    .s2-op.eq   { grid-column: 2; grid-row: 2; color: var(--blue); }
+    .s2-op.plus { grid-column: 2; grid-row: 1; align-self: end; padding-bottom: 6px; }
+    .s2-op.eq   { grid-column: 2; grid-row: 2; color: var(--blue); align-self: center; }
 
     .s2-actions {
       grid-column: 3;
       grid-row: 1;
+      align-self: end;
     }
 
     .s2-actions-label {
@@ -504,6 +506,7 @@
     .s2-outcome {
       grid-column: 3;
       grid-row: 2;
+      align-self: center;
       background: var(--blue);
       border-radius: 12px;
       padding: 18px 24px;
