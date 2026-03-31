@@ -118,20 +118,96 @@
     }
 
     /* ─────────────────────────────────────────────────
+       SLIDE 0 · COVER
+    ───────────────────────────────────────────────── */
+    .s0-inner {
+      max-width: 860px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .s0-eyebrow {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 20px;
+    }
+
+    .s0-title {
+      font-size: clamp(38px, 5.5vw, 72px);
+      font-weight: 900;
+      line-height: 1.0;
+      letter-spacing: -0.04em;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+
+    .s0-title span { color: var(--blue); }
+
+    .s0-subtitle {
+      font-size: clamp(20px, 2.5vw, 32px);
+      font-weight: 700;
+      color: var(--dim);
+      letter-spacing: -0.02em;
+      margin-bottom: 48px;
+    }
+
+    .s0-divider {
+      width: 100%;
+      height: 1px;
+      background: var(--border);
+      margin-bottom: 28px;
+    }
+
+    .s0-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+
+    .s0-meta-left {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .s0-meta-left strong {
+      display: block;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .s0-meta-right {
+      text-align: right;
+      font-size: 12px;
+      color: var(--dim);
+      line-height: 1.8;
+    }
+
+    .s0-meta-right strong { color: var(--muted); font-weight: 600; }
+
+    /* ─────────────────────────────────────────────────
        SLIDE 1 · THE OPPORTUNITY
     ───────────────────────────────────────────────── */
     .s1-inner {
-      max-width: 1100px;
+      max-width: 1060px;
       width: 100%;
       display: flex;
       flex-direction: column;
       gap: 28px;
     }
 
+    .s1-head { }
+
     .s1-title {
-      font-size: clamp(28px, 3.5vw, 48px);
+      font-size: clamp(26px, 3.2vw, 44px);
       font-weight: 900;
-      line-height: 1.08;
+      line-height: 1.1;
       letter-spacing: -0.03em;
       color: var(--text);
     }
@@ -139,18 +215,24 @@
     .s1-title span { color: var(--blue); }
 
     .s1-sub {
-      font-size: clamp(13px, 1.3vw, 16px);
+      font-size: clamp(13px, 1.2vw, 15px);
       color: var(--muted);
       margin-top: 10px;
-      line-height: 1.65;
-      max-width: 640px;
+      line-height: 1.7;
     }
 
+    /* Formula */
     .s1-formula {
       display: flex;
       align-items: center;
       gap: 10px;
       flex-wrap: wrap;
+    }
+
+    .s1-formula-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
     }
 
     .s1-formula-box {
@@ -176,92 +258,138 @@
       color: var(--text);
     }
 
+    .s1-formula-stacked {
+      background: var(--card);
+      border: 1.5px solid var(--blue-bd);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .s1-formula-stacked .stack-row {
+      padding: 7px 20px;
+      border-bottom: 1px solid var(--border);
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .s1-formula-stacked .stack-row:last-child { border-bottom: none; }
+
+    .s1-formula-stacked .stack-row .row-label {
+      font-size: 9px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--blue);
+      min-width: 52px;
+    }
+
     .s1-formula-op {
-      font-size: 22px;
+      font-size: 24px;
       font-weight: 300;
       color: var(--dim);
+      line-height: 1;
+    }
+
+    .s1-formula-arrow {
+      font-size: 26px;
+      color: var(--dim);
+      margin: 0 4px;
       line-height: 1;
     }
 
     .s1-formula-result {
       background: var(--blue);
       border-radius: 10px;
-      padding: 10px 24px;
+      padding: 14px 24px;
+      text-align: center;
+    }
+
+    .s1-formula-result .res-label {
+      font-size: 9px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: rgba(255,255,255,0.65);
+      margin-bottom: 3px;
+    }
+
+    .s1-formula-result .res-val {
       font-size: 16px;
-      font-weight: 800;
+      font-weight: 900;
       color: #fff;
       letter-spacing: -0.01em;
       white-space: nowrap;
     }
 
-    .s1-proof {
-      display: grid;
-      grid-template-columns: 1fr 1fr 1fr;
-      gap: 14px;
-    }
-
-    .s1-card {
+    /* Market opportunity bar */
+    .s1-market {
       background: var(--card);
       border: 1px solid var(--border);
       border-radius: 12px;
-      padding: 20px 22px;
+      padding: 20px 24px;
+      display: flex;
+      align-items: center;
+      gap: 28px;
     }
 
-    .s1-card.accent {
-      background: var(--card-alt);
-      border-color: var(--blue-bd);
+    .s1-market-text {
+      flex: 1;
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.7;
     }
 
-    .s1-card-eyebrow {
+    .s1-market-text strong { color: var(--text); }
+
+    .s1-market-deals {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      flex-shrink: 0;
+      border-left: 1px solid var(--border);
+      padding-left: 28px;
+    }
+
+    .s1-market-deals .deals-label {
       font-size: 9px;
       font-weight: 700;
-      letter-spacing: 0.14em;
       text-transform: uppercase;
+      letter-spacing: 0.14em;
       color: var(--blue);
-      margin-bottom: 8px;
+      margin-bottom: 2px;
     }
 
-    .s1-card-title {
-      font-size: 14px;
-      font-weight: 700;
-      color: var(--text);
-      margin-bottom: 7px;
-      line-height: 1.35;
-    }
-
-    .s1-card-body {
-      font-size: 12px;
-      color: var(--muted);
-      line-height: 1.65;
-    }
-
-    .s1-deal-row {
-      display: flex;
-      gap: 8px;
-      margin-top: 12px;
-      flex-wrap: wrap;
-    }
+    .s1-deal-row { display: flex; gap: 8px; flex-wrap: wrap; }
 
     .s1-deal-chip {
-      font-size: 11px;
+      font-size: 12px;
       font-weight: 700;
-      padding: 4px 11px;
+      padding: 5px 12px;
       border-radius: 20px;
       background: rgba(1,118,211,0.1);
       color: var(--blue);
       border: 1px solid var(--blue-bd);
+      white-space: nowrap;
     }
 
     /* ─────────────────────────────────────────────────
-       SLIDE 2 · MOMENTS THAT MATTER
+       SLIDE 2 · MOMENTS + EQUATION
     ───────────────────────────────────────────────── */
     .s2-inner {
-      max-width: 1160px;
+      max-width: 1200px;
       width: 100%;
-      display: grid;
-      grid-template-columns: 1fr 340px;
-      gap: 56px;
+      display: flex;
       align-items: center;
+      gap: 16px;
+    }
+
+    .s2-graphic {
+      flex-shrink: 0;
+      width: 280px;
     }
 
     .s2-graphic img {
@@ -269,36 +397,43 @@
       display: block;
     }
 
-    .s2-right {
-      display: flex;
-      flex-direction: column;
-      gap: 22px;
+    .s2-eq-sign {
+      font-size: 48px;
+      font-weight: 200;
+      color: var(--blue-bd);
+      flex-shrink: 0;
+      line-height: 1;
+      padding: 0 4px;
     }
 
-    .s2-title {
-      font-size: clamp(22px, 2.6vw, 34px);
-      font-weight: 900;
-      letter-spacing: -0.03em;
-      line-height: 1.1;
-      color: var(--text);
+    .s2-actions {
+      flex: 1;
+      min-width: 0;
     }
 
-    .s2-title span { color: var(--blue); }
+    .s2-actions-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 12px;
+    }
 
-    .s2-nba-list {
+    .s2-action-list {
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 8px;
       list-style: none;
     }
 
-    .s2-nba-item {
+    .s2-action-item {
       display: flex;
-      gap: 12px;
+      gap: 10px;
       align-items: flex-start;
     }
 
-    .s2-nba-dot {
+    .s2-action-dot {
       width: 6px;
       height: 6px;
       border-radius: 50%;
@@ -307,13 +442,41 @@
       margin-top: 6px;
     }
 
-    .s2-nba-text {
+    .s2-action-text {
       font-size: 13px;
       color: var(--muted);
       line-height: 1.55;
     }
 
-    .s2-nba-text strong { color: var(--text); font-weight: 700; }
+    .s2-action-text strong { color: var(--text); font-weight: 700; }
+
+    .s2-outcome {
+      flex-shrink: 0;
+      width: 200px;
+      background: var(--blue);
+      border-radius: 14px;
+      padding: 24px 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .s2-outcome-label {
+      font-size: 9px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: rgba(255,255,255,0.6);
+    }
+
+    .s2-outcome-title {
+      font-size: 16px;
+      font-weight: 900;
+      color: #fff;
+      line-height: 1.25;
+      letter-spacing: -0.02em;
+    }
 
     /* ─────────────────────────────────────────────────
        SLIDE 3 · TWO MODES
@@ -378,11 +541,7 @@
       line-height: 1.6;
     }
 
-    .s3-mode-pills {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-    }
+    .s3-mode-pills { display: flex; flex-wrap: wrap; gap: 6px; }
 
     .s3-pill {
       font-size: 11px;
@@ -418,11 +577,11 @@
        SLIDE 4 · AGENTIC DECISIONING STACK
     ───────────────────────────────────────────────── */
     .s4-inner {
-      max-width: 1100px;
+      max-width: 1060px;
       width: 100%;
     }
 
-    .s4-header { margin-bottom: 30px; }
+    .s4-header { margin-bottom: 24px; }
 
     .s4-title {
       font-size: clamp(24px, 2.8vw, 38px);
@@ -434,94 +593,130 @@
 
     .s4-title span { color: var(--blue); }
 
-    .s4-stack {
-      display: flex;
-      align-items: stretch;
-      margin-bottom: 18px;
+    .s4-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 10px;
+      margin-bottom: 14px;
     }
 
-    .s4-layer {
-      flex: 1;
+    .s4-card {
       background: var(--card);
       border: 1px solid var(--border);
-      border-right: none;
-      padding: 22px 18px;
+      border-radius: 14px;
+      padding: 18px 14px;
       display: flex;
       flex-direction: column;
-      gap: 7px;
+      gap: 10px;
       position: relative;
+      overflow: hidden;
     }
 
-    .s4-layer:first-child { border-radius: 12px 0 0 12px; }
-    .s4-layer:last-child  { border-radius: 0 12px 12px 0; border-right: 1px solid var(--border); }
-
-    .s4-layer.hl {
+    .s4-card.hl {
       background: var(--card-alt);
       border-color: var(--blue-bd);
+      border-top: 3px solid var(--blue);
     }
 
-    .s4-arrow {
+    .s4-card-num {
       position: absolute;
-      right: -13px;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 26px;
-      height: 26px;
-      background: var(--bg);
-      border: 1px solid var(--blue-bd);
-      border-radius: 50%;
+      top: 10px;
+      right: 12px;
+      font-size: 34px;
+      font-weight: 900;
+      color: rgba(1,118,211,0.05);
+      line-height: 1;
+      pointer-events: none;
+    }
+
+    .s4-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 9px;
+      background: rgba(1,118,211,0.08);
+      border: 1px solid rgba(1,118,211,0.14);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 11px;
-      color: var(--blue);
-      font-weight: 700;
-      z-index: 1;
+      flex-shrink: 0;
     }
 
-    .s4-layer-badge {
-      font-size: 9px;
-      font-weight: 700;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--blue);
-    }
+    .s4-icon-pair { display: flex; gap: 5px; }
 
-    .s4-layer-title {
-      font-size: 14px;
-      font-weight: 800;
+    .s4-card-title {
+      font-size: 13px;
+      font-weight: 700;
       color: var(--text);
-      letter-spacing: -0.01em;
+      line-height: 1.3;
+      margin-bottom: 3px;
     }
 
-    .s4-layer-sub {
-      font-size: 11px;
+    .s4-card-sub {
+      font-size: 12px;
       color: var(--muted);
       line-height: 1.55;
     }
 
-    .s4-callouts {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 14px;
+    .s4-tags {
+      display: flex;
+      gap: 4px;
+      flex-wrap: wrap;
+      margin-top: -2px;
     }
 
-    .s4-callout {
-      background: var(--card);
+    .s4-tag {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      padding: 2px 7px;
+      border-radius: 4px;
+    }
+
+    .s4-tag.blue { background: rgba(1,118,211,0.1); color: var(--blue); }
+    .s4-tag.green { background: rgba(46,125,50,0.1); color: #2E7D32; }
+
+    .s4-modes-bar {
+      display: flex;
       border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 16px 18px;
+      border-radius: 12px;
+      overflow: hidden;
+      background: rgba(255,255,255,0.7);
+    }
+
+    .s4-mode-bar-item {
+      flex: 1;
+      padding: 14px 18px;
+      border-right: 1px solid var(--border);
+    }
+
+    .s4-mode-bar-item:last-child { border-right: none; }
+
+    .s4-mode-bar-label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 5px;
+    }
+
+    .s4-mode-bar-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .s4-mode-bar-name {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.13em;
+      text-transform: uppercase;
+    }
+
+    .s4-mode-bar-text {
       font-size: 12px;
       color: var(--muted);
-      line-height: 1.65;
-    }
-
-    .s4-callout strong {
-      color: var(--text);
-      display: block;
-      font-size: 13px;
-      font-weight: 700;
-      margin-bottom: 4px;
+      line-height: 1.55;
+      padding-left: 16px;
     }
 
     /* ─────────────────────────────────────────────────
@@ -558,11 +753,7 @@
       margin-bottom: 8px;
     }
 
-    .s5-seg-items {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-    }
+    .s5-seg-items { display: flex; flex-wrap: wrap; gap: 6px; }
 
     .s5-seg-tag {
       font-size: 12px;
@@ -585,17 +776,9 @@
       margin-bottom: 12px;
     }
 
-    .s5-steps {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-    }
+    .s5-steps { display: flex; flex-direction: column; gap: 10px; }
 
-    .s5-step {
-      display: flex;
-      gap: 12px;
-      align-items: flex-start;
-    }
+    .s5-step { display: flex; gap: 12px; align-items: flex-start; }
 
     .s5-step-num {
       width: 22px;
@@ -612,19 +795,10 @@
       margin-top: 1px;
     }
 
-    .s5-step-text {
-      font-size: 13px;
-      color: var(--muted);
-      line-height: 1.6;
-    }
-
+    .s5-step-text { font-size: 13px; color: var(--muted); line-height: 1.6; }
     .s5-step-text strong { color: var(--text); }
 
-    .s5-signals {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
+    .s5-signals { display: flex; flex-direction: column; gap: 6px; }
 
     .s5-signal {
       font-size: 12px;
@@ -641,50 +815,82 @@
 
 <div class="deck" id="deck">
 
-  <!-- ── SLIDE 1 · THE OPPORTUNITY ───────────────── -->
+  <!-- ── SLIDE 0 · COVER ──────────────────────────── -->
   <div class="slide active">
+    <div class="s0-inner">
+
+      <div class="s0-eyebrow">Salesforce · Strategic Solution Specialist</div>
+      <div class="s0-title">CRM + Decisioning</div>
+      <div class="s0-subtitle">= Intelligence Delivering Value.</div>
+
+      <div class="s0-divider"></div>
+
+      <div class="s0-meta">
+        <div class="s0-meta-left">
+          <strong>Stuart Dunlop</strong>
+          Strategic Solution Specialist<br>
+          sdunlop@salesforce.com
+        </div>
+        <div class="s0-meta-right">
+          <strong>March 2026</strong><br>
+          Confidential
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── SLIDE 1 · THE OPPORTUNITY ───────────────── -->
+  <div class="slide">
     <div class="s1-inner">
 
-      <div>
+      <div class="s1-head">
         <div class="accent-line"></div>
-        <div class="s1-title">Your CRM already has the data.<br><span>Now make it intelligent.</span></div>
-        <div class="s1-sub">Every customer interaction is a decisioning moment. Most organisations miss them — wrong product, wrong timing, no follow-up. AI changes this equation entirely.</div>
+        <div class="s1-title">Add AI decisioning to your CRM<br>and it <span>starts delivering value.</span></div>
+        <div class="s1-sub">CRM gives you the relationship. Agents augment the work. When you layer in Data and a decisioning engine, every interaction becomes intelligent.</div>
       </div>
 
       <div class="s1-formula">
-        <div class="s1-formula-box">
-          <div class="box-label">Layer 1</div>
-          <div class="box-val">Agents</div>
+
+        <div class="s1-formula-stacked">
+          <div class="stack-row">
+            <span class="row-label">Base</span>
+            CRM
+          </div>
+          <div class="stack-row">
+            <span class="row-label">Augment</span>
+            Agents
+          </div>
         </div>
+
         <div class="s1-formula-op">+</div>
-        <div class="s1-formula-box">
-          <div class="box-label">Layer 2</div>
-          <div class="box-val">CRM</div>
+
+        <div class="s1-formula-stacked">
+          <div class="stack-row">
+            <span class="row-label">Signal</span>
+            Data / CDP
+          </div>
+          <div class="stack-row">
+            <span class="row-label">Engine</span>
+            Decisioning
+          </div>
         </div>
-        <div class="s1-formula-op">+</div>
-        <div class="s1-formula-box">
-          <div class="box-label">Layer 3</div>
-          <div class="box-val">Data / CDP</div>
+
+        <div class="s1-formula-arrow">→</div>
+
+        <div class="s1-formula-result">
+          <div class="res-label">Outcome</div>
+          <div class="res-val">Intelligence<br>Delivering Value</div>
         </div>
-        <div class="s1-formula-op" style="font-size: 28px; margin: 0 4px;">→</div>
-        <div class="s1-formula-result">Decisioning = Value</div>
+
       </div>
 
-      <div class="s1-proof">
-        <div class="s1-card">
-          <div class="s1-card-eyebrow">The Problem Today</div>
-          <div class="s1-card-title">Credit card offered when the client needed a loan</div>
-          <div class="s1-card-body">Rules-based personalisation can't see the full picture. A client signals refinancing intent across three touchpoints and gets a balance transfer offer. AI decisioning gets this right, every time, at scale.</div>
+      <div class="s1-market">
+        <div class="s1-market-text">
+          <strong>Everyone is trying to solve this — and Salesforce isn't in the conversation.</strong> Pega, SAS, and Adobe are winning these mandates by default. We've already proven we can deliver the same outcome — model-driven, auditable, on infrastructure they already own — at a fraction of the cost.
         </div>
-        <div class="s1-card">
-          <div class="s1-card-eyebrow">The Commercial Case</div>
-          <div class="s1-card-title">Same outcome. A fraction of the cost.</div>
-          <div class="s1-card-body">Legacy decisioning platforms (Pega, SAS) run to $30M+ implementations. Salesforce delivers the same capability — model-driven, auditable, channel-agnostic — on infrastructure most enterprises already own.</div>
-        </div>
-        <div class="s1-card accent">
-          <div class="s1-card-eyebrow">Deals in Market Now</div>
-          <div class="s1-card-title">$160M+ in active pipeline across ANZ</div>
-          <div class="s1-card-body">The window is open. Every week without a decisioning layer is a week competitors are closing it.</div>
+        <div class="s1-market-deals">
+          <div class="deals-label">Deals in Market</div>
           <div class="s1-deal-row">
             <span class="s1-deal-chip">$70M Westpac</span>
             <span class="s1-deal-chip">$60M Optus</span>
@@ -696,7 +902,7 @@
     </div>
   </div>
 
-  <!-- ── SLIDE 2 · MOMENTS THAT MATTER ─────────── -->
+  <!-- ── SLIDE 2 · MOMENTS + EQUATION ──────────── -->
   <div class="slide">
     <div class="s2-inner">
 
@@ -704,31 +910,39 @@
         <img src="moments-light.svg" alt="Moments That Matter">
       </div>
 
-      <div class="s2-right">
-        <div class="accent-line"></div>
-        <div class="s2-title">Moments that Matter.<br><span>Actions that Drive Outcomes.</span></div>
-        <ul class="s2-nba-list">
-          <li class="s2-nba-item">
-            <div class="s2-nba-dot"></div>
-            <div class="s2-nba-text"><strong>Enquiry received</strong> — recommend next listing in the confirmation email, in real time</div>
+      <div class="s2-eq-sign">+</div>
+
+      <div class="s2-actions">
+        <div class="s2-actions-label">Actions at the Moment of Interaction</div>
+        <ul class="s2-action-list">
+          <li class="s2-action-item">
+            <div class="s2-action-dot"></div>
+            <div class="s2-action-text"><strong>Enquiry received</strong> — recommend next listing in the confirmation email, in real time</div>
           </li>
-          <li class="s2-nba-item">
-            <div class="s2-nba-dot"></div>
-            <div class="s2-nba-text"><strong>Renewal approaching</strong> — personalised retention offer, right channel, right moment</div>
+          <li class="s2-action-item">
+            <div class="s2-action-dot"></div>
+            <div class="s2-action-text"><strong>Renewal approaching</strong> — personalised retention offer, right channel, right moment</div>
           </li>
-          <li class="s2-nba-item">
-            <div class="s2-nba-dot"></div>
-            <div class="s2-nba-text"><strong>Behaviour shift detected</strong> — RM alert and client brief created in CRM automatically</div>
+          <li class="s2-action-item">
+            <div class="s2-action-dot"></div>
+            <div class="s2-action-text"><strong>Behaviour shift detected</strong> — RM alert and client brief created in CRM automatically</div>
           </li>
-          <li class="s2-nba-item">
-            <div class="s2-nba-dot"></div>
-            <div class="s2-nba-text"><strong>Service interaction resolved</strong> — upsell prompt triggered when trust signal is highest</div>
+          <li class="s2-action-item">
+            <div class="s2-action-dot"></div>
+            <div class="s2-action-text"><strong>Service interaction resolved</strong> — upsell prompt triggered when trust signal is highest</div>
           </li>
-          <li class="s2-nba-item">
-            <div class="s2-nba-dot"></div>
-            <div class="s2-nba-text"><strong>Life event detected</strong> — BD outreach initiated, scored and prioritised automatically</div>
+          <li class="s2-action-item">
+            <div class="s2-action-dot"></div>
+            <div class="s2-action-text"><strong>Life event detected</strong> — BD outreach initiated, scored and prioritised automatically</div>
           </li>
         </ul>
+      </div>
+
+      <div class="s2-eq-sign">=</div>
+
+      <div class="s2-outcome">
+        <div class="s2-outcome-label">The Result</div>
+        <div class="s2-outcome-title">Intelligent Decisions Driving Outcomes</div>
       </div>
 
     </div>
@@ -786,43 +1000,96 @@
 
       <div class="s4-header">
         <div class="accent-line"></div>
-        <div class="s4-title">The Agentic<br><span>Decisioning Stack.</span></div>
+        <div class="s4-title">Mode 2 · Agentic <span>Decisioning</span></div>
       </div>
 
-      <div class="s4-stack">
-        <div class="s4-layer">
-          <div class="s4-layer-badge">Layer 1</div>
-          <div class="s4-layer-title">Data Cloud</div>
-          <div class="s4-layer-sub">Unified customer profile. CRM, behavioural, transactional, and partner data — one view, updated continuously, not in batch.</div>
-          <div class="s4-arrow">›</div>
+      <div class="s4-grid">
+
+        <!-- 01 Action Catalogue -->
+        <div class="s4-card">
+          <div class="s4-card-num">01</div>
+          <div class="s4-icon">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3 5h12M3 9h8M3 13h5" stroke="#0176D3" stroke-width="1.6" stroke-linecap="round"/><circle cx="14" cy="12" r="3" stroke="#0176D3" stroke-width="1.6"/></svg>
+          </div>
+          <div>
+            <div class="s4-card-title">Action Catalogue</div>
+            <div class="s4-card-sub">Every possible action available to the engine — offers, tasks, campaigns, workflows</div>
+          </div>
         </div>
-        <div class="s4-layer hl">
-          <div class="s4-layer-badge">Layer 2</div>
-          <div class="s4-layer-title">Einstein Studio</div>
-          <div class="s4-layer-sub">ML model trained on your outcome data. Scores every customer on churn risk, propensity, and next best action. Learns from every result.</div>
-          <div class="s4-arrow">›</div>
+
+        <!-- 02 Data 360 -->
+        <div class="s4-card">
+          <div class="s4-card-num">02</div>
+          <div class="s4-icon">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><ellipse cx="9" cy="5" rx="6" ry="2.5" stroke="#0176D3" stroke-width="1.6"/><path d="M3 5v4c0 1.38 2.686 2.5 6 2.5S15 10.38 15 9V5" stroke="#0176D3" stroke-width="1.6"/><path d="M3 9v4c0 1.38 2.686 2.5 6 2.5S15 14.38 15 13V9" stroke="#0176D3" stroke-width="1.6"/></svg>
+          </div>
+          <div>
+            <div class="s4-card-title">Data 360</div>
+            <div class="s4-card-sub">The signal — unified customer profile, real time, across every touchpoint</div>
+          </div>
         </div>
-        <div class="s4-layer hl">
-          <div class="s4-layer-badge">Layer 3</div>
-          <div class="s4-layer-title">Agentforce</div>
-          <div class="s4-layer-sub">Executes the decision. Creates tasks, triggers campaigns, surfaces insights to agents — auditable, explainable, no engineering dependency for each change.</div>
-          <div class="s4-arrow">›</div>
+
+        <!-- 03 Einstein + Agentforce (highlighted) -->
+        <div class="s4-card hl">
+          <div class="s4-card-num">03</div>
+          <div class="s4-icon-pair">
+            <div class="s4-icon">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="3.5" stroke="#0176D3" stroke-width="1.6"/><path d="M9 2v2M9 14v2M2 9h2M14 9h2M3.9 3.9l1.4 1.4M12.7 12.7l1.4 1.4M3.9 14.1l1.4-1.4M12.7 5.3l1.4-1.4" stroke="#0176D3" stroke-width="1.5" stroke-linecap="round"/></svg>
+            </div>
+            <div class="s4-icon">
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M9 3L4 8h3v7h4V8h3L9 3z" stroke="#0176D3" stroke-width="1.6" stroke-linejoin="round"/></svg>
+            </div>
+          </div>
+          <div>
+            <div class="s4-card-title">Einstein Studio <span style="font-weight: 500; color: var(--muted);">or</span> Agentforce</div>
+            <div class="s4-card-sub">The brain — ML scoring at scale, or agentic reasoning for complex decisions</div>
+          </div>
+          <div class="s4-tags">
+            <span class="s4-tag blue">ML · Scale</span>
+            <span class="s4-tag green">Agentic · Reasoning</span>
+          </div>
         </div>
-        <div class="s4-layer">
-          <div class="s4-layer-badge">Output</div>
-          <div class="s4-layer-title">Every Channel</div>
-          <div class="s4-layer-sub">Email · App · Web · Contact Centre · Relationship Manager — right action, right moment, right channel.</div>
+
+        <!-- 04 Marketing & Personalization -->
+        <div class="s4-card">
+          <div class="s4-card-num">04</div>
+          <div class="s4-icon">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M2 4h14v8a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V4z" stroke="#0176D3" stroke-width="1.6"/><path d="M2 4l7 5 7-5" stroke="#0176D3" stroke-width="1.6" stroke-linecap="round"/></svg>
+          </div>
+          <div>
+            <div class="s4-card-title">Agentforce Marketing &amp; Personalization</div>
+            <div class="s4-card-sub">The execution — agentic two-way communication and real-time in-channel personalisation at scale</div>
+          </div>
         </div>
+
+        <!-- 05 Feedback Loop -->
+        <div class="s4-card">
+          <div class="s4-card-num">05</div>
+          <div class="s4-icon">
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><path d="M3 9a6 6 0 0 1 6-6 6 6 0 0 1 4.24 1.76L15 7" stroke="#0176D3" stroke-width="1.6" stroke-linecap="round"/><path d="M15 3v4h-4" stroke="#0176D3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M15 9a6 6 0 0 1-6 6 6 6 0 0 1-4.24-1.76L3 11" stroke="#0176D3" stroke-width="1.6" stroke-linecap="round"/><path d="M3 15v-4h4" stroke="#0176D3" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div>
+            <div class="s4-card-title">Feedback Loop</div>
+            <div class="s4-card-sub">The learning — every outcome feeds back into the model. The next decision is better than the last.</div>
+          </div>
+        </div>
+
       </div>
 
-      <div class="s4-callouts">
-        <div class="s4-callout">
-          <strong>Trained on your data, not a generic model</strong>
-          Every customer who churned after a missed signal, every intervention that worked — becomes a training signal. The model compounds over time.
+      <div class="s4-modes-bar">
+        <div class="s4-mode-bar-item">
+          <div class="s4-mode-bar-label">
+            <div class="s4-mode-bar-dot" style="background: var(--blue);"></div>
+            <div class="s4-mode-bar-name" style="color: var(--blue);">ML at Scale</div>
+          </div>
+          <div class="s4-mode-bar-text">Einstein Studio + Flow — ML model scores every action, Flow arbitrates the winner. Fast, deterministic, auditable across millions of customers.</div>
         </div>
-        <div class="s4-callout">
-          <strong>Auditable by design</strong>
-          Every decision has a rationale. Why that offer, to that customer, at that moment — visible in the record. Compliance, governance, and trust built in from day one.
+        <div class="s4-mode-bar-item">
+          <div class="s4-mode-bar-label">
+            <div class="s4-mode-bar-dot" style="background: #2E7D32;"></div>
+            <div class="s4-mode-bar-name" style="color: #2E7D32;">Agentic Reasoning</div>
+          </div>
+          <div class="s4-mode-bar-text">Agentforce — an AI agent evaluates using live context and reasoning. For edge cases and nuance that rules can't resolve. Both approaches work in tandem.</div>
         </div>
       </div>
 
