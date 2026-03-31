@@ -524,6 +524,91 @@
     }
 
     /* ─────────────────────────────────────────────────
+       SLIDE FT · FROM / TO
+    ───────────────────────────────────────────────── */
+    .sft-inner {
+      max-width: 1080px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .sft-header {
+      display: flex;
+      align-items: flex-end;
+      gap: 16px;
+    }
+
+    .sft-title {
+      font-size: clamp(22px, 2.6vw, 34px);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      color: var(--text);
+      line-height: 1.1;
+    }
+
+    .sft-title span { color: var(--blue); }
+
+    .sft-cols {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+    }
+
+    .sft-col {
+      border-radius: 12px;
+      padding: 22px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .sft-col.before {
+      background: var(--card);
+      border: 1px solid var(--border);
+    }
+
+    .sft-col.after {
+      background: var(--blue);
+    }
+
+    .sft-col-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .sft-col.before .sft-col-label { color: var(--dim); }
+    .sft-col.after  .sft-col-label { color: rgba(255,255,255,0.55); }
+
+    .sft-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .sft-col.before .sft-item { background: var(--card-alt); color: var(--muted); }
+    .sft-col.after  .sft-item { background: rgba(255,255,255,0.12); color: #fff; }
+
+    .sft-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      margin-top: 5px;
+    }
+
+    .sft-col.before .sft-dot { background: var(--dim); }
+    .sft-col.after  .sft-dot { background: rgba(255,255,255,0.5); }
+
+    /* ─────────────────────────────────────────────────
        SLIDE 3 · TWO MODES
     ───────────────────────────────────────────────── */
     .s3-inner {
@@ -871,8 +956,7 @@
     <div class="s0-inner">
 
       <div class="s0-eyebrow">Salesforce · Strategic Solution Specialist</div>
-      <div class="s0-title">CRM + Decisioning</div>
-      <div class="s0-subtitle">= Intelligence Delivering Value.</div>
+      <div class="s0-title">CRM is the Body.<br>Agents are the Hands.<br>Decisioning is the Mind.</div>
 
       <div class="s0-divider"></div>
 
@@ -949,8 +1033,8 @@
         </div>
         <div class="s1-stats">
           <div class="s1-stat">
-            <div class="s1-stat-val">$4M/yr avg</div>
-            <div class="s1-stat-label">ANZ bank investment in decisioning · range $100K–$7M · Mi3 research</div>
+            <div class="s1-stat-val">$4M/yr avg · $50M+ at tier 1</div>
+            <div class="s1-stat-label">Avg ANZ bank decisioning spend $100K–$7M/yr (Mi3) · tier 1 Pega CDH implementations run to 8-figure TCO across licence, build and run</div>
           </div>
           <div class="s1-stat">
             <div class="s1-stat-val">$13.3B → $50B</div>
@@ -961,6 +1045,40 @@
             <div class="s1-stat-label">Home loan opportunities tripled in 24 months on Pega CDH · 800 adaptive models</div>
           </div>
         </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── SLIDE FT · FROM / TO ─────────────────────── -->
+  <div class="slide">
+    <div class="sft-inner">
+
+      <div class="sft-header">
+        <div class="accent-line"></div>
+        <div class="sft-title">What changes when you<br><span>add decisioning.</span></div>
+      </div>
+
+      <div class="sft-cols">
+
+        <div class="sft-col before">
+          <div class="sft-col-label">Without Decisioning</div>
+          <div class="sft-item"><div class="sft-dot"></div><span>CRM captures data. Agents respond. What to do next is decided by rules — or not at all.</span></div>
+          <div class="sft-item"><div class="sft-dot"></div><span>Campaigns are broadcast to segments. Same message, wrong moment, wrong person.</span></div>
+          <div class="sft-item"><div class="sft-dot"></div><span>Churn signals sit in the data unread — the customer is gone before anyone notices.</span></div>
+          <div class="sft-item"><div class="sft-dot"></div><span>Agents respond without knowing what the best action is for this customer, right now.</span></div>
+          <div class="sft-item"><div class="sft-dot"></div><span>Each channel acts independently. No coordination. No consistency. No learning.</span></div>
+        </div>
+
+        <div class="sft-col after">
+          <div class="sft-col-label">With Decisioning</div>
+          <div class="sft-item"><div class="sft-dot"></div><span>Every interaction is scored in real time. The right action for this customer, this moment.</span></div>
+          <div class="sft-item"><div class="sft-dot"></div><span>Offers are individualised — determined by a model trained on your own outcome data.</span></div>
+          <div class="sft-item"><div class="sft-dot"></div><span>Churn risk surfaces automatically before the customer acts. The window to intervene stays open.</span></div>
+          <div class="sft-item"><div class="sft-dot"></div><span>Agents are briefed on the best next action before the conversation starts.</span></div>
+          <div class="sft-item"><div class="sft-dot"></div><span>One decisioning layer coordinates across email, app, contact centre, and field. It learns from every outcome.</span></div>
+        </div>
+
       </div>
 
     </div>
@@ -1200,6 +1318,24 @@
       </div>
 
       <div class="s5-right">
+
+        <div class="s5-section">
+          <div class="s5-section-title">The Right Buyer</div>
+          <div class="s5-steps">
+            <div class="s5-step">
+              <div class="s5-step-num" style="background: var(--blue-dark);">✓</div>
+              <div class="s5-step-text"><strong>Chief Customer Officer / CMO</strong> — owns retention and revenue outcomes. Decisioning is their problem to solve.</div>
+            </div>
+            <div class="s5-step">
+              <div class="s5-step-num" style="background: var(--blue-dark);">✓</div>
+              <div class="s5-step-text"><strong>Chief Data / Analytics Officer</strong> — owns the data foundation and model governance. Will immediately understand the Einstein Studio play.</div>
+            </div>
+            <div class="s5-step">
+              <div class="s5-step-num" style="background: #B0BEC5; font-size: 10px;">✕</div>
+              <div class="s5-step-text" style="color: var(--dim);"><strong>CIO / IT / CRM Admin</strong> — wrong room. Decisioning is a commercial and customer conversation, not a technology procurement.</div>
+            </div>
+          </div>
+        </div>
 
         <div class="s5-section">
           <div class="s5-section-title">The Entry Motion</div>
