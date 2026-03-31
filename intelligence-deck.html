@@ -608,6 +608,8 @@
       border: 1px solid var(--border);
       border-radius: 14px;
       padding: 32px;
+      display: flex;
+      flex-direction: column;
     }
 
     .s3-mode.mode2 {
@@ -660,6 +662,37 @@
       border-color: var(--blue-bd);
       color: var(--blue);
       background: rgba(1,118,211,0.06);
+    }
+
+    .s3-competitors {
+      margin-top: auto;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+    }
+
+    .s3-competitor-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--dim);
+      margin-bottom: 8px;
+    }
+
+    .s3-competitor-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    .s3-competitor-pill {
+      font-size: 11px;
+      font-weight: 500;
+      padding: 4px 10px;
+      border-radius: 6px;
+      border: 1px solid var(--border);
+      color: var(--dim);
+      background: transparent;
     }
 
     .s3-note {
@@ -1101,6 +1134,14 @@
             <span class="s3-pill">Data 360</span>
             <span class="s3-pill">Rules + propensity</span>
           </div>
+          <div class="s3-competitors">
+            <div class="s3-competitor-label">You're replacing</div>
+            <div class="s3-competitor-pills">
+              <span class="s3-competitor-pill">Braze</span>
+              <span class="s3-competitor-pill">Adobe</span>
+              <span class="s3-competitor-pill">HubSpot</span>
+            </div>
+          </div>
         </div>
 
         <div class="s3-mode mode2">
@@ -1113,6 +1154,15 @@
             <span class="s3-pill">Data 360</span>
             <span class="s3-pill">Feedback loop</span>
             <span class="s3-pill">Auditable</span>
+          </div>
+          <div class="s3-competitors">
+            <div class="s3-competitor-label">You're replacing</div>
+            <div class="s3-competitor-pills">
+              <span class="s3-competitor-pill">Pega</span>
+              <span class="s3-competitor-pill">SAS</span>
+              <span class="s3-competitor-pill">Google</span>
+              <span class="s3-competitor-pill">Amazon</span>
+            </div>
           </div>
         </div>
 
