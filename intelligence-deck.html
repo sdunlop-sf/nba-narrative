@@ -406,12 +406,12 @@
       padding: 0 4px;
     }
 
-    .s2-actions {
+    .s2-refs {
       flex: 1;
       min-width: 0;
     }
 
-    .s2-actions-label {
+    .s2-refs-label {
       font-size: 10px;
       font-weight: 700;
       letter-spacing: 0.16em;
@@ -420,35 +420,32 @@
       margin-bottom: 12px;
     }
 
-    .s2-action-list {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      list-style: none;
+    .s2-ref-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 9px;
     }
 
-    .s2-action-item {
-      display: flex;
-      gap: 10px;
-      align-items: flex-start;
+    .s2-ref-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 16px;
     }
 
-    .s2-action-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--blue);
-      flex-shrink: 0;
-      margin-top: 6px;
+    .s2-ref-name {
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 3px;
+      letter-spacing: -0.01em;
     }
 
-    .s2-action-text {
-      font-size: 13px;
+    .s2-ref-sub {
+      font-size: 11px;
       color: var(--muted);
-      line-height: 1.55;
+      line-height: 1.45;
     }
-
-    .s2-action-text strong { color: var(--text); font-weight: 700; }
 
     .s2-outcome {
       flex-shrink: 0;
@@ -486,7 +483,7 @@
       width: 100%;
     }
 
-    .s3-header { margin-bottom: 30px; }
+    .s3-header { margin-bottom: 22px; }
 
     .s3-title {
       font-size: clamp(24px, 2.8vw, 38px);
@@ -509,7 +506,7 @@
       background: var(--card);
       border: 1px solid var(--border);
       border-radius: 14px;
-      padding: 26px;
+      padding: 32px;
     }
 
     .s3-mode.mode2 {
@@ -527,29 +524,35 @@
     }
 
     .s3-mode-title {
-      font-size: 18px;
+      font-size: 22px;
       font-weight: 800;
       color: var(--text);
-      margin-bottom: 6px;
-      letter-spacing: -0.01em;
+      margin-bottom: 8px;
+      letter-spacing: -0.02em;
     }
 
     .s3-mode-sub {
-      font-size: 13px;
+      font-size: 14px;
       color: var(--muted);
-      margin-bottom: 16px;
-      line-height: 1.6;
+      margin-bottom: 20px;
+      line-height: 1.65;
     }
 
-    .s3-mode-pills { display: flex; flex-wrap: wrap; gap: 6px; }
+    .s3-mode-pills {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 7px;
+    }
 
     .s3-pill {
-      font-size: 11px;
+      font-size: 12px;
       font-weight: 600;
-      padding: 4px 10px;
-      border-radius: 20px;
+      padding: 9px 12px;
+      border-radius: 8px;
       border: 1px solid var(--border);
       color: var(--muted);
+      background: var(--bg);
+      text-align: center;
     }
 
     .mode2 .s3-pill {
@@ -912,37 +915,33 @@
 
       <div class="s2-eq-sign">+</div>
 
-      <div class="s2-actions">
-        <div class="s2-actions-label">Actions at the Moment of Interaction</div>
-        <ul class="s2-action-list">
-          <li class="s2-action-item">
-            <div class="s2-action-dot"></div>
-            <div class="s2-action-text"><strong>Enquiry received</strong> — recommend next listing in the confirmation email, in real time</div>
-          </li>
-          <li class="s2-action-item">
-            <div class="s2-action-dot"></div>
-            <div class="s2-action-text"><strong>Renewal approaching</strong> — personalised retention offer, right channel, right moment</div>
-          </li>
-          <li class="s2-action-item">
-            <div class="s2-action-dot"></div>
-            <div class="s2-action-text"><strong>Behaviour shift detected</strong> — RM alert and client brief created in CRM automatically</div>
-          </li>
-          <li class="s2-action-item">
-            <div class="s2-action-dot"></div>
-            <div class="s2-action-text"><strong>Service interaction resolved</strong> — upsell prompt triggered when trust signal is highest</div>
-          </li>
-          <li class="s2-action-item">
-            <div class="s2-action-dot"></div>
-            <div class="s2-action-text"><strong>Life event detected</strong> — BD outreach initiated, scored and prioritised automatically</div>
-          </li>
-        </ul>
+      <div class="s2-refs">
+        <div class="s2-refs-label">Works with your data stack</div>
+        <div class="s2-ref-grid">
+          <div class="s2-ref-card">
+            <div class="s2-ref-name">Google Cloud</div>
+            <div class="s2-ref-sub">BigQuery · Vertex AI · native Data Cloud connector</div>
+          </div>
+          <div class="s2-ref-card">
+            <div class="s2-ref-name">Amazon AWS</div>
+            <div class="s2-ref-sub">S3 · Redshift · SageMaker integration via Data Cloud</div>
+          </div>
+          <div class="s2-ref-card">
+            <div class="s2-ref-name">Snowflake</div>
+            <div class="s2-ref-sub">Zero-copy data share · real-time sync with Data Cloud</div>
+          </div>
+          <div class="s2-ref-card">
+            <div class="s2-ref-name">Databricks</div>
+            <div class="s2-ref-sub">Delta Lake · Unity Catalog · models trained on your lakehouse</div>
+          </div>
+        </div>
       </div>
 
       <div class="s2-eq-sign">=</div>
 
       <div class="s2-outcome">
         <div class="s2-outcome-label">The Result</div>
-        <div class="s2-outcome-title">Intelligent Decisions Driving Outcomes</div>
+        <div class="s2-outcome-title">Moments that Matter. Actions that Drive Outcomes.</div>
       </div>
 
     </div>
