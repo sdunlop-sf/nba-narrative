@@ -143,16 +143,17 @@
       line-height: 1.0;
       letter-spacing: -0.04em;
       color: var(--text);
-      margin-bottom: 6px;
+      margin-bottom: 4px;
     }
 
     .s0-title span { color: var(--blue); }
 
     .s0-subtitle {
-      font-size: clamp(20px, 2.5vw, 32px);
-      font-weight: 700;
-      color: var(--dim);
-      letter-spacing: -0.02em;
+      font-size: clamp(38px, 5.5vw, 72px);
+      font-weight: 900;
+      line-height: 1.0;
+      letter-spacing: -0.04em;
+      color: var(--blue);
       margin-bottom: 48px;
     }
 
@@ -374,6 +375,38 @@
       color: var(--blue);
       border: 1px solid var(--blue-bd);
       white-space: nowrap;
+    }
+
+    .s1-stats {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      flex-shrink: 0;
+      border-left: 1px solid var(--border);
+      padding-left: 28px;
+      min-width: 220px;
+    }
+
+    .s1-stat {
+      background: var(--card-alt);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 14px;
+    }
+
+    .s1-stat-val {
+      font-size: 15px;
+      font-weight: 900;
+      color: var(--text);
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+    }
+
+    .s1-stat-label {
+      font-size: 11px;
+      color: var(--muted);
+      margin-top: 2px;
+      line-height: 1.4;
     }
 
     .s1-platform-row {
@@ -910,7 +943,7 @@
 
       <div class="s1-market">
         <div class="s1-market-text">
-          <strong>Everyone is trying to solve this — and Salesforce isn't in the conversation.</strong> Pega, SAS, and Adobe are winning these mandates. They all have deep partnerships with Google, Snowflake, Databricks, and AWS — the platforms your customers already run. Westpac wrote off $70M on a failed Pega program. Optus paid $2.5–3M/yr in Pega licence over several years with limited return.
+          <strong>Pega, SAS, and Adobe are winning these mandates — all have deep partnerships with the platforms your customers already run.</strong> CBA, NAB, ANZ, and Suncorp are generating outsized ROI. Westpac wrote off $70M building their own and still has no real-time decisioning capability — years behind its peers. Salesforce isn't in the conversation yet.
           <div class="s1-platform-row">
             <span class="s1-platform-chip">Google Cloud</span>
             <span class="s1-platform-chip">Amazon AWS</span>
@@ -918,12 +951,18 @@
             <span class="s1-platform-chip">Databricks</span>
           </div>
         </div>
-        <div class="s1-market-deals">
-          <div class="deals-label">The TAM</div>
-          <div class="s1-deal-row">
-            <span class="s1-deal-chip">Westpac · $70M written off</span>
-            <span class="s1-deal-chip">Optus · $2.5–3M/yr Pega</span>
-            <span class="s1-deal-chip">TPG · significant</span>
+        <div class="s1-stats">
+          <div class="s1-stat">
+            <div class="s1-stat-val">$4M/yr avg</div>
+            <div class="s1-stat-label">ANZ bank investment in decisioning · range $100K–$7M · Mi3 research</div>
+          </div>
+          <div class="s1-stat">
+            <div class="s1-stat-val">$13.3B → $50B</div>
+            <div class="s1-stat-label">Global decision intelligence market by 2030 · APAC fastest growing region</div>
+          </div>
+          <div class="s1-stat">
+            <div class="s1-stat-val">NAB: 3× mortgage</div>
+            <div class="s1-stat-label">Home loan opportunities tripled in 24 months on Pega CDH · 800 adaptive models</div>
           </div>
         </div>
       </div>
