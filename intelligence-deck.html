@@ -430,8 +430,14 @@
        SLIDE 2 · MOMENTS + EQUATION
     ───────────────────────────────────────────────── */
     .s2-inner {
-      max-width: 1200px;
+      max-width: 1100px;
       width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .s2-top {
       display: flex;
       align-items: center;
       gap: 16px;
@@ -439,7 +445,7 @@
 
     .s2-graphic {
       flex-shrink: 0;
-      width: 280px;
+      width: 320px;
     }
 
     .s2-graphic img {
@@ -451,6 +457,21 @@
       font-size: 48px;
       font-weight: 200;
       color: var(--blue-bd);
+      flex-shrink: 0;
+      line-height: 1;
+      padding: 0 4px;
+    }
+
+    .s2-bottom {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .s2-eq-label {
+      font-size: 32px;
+      font-weight: 200;
+      color: var(--blue);
       flex-shrink: 0;
       line-height: 1;
       padding: 0 4px;
@@ -501,15 +522,13 @@
     .s2-action-text strong { color: var(--text); font-weight: 700; }
 
     .s2-outcome {
-      flex-shrink: 0;
-      width: 200px;
+      flex: 1;
       background: var(--blue);
       border-radius: 14px;
-      padding: 24px 20px;
+      padding: 20px 28px;
       display: flex;
-      flex-direction: column;
-      justify-content: center;
-      gap: 8px;
+      align-items: center;
+      gap: 20px;
     }
 
     .s2-outcome-label {
@@ -518,13 +537,14 @@
       text-transform: uppercase;
       letter-spacing: 0.14em;
       color: rgba(255,255,255,0.6);
+      flex-shrink: 0;
     }
 
     .s2-outcome-title {
-      font-size: 16px;
+      font-size: 20px;
       font-weight: 900;
       color: #fff;
-      line-height: 1.25;
+      line-height: 1.2;
       letter-spacing: -0.02em;
     }
 
@@ -975,43 +995,45 @@
   <div class="slide">
     <div class="s2-inner">
 
-      <div class="s2-graphic">
-        <img src="moments-light.svg" alt="Moments That Matter">
+      <!-- Top row: graphic + actions -->
+      <div class="s2-top">
+        <div class="s2-graphic">
+          <img src="moments-light.svg" alt="Moments That Matter">
+        </div>
+        <div class="s2-eq-sign">+</div>
+        <div class="s2-actions">
+          <div class="s2-actions-label">Actions at the Moment of Interaction</div>
+          <ul class="s2-action-list">
+            <li class="s2-action-item">
+              <div class="s2-action-dot"></div>
+              <div class="s2-action-text"><strong>Enquiry received</strong> — recommend next listing in the confirmation email, in real time</div>
+            </li>
+            <li class="s2-action-item">
+              <div class="s2-action-dot"></div>
+              <div class="s2-action-text"><strong>Renewal approaching</strong> — personalised retention offer, right channel, right moment</div>
+            </li>
+            <li class="s2-action-item">
+              <div class="s2-action-dot"></div>
+              <div class="s2-action-text"><strong>Behaviour shift detected</strong> — RM alert and client brief created in CRM automatically</div>
+            </li>
+            <li class="s2-action-item">
+              <div class="s2-action-dot"></div>
+              <div class="s2-action-text"><strong>Service interaction resolved</strong> — upsell prompt triggered when trust signal is highest</div>
+            </li>
+            <li class="s2-action-item">
+              <div class="s2-action-dot"></div>
+              <div class="s2-action-text"><strong>Life event detected</strong> — BD outreach initiated, scored and prioritised automatically</div>
+            </li>
+          </ul>
+        </div>
       </div>
 
-      <div class="s2-eq-sign">+</div>
-
-      <div class="s2-actions">
-        <div class="s2-actions-label">Actions at the Moment of Interaction</div>
-        <ul class="s2-action-list">
-          <li class="s2-action-item">
-            <div class="s2-action-dot"></div>
-            <div class="s2-action-text"><strong>Enquiry received</strong> — recommend next listing in the confirmation email, in real time</div>
-          </li>
-          <li class="s2-action-item">
-            <div class="s2-action-dot"></div>
-            <div class="s2-action-text"><strong>Renewal approaching</strong> — personalised retention offer, right channel, right moment</div>
-          </li>
-          <li class="s2-action-item">
-            <div class="s2-action-dot"></div>
-            <div class="s2-action-text"><strong>Behaviour shift detected</strong> — RM alert and client brief created in CRM automatically</div>
-          </li>
-          <li class="s2-action-item">
-            <div class="s2-action-dot"></div>
-            <div class="s2-action-text"><strong>Service interaction resolved</strong> — upsell prompt triggered when trust signal is highest</div>
-          </li>
-          <li class="s2-action-item">
-            <div class="s2-action-dot"></div>
-            <div class="s2-action-text"><strong>Life event detected</strong> — BD outreach initiated, scored and prioritised automatically</div>
-          </li>
-        </ul>
-      </div>
-
-      <div class="s2-eq-sign">=</div>
-
-      <div class="s2-outcome">
-        <div class="s2-outcome-label">The Result</div>
-        <div class="s2-outcome-title">Moments that Matter. Actions that Drive Outcomes.</div>
+      <!-- Bottom row: = outcome -->
+      <div class="s2-bottom">
+        <div class="s2-eq-label">=</div>
+        <div class="s2-outcome">
+          <div class="s2-outcome-title">Moments that Matter. Actions that Drive Outcomes.</div>
+        </div>
       </div>
 
     </div>
