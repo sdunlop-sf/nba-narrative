@@ -959,6 +959,203 @@
       border-radius: 6px;
       font-style: italic;
     }
+
+    /* ─────────────────────────────────────────────────
+       APPENDIX SLIDES
+    ───────────────────────────────────────────────── */
+
+    /* Divider */
+    .sa-divider-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 12px;
+    }
+    .sa-divider-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--dim);
+    }
+    .sa-divider-title {
+      font-size: clamp(36px, 5vw, 64px);
+      font-weight: 900;
+      letter-spacing: -0.04em;
+      color: var(--text);
+      line-height: 1.0;
+    }
+    .sa-divider-title span { color: var(--blue); }
+    .sa-divider-sub {
+      font-size: 15px;
+      color: var(--muted);
+      max-width: 520px;
+      line-height: 1.6;
+      margin-top: 4px;
+    }
+
+    /* Shared appendix layout */
+    .sa-inner {
+      max-width: 1100px;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+    .sa-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .sa-eyebrow {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--dim);
+      margin-bottom: 2px;
+    }
+    .sa-title {
+      font-size: clamp(18px, 2vw, 26px);
+      font-weight: 900;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      line-height: 1.1;
+    }
+    .sa-title span { color: var(--blue); }
+
+    /* Two-column grid */
+    .sa-cols {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+    .sa-cols-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 14px;
+    }
+    .sa-col-head {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding-bottom: 10px;
+      margin-bottom: 10px;
+      border-bottom: 2px solid var(--border);
+      color: var(--dim);
+    }
+    .sa-col-head.blue { color: var(--blue); border-color: var(--blue); }
+    .sa-col-head.red  { color: #c0392b; border-color: #c0392b; }
+
+    .sa-item {
+      display: flex;
+      gap: 10px;
+      padding: 7px 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 12.5px;
+      line-height: 1.5;
+      color: var(--muted);
+    }
+    .sa-item:last-child { border-bottom: none; }
+    .sa-item strong { color: var(--text); display: block; font-size: 12px; margin-bottom: 1px; }
+    .sa-dot {
+      width: 5px; height: 5px; border-radius: 50%;
+      background: var(--blue-bd); flex-shrink: 0; margin-top: 6px;
+    }
+    .sa-dot.red { background: #e74c3c; }
+    .sa-dot.green { background: #27ae60; }
+
+    /* Comparison table */
+    .sa-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12px;
+    }
+    .sa-table thead th {
+      background: var(--blue);
+      color: #fff;
+      font-weight: 700;
+      padding: 9px 12px;
+      text-align: left;
+      font-size: 11px;
+      letter-spacing: 0.04em;
+    }
+    .sa-table thead th:first-child { border-radius: 6px 0 0 0; width: 160px; }
+    .sa-table thead th:last-child  { border-radius: 0 6px 0 0; }
+    .sa-table tbody tr { border-bottom: 1px solid var(--border); }
+    .sa-table tbody tr:last-child { border-bottom: none; }
+    .sa-table tbody tr:nth-child(even) { background: var(--light); }
+    .sa-table td {
+      padding: 9px 12px;
+      vertical-align: top;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+    .sa-table td:first-child {
+      font-weight: 700;
+      color: var(--text);
+      white-space: nowrap;
+    }
+    .sa-badge {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 4px;
+      letter-spacing: 0.04em;
+    }
+    .sa-badge.yes   { background: #e8f5e9; color: #2e7d32; }
+    .sa-badge.part  { background: #fff8e1; color: #f57f17; }
+    .sa-badge.no    { background: #fbe9e7; color: #c62828; }
+    .sa-badge.build { background: var(--blue-lt); color: var(--blue); }
+
+    /* Vendor cards */
+    .sa-vendor-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 18px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .sa-vendor-name {
+      font-size: 15px;
+      font-weight: 800;
+      color: var(--text);
+      letter-spacing: -0.01em;
+    }
+    .sa-vendor-pitch {
+      font-size: 12.5px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    .sa-vendor-section-label {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--dim);
+      margin-bottom: 6px;
+    }
+    .sa-tag-row { display: flex; flex-wrap: wrap; gap: 5px; }
+    .sa-tag {
+      font-size: 11px;
+      padding: 3px 9px;
+      border-radius: 5px;
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+    .sa-win-row {
+      font-size: 12px;
+      color: var(--muted);
+      padding: 4px 0;
+      border-bottom: 1px solid var(--border);
+      line-height: 1.4;
+    }
+    .sa-win-row:last-child { border-bottom: none; }
+    .sa-win-row strong { color: var(--text); }
   </style>
 </head>
 <body>
@@ -1390,6 +1587,213 @@
         </div>
 
       </div>
+    </div>
+  </div>
+
+  <!-- ── APPENDIX DIVIDER ──────────────────────────── -->
+  <div class="slide">
+    <div class="sa-divider-inner">
+      <div class="accent-line"></div>
+      <div class="sa-divider-label">Supplementary Material</div>
+      <div class="sa-divider-title">Appendix.<br><span>Reference Detail.</span></div>
+      <div class="sa-divider-sub">Einstein Studio capabilities and gaps · Competitive landscape · Google Cloud and Microsoft Azure deep dives</div>
+    </div>
+  </div>
+
+  <!-- ── APPENDIX A · EINSTEIN STUDIO ──────────────── -->
+  <div class="slide">
+    <div class="sa-inner">
+
+      <div class="sa-header">
+        <div>
+          <div class="sa-eyebrow">Appendix A</div>
+          <div class="sa-title">Einstein Studio — <span>What's There Today</span></div>
+        </div>
+      </div>
+
+      <div class="sa-cols">
+        <div>
+          <div class="sa-col-head blue">Live and Working</div>
+          <div class="sa-item"><div class="sa-dot green"></div><div><strong>Binary classification (no-code)</strong>Trains on DMOs and Calculated Insights. Reliable for propensity models — churn, product uptake, activation.</div></div>
+          <div class="sa-item"><div class="sa-dot green"></div><div><strong>Scheduled retraining</strong>GA March 2025. Models stay fresh on a defined schedule without manual intervention.</div></div>
+          <div class="sa-item"><div class="sa-dot green"></div><div><strong>Inference Builder — batch scoring</strong>Writes prediction scores back to DMOs. All action scores land in the same place; decisioning logic runs on the unified scored profile.</div></div>
+          <div class="sa-item"><div class="sa-dot green"></div><div><strong>Predictive Agent Actions — real-time</strong>On-demand scoring inside Flows and Agentforce at the moment of interaction. This is the live decisioning moment.</div></div>
+          <div class="sa-item"><div class="sa-dot green"></div><div><strong>BYOM — Bring Your Own Model</strong>Register any MLflow endpoint (Databricks, SageMaker, Vertex AI). Called at inference time. One-to-one DMO constraint applies.</div></div>
+          <div class="sa-item"><div class="sa-dot green"></div><div><strong>Model lineage + audit trail</strong>Every prediction is traceable. The governance story is real and matters for regulated industries.</div></div>
+        </div>
+        <div>
+          <div class="sa-col-head red">Known Gaps</div>
+          <div class="sa-item"><div class="sa-dot red"></div><div><strong>No multiclass or ranking natively</strong>Arbitration (which action wins?) requires Flow Builder rules or a BYOM ranker. Multiclass is on roadmap. This is the biggest gap vs Pega CDH.</div></div>
+          <div class="sa-item"><div class="sa-dot red"></div><div><strong>No native optimisation layer</strong>Pega's always-on brain optimises across a constrained action set against a business objective. Salesforce approximates this with Flow + scoring thresholds.</div></div>
+          <div class="sa-item"><div class="sa-dot red"></div><div><strong>No champion-challenger testing</strong>A/B testing decisions requires external setup. Not built in.</div></div>
+          <div class="sa-item"><div class="sa-dot red"></div><div><strong>Scheduled, not adaptive retraining</strong>Pega's Adaptive Decision Manager updates continuously from every interaction in real time. Einstein retrains on a schedule.</div></div>
+          <div class="sa-item"><div class="sa-dot red"></div><div><strong>No contact policy or capacity management</strong>Pega has built-in suppression, frequency caps, and channel cooldowns. In Salesforce this requires Flow Builder logic to be built.</div></div>
+          <div class="sa-item"><div class="sa-dot red"></div><div><strong>BYOM is one-to-one</strong>One DMO per model call. Multi-DMO feature engineering must be pre-processed into a single DMO before calling a BYOM endpoint.</div></div>
+        </div>
+      </div>
+
+      <div style="background:var(--card-alt);border:1px solid var(--border);border-radius:10px;padding:14px 18px;font-size:12px;color:var(--muted);line-height:1.6;">
+        <strong style="color:var(--text);">Recommended architecture for a Pega-style engine:</strong> Per-action propensity models in native Einstein Studio (binary classification) → complex or ranking models as BYOM endpoints → all scores written back to a single DMO via Inference Builder → Flow Builder runs arbitration (scores + eligibility rules) → Agentforce / Marketing Cloud activates. Optimisation and arbitration will move native once Einstein Studio's Optimisation capability ships.
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── APPENDIX B · COMPETITIVE LANDSCAPE ────────── -->
+  <div class="slide">
+    <div class="sa-inner">
+
+      <div class="sa-header">
+        <div>
+          <div class="sa-eyebrow">Appendix B</div>
+          <div class="sa-title">Decisioning Landscape — <span>How Each Player Stacks Up</span></div>
+        </div>
+      </div>
+
+      <table class="sa-table">
+        <thead>
+          <tr>
+            <th>Capability</th>
+            <th>Pega CDH</th>
+            <th>Salesforce</th>
+            <th>Google Cloud</th>
+            <th>Microsoft Azure</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Real-time scoring</td>
+            <td><span class="sa-badge yes">Native</span> Sub-100ms, single decision container, no engineering</td>
+            <td><span class="sa-badge yes">Native</span> Predictive Agent Actions + Real-Time Data Actions</td>
+            <td><span class="sa-badge build">Build it</span> Vertex AI endpoints achievable but pipeline must be engineered</td>
+            <td><span class="sa-badge build">Build it</span> Azure ML endpoints achievable but requires custom pipeline</td>
+          </tr>
+          <tr>
+            <td>Arbitration engine</td>
+            <td><span class="sa-badge yes">Native</span> P×C×V×L formula, auditable across all competing actions</td>
+            <td><span class="sa-badge part">Partial</span> Flow Builder + scoring thresholds. BYOM ranker for complex arbitration</td>
+            <td><span class="sa-badge no">None</span> No concept of arbitration across competing actions</td>
+            <td><span class="sa-badge no">None</span> Journey logic or Copilot reasoning — not deterministic arbitration</td>
+          </tr>
+          <tr>
+            <td>Contact policy</td>
+            <td><span class="sa-badge yes">Native</span> Frequency caps, suppression, channel cooldowns — all configurable</td>
+            <td><span class="sa-badge part">Partial</span> Requires Flow Builder. Not a managed policy layer.</td>
+            <td><span class="sa-badge no">None</span> Must be hand-built in application logic</td>
+            <td><span class="sa-badge part">Partial</span> Journey-level frequency caps only — not unified across channels</td>
+          </tr>
+          <tr>
+            <td>Adaptive models</td>
+            <td><span class="sa-badge yes">Native</span> ADM: continuous real-time learning per action per treatment</td>
+            <td><span class="sa-badge part">Partial</span> Scheduled retraining (GA March 2025). Not continuous adaptive.</td>
+            <td><span class="sa-badge part">Partial</span> Vertex AI Pipelines: scheduled retraining only. Recommendations AI retrains daily.</td>
+            <td><span class="sa-badge part">Partial</span> Azure ML scheduled retraining. Customer Insights predictions are batch-refresh.</td>
+          </tr>
+          <tr>
+            <td>Activation breadth</td>
+            <td><span class="sa-badge yes">Native</span> Web, mobile, email, SMS, call centre, paid media — one brain, all channels</td>
+            <td><span class="sa-badge yes">Native</span> Marketing Cloud, Service Cloud, Sales Cloud, Agentforce — native</td>
+            <td><span class="sa-badge part">Partial</span> CES covers contact centre well. Outbound marketing requires integrations.</td>
+            <td><span class="sa-badge part">Partial</span> Dynamics 365 Journeys covers email/SMS. Contact center via D365 CC. Not unified.</td>
+          </tr>
+          <tr>
+            <td>Target buyer</td>
+            <td>CCO / CMO / CDO in FSI, telco, insurance</td>
+            <td>CCO / CMO / CDO — existing Salesforce accounts</td>
+            <td>CTO / Head of Data — wants to build on infrastructure</td>
+            <td>CIO / CDO — Microsoft-incumbent enterprises</td>
+          </tr>
+          <tr>
+            <td>Analyst positioning</td>
+            <td><span class="sa-badge yes">Leader</span> Forrester RTIM Q4 2025 — 25/28 criteria. Only vendor evaluated.</td>
+            <td>Not in RTIM. Triple Leader: Banking, AWM, Insurance CXOP (Everest).</td>
+            <td><span class="sa-badge no">Not evaluated</span> Forrester RTIM — not a decisioning vendor per analysts</td>
+            <td><span class="sa-badge no">Not evaluated</span> Forrester RTIM — not a decisioning vendor per analysts</td>
+          </tr>
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+
+  <!-- ── APPENDIX C · GOOGLE + MICROSOFT ───────────── -->
+  <div class="slide">
+    <div class="sa-inner">
+
+      <div class="sa-header">
+        <div>
+          <div class="sa-eyebrow">Appendix C</div>
+          <div class="sa-title">Google Cloud &amp; Microsoft — <span>How They Approach It</span></div>
+        </div>
+      </div>
+
+      <div class="sa-cols">
+
+        <div class="sa-vendor-card">
+          <div class="sa-vendor-name">Google Cloud</div>
+          <div class="sa-vendor-pitch">An AI infrastructure play, not a packaged decisioning product. Google assembles decisioning from BigQuery (data), Vertex AI (ML), and Customer Engagement Suite (contact centre AI). Strong for organisations building a custom stack. No answer for organisations who want to buy a decisioning system.</div>
+          <div>
+            <div class="sa-vendor-section-label">Their stack</div>
+            <div class="sa-tag-row">
+              <span class="sa-tag">BigQuery / BigQuery ML</span>
+              <span class="sa-tag">Vertex AI</span>
+              <span class="sa-tag">Customer Engagement Suite</span>
+              <span class="sa-tag">Vertex AI Agent Builder</span>
+            </div>
+          </div>
+          <div>
+            <div class="sa-vendor-section-label">Strengths</div>
+            <div class="sa-item" style="padding:4px 0;border:none;"><div class="sa-dot green"></div><div>Best-in-class data infrastructure — BigQuery at petabyte scale with native ML</div></div>
+            <div class="sa-item" style="padding:4px 0;border:none;"><div class="sa-dot green"></div><div>Vertex AI is a world-class ML platform — full MLOps, custom models, AutoML</div></div>
+            <div class="sa-item" style="padding:4px 0;border:none;"><div class="sa-dot green"></div><div>Customer Engagement Suite is strong for contact centre AI and Agent Assist</div></div>
+          </div>
+          <div>
+            <div class="sa-vendor-section-label">Gaps vs a decisioning platform</div>
+            <div class="sa-item" style="padding:4px 0;border:none;"><div class="sa-dot red"></div><div>No arbitration engine — action prioritisation must be custom-built</div></div>
+            <div class="sa-item" style="padding:4px 0;border:none;"><div class="sa-dot red"></div><div>No contact policy — suppression and frequency caps must be hand-coded</div></div>
+            <div class="sa-item" style="padding:4px 0;border:none;"><div class="sa-dot red"></div><div>Not in Forrester RTIM — analysts do not position Google as a decisioning vendor</div></div>
+          </div>
+          <div>
+            <div class="sa-vendor-section-label">ANZ / FSI wins</div>
+            <div class="sa-win-row"><strong>Insignia Financial (MLC)</strong> — AI personalisation for 1.5M super members · BigQuery + Vertex AI agents · Sept 2025</div>
+            <div class="sa-win-row"><strong>Macquarie Bank</strong> — fraud protection + 38% more self-service · Vertex AI + BigQuery</div>
+          </div>
+        </div>
+
+        <div class="sa-vendor-card">
+          <div class="sa-vendor-name">Microsoft Azure</div>
+          <div class="sa-vendor-pitch">An ecosystem lock-in play. For enterprises already on Dynamics 365 + Azure + Microsoft 365, the extension path is low-friction. The NBA story is primarily rep-assist (Copilot surfacing recommended next steps to a sales or service agent) — not real-time 1:1 outbound decisioning. Not in Forrester RTIM or Gartner CDP MQ.</div>
+          <div>
+            <div class="sa-vendor-section-label">Their stack</div>
+            <div class="sa-tag-row">
+              <span class="sa-tag">Dynamics 365 Customer Insights</span>
+              <span class="sa-tag">Azure ML</span>
+              <span class="sa-tag">Copilot Studio</span>
+              <span class="sa-tag">Microsoft Fabric</span>
+              <span class="sa-tag">Agent 365</span>
+            </div>
+          </div>
+          <div>
+            <div class="sa-vendor-section-label">Strengths</div>
+            <div class="sa-item" style="padding:4px 0;border:none;"><div class="sa-dot green"></div><div>Unmatched ecosystem — Dynamics 365, Microsoft 365, Teams, Azure, Fabric create minimal integration friction</div></div>
+            <div class="sa-item" style="padding:4px 0;border:none;"><div class="sa-dot green"></div><div>Best-in-class LLM access via Azure OpenAI (GPT-4o/o3) — matters for regulated industry compliance</div></div>
+            <div class="sa-item" style="padding:4px 0;border:none;"><div class="sa-dot green"></div><div>Copilot for Sales/Service is strong for rep-assist NBA recommendations in the CRM flow</div></div>
+          </div>
+          <div>
+            <div class="sa-vendor-section-label">Gaps vs a decisioning platform</div>
+            <div class="sa-item" style="padding:4px 0;border:none;"><div class="sa-dot red"></div><div>No formalised arbitration — no deterministic formula across competing actions</div></div>
+            <div class="sa-item" style="padding:4px 0;border:none;"><div class="sa-dot red"></div><div>No cross-channel contact policy — journey-level caps only, not unified</div></div>
+            <div class="sa-item" style="padding:4px 0;border:none;"><div class="sa-dot red"></div><div>Not in Forrester RTIM or Gartner CDP MQ — analysts agree: not a decisioning platform</div></div>
+          </div>
+          <div>
+            <div class="sa-vendor-section-label">ANZ / FSI wins</div>
+            <div class="sa-win-row"><strong>ANZ Bank</strong> — AI Immersion Centre partnership · broad Azure AI capability building</div>
+            <div class="sa-win-row"><strong>Telstra</strong> — customer experience and network operations · Azure AI</div>
+          </div>
+        </div>
+
+      </div>
+
     </div>
   </div>
 
