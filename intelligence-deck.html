@@ -376,6 +376,23 @@
       white-space: nowrap;
     }
 
+    .s1-platform-row {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+    }
+
+    .s1-platform-chip {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 6px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      color: var(--muted);
+    }
+
     /* ─────────────────────────────────────────────────
        SLIDE 2 · MOMENTS + EQUATION
     ───────────────────────────────────────────────── */
@@ -406,12 +423,12 @@
       padding: 0 4px;
     }
 
-    .s2-refs {
+    .s2-actions {
       flex: 1;
       min-width: 0;
     }
 
-    .s2-refs-label {
+    .s2-actions-label {
       font-size: 10px;
       font-weight: 700;
       letter-spacing: 0.16em;
@@ -420,32 +437,35 @@
       margin-bottom: 12px;
     }
 
-    .s2-ref-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
+    .s2-action-list {
+      display: flex;
+      flex-direction: column;
       gap: 9px;
+      list-style: none;
     }
 
-    .s2-ref-card {
-      background: var(--card);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 14px 16px;
+    .s2-action-item {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
     }
 
-    .s2-ref-name {
-      font-size: 14px;
-      font-weight: 800;
-      color: var(--text);
-      margin-bottom: 3px;
-      letter-spacing: -0.01em;
+    .s2-action-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--blue);
+      flex-shrink: 0;
+      margin-top: 6px;
     }
 
-    .s2-ref-sub {
-      font-size: 11px;
+    .s2-action-text {
+      font-size: 13px;
       color: var(--muted);
-      line-height: 1.45;
+      line-height: 1.55;
     }
+
+    .s2-action-text strong { color: var(--text); font-weight: 700; }
 
     .s2-outcome {
       flex-shrink: 0;
@@ -890,7 +910,13 @@
 
       <div class="s1-market">
         <div class="s1-market-text">
-          <strong>Everyone is trying to solve this — and Salesforce isn't in the conversation.</strong> Westpac wrote off $70M on a failed Pega program. Optus spent $2.5–3M a year in Pega licence over several years with limited return. TPG's investment is reportedly significant. The same outcome is available on infrastructure they already own, at a fraction of the cost.
+          <strong>Everyone is trying to solve this — and Salesforce isn't in the conversation.</strong> Pega, SAS, and Adobe are winning these mandates. They all have deep partnerships with Google, Snowflake, Databricks, and AWS — the platforms your customers already run. Westpac wrote off $70M on a failed Pega program. Optus paid $2.5–3M/yr in Pega licence over several years with limited return.
+          <div class="s1-platform-row">
+            <span class="s1-platform-chip">Google Cloud</span>
+            <span class="s1-platform-chip">Amazon AWS</span>
+            <span class="s1-platform-chip">Snowflake</span>
+            <span class="s1-platform-chip">Databricks</span>
+          </div>
         </div>
         <div class="s1-market-deals">
           <div class="deals-label">The TAM</div>
@@ -915,26 +941,30 @@
 
       <div class="s2-eq-sign">+</div>
 
-      <div class="s2-refs">
-        <div class="s2-refs-label">Works with your data stack</div>
-        <div class="s2-ref-grid">
-          <div class="s2-ref-card">
-            <div class="s2-ref-name">Google Cloud</div>
-            <div class="s2-ref-sub">BigQuery · Vertex AI · native Data Cloud connector</div>
-          </div>
-          <div class="s2-ref-card">
-            <div class="s2-ref-name">Amazon AWS</div>
-            <div class="s2-ref-sub">S3 · Redshift · SageMaker integration via Data Cloud</div>
-          </div>
-          <div class="s2-ref-card">
-            <div class="s2-ref-name">Snowflake</div>
-            <div class="s2-ref-sub">Zero-copy data share · real-time sync with Data Cloud</div>
-          </div>
-          <div class="s2-ref-card">
-            <div class="s2-ref-name">Databricks</div>
-            <div class="s2-ref-sub">Delta Lake · Unity Catalog · models trained on your lakehouse</div>
-          </div>
-        </div>
+      <div class="s2-actions">
+        <div class="s2-actions-label">Actions at the Moment of Interaction</div>
+        <ul class="s2-action-list">
+          <li class="s2-action-item">
+            <div class="s2-action-dot"></div>
+            <div class="s2-action-text"><strong>Enquiry received</strong> — recommend next listing in the confirmation email, in real time</div>
+          </li>
+          <li class="s2-action-item">
+            <div class="s2-action-dot"></div>
+            <div class="s2-action-text"><strong>Renewal approaching</strong> — personalised retention offer, right channel, right moment</div>
+          </li>
+          <li class="s2-action-item">
+            <div class="s2-action-dot"></div>
+            <div class="s2-action-text"><strong>Behaviour shift detected</strong> — RM alert and client brief created in CRM automatically</div>
+          </li>
+          <li class="s2-action-item">
+            <div class="s2-action-dot"></div>
+            <div class="s2-action-text"><strong>Service interaction resolved</strong> — upsell prompt triggered when trust signal is highest</div>
+          </li>
+          <li class="s2-action-item">
+            <div class="s2-action-dot"></div>
+            <div class="s2-action-text"><strong>Life event detected</strong> — BD outreach initiated, scored and prioritised automatically</div>
+          </li>
+        </ul>
       </div>
 
       <div class="s2-eq-sign">=</div>
