@@ -429,21 +429,23 @@
     /* ─────────────────────────────────────────────────
        SLIDE 2 · MOMENTS + EQUATION
     ───────────────────────────────────────────────── */
-    /* Slide 2 — horizontal equation: graphic + actions = outcome */
+    /* Slide 2 — grid equation: graphic+actions on top, = outcome on bottom */
     .s2-inner {
-      max-width: 1160px;
+      max-width: 1100px;
       width: 100%;
-      display: flex;
-      align-items: center;
-      gap: 0;
+      display: grid;
+      grid-template-columns: 400px 48px 1fr;
+      grid-template-rows: auto auto;
+      row-gap: 14px;
     }
 
+    /* Row 1: graphic | + | actions */
     .s2-graphic {
-      flex-shrink: 0;
-      width: 320px;
+      grid-column: 1;
+      grid-row: 1;
       display: flex;
       align-items: center;
-      justify-content: center;
+      padding-right: 8px;
     }
 
     .s2-graphic img {
@@ -452,21 +454,22 @@
     }
 
     .s2-op {
-      flex-shrink: 0;
       font-size: 40px;
       font-weight: 200;
       line-height: 1;
-      width: 44px;
       text-align: center;
-      color: var(--blue-bd);
-      padding-bottom: 4px;
+      color: rgba(1,118,211,0.3);
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
-    .s2-op.eq { color: var(--blue); }
+    .s2-op.plus { grid-column: 2; grid-row: 1; align-self: center; }
+    .s2-op.eq   { grid-column: 2; grid-row: 2; color: var(--blue); }
 
     .s2-actions {
-      flex: 1;
-      min-width: 0;
+      grid-column: 3;
+      grid-row: 1;
     }
 
     .s2-actions-label {
@@ -497,21 +500,22 @@
 
     .s2-action-item strong { color: var(--text); font-weight: 700; }
 
+    /* Row 2: (graphic col spans empty) | = | outcome */
     .s2-outcome {
-      flex-shrink: 0;
-      width: 230px;
+      grid-column: 3;
+      grid-row: 2;
       background: var(--blue);
       border-radius: 12px;
-      padding: 20px 22px;
+      padding: 18px 24px;
       display: flex;
       align-items: center;
     }
 
     .s2-outcome-title {
-      font-size: 17px;
+      font-size: 18px;
       font-weight: 900;
       color: #fff;
-      line-height: 1.25;
+      line-height: 1.2;
       letter-spacing: -0.02em;
     }
 
