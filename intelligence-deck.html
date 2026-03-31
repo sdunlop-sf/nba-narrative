@@ -429,24 +429,27 @@
     /* ─────────────────────────────────────────────────
        SLIDE 2 · MOMENTS + EQUATION
     ───────────────────────────────────────────────── */
-    /* Slide 2 — grid equation: graphic+actions on top, = outcome on bottom */
+    /* Slide 2 — column layout: [graphic + actions] row, then centered outcome */
     .s2-inner {
       max-width: 1100px;
       width: 100%;
-      display: grid;
-      grid-template-columns: 400px 48px 1fr;
-      grid-template-rows: auto auto;
-      row-gap: 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
     }
 
-    /* Row 1: graphic | + | actions — all bottom-aligned */
-    .s2-graphic {
-      grid-column: 1;
-      grid-row: 1;
-      align-self: end;
+    .s2-top {
       display: flex;
-      align-items: flex-end;
-      padding-right: 8px;
+      align-items: center;
+      gap: 0;
+      width: 100%;
+    }
+
+    .s2-graphic {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
     .s2-graphic img {
@@ -455,23 +458,19 @@
     }
 
     .s2-op {
+      flex-shrink: 0;
       font-size: 40px;
       font-weight: 200;
       line-height: 1;
+      width: 48px;
       text-align: center;
       color: rgba(1,118,211,0.3);
-      display: flex;
-      align-items: center;
-      justify-content: center;
     }
 
-    .s2-op.plus { grid-column: 2; grid-row: 1; align-self: end; padding-bottom: 6px; }
-    .s2-op.eq   { grid-column: 2; grid-row: 2; color: var(--blue); align-self: center; }
+    .s2-op.eq { color: var(--blue); }
 
     .s2-actions {
-      grid-column: 3;
-      grid-row: 1;
-      align-self: end;
+      flex: 1;
     }
 
     .s2-actions-label {
@@ -502,16 +501,17 @@
 
     .s2-action-item strong { color: var(--text); font-weight: 700; }
 
-    /* Row 2: (graphic col spans empty) | = | outcome */
-    .s2-outcome {
-      grid-column: 3;
-      grid-row: 2;
-      align-self: center;
-      background: var(--blue);
-      border-radius: 12px;
-      padding: 18px 24px;
+    .s2-bottom {
       display: flex;
       align-items: center;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .s2-outcome {
+      background: var(--blue);
+      border-radius: 12px;
+      padding: 18px 40px;
     }
 
     .s2-outcome-title {
@@ -520,6 +520,7 @@
       color: #fff;
       line-height: 1.2;
       letter-spacing: -0.02em;
+      text-align: center;
     }
 
     /* ─────────────────────────────────────────────────
@@ -969,27 +970,30 @@
   <div class="slide">
     <div class="s2-inner">
 
-      <div class="s2-graphic">
-        <img src="moments-light.svg" alt="Moments That Matter">
+      <!-- Row 1: two columns -->
+      <div class="s2-top">
+        <div class="s2-graphic">
+          <img src="moments-light.svg" alt="Moments That Matter">
+        </div>
+        <div class="s2-op">+</div>
+        <div class="s2-actions">
+          <div class="s2-actions-label">Actions at the Moment of Interaction</div>
+          <ul class="s2-action-list">
+            <li class="s2-action-item"><strong>Enquiry received</strong> — recommend next listing in the confirmation email, in real time</li>
+            <li class="s2-action-item"><strong>Renewal approaching</strong> — personalised retention offer, right channel, right moment</li>
+            <li class="s2-action-item"><strong>Behaviour shift detected</strong> — RM alert and client brief created in CRM automatically</li>
+            <li class="s2-action-item"><strong>Service interaction resolved</strong> — upsell prompt triggered when trust signal is highest</li>
+            <li class="s2-action-item"><strong>Life event detected</strong> — BD outreach initiated, scored and prioritised automatically</li>
+          </ul>
+        </div>
       </div>
 
-      <div class="s2-op">+</div>
-
-      <div class="s2-actions">
-        <div class="s2-actions-label">Actions at the Moment of Interaction</div>
-        <ul class="s2-action-list">
-          <li class="s2-action-item"><strong>Enquiry received</strong> — recommend next listing in the confirmation email, in real time</li>
-          <li class="s2-action-item"><strong>Renewal approaching</strong> — personalised retention offer, right channel, right moment</li>
-          <li class="s2-action-item"><strong>Behaviour shift detected</strong> — RM alert and client brief created in CRM automatically</li>
-          <li class="s2-action-item"><strong>Service interaction resolved</strong> — upsell prompt triggered when trust signal is highest</li>
-          <li class="s2-action-item"><strong>Life event detected</strong> — BD outreach initiated, scored and prioritised automatically</li>
-        </ul>
-      </div>
-
-      <div class="s2-op eq">=</div>
-
-      <div class="s2-outcome">
-        <div class="s2-outcome-title">Decisions that drive business outcomes.</div>
+      <!-- Row 2: centered outcome -->
+      <div class="s2-bottom">
+        <div class="s2-op eq">=</div>
+        <div class="s2-outcome">
+          <div class="s2-outcome-title">Decisions that drive business outcomes.</div>
+        </div>
       </div>
 
     </div>
