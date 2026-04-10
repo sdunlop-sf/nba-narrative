@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>NBA Decisioning Accelerator — Technical Summary</title>
+<style>
+  @page { margin: 1in; size: A4; }
+  * { box-sizing: border-box; }
+  body {
+    font-family: 'Salesforce Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    color: #181818;
+    line-height: 1.6;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    font-size: 11pt;
+  }
+  h1 {
+    font-size: 22pt;
+    color: #032D60;
+    border-bottom: 3px solid #0176D3;
+    padding-bottom: 12px;
+    margin-bottom: 8px;
+  }
+  .subtitle {
+    font-size: 11pt;
+    color: #706E6B;
+    margin-bottom: 32px;
+  }
+  h2 {
+    font-size: 15pt;
+    color: #032D60;
+    margin-top: 32px;
+    margin-bottom: 12px;
+    border-left: 4px solid #0176D3;
+    padding-left: 12px;
+  }
+  h3 {
+    font-size: 12pt;
+    color: #444;
+    margin-top: 20px;
+    margin-bottom: 8px;
+  }
+  p, li { font-size: 11pt; }
+  ul { padding-left: 20px; }
+  li { margin-bottom: 6px; }
+  .callout {
+    background: #F3F3F3;
+    border-left: 4px solid #0176D3;
+    padding: 16px 20px;
+    margin: 20px 0;
+    border-radius: 0 4px 4px 0;
+  }
+  .callout-title {
+    font-weight: 700;
+    color: #032D60;
+    margin-bottom: 4px;
+  }
+  .tier-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0;
+    font-size: 10.5pt;
+  }
+  .tier-table th {
+    background: #032D60;
+    color: white;
+    padding: 10px 14px;
+    text-align: left;
+    font-weight: 600;
+  }
+  .tier-table td {
+    padding: 10px 14px;
+    border-bottom: 1px solid #E5E5E5;
+    vertical-align: top;
+  }
+  .tier-table tr:nth-child(even) td { background: #F9F9F9; }
+  .flow-diagram {
+    background: #FAFAF9;
+    border: 1px solid #E5E5E5;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 20px 0;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    font-size: 9.5pt;
+    line-height: 1.8;
+    white-space: pre;
+    overflow-x: auto;
+    color: #333;
+  }
+  .section-intro {
+    font-size: 11pt;
+    color: #444;
+    margin-bottom: 16px;
+  }
+  .tag {
+    display: inline-block;
+    background: #E8F4FD;
+    color: #0176D3;
+    padding: 2px 8px;
+    border-radius: 3px;
+    font-size: 9pt;
+    font-weight: 600;
+    margin-right: 4px;
+  }
+  .tag-green {
+    background: #E3F5E1;
+    color: #2E844A;
+  }
+  .tag-orange {
+    background: #FFF3E0;
+    color: #E65100;
+  }
+  .footer {
+    margin-top: 40px;
+    padding-top: 16px;
+    border-top: 1px solid #E5E5E5;
+    color: #706E6B;
+    font-size: 9pt;
+  }
+  @media print {
+    body { padding: 0; }
+    h2 { page-break-after: avoid; }
+    .flow-diagram { page-break-inside: avoid; }
+    .tier-table { page-break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<h1>NBA Decisioning Accelerator</h1>
+<div class="subtitle">Unlocked Package for Salesforce &mdash; Technical Summary for Leadership<br>
+April 2026</div>
+
+<h2>What It Is</h2>
+<p>The NBA Decisioning Accelerator is an unlocked Salesforce package that delivers a production-grade <strong>Next Best Action decisioning engine</strong> entirely within the Salesforce platform. It combines a <strong>modular, bring-your-own-model ML architecture</strong> for predictive scoring with a <strong>deterministic arbitration engine</strong> for action selection, and an <strong>Agentforce agent</strong> for intelligent adjudication of complex decisions &mdash; all without external dependencies.</p>
+
+<div class="callout">
+  <div class="callout-title">Key Principle</div>
+  No LLM in the hot path. ML models score, deterministic logic arbitrates, and Agentforce reasons only when human review is required. This keeps latency low, costs predictable, and decisions auditable.
+</div>
+
+<h2>Architecture Overview</h2>
+
+<div class="flow-diagram">
+  Data Cloud          Scoring Layer           Arbitration Engine        Agentforce
+  +-----------+       +----------------+     +--------------------+    +------------------+
+  | Segments  |------>| Einstein Studio|---->| Score + Weight     |--->| Tier 1: Auto     |
+  | Contact   |       | OR             |     | Channel Policy     |    | (no LLM needed)  |
+  | Behaviour |       | External Model |     | Suppression Check  |    |                  |
+  +-----------+       | (BYOM)         |     | Proximity Check    |    | Tier 2: Agent    |
+                      +----------------+     +--------------------+    | reasons, drafts, |
+                             |                        |                | human approves   |
+                             v                        v                +------------------+
+                      Outcome Score (0-1)       Tiered Decision               |
+                      per Contact                     |                       v
+                                                      v                Write-back to
+                                               NBADecision__c          Decision Record
+                                               (full audit trail)
+</div>
+
+<h2>The ML Pipeline</h2>
+<p class="section-intro">The accelerator is built on a modular, bring-your-own-model architecture. Each decisioning module can be backed by its own scoring source &mdash; the arbitration engine doesn't care where the score comes from, only that it receives one.</p>
+
+<h3>Scoring Sources</h3>
+<table class="tier-table">
+  <tr>
+    <th>Source</th>
+    <th>How It Works</th>
+    <th>When to Use</th>
+  </tr>
+  <tr>
+    <td><strong>Einstein Studio</strong></td>
+    <td>Binary Classification model trained on Data Cloud DMOs. Scores are retrieved via the Einstein prediction Flow action.</td>
+    <td>Standard use case &mdash; churn, propensity to buy, renewal risk. Training data lives in Data Cloud.</td>
+  </tr>
+  <tr>
+    <td><strong>External Model (BYOM)</strong></td>
+    <td>Any model accessible via a Named Credential + REST endpoint. The module stores the credential name and endpoint path; the engine calls it at runtime.</td>
+    <td>Teams with existing ML platforms (SageMaker, Vertex AI, Azure ML, custom APIs) who want to keep their models where they are.</td>
+  </tr>
+  <tr>
+    <td><strong>Data Cloud Score Field</strong></td>
+    <td>Pre-computed score stored on a Data Cloud DMO field. No runtime callout needed &mdash; the engine reads the value directly.</td>
+    <td>High-frequency decisioning where latency matters, or when scores are batch-computed externally and synced to Data Cloud.</td>
+  </tr>
+</table>
+
+<h3>Multi-Module Architecture</h3>
+<ul>
+  <li><strong>One module per outcome</strong> &mdash; Churn, Upsell, Renewal, Winback, etc. Each module is independently configurable with its own model source, actions, and thresholds</li>
+  <li><strong>Cross-module arbitration</strong> &mdash; When multiple modules fire for the same contact, the engine evaluates actions across all modules and applies cross-module cooldowns to prevent over-contact</li>
+  <li><strong>Independent lifecycle</strong> &mdash; Modules can be activated, paused, or reconfigured without affecting other modules</li>
+</ul>
+
+<h3>Einstein Studio Model Details</h3>
+<ul>
+  <li><strong>Model type:</strong> Binary Classification (extensible to other types as Einstein Studio evolves)</li>
+  <li><strong>Training data source:</strong> CampaignMember Data Model Object (DMO) in Data Cloud &mdash; captures outcome signals (accepted/declined) from prior decisions</li>
+  <li><strong>Scoring:</strong> Each contact receives an outcome probability score (0&ndash;1) that feeds directly into the arbitration engine</li>
+  <li><strong>Retraining:</strong> Automated retraining scheduler monitors outcome volume &mdash; when the threshold is met, a new model version is trained and the AUC metric is tracked</li>
+</ul>
+
+<h3>Training Feedback Loop</h3>
+<ul>
+  <li>Decision approved &rarr; Campaign + CampaignMember created (Status: Sent)</li>
+  <li>Customer responds &rarr; CampaignMember status updated (Responded &rarr; Accepted/Declined)</li>
+  <li>CampaignMember syncs to Data Cloud &rarr; becomes training signal for next model version</li>
+  <li>This creates a continuously improving model that learns from real decision outcomes</li>
+</ul>
+
+<h2>The Arbitration Engine</h2>
+<p class="section-intro">A deterministic, Flow-based engine that evaluates every eligible action for a given contact and selects the optimal treatment.</p>
+
+<h3>How It Works</h3>
+<ol>
+  <li><strong>Module selection</strong> &mdash; Active modules (e.g. Churn) define which outcome type to evaluate</li>
+  <li><strong>Score retrieval</strong> &mdash; Einstein Studio model score for the contact is fetched (or simulated in demo mode)</li>
+  <li><strong>Action eligibility</strong> &mdash; Each NBA Action is checked against:
+    <ul>
+      <li>Minimum score threshold (does the contact's score warrant this action?)</li>
+      <li>Segment eligibility and exclusions (Data Cloud segment membership)</li>
+      <li>Channel frequency caps (email: 48h cooldown, push: 24h, outbound call: 168h)</li>
+      <li>Global suppressions (contact-level or segment-level opt-outs)</li>
+      <li>Budget and date-range constraints</li>
+    </ul>
+  </li>
+  <li><strong>Weighted scoring</strong> &mdash; Each eligible action's score is calculated: <code>churn_score x priority_weight</code></li>
+  <li><strong>Tiering decision</strong> &mdash; Based on score proximity between the top two actions</li>
+</ol>
+
+<h3>Decision Tiering</h3>
+<table class="tier-table">
+  <tr>
+    <th>Tier</th>
+    <th>Condition</th>
+    <th>Handling</th>
+    <th>Expected Volume</th>
+  </tr>
+  <tr>
+    <td><span class="tag tag-green">Tier 1</span></td>
+    <td>Clear winner &mdash; top action's weighted score exceeds the runner-up by more than the proximity threshold</td>
+    <td>Auto-adjudicated. No human review needed. Decision recorded and action executed immediately.</td>
+    <td>~80% of decisions</td>
+  </tr>
+  <tr>
+    <td><span class="tag tag-orange">Tier 2</span></td>
+    <td>Competing signals &mdash; top two actions score within the proximity threshold (default: 0.050)</td>
+    <td>Routed to Agentforce for AI-assisted adjudication with human approval.</td>
+    <td>~15-20% of decisions</td>
+  </tr>
+</table>
+
+<h2>Agentic Adjudication (Tier 2)</h2>
+<p class="section-intro">When the arbitration engine identifies a close call, the decision is escalated to an Agentforce agent that reasons over the full context and produces a recommendation for human review.</p>
+
+<h3>What the Agent Does</h3>
+<ol>
+  <li><strong>Receives full decision context</strong> &mdash; contact profile, model score, all eligible actions with weighted scores, channel history, offer values</li>
+  <li><strong>Reasons about the best treatment</strong> &mdash; weighs channel effectiveness, offer value, score proximity, and contact context to recommend the optimal action</li>
+  <li><strong>Drafts outreach content</strong> &mdash; generates channel-appropriate content:
+    <ul>
+      <li><strong>Outbound call:</strong> Call guide with objective, key talking points, and next steps</li>
+      <li><strong>Email:</strong> Subject line and personalised email body</li>
+      <li><strong>Push notification:</strong> Short, targeted notification text</li>
+    </ul>
+  </li>
+  <li><strong>Human approves or overrides</strong> &mdash; the analyst reviews the recommendation and either approves (saving the agent's rationale and draft) or overrides with their own reasoning</li>
+</ol>
+
+<div class="callout">
+  <div class="callout-title">Why Agentforce, Not a Flow</div>
+  Tier 2 decisions involve ambiguous trade-offs (e.g. a high-value email offer vs. a personalised call with a relationship manager) where deterministic rules can't capture the nuance. The Agentforce agent applies reasoning to weigh these trade-offs and generates contextual outreach &mdash; something a Flow cannot do. Critically, the agent never acts autonomously; it recommends and drafts, but a human makes the final call.
+</div>
+
+<h3>Technical Implementation</h3>
+<ul>
+  <li><strong>API:</strong> Agentforce Agent Runtime API at <code>api.salesforce.com</code></li>
+  <li><strong>Authentication:</strong> OAuth 2.0 Client Credentials flow with JWT access tokens &mdash; scoped to <code>chatbot_api</code>, <code>sfap_api</code>, and <code>api</code></li>
+  <li><strong>Agent type:</strong> EinsteinServiceAgent configured via Agent Builder</li>
+  <li><strong>Integration:</strong> Apex controller manages session lifecycle and message routing; LWC provides the review/approval interface</li>
+  <li><strong>Audit trail:</strong> Agent rationale and drafted content are persisted on the NBADecision__c record</li>
+</ul>
+
+<h2>The Cockpit UI</h2>
+<p class="section-intro">A purpose-built Lightning app ("Decisioning Hub") gives analysts and managers full visibility and control.</p>
+
+<ul>
+  <li><strong>Overview dashboard</strong> &mdash; Decision volume, tier split, model health, outcome rates</li>
+  <li><strong>NBA Catalogue</strong> &mdash; Configure actions, channels, thresholds, offers, eligibility segments</li>
+  <li><strong>Contact Policy</strong> &mdash; Channel frequency caps and cooldown windows</li>
+  <li><strong>Live Simulation</strong> &mdash; Test arbitration against any contact in real time, see exactly which actions qualify and why</li>
+  <li><strong>Tier 2 Queue</strong> &mdash; Review queue for decisions awaiting adjudication</li>
+  <li><strong>Management Agent</strong> &mdash; Conversational interface for adjudication, status checks, and system management</li>
+  <li><strong>Data Cloud Setup</strong> &mdash; Guided configuration wizard for Data Cloud bundles, segments, and model training</li>
+</ul>
+
+<h2>What Ships in the Package</h2>
+<table class="tier-table">
+  <tr>
+    <th>Component</th>
+    <th>Details</th>
+  </tr>
+  <tr>
+    <td>Custom Objects</td>
+    <td>NBA_Module__c (outcome modules with model source config), NBAAction__c (treatments per module), NBADecision__c (decision audit trail), NBA_Channel_Policy__c, NBA_Global_Suppression__c, NBA_Eligibility__c, NBA_Decisioning_Settings__c</td>
+  </tr>
+  <tr>
+    <td>Apex Classes</td>
+    <td>Arbitration engine, cockpit controllers, setup agent actions, management agent controller, adjudication handler, simulation engine, retraining scheduler</td>
+  </tr>
+  <tr>
+    <td>LWC Components</td>
+    <td>Cockpit dashboard, catalogue manager, policy editor, live simulator, Tier 2 queue, management agent panel, Data Cloud setup wizard</td>
+  </tr>
+  <tr>
+    <td>Flows</td>
+    <td>Arbitration orchestrator, churn trigger handler, outcome event processor</td>
+  </tr>
+  <tr>
+    <td>Test Coverage</td>
+    <td>82 unit and integration tests covering arbitration logic, tiering, suppression, segment filtering, adjudication, and all controller methods</td>
+  </tr>
+</table>
+
+<h2>Competitive Positioning</h2>
+<p>The accelerator demonstrates that Salesforce can deliver a <strong>Pega-style decisioning capability</strong> as an embedded platform feature rather than a standalone product. Key differentiators:</p>
+<ul>
+  <li><strong>Native platform:</strong> No external infrastructure, no data egress, no additional vendor contracts</li>
+  <li><strong>Bring your own model:</strong> Works with Einstein Studio, external ML platforms (SageMaker, Vertex AI, Azure ML), or pre-computed Data Cloud scores &mdash; customers aren't locked into a single ML stack</li>
+  <li><strong>Multi-module:</strong> One engine handles churn, upsell, renewal, winback, and any future outcome type &mdash; each with its own model, actions, and thresholds</li>
+  <li><strong>Agentforce reasoning:</strong> AI-assisted adjudication that goes beyond rule-based decisioning, with full human oversight</li>
+  <li><strong>Unlocked package:</strong> Deployable to any Enterprise org via standard package install + guided setup</li>
+  <li><strong>Closed-loop learning:</strong> Decision outcomes feed back into model retraining automatically</li>
+</ul>
+
+<div class="callout" style="margin-top: 32px;">
+  <div class="callout-title">Live Tracking Dashboard</div>
+  Track build progress, milestones, and feature status in real time: <a href="https://sdunlop-sf.github.io/nba-narrative/dashboard.html" target="_blank" style="color: #0176D3; font-weight: 600;">Open Dashboard &rarr;</a>
+</div>
+
+<div class="footer">
+  NBA Decisioning Accelerator v3.x &mdash; Unlocked Package for Salesforce<br>
+  Prepared by Stuart Dunlop &mdash; April 2026
+</div>
+
+<script src="gate.js" data-page="Decisioning Accelerator — Technical Summary"></script>
+</body>
+</html>
