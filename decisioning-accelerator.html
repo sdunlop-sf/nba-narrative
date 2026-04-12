@@ -137,7 +137,7 @@ April 2026</div>
 
 <div class="callout">
   <div class="callout-title">Key Principle</div>
-  No LLM in the hot path. ML models score, deterministic logic arbitrates, and Agentforce reasons only when human review is required. This keeps latency low, costs predictable, and decisions auditable.
+  Deterministic at scale, agentic at the edges. ML models score, deterministic logic arbitrates the 99% of decisions that are clear, and LLM reasoning is applied only where it matters &mdash; ambiguous Tier 2 adjudications and proactive self-monitoring. No LLM in the hot path. Costs are predictable. Every decision is auditable.
 </div>
 
 <h2>Architecture Overview</h2>
@@ -157,6 +157,26 @@ April 2026</div>
                                                       v                Write-back to
                                                NBADecision__c          Decision Record
                                                (full audit trail)
+                                                      |
+                      +-------------------------------+-------------------------------+
+                      |                                                               |
+                      v                                                               v
+               Outcome Feedback                                           Proactive Agentic Layer
+               +------------------+                                      +---------------------+
+               | Retraining       |                                      | Strategy Agent       |
+               | Scheduler        |                                      | (scheduled, daily)   |
+               | (outcome count   |                                      |                      |
+               |  threshold met   |                                      | Anomaly Detection    |
+               |  -> retrain)     |                                      | (deterministic)      |
+               +------------------+                                      |        |             |
+                                                                         |        v             |
+                                                                         | LLM Reasoning        |
+                                                                         | (root-cause analysis)|
+                                                                         |        |             |
+                                                                         |        v             |
+                                                                         | NBA_Agent_Insight__c |
+                                                                         | (human reviews)      |
+                                                                         +---------------------+
 </div>
 
 <h2>The ML Pipeline</h2>
@@ -282,6 +302,95 @@ April 2026</div>
   <li><strong>Audit trail:</strong> Agent rationale and drafted content are persisted on the NBADecision__c record</li>
 </ul>
 
+<h2>Proactive Agentic Layer</h2>
+<p class="section-intro">The decisioning system becomes an active participant in its own operation. Rather than waiting for humans to spot problems, the platform observes its own performance, reasons about what it finds, and surfaces actionable recommendations.</p>
+
+<div class="callout">
+  <div class="callout-title">The Architectural Shift</div>
+  Most decisioning platforms are purely reactive &mdash; they execute rules and wait for humans to notice when something is wrong. This platform has two modes: <strong>deterministic at scale</strong> (the arbitration engine handles 99% of decisions with no LLM) and <strong>agentic at the edges</strong> (LLM reasoning for the ambiguous cases and for self-monitoring). Neither mode is new on its own. The combination is.
+</div>
+
+<h3>Strategy Agent</h3>
+<p>The Strategy Agent is the first proactive capability. It runs on a nightly schedule (after model retraining) and performs two-phase analysis:</p>
+
+<table class="tier-table">
+  <tr>
+    <th>Phase</th>
+    <th>What Happens</th>
+    <th>Technology</th>
+  </tr>
+  <tr>
+    <td><span class="tag tag-green">Phase 1: Detection</span></td>
+    <td>Deterministic analysis queries decision outcomes over rolling 7-day and 30-day windows. Identifies statistical anomalies: underperforming actions, weak channels, stale outcomes, trend declines.</td>
+    <td>Scheduled Apex &mdash; pure SOQL aggregation, no LLM cost</td>
+  </tr>
+  <tr>
+    <td><span class="tag">Phase 2: Reasoning</span></td>
+    <td>Anomaly data is passed to an LLM which reasons about root cause, writes natural-language rationale explaining <em>why</em> something is happening, and recommends specific actions with expected impact.</td>
+    <td>Claude API callout &mdash; reasoning applied only to detected anomalies</td>
+  </tr>
+</table>
+
+<h3>What the Strategy Agent Detects</h3>
+<ul>
+  <li><strong>Action underperformance</strong> &mdash; flags actions whose acceptance rate is significantly below the module average, with root-cause analysis of <em>why</em> (e.g. "the $25 reward is too low relative to the $50 discount competing for the same customers")</li>
+  <li><strong>Channel weakness</strong> &mdash; identifies channels converting below the cross-channel average, with recommendations for reallocation</li>
+  <li><strong>Stale outcomes</strong> &mdash; detects decisions stuck in "pending" beyond the confirmation window, which degrade retraining signal quality</li>
+  <li><strong>Module trend decline</strong> &mdash; compares 7-day vs 30-day acceptance rates to detect drift before it becomes a problem</li>
+</ul>
+
+<h3>Insight Queue</h3>
+<p>Insights are written to <code>NBA_Agent_Insight__c</code> and surfaced in the cockpit's <strong>Agent Insights</strong> panel. Each insight carries:</p>
+<ul>
+  <li><strong>Type</strong> &mdash; strategy, action design, model debug, outcome chase, journey, competitive</li>
+  <li><strong>Rationale</strong> &mdash; LLM-generated root-cause analysis (not templated text)</li>
+  <li><strong>Suggested Action</strong> &mdash; specific, actionable recommendation with expected impact</li>
+  <li><strong>Confidence</strong> &mdash; statistical confidence in the finding</li>
+  <li><strong>Status workflow</strong> &mdash; New &rarr; Approved &rarr; Implemented (or Dismissed, with recovery)</li>
+</ul>
+
+<div class="callout">
+  <div class="callout-title">Human-in-the-Loop, Shifted</div>
+  The operator's job shifts from "watch dashboards, spot patterns, make adjustments" to "review the system's recommendations, approve the ones that make sense." The system does the observation work. The human does the judgement call. This is what decisioning looks like when you assume reasoning is a capability of the platform, not just execution.
+</div>
+
+<h3>Graceful Degradation</h3>
+<p>If no LLM API key is configured, the Strategy Agent falls back to deterministic template-based insights &mdash; functional but less insightful. This means the feature works out of the box (Mode 1 only) and upgrades to agentic reasoning (Mode 1 + Mode 2) when the API key is set. No code change required.</p>
+
+<h3>Planned Proactive Capabilities</h3>
+<table class="tier-table">
+  <tr>
+    <th>Capability</th>
+    <th>What It Does</th>
+    <th>Status</th>
+  </tr>
+  <tr>
+    <td><strong>Strategy Agent</strong></td>
+    <td>Portfolio-level performance analysis with LLM reasoning over anomalies</td>
+    <td><span class="tag tag-green">Live</span></td>
+  </tr>
+  <tr>
+    <td><strong>Autonomous Action Design</strong></td>
+    <td>Proposes new actions based on outcome patterns the engine discovers</td>
+    <td><span class="tag tag-orange">Next</span></td>
+  </tr>
+  <tr>
+    <td><strong>Model Debugging</strong></td>
+    <td>Root-causes AUC drops in natural language, recommends retraining parameters</td>
+    <td><span class="tag tag-orange">Next</span></td>
+  </tr>
+  <tr>
+    <td><strong>Outcome Chasing</strong></td>
+    <td>Hunts for outcome signals when decisions go unconfirmed, closes the feedback loop faster</td>
+    <td><span class="tag tag-orange">Next</span></td>
+  </tr>
+  <tr>
+    <td><strong>Competitive Response</strong></td>
+    <td>Detects competitive signals and auto-creates time-bound counter-offers</td>
+    <td><span class="tag">Planned</span></td>
+  </tr>
+</table>
+
 <h2>The Cockpit UI</h2>
 <p class="section-intro">A purpose-built Lightning app ("Decisioning Hub") gives analysts and managers full visibility and control.</p>
 
@@ -290,8 +399,9 @@ April 2026</div>
   <li><strong>NBA Catalogue</strong> &mdash; Configure actions, channels, thresholds, offers, eligibility segments</li>
   <li><strong>Contact Policy</strong> &mdash; Channel frequency caps and cooldown windows</li>
   <li><strong>Live Simulation</strong> &mdash; Test arbitration against any contact in real time, see exactly which actions qualify and why</li>
-  <li><strong>Tier 2 Queue</strong> &mdash; Review queue for decisions awaiting adjudication</li>
-  <li><strong>Management Agent</strong> &mdash; Conversational interface for adjudication, status checks, and system management</li>
+  <li><strong>Tier 2 Queue</strong> &mdash; Review queue for decisions awaiting adjudication, with multi-decision consolidation and auto-clear on resolution</li>
+  <li><strong>Agent Insights</strong> &mdash; Proactive insight queue with approve/dismiss/recover workflow, filterable by status, showing LLM-generated rationale and recommendations</li>
+  <li><strong>Management Agent</strong> &mdash; Conversational interface for adjudication, status checks, and system management, with persistent conversation history</li>
   <li><strong>Data Cloud Setup</strong> &mdash; Guided configuration wizard for Data Cloud bundles, segments, and model training</li>
 </ul>
 
@@ -303,15 +413,15 @@ April 2026</div>
   </tr>
   <tr>
     <td>Custom Objects</td>
-    <td>NBA_Module__c (outcome modules with model source config), NBAAction__c (treatments per module), NBADecision__c (decision audit trail), NBA_Channel_Policy__c, NBA_Global_Suppression__c, NBA_Eligibility__c, NBA_Decisioning_Settings__c</td>
+    <td>NBA_Module__c (outcome modules with model source config), NBAAction__c (treatments per module), NBADecision__c (decision audit trail with Tier 2 grouping), NBA_Agent_Insight__c (proactive insight queue), NBA_Channel_Policy__c, NBA_Global_Suppression__c, NBA_Eligibility__c, NBA_Decisioning_Settings__c</td>
   </tr>
   <tr>
     <td>Apex Classes</td>
-    <td>Arbitration engine, cockpit controllers, setup agent actions, management agent controller, adjudication handler, simulation engine, retraining scheduler</td>
+    <td>Arbitration engine, cockpit controllers, setup agent actions, management agent controller, adjudication handler, simulation engine, retraining scheduler, Strategy Agent (scheduler + queueable with LLM callout), insight queue controller</td>
   </tr>
   <tr>
     <td>LWC Components</td>
-    <td>Cockpit dashboard, catalogue manager, policy editor, live simulator, Tier 2 queue, management agent panel, Data Cloud setup wizard</td>
+    <td>Cockpit dashboard, catalogue manager, policy editor, live simulator, Tier 2 queue, Agent Insights panel, management agent panel, Data Cloud setup wizard</td>
   </tr>
   <tr>
     <td>Flows</td>
@@ -319,17 +429,18 @@ April 2026</div>
   </tr>
   <tr>
     <td>Test Coverage</td>
-    <td>82 unit and integration tests covering arbitration logic, tiering, suppression, segment filtering, adjudication, and all controller methods</td>
+    <td>92+ unit and integration tests covering arbitration logic, tiering, suppression, segment filtering, adjudication, Strategy Agent (agentic + deterministic paths), management agent API mocking, and all controller methods</td>
   </tr>
 </table>
 
 <h2>Competitive Positioning</h2>
-<p>The accelerator demonstrates that Salesforce can deliver a <strong>Pega-style decisioning capability</strong> as an embedded platform feature rather than a standalone product. Key differentiators:</p>
+<p>The accelerator demonstrates what decisioning looks like when you start from first principles with modern capabilities &mdash; unified data, composable actions, and reasoning as a platform capability. Key differentiators:</p>
 <ul>
-  <li><strong>Native platform:</strong> No external infrastructure, no data egress, no additional vendor contracts</li>
+  <li><strong>Native platform:</strong> No external infrastructure, no data egress, no additional vendor contracts. Configuration lives in data, not code.</li>
   <li><strong>Bring your own model:</strong> Works with Einstein Studio, external ML platforms (SageMaker, Vertex AI, Azure ML), or pre-computed Data Cloud scores &mdash; customers aren't locked into a single ML stack</li>
   <li><strong>Multi-module:</strong> One engine handles churn, upsell, renewal, winback, and any future outcome type &mdash; each with its own model, actions, and thresholds</li>
-  <li><strong>Agentforce reasoning:</strong> AI-assisted adjudication that goes beyond rule-based decisioning, with full human oversight</li>
+  <li><strong>Deterministic + agentic:</strong> Fast, cheap arbitration for clear decisions. LLM reasoning for ambiguous adjudications and proactive self-monitoring. The right tool for the right decision.</li>
+  <li><strong>Self-monitoring:</strong> The Strategy Agent analyses its own performance nightly, reasons about root causes, and surfaces recommendations. The system observes; the operator reviews. This cannot be retrofitted onto a rules engine.</li>
   <li><strong>Unlocked package:</strong> Deployable to any Enterprise org via standard package install + guided setup</li>
   <li><strong>Closed-loop learning:</strong> Decision outcomes feed back into model retraining automatically</li>
 </ul>
@@ -340,7 +451,7 @@ April 2026</div>
 </div>
 
 <div class="footer">
-  NBA Decisioning Accelerator v3.x &mdash; Unlocked Package for Salesforce<br>
+  NBA Decisioning Accelerator v3.3.0 &mdash; Unlocked Package for Salesforce<br>
   Prepared by Stuart Dunlop &mdash; April 2026
 </div>
 
