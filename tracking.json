@@ -9982,5 +9982,17 @@
     "location": "Canberra, Australian Capital Territory, Australia",
     "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
     "returning": "yes"
+  },
+  {
+    "timestamp": "Mon, 13 Apr 2026 03:10:44 GMT",
+    "name": "Nick",
+    "company": "Salesforce",
+    "position": "SVP",
+    "page": "Thought Leadership Talk Track",
+    "url": "https://sdunlop-sf.github.io/nba-narrative/thought-leadership.html",
+    "ip": "147.161.219.21",
+    "location": "Canberra, Australian Capital Territory, Australia",
+    "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36",
+    "returning": "yes"
   }
 ]
