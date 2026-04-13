@@ -10042,5 +10042,17 @@
     "location": "Melbourne, Victoria, Australia",
     "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
     "returning": "yes"
+  },
+  {
+    "timestamp": "Mon, 13 Apr 2026 19:50:02 GMT",
+    "name": "Stuart Dunlop",
+    "company": "Salesforce",
+    "position": "Solutions",
+    "page": "Salesforce Decisioning · Optus",
+    "url": "https://sdunlop-sf.github.io/nba-narrative/optus.html",
+    "ip": "167.103.80.244",
+    "location": "Melbourne, Victoria, Australia",
+    "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
+    "returning": "yes"
   }
 ]
