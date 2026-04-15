@@ -10570,5 +10570,17 @@
     "location": "Toronto, Ontario, Canada",
     "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
     "returning": "no"
+  },
+  {
+    "timestamp": "Wed, 15 Apr 2026 13:19:39 GMT",
+    "name": "GeetDhillon",
+    "company": "Salesforce",
+    "position": "SolutionsEngineer",
+    "page": "Decisioning Hub Framing Lite",
+    "url": "https://sdunlop-sf.github.io/decisioning-hub-framing/lite.html",
+    "ip": "136.226.77.27",
+    "location": "Toronto, Ontario, Canada",
+    "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
+    "returning": "yes"
   }
 ]
