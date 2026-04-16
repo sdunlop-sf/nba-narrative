@@ -1,0 +1,1141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Westpac Business Banking · Customer Obsessed</title>
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --navy:   #032D60;
+            --navy2:  #021845;
+            --blue:   #00B3FF;
+            --blue2:  #1AB9FF;
+            --royal:  #022AC0;
+            --teal:   #04E1CB;
+            --lblue:  #90D0FE;
+            --gold:   #FCC003;
+            --white:  #FFFFFF;
+            --card:   rgba(2, 39, 117, 0.22);
+            --card-h: rgba(2, 39, 117, 0.38);
+            --border: rgba(0, 179, 255, 0.14);
+            --muted:  rgba(255, 255, 255, 0.78);
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: var(--navy);
+            color: var(--white);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .bg-base {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            background: radial-gradient(ellipse 90% 70% at 100% 0%, rgba(2, 42, 192, 0.28) 0%, transparent 55%),
+                        radial-gradient(ellipse 60% 50% at 0% 100%, rgba(4, 225, 203, 0.06) 0%, transparent 50%),
+                        linear-gradient(170deg, #032D60 0%, #021340 60%, #032D60 100%);
+        }
+
+        .bg-noise {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0.025;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+            background-repeat: repeat;
+            background-size: 200px 200px;
+        }
+
+        .deck { width: 100%; height: 100vh; position: relative; z-index: 1; }
+
+        .slide {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 64px 108px 88px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.45s cubic-bezier(0.4, 0, 0.2, 1), transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateY(22px);
+        }
+
+        .slide.active { opacity: 1; pointer-events: all; transform: translateY(0); }
+        .slide.exit   { opacity: 0; transform: translateY(-18px); transition: opacity 0.26s ease, transform 0.26s ease; }
+
+        /* ── NAV BAR ── */
+        .nav-bar {
+            position: fixed;
+            bottom: 0; left: 0; right: 0;
+            z-index: 100;
+            height: 56px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 40px;
+            background: rgba(3, 22, 55, 0.96);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(0, 179, 255, 0.1);
+        }
+
+        .nav-brand { display: flex; align-items: center; gap: 12px; }
+        .nav-sf-logo { height: 24px; width: auto; }
+        .nav-divider { width: 1px; height: 18px; background: rgba(255, 255, 255, 0.12); }
+        .nav-title {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: rgba(255, 255, 255, 0.55);
+        }
+        .nav-controls { display: flex; align-items: center; gap: 14px; }
+        .nav-btn {
+            width: 30px; height: 30px;
+            border-radius: 50%;
+            border: 1px solid rgba(0, 179, 255, 0.35);
+            background: none;
+            color: rgba(255, 255, 255, 0.78);
+            font-size: 15px;
+            cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+        .nav-btn:hover { border-color: var(--blue2); color: var(--blue2); background: rgba(0, 179, 255, 0.08); }
+        .nav-btn:focus-visible { outline: 2px solid var(--blue2); outline-offset: 3px; }
+        .nav-btn:disabled { opacity: 0.28; cursor: default; }
+        .nav-counter { font-size: 11px; color: var(--muted); min-width: 32px; text-align: center; letter-spacing: 0.04em; }
+        .nav-dots { display: flex; align-items: center; gap: 5px; }
+        .dot {
+            width: 5px; height: 5px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.22);
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none; padding: 0;
+            flex-shrink: 0;
+        }
+        .dot:focus-visible { outline: 2px solid var(--blue2); outline-offset: 3px; border-radius: 4px; }
+        .dot.active { background: var(--blue2); width: 16px; border-radius: 3px; }
+
+        .key-hint {
+            position: fixed;
+            bottom: 66px;
+            right: 36px;
+            font-size: 9px;
+            color: rgba(255, 255, 255, 0.14);
+            letter-spacing: 0.06em;
+            display: flex; align-items: center; gap: 4px;
+        }
+        .key { padding: 2px 5px; border-radius: 3px; border: 1px solid rgba(255, 255, 255, 0.1); font-size: 8px; }
+
+        /* ── TYPOGRAPHY ── */
+        .eyebrow {
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--blue2);
+            margin-bottom: 14px;
+        }
+
+        .big {
+            font-size: clamp(32px, 4vw, 58px);
+            font-weight: 900;
+            line-height: 1.05;
+            letter-spacing: -0.03em;
+            margin-bottom: 20px;
+        }
+
+        .sub {
+            font-size: clamp(15px, 1.4vw, 18px);
+            color: var(--muted);
+            line-height: 1.8;
+            max-width: 540px;
+        }
+
+        .hl       { color: var(--blue2); }
+        .hl-teal  { color: var(--teal); }
+        .hl-gold  { color: var(--gold); }
+        .hl-lblue { color: var(--lblue); }
+
+        .accent-line {
+            width: 40px;
+            height: 3px;
+            border-radius: 2px;
+            margin-bottom: 20px;
+            background: linear-gradient(90deg, var(--blue2), var(--teal));
+        }
+
+        /* ── 2-COLUMN ── */
+        .two-col { display: flex; gap: 72px; align-items: center; max-width: 980px; }
+        .two-col .col { flex: 1; }
+
+        /* ── STAT GRID ── */
+        .stat-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            width: 100%;
+            max-width: 880px;
+        }
+
+        .stat-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 26px 22px;
+            border-left: 3px solid var(--blue2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, var(--blue2), transparent);
+            opacity: 0.5;
+        }
+
+        .stat-card.teal  { border-left-color: var(--teal); }
+        .stat-card.teal::before  { background: linear-gradient(90deg, var(--teal), transparent); }
+        .stat-card.gold  { border-left-color: var(--gold); }
+        .stat-card.gold::before  { background: linear-gradient(90deg, var(--gold), transparent); }
+        .stat-card.lblue { border-left-color: var(--lblue); }
+        .stat-card.lblue::before { background: linear-gradient(90deg, var(--lblue), transparent); }
+
+        .stat-val {
+            font-size: clamp(32px, 3.8vw, 50px);
+            font-weight: 900;
+            letter-spacing: -0.03em;
+            line-height: 1;
+            margin-bottom: 9px;
+        }
+
+        .stat-val.c-blue  { color: var(--blue2); }
+        .stat-val.c-teal  { color: var(--teal); }
+        .stat-val.c-gold  { color: var(--gold); }
+        .stat-val.c-lblue { color: var(--lblue); }
+
+        .stat-label { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+        .stat-desc  { font-size: 13px; color: var(--muted); line-height: 1.65; }
+
+        /* ── FLOW ── */
+        .flow {
+            display: flex;
+            align-items: flex-start;
+            width: 100%;
+            max-width: 1020px;
+        }
+
+        .flow-step {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .flow-icon {
+            width: 64px;
+            height: 64px;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 179, 255, 0.08);
+            border: 1px solid rgba(0, 179, 255, 0.18);
+            border-radius: 18px;
+            font-size: 24px;
+            font-weight: 900;
+            color: var(--blue2);
+        }
+
+        .flow-step-num {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--blue2);
+            margin-bottom: 5px;
+        }
+
+        .flow-step-title { font-size: 16px; font-weight: 700; margin-bottom: 6px; }
+        .flow-step-desc  { font-size: 13px; color: var(--muted); line-height: 1.6; max-width: 140px; }
+
+        .flow-arrow {
+            flex-shrink: 0;
+            align-self: center;
+            padding-bottom: 48px;
+            color: rgba(0, 179, 255, 0.3);
+            font-size: 20px;
+            margin: 0 2px;
+        }
+
+        /* ── PLATFORM / PILLAR GRID ── */
+        .platform-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+            width: 100%;
+            max-width: 900px;
+        }
+
+        .platform-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 22px 18px;
+            transition: background 0.2s, border-color 0.2s;
+            border-top: 3px solid var(--blue2);
+        }
+
+        .platform-card.teal { border-top-color: var(--teal); }
+        .platform-card.gold { border-top-color: var(--gold); }
+
+        .platform-card:hover { background: var(--card-h); border-color: rgba(0, 179, 255, 0.3); }
+
+        .platform-num  { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--blue2); margin-bottom: 6px; }
+        .platform-card.teal .platform-num { color: var(--teal); }
+        .platform-card.gold .platform-num { color: var(--gold); }
+        .platform-name { font-size: 18px; font-weight: 800; margin-bottom: 8px; letter-spacing: -0.01em; }
+        .platform-desc { font-size: 13px; color: var(--muted); line-height: 1.6; margin-bottom: 10px; }
+        .platform-mech { font-size: 12px; color: rgba(255,255,255,0.6); line-height: 1.55; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.06); }
+        .platform-mech strong { color: var(--white); font-weight: 700; display: block; margin-bottom: 3px; font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase; }
+
+        /* ── OUTCOME GRID ── */
+        .outcome-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 13px;
+            width: 100%;
+            max-width: 860px;
+        }
+
+        .outcome-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 22px;
+            display: flex;
+            gap: 14px;
+            align-items: flex-start;
+            transition: background 0.2s;
+        }
+
+        .outcome-card:hover { background: var(--card-h); }
+
+        .outcome-bullet { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; margin-top: 7px; }
+        .outcome-title  { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
+        .outcome-desc   { font-size: 14px; color: var(--muted); line-height: 1.65; }
+
+        /* ── VOICE / QUOTES ── */
+        .voice-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            width: 100%;
+            max-width: 900px;
+        }
+
+        .voice-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 22px 22px 20px;
+            position: relative;
+        }
+        .voice-card.challenge { border-left: 3px solid var(--gold); }
+        .voice-card.ambition  { border-left: 3px solid var(--teal); }
+
+        .voice-tag {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+        .voice-card.challenge .voice-tag { color: var(--gold); }
+        .voice-card.ambition  .voice-tag { color: var(--teal); }
+
+        .voice-quote {
+            font-size: 14px;
+            line-height: 1.65;
+            color: rgba(255,255,255,0.88);
+            font-style: italic;
+        }
+        .voice-quote::before { content: '"'; margin-right: 2px; }
+        .voice-quote::after  { content: '"'; margin-left: 2px; }
+
+        /* ── BIG QUOTE ── */
+        .big-quote {
+            max-width: 900px;
+            text-align: center;
+        }
+        .big-quote .mark {
+            font-size: 120px;
+            line-height: 0.8;
+            color: var(--blue2);
+            opacity: 0.35;
+            font-family: Georgia, serif;
+            display: block;
+            margin-bottom: -20px;
+        }
+        .big-quote blockquote {
+            font-size: clamp(22px, 2.4vw, 34px);
+            font-weight: 700;
+            line-height: 1.35;
+            letter-spacing: -0.01em;
+            margin-bottom: 28px;
+        }
+        .big-quote cite {
+            font-size: 13px;
+            font-style: normal;
+            font-weight: 700;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--blue2);
+        }
+
+        /* ── MATURITY LADDER ── */
+        .ladder {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            width: 100%;
+            max-width: 760px;
+        }
+        .ladder-row {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            padding: 14px 20px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            position: relative;
+        }
+        .ladder-row.today    { border-left: 3px solid var(--gold); }
+        .ladder-row.future   { border-left: 3px solid var(--teal); background: rgba(4,225,203,0.08); }
+        .ladder-row .lvl {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.45);
+            min-width: 70px;
+        }
+        .ladder-row.today .lvl { color: var(--gold); }
+        .ladder-row.future .lvl { color: var(--teal); }
+        .ladder-row .name { font-size: 15px; font-weight: 700; min-width: 130px; }
+        .ladder-row .desc { font-size: 13px; color: var(--muted); flex: 1; line-height: 1.5; }
+        .ladder-row .tag {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 4px 10px;
+            border-radius: 12px;
+        }
+        .ladder-row.today .tag  { background: rgba(252,192,3,0.15); color: var(--gold); }
+        .ladder-row.future .tag { background: rgba(4,225,203,0.15); color: var(--teal); }
+
+        /* ── ROADMAP TIMELINE ── */
+        .roadmap {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            width: 100%;
+            max-width: 1020px;
+        }
+        .rm-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 16px 14px;
+            border-top: 3px solid var(--blue2);
+            position: relative;
+        }
+        .rm-card.phase2 { border-top-color: var(--teal); }
+        .rm-card.phase3 { border-top-color: var(--gold); }
+        .rm-card.phase4 { border-top-color: var(--lblue); }
+        .rm-when {
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--blue2);
+            margin-bottom: 6px;
+        }
+        .rm-card.phase2 .rm-when { color: var(--teal); }
+        .rm-card.phase3 .rm-when { color: var(--gold); }
+        .rm-card.phase4 .rm-when { color: var(--lblue); }
+        .rm-title { font-size: 14px; font-weight: 700; margin-bottom: 6px; line-height: 1.3; }
+        .rm-desc  { font-size: 12px; color: var(--muted); line-height: 1.55; }
+
+        /* ── PRESS RELEASE / FUTURE SLIDE ── */
+        .press {
+            max-width: 960px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-left: 3px solid var(--teal);
+            border-radius: 18px;
+            padding: 40px 48px;
+            position: relative;
+        }
+        .press::before {
+            content: 'FOR IMMEDIATE RELEASE · 2028';
+            position: absolute;
+            top: 18px; right: 24px;
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 0.14em;
+            color: rgba(255,255,255,0.3);
+        }
+        .press-headline {
+            font-size: clamp(22px, 2.6vw, 36px);
+            font-weight: 900;
+            line-height: 1.15;
+            letter-spacing: -0.02em;
+            margin-bottom: 18px;
+            max-width: 800px;
+        }
+        .press-body {
+            font-size: 14px;
+            line-height: 1.75;
+            color: var(--muted);
+            margin-bottom: 18px;
+            max-width: 820px;
+        }
+        .press-body strong { color: var(--white); }
+        .press-quote {
+            font-size: 15px;
+            line-height: 1.7;
+            font-style: italic;
+            color: rgba(255,255,255,0.92);
+            padding: 16px 20px;
+            background: rgba(4,225,203,0.06);
+            border-left: 2px solid var(--teal);
+            border-radius: 6px;
+            margin-bottom: 12px;
+        }
+        .press-quote .who {
+            display: block;
+            margin-top: 8px;
+            font-style: normal;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--teal);
+        }
+
+        /* ── CTA ── */
+        .cta-wrap {
+            border: 1px solid rgba(0, 179, 255, 0.2);
+            border-radius: 28px;
+            padding: 50px 60px;
+            text-align: center;
+            max-width: 680px;
+            background: linear-gradient(145deg, rgba(2, 39, 117, 0.3), rgba(3, 22, 55, 0.6));
+            backdrop-filter: blur(12px);
+            position: relative;
+            overflow: hidden;
+        }
+        .cta-wrap::before {
+            content: '';
+            position: absolute;
+            top: -1px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, var(--blue2), transparent);
+        }
+        .cta-steps { display: flex; gap: 32px; justify-content: center; margin-top: 36px; }
+        .cta-step-num {
+            width: 26px; height: 26px;
+            border-radius: 50%;
+            margin: 0 auto 8px;
+            background: rgba(0, 179, 255, 0.1);
+            border: 1px solid rgba(0, 179, 255, 0.3);
+            font-size: 11px; font-weight: 700;
+            color: var(--blue2);
+            display: flex; align-items: center; justify-content: center;
+        }
+        .cta-step-label { font-size: 14px; color: rgba(255, 255, 255, 0.82); font-weight: 600; }
+
+        /* ── DECORATIONS ── */
+        .star-deco { position: absolute; pointer-events: none; user-select: none; z-index: 2; }
+        .star-deco img { display: block; width: 28px; height: 28px; opacity: 0.35; }
+        .char { position: absolute; pointer-events: none; user-select: none; z-index: 2; }
+        .char img { display: block; height: 180px; width: auto; }
+
+        /* ── CO-BRAND ── */
+        .cobrand {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 26px;
+            margin-bottom: 26px;
+        }
+        .cobrand .sf {
+            height: 34px;
+            width: auto;
+        }
+        .cobrand .wbc {
+            height: 38px;
+            width: auto;
+            border-radius: 6px;
+            background: #fff;
+            padding: 4px 10px;
+        }
+        .cobrand .x {
+            color: rgba(255,255,255,0.35);
+            font-size: 18px;
+            font-weight: 300;
+        }
+
+        /* ── MOBILE ── */
+        @media (max-width: 900px) { .slide { padding: 48px 64px 80px; } }
+
+        @media (max-width: 768px) {
+            html, body { overflow-y: auto; height: auto; }
+            .deck { height: auto; }
+            .slide {
+                position: relative;
+                opacity: 1 !important;
+                transform: none !important;
+                pointer-events: all;
+                display: none;
+                flex-direction: column;
+                align-items: center;
+                justify-content: flex-start;
+                padding: 32px 20px 88px;
+                gap: 20px;
+                min-height: 100svh;
+            }
+            .slide.active { display: flex; }
+            .eyebrow { font-size: 11px; letter-spacing: 0.14em; margin-bottom: 10px; }
+            .big { font-size: clamp(26px, 7vw, 38px); }
+            .sub { font-size: 15px; line-height: 1.75; }
+            .two-col { flex-direction: column; gap: 4px; max-width: 100%; }
+            .stat-grid { grid-template-columns: 1fr; gap: 10px; max-width: 100%; }
+            .stat-val { font-size: 36px !important; }
+            .flow { flex-wrap: wrap; gap: 14px; justify-content: center; max-width: 100%; }
+            .flow-arrow { display: none; }
+            .flow-step { width: calc(50% - 8px); }
+            .platform-grid { grid-template-columns: 1fr; gap: 10px; max-width: 100%; }
+            .outcome-grid { grid-template-columns: 1fr; gap: 10px; max-width: 100%; }
+            .voice-grid { grid-template-columns: 1fr; gap: 10px; max-width: 100%; }
+            .roadmap { grid-template-columns: 1fr 1fr; gap: 10px; max-width: 100%; }
+            .press { padding: 24px 20px; }
+            .cta-wrap { padding: 28px 20px; border-radius: 18px; max-width: 100%; }
+            .cta-steps { flex-direction: row; gap: 20px; flex-wrap: wrap; justify-content: center; margin-top: 24px; }
+            .nav-bar { padding: 0 16px; }
+            .nav-title { display: none; }
+            .nav-divider { display: none; }
+            .nav-dots { display: none; }
+            .nav-counter { font-size: 12px; }
+            .key-hint, .star-deco, .char { display: none; }
+            .ladder-row { flex-wrap: wrap; gap: 8px; }
+            .ladder-row .name { min-width: auto; }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-base"></div>
+    <div class="bg-noise"></div>
+
+    <div id="deck" class="deck">
+
+        <!-- Slide 1: Title -->
+        <section class="slide">
+            <div style="text-align: center; max-width: 900px;">
+                <div class="cobrand">
+                    <img class="sf" src="sf-logo-cloud.png" alt="Salesforce">
+                    <span class="x">×</span>
+                    <img class="wbc" src="westpac-logo.jpg" alt="Westpac">
+                </div>
+                <div class="accent-line" style="margin: 0 auto 20px;"></div>
+                <div class="eyebrow">Westpac Business Banking · Salesforce Innovation Centre</div>
+                <h1 class="big">The most customer obsessed<br><span class="hl">team in the bank.</span></h1>
+                <p class="sub" style="margin: 0 auto;">A working playbook for capturing 1 in 4 Australian small businesses — and becoming Australia's #1 bank.</p>
+            </div>
+            <div class="star-deco" style="top: 100px; right: 120px;"><img src="sf-star-gold.png" alt=""></div>
+            <div class="star-deco" style="top: 140px; right: 80px; opacity: 0.2;"><img src="sf-star-gold.png" style="width:16px;height:16px;opacity:1;"></div>
+            <div class="char" style="bottom: 56px; right: 80px;"><img src="char-agent-astro-2.png" alt=""></div>
+        </section>
+
+        <!-- Slide 2: The Ambition -->
+        <section class="slide">
+            <div class="big-quote">
+                <span class="mark">"</span>
+                <blockquote>My vision for this team is that we are the most <span class="hl">customer obsessed team in the bank</span>. Because in a fast-paced world, if we're not ruthlessly obsessed with the customer, <span class="hl-teal">we will not win</span>.</blockquote>
+                <cite>Cass O'Brien · Business Banking Lead, Westpac</cite>
+            </div>
+        </section>
+
+        <!-- Slide 3: Current State vs Ambition (maturity ladder) -->
+        <section class="slide">
+            <div style="max-width: 880px; width: 100%;">
+                <div class="accent-line" style="margin: 0 auto 14px;"></div>
+                <div class="eyebrow" style="text-align: center; margin-bottom: 6px;">Current State vs. Ambition</div>
+                <h2 class="big" style="text-align: center; font-size: clamp(24px, 2.8vw, 38px); margin-bottom: 28px;">Leapfrog the field — from<br><span class="hl-gold">transactional utility</span> to <span class="hl-teal">agentic partner</span>.</h2>
+
+                <div class="ladder">
+                    <div class="ladder-row today">
+                        <div class="lvl">Level 1–2</div>
+                        <div class="name">Entry / Tiered</div>
+                        <div class="desc">Fragmented journeys, manual processes, value "hidden in the app"</div>
+                        <div class="tag">Today</div>
+                    </div>
+                    <div class="ladder-row">
+                        <div class="lvl">Level 3</div>
+                        <div class="name">Segmented</div>
+                        <div class="desc">Personalised offers and journeys based on static segments</div>
+                        <div class="tag" style="background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.5);">—</div>
+                    </div>
+                    <div class="ladder-row">
+                        <div class="lvl">Level 4</div>
+                        <div class="name">Predictive</div>
+                        <div class="desc">Real-time behavioural signals trigger the next best action</div>
+                        <div class="tag" style="background: rgba(255,255,255,0.06); color: rgba(255,255,255,0.5);">—</div>
+                    </div>
+                    <div class="ladder-row future">
+                        <div class="lvl">Level 5</div>
+                        <div class="name">Agentic Loyalty</div>
+                        <div class="desc">Autonomous, intent-aware partnerships — predicts needs and executes before the customer asks</div>
+                        <div class="tag">Ambition</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 4: Voice of the Team -->
+        <section class="slide">
+            <div style="max-width: 920px; width: 100%;">
+                <div class="accent-line" style="margin: 0 auto 14px;"></div>
+                <div class="eyebrow" style="text-align: center; margin-bottom: 6px;">Voice of the Team</div>
+                <h2 class="big" style="text-align: center; font-size: clamp(22px, 2.4vw, 34px); margin-bottom: 28px;">What we heard in the room.</h2>
+
+                <div class="voice-grid">
+                    <div class="voice-card challenge">
+                        <div class="voice-tag">Challenge · Piecemeal</div>
+                        <p class="voice-quote">It's a bit piecemeal — there's no complete offer, no really well-thought-out offering.</p>
+                    </div>
+                    <div class="voice-card ambition">
+                        <div class="voice-tag">Ambition · Focus</div>
+                        <p class="voice-quote">It's hard to be the master of everything. Pick the right partners and execute them end to end — biggest bang for buck.</p>
+                    </div>
+                    <div class="voice-card challenge">
+                        <div class="voice-tag">Challenge · Discoverability</div>
+                        <p class="voice-quote">The biggest gap is getting customers to use it. There's so much going on in the app, the value is almost hidden.</p>
+                    </div>
+                    <div class="voice-card ambition">
+                        <div class="voice-tag">Ambition · Cohesion</div>
+                        <p class="voice-quote">How do we join it into one big cohesive program? We have a lot of things we can do — we just don't put them together in a neat package.</p>
+                    </div>
+                    <div class="voice-card challenge">
+                        <div class="voice-tag">Challenge · Maturity</div>
+                        <p class="voice-quote">I can say honestly — we are still at level one or two maturity.</p>
+                    </div>
+                    <div class="voice-card ambition">
+                        <div class="voice-tag">Ambition · Pace</div>
+                        <p class="voice-quote">I want to learn how to do things at pace. The team has been discussing this for the last four or five months.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 5: Redefining Loyalty -->
+        <section class="slide">
+            <div class="two-col">
+                <div class="col">
+                    <div class="accent-line"></div>
+                    <div class="eyebrow">Salesforce Thought Leadership</div>
+                    <h2 class="big">Loyalty isn't points.<br><span class="hl">It's the outcome of a<br>superior experience.</span></h2>
+                </div>
+                <div class="col" style="display: flex; flex-direction: column; gap: 18px;">
+                    <p class="sub" style="max-width: 100%;"><strong style="color:#fff;">Points don't make up for a broken experience.</strong> In SMB, loyalty is built by removing friction and delivering tangible value before you earn the right to delight.</p>
+                    <p class="sub" style="max-width: 100%;">Meet the need. Remove the pain. <em>Then</em> emotional and social benefits — community, advocacy, identity — drive love.</p>
+                    <p class="sub" style="max-width: 100%;">The future is <span class="hl-teal">agentic</span>: B2B becomes A2B becomes A2A. Westpac's agent talks to the customer's agent — in real time, with consistent decisioning.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 6: Three Pillars Headline -->
+        <section class="slide">
+            <div style="max-width: 980px; width: 100%;">
+                <div class="accent-line" style="margin: 0 auto 14px;"></div>
+                <div class="eyebrow" style="text-align: center; margin-bottom: 6px;">The Transformation Strategy</div>
+                <h2 class="big" style="text-align: center; font-size: clamp(28px, 3.2vw, 44px); margin-bottom: 36px;">Choose us. Join us.<br><span class="hl">Love us.</span></h2>
+
+                <div class="platform-grid">
+                    <div class="platform-card">
+                        <div class="platform-num">Pillar 01 · Acquisition</div>
+                        <div class="platform-name">Choose Us</div>
+                        <div class="platform-desc">Advocacy &amp; agentic marketing — show up where customers now discover banks, powered by referrals.</div>
+                        <div class="platform-mech"><strong>The moment</strong>A solved problem triggers a referral prompt. Customers become the acquisition channel.</div>
+                    </div>
+                    <div class="platform-card teal">
+                        <div class="platform-num">Pillar 02 · Onboarding</div>
+                        <div class="platform-name">Join Us</div>
+                        <div class="platform-desc">Switching costs go to zero. Agentic guided flows, then intent-aware origination wired into Slack &amp; Xero.</div>
+                        <div class="platform-mech"><strong>The moment</strong>No forms. The bank verifies identity and opens the account through the tools the business already uses.</div>
+                    </div>
+                    <div class="platform-card gold">
+                        <div class="platform-num">Pillar 03 · Retention</div>
+                        <div class="platform-name">Love Us</div>
+                        <div class="platform-desc">From vault to Fiduciary Guardian — predicting cash flow gaps, negotiating with suppliers, celebrating wins.</div>
+                        <div class="platform-mech"><strong>The moment</strong>Curated partner offers and proactive interventions land at the moment they actually matter.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 7: Choose Us deep dive -->
+        <section class="slide">
+            <div class="two-col">
+                <div class="col">
+                    <div class="accent-line"></div>
+                    <div class="eyebrow">Pillar 01 · Choose Us</div>
+                    <h2 class="big">Turn customers into<br><span class="hl">your acquisition<br>channel.</span></h2>
+                    <p class="sub" style="margin-top: 14px;">When a Surry Hills florist refers a local business, it isn't for the reward — it's because you gave them their Sunday night back.</p>
+                </div>
+                <div class="col">
+                    <div class="stat-grid" style="grid-template-columns: 1fr; gap: 12px;">
+                        <div class="stat-card">
+                            <div class="stat-val c-blue">2×</div>
+                            <div class="stat-label">ROI of referral vs. traditional channels</div>
+                            <div class="stat-desc">Lowest hanging fruit in the acquisition mix — and trust-rich from day one.</div>
+                        </div>
+                        <div class="stat-card teal">
+                            <div class="stat-val c-teal" style="font-size: clamp(24px, 2.6vw, 34px);">Moments that matter</div>
+                            <div class="stat-label">Trigger referral prompts the instant a problem is solved</div>
+                            <div class="stat-desc">Single real-time customer view drives hyper-targeted communications during consideration.</div>
+                        </div>
+                        <div class="stat-card gold">
+                            <div class="stat-val c-gold" style="font-size: clamp(24px, 2.6vw, 34px);">Agentic marketing</div>
+                            <div class="stat-label">Show up in AI-native discovery</div>
+                            <div class="stat-desc">Scale hyper-personalised experiences into the platforms where buying decisions are now made.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 8: Join Us deep dive -->
+        <section class="slide">
+            <div class="two-col">
+                <div class="col">
+                    <div class="accent-line"></div>
+                    <div class="eyebrow">Pillar 02 · Join Us</div>
+                    <h2 class="big">Eliminate the friction.<br><span class="hl">Make switching<br>negligible.</span></h2>
+                    <p class="sub" style="margin-top: 14px;">Near-term: high self-serve, shorter call queues, trust preserved. End state: no forms at all.</p>
+                </div>
+                <div class="col" style="display: flex; flex-direction: column; gap: 14px;">
+                    <div class="outcome-card">
+                        <div class="outcome-bullet" style="background: var(--blue2);"></div>
+                        <div>
+                            <div class="outcome-title">Agentic guided flows</div>
+                            <div class="outcome-desc">Reduce drop-out with self-serve support. Verification maintains trust without the wait.</div>
+                        </div>
+                    </div>
+                    <div class="outcome-card">
+                        <div class="outcome-bullet" style="background: var(--teal);"></div>
+                        <div>
+                            <div class="outcome-title">Intent-aware tailoring</div>
+                            <div class="outcome-desc">Replace forms with a process that reads what the business actually needs — and tailors the ask.</div>
+                        </div>
+                    </div>
+                    <div class="outcome-card">
+                        <div class="outcome-bullet" style="background: var(--gold);"></div>
+                        <div>
+                            <div class="outcome-title">Workflow-native origination</div>
+                            <div class="outcome-desc">Connect directly to Slack, Xero and business tools to validate identity and open accounts instantly.</div>
+                        </div>
+                    </div>
+                    <div class="outcome-card">
+                        <div class="outcome-bullet" style="background: var(--lblue);"></div>
+                        <div>
+                            <div class="outcome-title">Loyalty starts at origination</div>
+                            <div class="outcome-desc">Move beyond generic confirmation emails — surface business money tools the moment the account opens.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 9: Love Us deep dive -->
+        <section class="slide">
+            <div class="two-col">
+                <div class="col">
+                    <div class="accent-line"></div>
+                    <div class="eyebrow">Pillar 03 · Love Us</div>
+                    <h2 class="big">Be the Fiduciary<br><span class="hl">Guardian — not<br>the vault.</span></h2>
+                    <p class="sub" style="margin-top: 14px;">Westpac acts in the customer's best interest. Predicts cash flow gaps. Negotiates with suppliers. Automates tax. Celebrates the wins.</p>
+                </div>
+                <div class="col" style="display: flex; flex-direction: column; gap: 14px;">
+                    <div class="outcome-card">
+                        <div class="outcome-bullet" style="background: var(--blue2);"></div>
+                        <div>
+                            <div class="outcome-title">Proactive cash flow intelligence</div>
+                            <div class="outcome-desc">Flag crunches before they hit. Structure capital when a growth spike is detected.</div>
+                        </div>
+                    </div>
+                    <div class="outcome-card">
+                        <div class="outcome-bullet" style="background: var(--teal);"></div>
+                        <div>
+                            <div class="outcome-title">Curated partner ecosystem</div>
+                            <div class="outcome-desc">Logistics, legal, tax — dynamic partner offers within guardrails, based on real-time business lifecycle signals.</div>
+                        </div>
+                    </div>
+                    <div class="outcome-card">
+                        <div class="outcome-bullet" style="background: var(--gold);"></div>
+                        <div>
+                            <div class="outcome-title">Reward the right decisions</div>
+                            <div class="outcome-desc">Monitor and reward best-practice business behaviour. Celebrate milestones instead of chasing spend.</div>
+                        </div>
+                    </div>
+                    <div class="outcome-card">
+                        <div class="outcome-bullet" style="background: var(--lblue);"></div>
+                        <div>
+                            <div class="outcome-title">Zero UI for routine work</div>
+                            <div class="outcome-desc">Execute decisions directly inside the customer's own workflows — Slack, email, smart inventory — on pre-agreed parameters.</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 10: The Platform -->
+        <section class="slide">
+            <div style="max-width: 960px; width: 100%;">
+                <div class="accent-line" style="margin: 0 auto 14px;"></div>
+                <div class="eyebrow" style="text-align: center; margin-bottom: 6px;">Enabling the Vision · The Salesforce Platform</div>
+                <h2 class="big" style="text-align: center; font-size: clamp(24px, 2.8vw, 38px); margin-bottom: 32px;">The unified data engine behind<br>the <span class="hl-teal">Digital Co-Founder</span>.</h2>
+
+                <div class="platform-grid">
+                    <div class="platform-card">
+                        <div class="platform-num">Layer 01 · The Brain</div>
+                        <div class="platform-name">Data 360</div>
+                        <div class="platform-desc">Harmonises loyalty, web, and transactional data into a single real-time profile.</div>
+                        <div class="platform-mech"><strong>Eliminates</strong>Silos that block hyper-personalisation and real-time decisioning.</div>
+                    </div>
+                    <div class="platform-card teal">
+                        <div class="platform-num">Layer 02 · Rewards Engine</div>
+                        <div class="platform-name">Agentforce Loyalty</div>
+                        <div class="platform-desc">Automates the partner ecosystem, managing inventory and offer sales so every reward feels curated.</div>
+                        <div class="platform-mech"><strong>Powers</strong>Agentic referral &amp; real-time offer management.</div>
+                    </div>
+                    <div class="platform-card gold">
+                        <div class="platform-num">Layer 03 · The Conversation</div>
+                        <div class="platform-name">Agentforce Marketing</div>
+                        <div class="platform-desc">Orchestrates journeys across email, app, and SMS — moving from predictive to autonomous.</div>
+                        <div class="platform-mech"><strong>Delivers</strong>Interfaces that adapt in real time to natural language.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 11: Roadmap / No Regrets -->
+        <section class="slide">
+            <div style="max-width: 1060px; width: 100%;">
+                <div class="accent-line" style="margin: 0 auto 14px;"></div>
+                <div class="eyebrow" style="text-align: center; margin-bottom: 6px;">Next Steps · No Regrets Work</div>
+                <h2 class="big" style="text-align: center; font-size: clamp(22px, 2.6vw, 34px); margin-bottom: 28px;">From Level 1 to the Level 5 ambition —<br>one quarter at a time.</h2>
+
+                <div class="roadmap">
+                    <div class="rm-card">
+                        <div class="rm-when">Feb · Planning</div>
+                        <div class="rm-title">Ambition Summary</div>
+                        <div class="rm-desc">1–2 page working doc qualifying the team's ambition to share internally.</div>
+                    </div>
+                    <div class="rm-card">
+                        <div class="rm-when">Feb–Mar · Foundations</div>
+                        <div class="rm-title">No Regrets Work</div>
+                        <div class="rm-desc">FY27 priorities that build the data and trust foundations for an agentic future.</div>
+                    </div>
+                    <div class="rm-card">
+                        <div class="rm-when">Mar · Workstreams</div>
+                        <div class="rm-title">Referral + Partner Scope</div>
+                        <div class="rm-desc">Formalise workstreams for referral marketing and partner ecosystem.</div>
+                    </div>
+                    <div class="rm-card">
+                        <div class="rm-when">Mar · Origination</div>
+                        <div class="rm-title">Loyalty at Origination</div>
+                        <div class="rm-desc">Move beyond generic confirmation emails — surface business money tools from day one.</div>
+                    </div>
+                    <div class="rm-card phase2">
+                        <div class="rm-when">Mar–Apr · Scope</div>
+                        <div class="rm-title">Referral POC Budget</div>
+                        <div class="rm-desc">Finalise scope — POC or short-term program — for referral marketing.</div>
+                    </div>
+                    <div class="rm-card phase2">
+                        <div class="rm-when">April · Build</div>
+                        <div class="rm-title">Referral POC Live</div>
+                        <div class="rm-desc">Implement the referral marketing program.</div>
+                    </div>
+                    <div class="rm-card phase3">
+                        <div class="rm-when">June · Review</div>
+                        <div class="rm-title">POC Look-back</div>
+                        <div class="rm-desc">Historical performance review. Validate hypothesis, continue funding or pivot.</div>
+                    </div>
+                    <div class="rm-card phase4">
+                        <div class="rm-when">Jul–Sep+ · Scale</div>
+                        <div class="rm-title">Partner Ecosystem</div>
+                        <div class="rm-desc">FY28 scope, budget, timelines — and program kick off.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 12: Culture quote -->
+        <section class="slide">
+            <div class="big-quote">
+                <span class="mark">"</span>
+                <blockquote>When no one's looking, we design processes that are about the <span class="hl">customer</span> — not about ourselves. That means we don't do things that serve us. We do things that genuinely help the customer. And we're <span class="hl-teal">brave enough to fix what's broken</span>.</blockquote>
+                <cite>Cass O'Brien · Business Banking Lead, Westpac</cite>
+            </div>
+        </section>
+
+        <!-- Slide 13: Press Release from 2028 -->
+        <section class="slide">
+            <div class="press">
+                <div class="eyebrow" style="color: var(--teal);">The Art of the Possible · Sydney, 2028</div>
+                <h2 class="press-headline">Westpac Secures 25% SMB Market Share by Turning the <span class="hl-teal">'Double You'</span> into a Digital Co-Founder.</h2>
+                <p class="press-body">Two years ago, Westpac's Business Banking team identified a critical insight: business owners didn't want a flashier app — they wanted their financial admin to disappear. By integrating Salesforce's unified data engine and agentic architecture, Westpac transformed the iconic 'W' into a digital co-founder that <strong>predicts needs and automates solutions</strong>. Onboarding takes seconds, not days. Routine tasks require <strong>Zero UI</strong>.</p>
+                <div class="press-quote">
+                    I used to spend my Sunday nights sorting invoices and worrying about cash flow. Now Westpac's agent handles my supplier payments and flags potential cash crunches before they happen. My finances just work. It feels like they're actually on my side — not just holding my money.
+                    <span class="who">Trisha · Sydney-based florist</span>
+                </div>
+                <div class="press-quote">
+                    We stopped building processes that served the bank and started building agents that served the customer. We don't wait for a customer to apply for help anymore — if the data shows a logistics company is hitting a growth spike, we proactively structure the capital they need. We moved from <em>doing</em> to <em>done</em>.
+                    <span class="who">Cass O'Brien · Business Banking Lead</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Slide 14: CTA -->
+        <section class="slide">
+            <div class="cta-wrap">
+                <div class="eyebrow">The Next Conversation</div>
+                <h2 class="big" style="font-size: clamp(26px, 3.2vw, 44px);">Let's make<br><span class="hl">the future practical.</span></h2>
+                <p class="sub" style="margin: 16px auto 0; font-size: 14px; max-width: 520px;">Walk through Pepperstone &amp; TD Bank referral stories. See a bespoke view built on Westpac's architecture. Model the ROI on your inputs.</p>
+                <div class="cta-steps">
+                    <div>
+                        <div class="cta-step-num">1</div>
+                        <div class="cta-step-label">Customer stories</div>
+                    </div>
+                    <div>
+                        <div class="cta-step-num">2</div>
+                        <div class="cta-step-label">Bespoke architecture view</div>
+                    </div>
+                    <div>
+                        <div class="cta-step-num">3</div>
+                        <div class="cta-step-label">Modelled referral ROI</div>
+                    </div>
+                </div>
+            </div>
+            <div class="star-deco" style="top: 100px; left: 140px;"><img src="sf-star-gold.png" alt=""></div>
+            <div class="char" style="bottom: 56px; right: 80px;"><img src="char-agent-einstein-1.png" alt=""></div>
+        </section>
+
+    </div>
+
+    <!-- Navigation -->
+    <nav class="nav-bar" role="navigation" aria-label="Slide navigation">
+        <div class="nav-brand">
+            <img class="nav-sf-logo" src="sf-logo-cloud.png" alt="Salesforce">
+            <div class="nav-divider"></div>
+            <span class="nav-title">Westpac Business Banking · Customer Obsessed</span>
+        </div>
+        <div class="nav-dots" role="tablist" id="progress"></div>
+        <div class="nav-controls">
+            <button class="nav-btn" id="btn-prev" aria-label="Previous slide">‹</button>
+            <span class="nav-counter" id="counter">1 / 14</span>
+            <button class="nav-btn" id="btn-next" aria-label="Next slide">›</button>
+        </div>
+    </nav>
+
+    <div class="key-hint">
+        <span class="key">←→</span> navigate <span class="key">Space</span> advance
+    </div>
+
+    <script>
+        var slides  = document.querySelectorAll('#deck > .slide');
+        var total   = slides.length;
+        var current = 0;
+        var busy    = false;
+        var prog    = document.getElementById('progress');
+
+        for (var i = 0; i < total; i++) {
+            var dot = document.createElement('button');
+            dot.className = 'dot' + (i === 0 ? ' active' : '');
+            dot.setAttribute('role', 'tab');
+            dot.setAttribute('aria-label', 'Slide ' + (i + 1));
+            dot.setAttribute('aria-selected', i === 0 ? 'true' : 'false');
+            dot.addEventListener('click', (function(idx) {
+                return function() { goTo(idx); };
+            })(i));
+            prog.appendChild(dot);
+        }
+
+        function goTo(idx) {
+            if (busy || idx === current || idx < 0 || idx >= total) return;
+            busy = true;
+            slides[current].classList.add('exit');
+            var prev = current;
+            current = idx;
+            setTimeout(function() {
+                slides[prev].classList.remove('active', 'exit');
+                slides[current].classList.add('active');
+                updateUI();
+                setTimeout(function() { busy = false; }, 450);
+            }, 260);
+        }
+
+        function navigate(dir) { goTo(current + dir); }
+
+        function updateUI() {
+            document.getElementById('counter').textContent = (current + 1) + ' / ' + total;
+            document.getElementById('btn-prev').disabled = current === 0;
+            document.getElementById('btn-next').disabled = current === total - 1;
+            document.getElementById('btn-prev').setAttribute('aria-label', 'Previous slide (slide ' + current + ' of ' + total + ')');
+            document.getElementById('btn-next').setAttribute('aria-label', 'Next slide (slide ' + (current + 2) + ' of ' + total + ')');
+            document.querySelectorAll('.dot').forEach(function(d, i) {
+                d.classList.toggle('active', i === current);
+                d.setAttribute('aria-selected', i === current ? 'true' : 'false');
+            });
+        }
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') { e.preventDefault(); navigate(1); }
+            if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')                    { e.preventDefault(); navigate(-1); }
+        });
+
+        var tx = null;
+        document.addEventListener('touchstart', function(e) { tx = e.touches[0].clientX; });
+        document.addEventListener('touchend',   function(e) {
+            if (tx === null) return;
+            if (Math.abs(e.changedTouches[0].clientX - tx) > 50) navigate(e.changedTouches[0].clientX - tx < 0 ? 1 : -1);
+            tx = null;
+        });
+
+        slides[0].classList.add('active');
+        updateUI();
+    </script>
+</body>
+</html>
