@@ -340,6 +340,35 @@
         .outcome-title  { font-size: 15px; font-weight: 700; margin-bottom: 6px; }
         .outcome-desc   { font-size: 14px; color: var(--muted); line-height: 1.65; }
 
+        /* ── PHASE TAGS ── */
+        .phase-tag {
+            display: inline-block;
+            font-size: 9px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            padding: 2px 8px;
+            border-radius: 10px;
+            margin-left: 8px;
+            vertical-align: middle;
+            cursor: help;
+        }
+        .phase-tag.phase-now  { background: rgba(4,225,203,0.14); color: var(--teal); border: 1px solid rgba(4,225,203,0.3); }
+        .phase-tag.phase-lift { background: rgba(252,192,3,0.12); color: var(--gold); border: 1px solid rgba(252,192,3,0.28); }
+
+        .phase-legend {
+            display: flex;
+            justify-content: center;
+            gap: 28px;
+            margin-top: 22px;
+            font-size: 11px;
+            color: rgba(255,255,255,0.55);
+            line-height: 1.4;
+            flex-wrap: wrap;
+        }
+        .phase-legend .item { display: flex; align-items: center; gap: 8px; }
+        .phase-legend .phase-tag { margin-left: 0; cursor: default; }
+
         /* ── VOICE / QUOTES ── */
         .voice-grid {
             display: grid;
@@ -814,23 +843,31 @@
                     <h2 class="big">AI &amp; customers<br><span class="hl">become the primary<br>acquisition channel.</span></h2>
                     <p class="sub" style="margin-top: 14px;">When a Surry Hills florist refers a local business, it isn't for the reward — it's because you gave them their Sunday night back.</p>
                 </div>
-                <div class="col">
-                    <div class="stat-grid" style="grid-template-columns: 1fr; gap: 12px;">
-                        <div class="stat-card">
-                            <div class="stat-val c-blue">Amplify Advocacy</div>
-                            <div class="stat-label">AI identifies the moments that matter — and triggers referrals in high-intent channels</div>
-                            <div class="stat-desc"><strong style="color:#fff;">2× ROI</strong> vs. traditional acquisition. Lowest hanging fruit in the mix — and trust-rich from day one.</div>
+                <div class="col" style="display: flex; flex-direction: column; gap: 14px;">
+                    <div class="outcome-card">
+                        <div class="outcome-bullet" style="background: var(--blue2);"></div>
+                        <div>
+                            <div class="outcome-title">Amplify advocacy <span class="phase-tag phase-now" title="Out of the box capabilities, easily deployable">Ready now</span></div>
+                            <div class="outcome-desc">AI identifies the moments that matter and triggers referrals in high-intent channels. <strong style="color:#fff;">2× ROI</strong> vs. traditional acquisition — and trust-rich from day one.</div>
                         </div>
-                        <div class="stat-card teal">
-                            <div class="stat-val c-teal" style="font-size: clamp(24px, 2.6vw, 34px);">Agentic Marketing</div>
-                            <div class="stat-label">Show up in AI-native discovery</div>
-                            <div class="stat-desc">Scale hyper-personalised experiences into the platforms where buying decisions are now made.</div>
+                    </div>
+                    <div class="outcome-card">
+                        <div class="outcome-bullet" style="background: var(--teal);"></div>
+                        <div>
+                            <div class="outcome-title">Agentic marketing <span class="phase-tag phase-lift" title="Further discovery, anticipated integrations, regulatory checks">Bigger lift</span></div>
+                            <div class="outcome-desc">Show up in AI-native discovery. Scale hyper-personalised experiences into the platforms where buying decisions are now made.</div>
                         </div>
-                        <div class="stat-card gold">
-                            <div class="stat-val c-gold" style="font-size: clamp(24px, 2.6vw, 34px);">Customer Propensity Signals</div>
-                            <div class="stat-label">Find the SMB owners already inside the Westpac book</div>
-                            <div class="stat-desc">Segment on propensity and intent across retail banking to spot customers running a business with another institution — or about to start one. Make consolidation (MFI) mutually beneficial.</div>
+                    </div>
+                    <div class="outcome-card">
+                        <div class="outcome-bullet" style="background: var(--gold);"></div>
+                        <div>
+                            <div class="outcome-title">Customer propensity signals <span class="phase-tag phase-now" title="Out of the box capabilities, easily deployable">Ready now</span></div>
+                            <div class="outcome-desc">Segment on propensity and intent across retail banking to find customers already running a business with another institution — or about to start one. Make MFI consolidation mutually beneficial.</div>
                         </div>
+                    </div>
+                    <div class="phase-legend">
+                        <div class="item"><span class="phase-tag phase-now">Ready now</span> Out of the box · easily deployable</div>
+                        <div class="item"><span class="phase-tag phase-lift">Bigger lift</span> Further discovery · integrations · regulatory</div>
                     </div>
                 </div>
             </div>
@@ -849,37 +886,41 @@
                     <div class="outcome-card" style="padding: 16px 18px;">
                         <div class="outcome-bullet" style="background: var(--blue2);"></div>
                         <div>
-                            <div class="outcome-title">Conversational agent onboarding</div>
+                            <div class="outcome-title">Conversational agent onboarding <span class="phase-tag phase-now" title="Out of the box capabilities, easily deployable">Ready now</span></div>
                             <div class="outcome-desc">Eliminate forms. Reduce drop-out with cross-device, cross-channel continuation — pick up where you left off, on any surface.</div>
                         </div>
                     </div>
                     <div class="outcome-card" style="padding: 16px 18px;">
                         <div class="outcome-bullet" style="background: var(--teal);"></div>
                         <div>
-                            <div class="outcome-title">Agentic guided flows</div>
+                            <div class="outcome-title">Agentic guided flows <span class="phase-tag phase-now" title="Out of the box capabilities, easily deployable">Ready now</span></div>
                             <div class="outcome-desc">Self-serve support shortens queues. Verification maintains trust without the wait.</div>
                         </div>
                     </div>
                     <div class="outcome-card" style="padding: 16px 18px;">
                         <div class="outcome-bullet" style="background: var(--gold);"></div>
                         <div>
-                            <div class="outcome-title">Intent-aware tailoring</div>
-                            <div class="outcome-desc">Replace forms with a process that reads what the business actually needs — and tailors the ask.</div>
+                            <div class="outcome-title">Loyalty starts at origination <span class="phase-tag phase-now" title="Out of the box capabilities, easily deployable">Ready now</span></div>
+                            <div class="outcome-desc">Move beyond generic confirmation emails — surface business money tools the moment the account opens.</div>
                         </div>
                     </div>
                     <div class="outcome-card" style="padding: 16px 18px;">
                         <div class="outcome-bullet" style="background: var(--lblue);"></div>
                         <div>
-                            <div class="outcome-title">Workflow-native origination</div>
-                            <div class="outcome-desc">Connect directly to Slack, Xero and business tools to validate identity and open accounts instantly.</div>
+                            <div class="outcome-title">Intent-aware tailoring <span class="phase-tag phase-lift" title="Further discovery, anticipated integrations, regulatory checks">Bigger lift</span></div>
+                            <div class="outcome-desc">Replace forms with a process that reads what the business actually needs — and tailors the ask.</div>
                         </div>
                     </div>
                     <div class="outcome-card" style="padding: 16px 18px;">
                         <div class="outcome-bullet" style="background: var(--blue2);"></div>
                         <div>
-                            <div class="outcome-title">Loyalty starts at origination</div>
-                            <div class="outcome-desc">Move beyond generic confirmation emails — surface business money tools the moment the account opens.</div>
+                            <div class="outcome-title">Workflow-native origination <span class="phase-tag phase-lift" title="Further discovery, anticipated integrations, regulatory checks">Bigger lift</span></div>
+                            <div class="outcome-desc">Connect directly to Slack, Xero and business tools to validate identity and open accounts instantly.</div>
                         </div>
+                    </div>
+                    <div class="phase-legend">
+                        <div class="item"><span class="phase-tag phase-now">Ready now</span> Out of the box · easily deployable</div>
+                        <div class="item"><span class="phase-tag phase-lift">Bigger lift</span> Further discovery · integrations · regulatory</div>
                     </div>
                 </div>
             </div>
@@ -898,30 +939,34 @@
                     <div class="outcome-card">
                         <div class="outcome-bullet" style="background: var(--blue2);"></div>
                         <div>
-                            <div class="outcome-title">Curated partner ecosystem <span style="font-size: 10px; font-weight: 700; letter-spacing: 0.1em; color: var(--teal); margin-left: 6px; text-transform: uppercase;">Ready now</span></div>
+                            <div class="outcome-title">Curated partner ecosystem <span class="phase-tag phase-now" title="Out of the box capabilities, easily deployable">Ready now</span></div>
                             <div class="outcome-desc">Logistics, legal, tax — dynamic partner offers within guardrails, based on real-time business lifecycle signals. Deliverable today with Loyalty &amp; Offers.</div>
                         </div>
                     </div>
                     <div class="outcome-card">
                         <div class="outcome-bullet" style="background: var(--teal);"></div>
                         <div>
-                            <div class="outcome-title">Reward the right decisions <span style="font-size: 10px; font-weight: 700; letter-spacing: 0.1em; color: var(--teal); margin-left: 6px; text-transform: uppercase;">Ready now</span></div>
+                            <div class="outcome-title">Reward the right decisions <span class="phase-tag phase-now" title="Out of the box capabilities, easily deployable">Ready now</span></div>
                             <div class="outcome-desc">Monitor and reward best-practice business behaviour. Celebrate milestones instead of chasing spend.</div>
                         </div>
                     </div>
                     <div class="outcome-card">
                         <div class="outcome-bullet" style="background: var(--gold);"></div>
                         <div>
-                            <div class="outcome-title">Zero UI for routine work <span style="font-size: 10px; font-weight: 700; letter-spacing: 0.1em; color: var(--gold); margin-left: 6px; text-transform: uppercase;">Bigger lift</span></div>
+                            <div class="outcome-title">Zero UI for routine work <span class="phase-tag phase-lift" title="Further discovery, anticipated integrations, regulatory checks">Bigger lift</span></div>
                             <div class="outcome-desc">Execute decisions directly inside the customer's own workflows — Slack, email, smart inventory — on pre-agreed parameters.</div>
                         </div>
                     </div>
                     <div class="outcome-card">
                         <div class="outcome-bullet" style="background: var(--lblue);"></div>
                         <div>
-                            <div class="outcome-title">Proactive cash flow intelligence <span style="font-size: 10px; font-weight: 700; letter-spacing: 0.1em; color: var(--gold); margin-left: 6px; text-transform: uppercase;">Bigger lift</span></div>
+                            <div class="outcome-title">Proactive cash flow intelligence <span class="phase-tag phase-lift" title="Further discovery, anticipated integrations, regulatory checks">Bigger lift</span></div>
                             <div class="outcome-desc">Flag crunches before they hit. Structure capital when a growth spike is detected.</div>
                         </div>
+                    </div>
+                    <div class="phase-legend">
+                        <div class="item"><span class="phase-tag phase-now">Ready now</span> Out of the box · easily deployable</div>
+                        <div class="item"><span class="phase-tag phase-lift">Bigger lift</span> Further discovery · integrations · regulatory</div>
                     </div>
                 </div>
             </div>
