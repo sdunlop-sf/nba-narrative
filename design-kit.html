@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Salesforce Narrative Design Kit</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="design-kit/tokens.css" />
+  <link rel="stylesheet" href="design-kit/components.css" />
+  <style>
+    :root { --accent: #E65100; --accent-l: #FF8A3D; }
+
+    /* Download button — big, obvious */
+    .download-cta {
+      display: inline-flex; align-items: center; gap: 12px;
+      padding: 18px 32px; border-radius: 12px;
+      background: linear-gradient(135deg, var(--sf-blue), #0060a8);
+      color: var(--white); font-size: 16px; font-weight: 700;
+      text-decoration: none; border: none; cursor: pointer;
+      font-family: inherit; letter-spacing: -0.01em;
+      box-shadow: 0 8px 32px rgba(1,118,211,0.35);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .download-cta:hover { transform: translateY(-2px); box-shadow: 0 12px 40px rgba(1,118,211,0.45); }
+    .download-cta .size { opacity: 0.7; font-weight: 500; font-size: 13px; }
+    .download-cta svg { width: 20px; height: 20px; }
+
+    /* Asset preview grid */
+    .asset-preview {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: 12px;
+    }
+    .asset-tile {
+      background: var(--white);
+      border: 1px solid var(--gray-200);
+      border-radius: 12px;
+      padding: 20px 12px;
+      display: flex; flex-direction: column; align-items: center; gap: 10px;
+      aspect-ratio: 1; justify-content: center;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .asset-tile:hover { border-color: var(--sf-blue); box-shadow: var(--shadow-card); }
+    .asset-tile img { max-width: 48px; max-height: 48px; object-fit: contain; }
+    .asset-tile .label {
+      font-size: 10px; color: var(--muted); text-align: center;
+      line-height: 1.3; font-weight: 500;
+    }
+
+    /* Swatches */
+    .swatch-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px; }
+    .swatch {
+      border: 1px solid var(--gray-200);
+      border-radius: 12px; overflow: hidden; background: var(--white);
+    }
+    .swatch-chip { height: 64px; }
+    .swatch-meta { padding: 10px 12px; }
+    .swatch-name { font-size: 12px; font-weight: 700; color: var(--text); }
+    .swatch-hex { font-size: 11px; color: var(--muted); font-family: 'SF Mono', Menlo, monospace; }
+
+    /* Code block */
+    .code-block {
+      background: #0D1B2E; color: #E2E8F0;
+      border-radius: 12px; padding: 20px 24px;
+      font-family: 'SF Mono', Menlo, monospace; font-size: 12px;
+      line-height: 1.7; overflow-x: auto;
+    }
+    .code-block .c-comment { color: #64748B; }
+    .code-block .c-tag     { color: #7FD4F5; }
+    .code-block .c-attr    { color: #FBBF24; }
+    .code-block .c-str     { color: #86EFAC; }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-inner">
+      <div class="nav-lockup">
+        <img src="design-kit/assets/logos/sf-logo.jpeg" class="nav-logo-sf" alt="Salesforce" />
+        <div class="nav-divider"></div>
+        <div class="nav-title">Narrative Design Kit · v1.0</div>
+      </div>
+      <div class="nav-tag">Internal · For AE &amp; SE Use</div>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-inner">
+      <div>
+        <div class="hero-eyebrow">Design Kit · Fonts · Icons · Gate</div>
+        <h1>Build narrative pages<br/><em>the way we do — in an hour.</em></h1>
+        <p class="hero-sub">Every component, colour, icon and script behind the NBA, Westpac, Bunnings and Decisioning Hub pages — packaged into one folder you can drop into any repo.</p>
+        <a href="design-kit.zip" download class="download-cta">
+          <svg viewBox="0 0 20 20" fill="currentColor"><path d="M10 3a1 1 0 011 1v8.586l2.293-2.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L9 12.586V4a1 1 0 011-1zm-7 13a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"/></svg>
+          Download the kit
+          <span class="size">8.4 MB · zip</span>
+        </a>
+      </div>
+      <div class="hero-kpi">
+        <div class="hero-kpi-card">
+          <div class="hkc-val"><span>42</span></div>
+          <div class="hkc-label">Files — CSS, template, scripts, assets</div>
+        </div>
+        <div class="hero-kpi-card">
+          <div class="hkc-val"><span>10</span></div>
+          <div class="hkc-label">Reusable components — hero to closing CTA</div>
+        </div>
+        <div class="hero-kpi-card">
+          <div class="hkc-val">25<span style="font-size:18px;color:rgba(255,255,255,0.5);"> assets</span></div>
+          <div class="hkc-label">Salesforce + Agentforce icons, characters, graphics</div>
+        </div>
+        <div class="hero-kpi-card">
+          <div class="hkc-val">1<span style="font-size:18px;color:rgba(255,255,255,0.5);"> hour</span></div>
+          <div class="hkc-label">From blank template to a gated, branded page</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WHAT'S IN THE BOX -->
+  <div class="section" style="padding-top:100px;">
+    <div class="eyebrow">What's In The Box</div>
+    <div class="section-title">Everything you need.<br/>Nothing you don't.</div>
+    <div class="section-sub">One folder. Drop it into any project. Open the template, change the copy and the customer accent colour, and you're done.</div>
+
+    <div class="card-grid-4">
+      <div class="card card-accent-blue">
+        <div class="card-icon">🎨</div>
+        <div class="card-title">tokens.css</div>
+        <div class="card-body">Every colour, font, radius and shadow as CSS variables. <strong>Change one line, reskin the whole page.</strong></div>
+      </div>
+      <div class="card card-accent-blue">
+        <div class="card-icon">🧩</div>
+        <div class="card-title">components.css</div>
+        <div class="card-body">Nav, hero, cards, compare table, stack, phase cards, proof block, closing CTA. <strong>Ten reusable blocks.</strong></div>
+      </div>
+      <div class="card card-accent-accent">
+        <div class="card-icon">📄</div>
+        <div class="card-title">template.html</div>
+        <div class="card-body">The full page shape wired up. <strong>Delete sections you don't need.</strong> Placeholder copy shows you where everything goes.</div>
+      </div>
+      <div class="card card-accent-accent">
+        <div class="card-icon">🔒</div>
+        <div class="card-title">gate.js</div>
+        <div class="card-body">Password gate + visitor tracking. <strong>One script tag, name + company + IP captured.</strong> Emails on each new visit.</div>
+      </div>
+      <div class="card card-accent-blue">
+        <div class="card-icon">☁️</div>
+        <div class="card-title">cloudflare-worker.js</div>
+        <div class="card-body">The endpoint behind gate.js. <strong>Logs every visit to a tracking.json in your repo.</strong> Free tier works.</div>
+      </div>
+      <div class="card card-accent-blue">
+        <div class="card-icon">🖼️</div>
+        <div class="card-title">assets/icons</div>
+        <div class="card-body">Agentforce, Data Cloud, Einstein Studio, Personalisation, Marketing, Sales, Slack, Platform. <strong>Every product mark in one place.</strong></div>
+      </div>
+      <div class="card card-accent-accent">
+        <div class="card-icon">✨</div>
+        <div class="card-title">assets/characters</div>
+        <div class="card-body">Astro-as-agent, Einstein-as-agent, jumping Astro, gold star. <strong>Kinetic moments for the moments that matter.</strong></div>
+      </div>
+      <div class="card card-accent-accent">
+        <div class="card-icon">📘</div>
+        <div class="card-title">STYLE-GUIDE.md</div>
+        <div class="card-body">How to structure a page. <strong>Voice, copy lengths, rhythm, things to avoid.</strong> Read this before your first build.</div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider" />
+
+  <!-- COLOUR SYSTEM -->
+  <div class="section-bg">
+    <div class="section">
+      <div class="eyebrow">The Palette</div>
+      <div class="section-title">Three blues. One customer accent.<br/>That's it.</div>
+      <div class="section-sub">Don't add more. The whole system holds together because we resist the urge.</div>
+
+      <div class="swatch-grid">
+        <div class="swatch"><div class="swatch-chip" style="background:#032D60;"></div><div class="swatch-meta"><div class="swatch-name">SF Navy</div><div class="swatch-hex">#032D60</div></div></div>
+        <div class="swatch"><div class="swatch-chip" style="background:#0176D3;"></div><div class="swatch-meta"><div class="swatch-name">SF Blue</div><div class="swatch-hex">#0176D3</div></div></div>
+        <div class="swatch"><div class="swatch-chip" style="background:#0D9DDA;"></div><div class="swatch-meta"><div class="swatch-name">SF Blue Light</div><div class="swatch-hex">#0D9DDA</div></div></div>
+        <div class="swatch"><div class="swatch-chip" style="background:#DA1710;"></div><div class="swatch-meta"><div class="swatch-name">Accent (Westpac)</div><div class="swatch-hex">#DA1710</div></div></div>
+        <div class="swatch"><div class="swatch-chip" style="background:#F5F8FA;border-top:1px solid var(--gray-200);"></div><div class="swatch-meta"><div class="swatch-name">Off-white</div><div class="swatch-hex">#F5F8FA</div></div></div>
+        <div class="swatch"><div class="swatch-chip" style="background:#D8E0EA;"></div><div class="swatch-meta"><div class="swatch-name">Gray 200</div><div class="swatch-hex">#D8E0EA</div></div></div>
+        <div class="swatch"><div class="swatch-chip" style="background:#7A8A9A;"></div><div class="swatch-meta"><div class="swatch-name">Muted</div><div class="swatch-hex">#7A8A9A</div></div></div>
+        <div class="swatch"><div class="swatch-chip" style="background:#3E4D5C;"></div><div class="swatch-meta"><div class="swatch-name">Body</div><div class="swatch-hex">#3E4D5C</div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider" />
+
+  <!-- PRODUCT ICONS PREVIEW -->
+  <div class="section">
+    <div class="eyebrow">Salesforce &amp; Agentforce Assets</div>
+    <div class="section-title">Every icon.<br/>Every character. Ready to drop in.</div>
+    <div class="section-sub">Organised by type. No hunting through Slack or old decks.</div>
+
+    <!-- Product icons -->
+    <div style="font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--sf-blue);margin-bottom:12px;">Product Icons</div>
+    <div class="asset-preview" style="margin-bottom:40px;">
+      <div class="asset-tile"><img src="design-kit/assets/icons/icon-agentforce.png" alt="Agentforce"/><div class="label">Agentforce</div></div>
+      <div class="asset-tile"><img src="design-kit/assets/icons/icon-data360.png" alt="Data 360"/><div class="label">Data 360</div></div>
+      <div class="asset-tile"><img src="design-kit/assets/icons/dc-logo.png" alt="Data Cloud"/><div class="label">Data Cloud</div></div>
+      <div class="asset-tile"><img src="design-kit/assets/icons/icon-marketing.png" alt="Marketing Cloud"/><div class="label">Marketing Cloud</div></div>
+      <div class="asset-tile"><img src="design-kit/assets/icons/icon-platform.png" alt="Platform"/><div class="label">Platform</div></div>
+      <div class="asset-tile"><img src="design-kit/assets/icons/icon-salesrevenue.png" alt="Sales &amp; Revenue"/><div class="label">Sales &amp; Revenue</div></div>
+      <div class="asset-tile"><img src="design-kit/assets/icons/icon-slack.png" alt="Slack"/><div class="label">Slack</div></div>
+      <div class="asset-tile"><img src="design-kit/assets/icons/xero-einstein-icon.png" alt="Einstein Studio"/><div class="label">Einstein Studio</div></div>
+      <div class="asset-tile"><img src="design-kit/assets/icons/xero-perso-icon.png" alt="Personalisation"/><div class="label">Personalisation</div></div>
+      <div class="asset-tile"><img src="design-kit/assets/icons/xero-rtom-icon.png" alt="Real-Time Orchestration"/><div class="label">Real-Time Orch.</div></div>
+    </div>
+
+    <!-- Characters -->
+    <div style="font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--sf-blue);margin-bottom:12px;">Characters &amp; Mascots</div>
+    <div class="asset-preview" style="margin-bottom:40px;">
+      <div class="asset-tile"><img src="design-kit/assets/characters/char-agent-astro-2.png" alt="Astro 2"/><div class="label">Astro · Agent 2</div></div>
+      <div class="asset-tile"><img src="design-kit/assets/characters/char-agent-astro-3.png" alt="Astro 3"/><div class="label">Astro · Agent 3</div></div>
+      <div class="asset-tile"><img src="design-kit/assets/characters/char-agent-einstein-1.png" alt="Einstein"/><div class="label">Einstein · Agent</div></div>
+      <div class="asset-tile"><img src="design-kit/assets/characters/char-astro-jumping.png" alt="Astro jumping"/><div class="label">Astro · Jumping</div></div>
+      <div class="asset-tile"><img src="design-kit/assets/characters/sf-star-gold.png" alt="Gold Star"/><div class="label">Gold Star</div></div>
+    </div>
+
+    <!-- Logos -->
+    <div style="font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--sf-blue);margin-bottom:12px;">Logos</div>
+    <div class="asset-preview">
+      <div class="asset-tile"><img src="design-kit/assets/logos/sf-logo.jpeg" alt="Salesforce"/><div class="label">SF Logo</div></div>
+      <div class="asset-tile"><img src="design-kit/assets/logos/sf-logo-cloud.png" alt="Salesforce Cloud"/><div class="label">SF Cloud</div></div>
+    </div>
+  </div>
+
+  <hr class="divider" />
+
+  <!-- HOW TO USE -->
+  <div class="section-bg">
+    <div class="section">
+      <div class="eyebrow">How It Works</div>
+      <div class="section-title">Four steps from download<br/>to a branded, tracked page.</div>
+      <div class="section-sub">No build tooling. No frameworks. Plain HTML + CSS that opens in any browser.</div>
+
+      <div class="card-grid-4">
+        <div class="scale-card">
+          <div class="sc-num">STEP 01</div>
+          <div class="sc-title">Download &amp; unzip</div>
+          <div class="sc-body">One zip file, 8.4 MB. Drop the <code>design-kit/</code> folder into your project.</div>
+        </div>
+        <div class="scale-card">
+          <div class="sc-num">STEP 02</div>
+          <div class="sc-title">Duplicate the template</div>
+          <div class="sc-body">Open <code>template.html</code>, save as your page name. Replace placeholder copy and swap the customer logo.</div>
+        </div>
+        <div class="scale-card">
+          <div class="sc-num">STEP 03</div>
+          <div class="sc-title">Set the accent colour</div>
+          <div class="sc-body">One line of CSS in the <code>&lt;head&gt;</code> — <code>--accent: #yourHex</code>. The whole page rebrands.</div>
+        </div>
+        <div class="scale-card">
+          <div class="sc-num">STEP 04</div>
+          <div class="sc-title">Deploy &amp; share</div>
+          <div class="sc-body">Push to any static host — GitHub Pages, Netlify, Cloudflare. The gate tracks visitors automatically.</div>
+        </div>
+      </div>
+
+      <div style="margin-top:40px;">
+        <div style="font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--sf-blue);margin-bottom:12px;">The single-line gate</div>
+        <div class="code-block"><span class="c-comment">&lt;!-- Paste above &lt;/body&gt; to lock the page + start tracking --&gt;</span>
+<span class="c-tag">&lt;script</span> <span class="c-attr">src</span>=<span class="c-str">"gate.js"</span> <span class="c-attr">data-page</span>=<span class="c-str">"Customer Narrative Name"</span><span class="c-tag">&gt;&lt;/script&gt;</span></div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider" />
+
+  <!-- LIVE COMPONENT PREVIEW -->
+  <div class="section">
+    <div class="eyebrow">Component Preview</div>
+    <div class="section-title">These very sections<br/>come from the kit.</div>
+    <div class="section-sub">Every block on this page is a component in <code>components.css</code>. What you see is what you ship.</div>
+
+    <!-- Mini compare -->
+    <div style="font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--sf-blue);margin:24px 0 12px;">Compare Table</div>
+    <div class="compare-wrap">
+      <div class="compare-head">
+        <div class="compare-head-col today">Without the kit</div>
+        <div class="compare-head-col tomorrow">With the kit</div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-cell today"><strong>A day of copy-pasting</strong> CSS from an old page — and still missing half the patterns.</div>
+        <div class="compare-cell tomorrow"><strong>One hour to a branded page</strong> — template, tokens, components, all wired up.</div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-cell today"><strong>Everyone's pages drift</strong> off-brand — different navy, different radii, different type scale.</div>
+        <div class="compare-cell tomorrow"><strong>One source of truth.</strong> Tokens flow through every component. You can't accidentally go off-brand.</div>
+      </div>
+      <div class="compare-row">
+        <div class="compare-cell today"><strong>No visibility</strong> on who opens what the AE sent them.</div>
+        <div class="compare-cell tomorrow"><strong>Every visitor logged</strong> — name, company, IP, geo. Email on each new open.</div>
+      </div>
+    </div>
+
+    <!-- Proof block -->
+    <div style="font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--sf-blue);margin:40px 0 12px;">Proof Block</div>
+    <div class="proof-wrap">
+      <div>
+        <div class="proof-eyebrow">Pages already built on this system</div>
+        <div class="proof-quote">"I opened the Westpac page and every one of my CROs read it end-to-end — no one closed it early."</div>
+        <p class="proof-desc">The system was battle-tested across NBA narrative, Westpac Business Banking, Bunnings opportunity, IAG, Decisioning Hub framing, and a dozen more. <strong>Same system, same rhythm, same result.</strong> Consistency is the point.</p>
+        <div class="proof-source">Source: Account teams running customer-facing pages in 2025–26</div>
+      </div>
+      <div class="proof-stats">
+        <div class="proof-stat">
+          <div class="proof-stat-val"><span>12+</span></div>
+          <div class="proof-stat-label">Customer pages shipped on this system</div>
+        </div>
+        <div class="proof-stat">
+          <div class="proof-stat-val"><span>1</span></div>
+          <div class="proof-stat-label">Typeface, three blues — the whole palette</div>
+        </div>
+        <div class="proof-stat">
+          <div class="proof-stat-val">GH</div>
+          <div class="proof-stat-label">Pages — free hosting, no build step</div>
+        </div>
+        <div class="proof-stat">
+          <div class="proof-stat-val">RT</div>
+          <div class="proof-stat-label">Visitor tracking to your GitHub + email</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="divider" />
+
+  <!-- CLOSING -->
+  <div class="section">
+    <div class="closing-inner">
+      <h2>Download the kit.<br/>Build your first page.<br/>Ship it this afternoon.</h2>
+      <p>The zip contains everything you just saw on this page — every component, every icon, every line of CSS.</p>
+      <div class="closing-steps">
+        <a href="design-kit.zip" download class="c-step primary" style="text-decoration:none;display:inline-flex;align-items:center;gap:8px;">
+          <svg style="width:16px;height:16px;" viewBox="0 0 20 20" fill="currentColor"><path d="M10 3a1 1 0 011 1v8.586l2.293-2.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L9 12.586V4a1 1 0 011-1zm-7 13a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z"/></svg>
+          Download design-kit.zip
+        </a>
+        <div class="c-arrow">→</div>
+        <div class="c-step">Open template.html</div>
+        <div class="c-arrow">→</div>
+        <div class="c-step">Ship a page</div>
+      </div>
+    </div>
+  </div>
+
+  <script src="gate.js" data-page="Narrative Design Kit"></script>
+
+</body>
+</html>
