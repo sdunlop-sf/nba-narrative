@@ -10894,5 +10894,17 @@
     "location": "Sydney, New South Wales, Australia",
     "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36",
     "returning": "no"
+  },
+  {
+    "timestamp": "Fri, 17 Apr 2026 01:46:43 GMT",
+    "name": "Jesse Gong",
+    "company": "Salesforce",
+    "position": "Manager",
+    "page": "Narrative Design Kit",
+    "url": "https://sdunlop-sf.github.io/nba-narrative/design-kit.html",
+    "ip": "147.161.214.178",
+    "location": "Sydney, New South Wales, Australia",
+    "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36",
+    "returning": "no"
   }
 ]
