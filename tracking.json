@@ -10906,5 +10906,17 @@
     "location": "Sydney, New South Wales, Australia",
     "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36",
     "returning": "no"
+  },
+  {
+    "timestamp": "Fri, 17 Apr 2026 02:00:18 GMT",
+    "name": "Martin Andrew",
+    "company": "Salesforce",
+    "position": "Director Solution Engineering",
+    "page": "Narrative Design Kit",
+    "url": "https://sdunlop-sf.github.io/nba-narrative/design-kit.html",
+    "ip": "165.225.115.105",
+    "location": "Sydney, New South Wales, Australia",
+    "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
+    "returning": "yes"
   }
 ]
