@@ -11014,5 +11014,17 @@
     "location": "Sydney, New South Wales, Australia",
     "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
     "returning": "yes"
+  },
+  {
+    "timestamp": "Fri, 17 Apr 2026 05:38:27 GMT",
+    "name": "miles",
+    "company": "toolin",
+    "position": "goat",
+    "page": "Patent Disclosure — Constitutional Composition",
+    "url": "https://sdunlop-sf.github.io/nba-narrative/patent-disclosure.html",
+    "ip": "165.225.114.166",
+    "location": "Sydney, New South Wales, Australia",
+    "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36",
+    "returning": "no"
   }
 ]
