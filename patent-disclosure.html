@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Invention Disclosure — Constitutional Composition Architecture</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Salesforce Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    color: #1a1a1a;
+    line-height: 1.65;
+    background: #f7f9fc;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(135deg, #1B2A4A 0%, #032D60 50%, #0176D3 100%);
+    color: white;
+    padding: 100px 20px 80px;
+    text-align: center;
+  }
+  .hero-inner { max-width: 820px; margin: 0 auto; }
+  .eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    font-size: 11px;
+    opacity: 0.75;
+    margin-bottom: 16px;
+    font-weight: 600;
+  }
+  .conf-badge {
+    display: inline-block;
+    background: rgba(194, 57, 52, 0.9);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    padding: 5px 14px;
+    border-radius: 4px;
+    margin-bottom: 24px;
+  }
+  .hero h1 {
+    font-size: 42px;
+    line-height: 1.15;
+    font-weight: 700;
+    margin-bottom: 20px;
+    letter-spacing: -0.5px;
+  }
+  .hero .tagline {
+    font-size: 19px;
+    opacity: 0.88;
+    font-weight: 300;
+    max-width: 680px;
+    margin: 0 auto 24px;
+  }
+  .hero-meta {
+    font-size: 13px;
+    opacity: 0.55;
+    font-weight: 400;
+  }
+
+  /* ── NAV ── */
+  nav.toc {
+    background: white;
+    border-bottom: 1px solid #e5e5e5;
+    padding: 16px 20px;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  }
+  nav.toc ul {
+    max-width: 1100px;
+    margin: 0 auto;
+    list-style: none;
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+    justify-content: center;
+    font-size: 13px;
+  }
+  nav.toc a {
+    color: #444;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.15s;
+  }
+  nav.toc a:hover { color: #0176D3; }
+
+  /* ── MAIN ── */
+  main {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 60px 24px 100px;
+  }
+  section { margin-bottom: 72px; }
+  section h2 {
+    font-size: 30px;
+    color: #032D60;
+    margin-bottom: 24px;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+  }
+  section h3 {
+    font-size: 20px;
+    color: #032D60;
+    margin-top: 32px;
+    margin-bottom: 12px;
+    font-weight: 600;
+  }
+  section p {
+    font-size: 16px;
+    margin-bottom: 16px;
+    color: #2a2a2a;
+  }
+  section p.lead {
+    font-size: 19px;
+    font-weight: 400;
+    color: #0b1e3a;
+    line-height: 1.55;
+    margin-bottom: 24px;
+  }
+  ul, ol { padding-left: 24px; margin-bottom: 16px; }
+  li { font-size: 16px; margin-bottom: 8px; color: #2a2a2a; }
+
+  /* ── CALLOUTS ── */
+  .callout {
+    background: white;
+    border-left: 5px solid #0176D3;
+    padding: 20px 24px;
+    margin: 24px 0;
+    border-radius: 0 6px 6px 0;
+    box-shadow: 0 2px 8px rgba(3,45,96,0.06);
+  }
+  .callout p:last-child { margin-bottom: 0; }
+  .callout-warn { border-left-color: #fe9339; }
+  .callout-critical { border-left-color: #c23934; }
+  .callout-title {
+    font-weight: 700;
+    color: #032D60;
+    margin-bottom: 8px;
+    font-size: 15px;
+  }
+
+  /* ── TABLES ── */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0 24px;
+    font-size: 14px;
+  }
+  th {
+    background: #032D60;
+    color: white;
+    padding: 10px 14px;
+    text-align: left;
+    font-weight: 600;
+  }
+  td {
+    padding: 10px 14px;
+    border-bottom: 1px solid #e5e5e5;
+    vertical-align: top;
+  }
+  tr:nth-child(even) td { background: #f9f9f9; }
+
+  /* ── CODE / DIAGRAM ── */
+  code {
+    background: #eef2f7;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 13px;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    color: #0b4f8a;
+  }
+  .diagram {
+    background: #0D1B2E;
+    color: #7FD4F5;
+    padding: 28px 24px;
+    border-radius: 8px;
+    margin: 24px 0;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    font-size: 12.5px;
+    line-height: 1.8;
+    overflow-x: auto;
+    white-space: pre;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    max-width: 820px;
+    margin: 0 auto;
+    padding: 24px;
+    border-top: 1px solid #e5e5e5;
+    font-size: 12px;
+    color: #999;
+  }
+</style>
+</head>
+<body>
+
+<!-- ── HERO ── -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="conf-badge">Salesforce Confidential &mdash; Invention Disclosure</div>
+    <div class="eyebrow">NBA Decisioning Accelerator</div>
+    <h1>Constitutional Composition Architecture for Next-Best-Action Decisioning</h1>
+    <p class="tagline">A system and method for LLM-composed customer treatments validated through deterministic constitutional-rails enforcement, with evidence-gated promotion to a self-improving action catalogue.</p>
+    <p class="hero-meta">Inventor: Stuart Dunlop &middot; Cloud: Einstein AI &middot; April 2026</p>
+  </div>
+</div>
+
+<!-- ── NAV ── -->
+<nav class="toc">
+  <ul>
+    <li><a href="#problem">Problem</a></li>
+    <li><a href="#solution">Solution</a></li>
+    <li><a href="#architecture">Architecture</a></li>
+    <li><a href="#rails">Constitutional Rails</a></li>
+    <li><a href="#approval">Approval Queue</a></li>
+    <li><a href="#promotion">Catalogue Promotion</a></li>
+    <li><a href="#null-score">Null-Score Pattern</a></li>
+    <li><a href="#differentiators">Differentiators</a></li>
+    <li><a href="#implementation">Implementation</a></li>
+  </ul>
+</nav>
+
+<!-- ── MAIN ── -->
+<main>
+
+<!-- 1. Problem -->
+<section id="problem">
+  <h2>1. Problem Statement</h2>
+  <p class="lead">Current NBA decisioning systems operate on a fixed catalogue of pre-defined actions. When no action meets eligibility, scoring, or compliance thresholds, the system returns nothing &mdash; a silent failure representing lost revenue and missed customer engagement.</p>
+
+  <p>This is the dominant pattern in both Salesforce's existing NBA capabilities and competitor platforms such as Pega CDH and Adobe Target. The problem compounds over time: as customer segments evolve and business conditions shift, the static catalogue becomes increasingly misaligned with what customers actually need, requiring manual intervention from business users to create new actions &mdash; a slow, reactive process.</p>
+
+  <p>Additionally, when organisations attempt to use large language models (LLMs) to generate customer-facing treatments dynamically, they face a compliance and governance gap: LLM-generated content cannot be trusted to respect business constraints (budget caps, contact frequency policies, channel eligibility, regulatory suppressions) without a deterministic enforcement layer.</p>
+
+  <div class="callout">
+    <p class="callout-title">The Binary Problem</p>
+    <p>Organisations face a forced choice: <strong>fully deterministic</strong> (safe but rigid &mdash; the catalogue can't adapt) or <strong>fully generative</strong> (flexible but ungoverned &mdash; the LLM can't be trusted to respect compliance). There is no production-safe middle ground. This invention provides one.</p>
+  </div>
+</section>
+
+<!-- 2. Solution -->
+<section id="solution">
+  <h2>2. Solution Overview</h2>
+  <p class="lead">A composition layer that sits inside an existing deterministic arbitration pipeline. When no catalogued action is eligible, an LLM composes a novel treatment &mdash; then that treatment is validated by the <em>same</em> deterministic compliance checks that catalogued actions pass through.</p>
+
+  <p>Treatments that pass constitutional-rails validation are surfaced for human approval. Approved treatments that generate positive customer outcomes can be promoted to first-class catalogue entries, creating a self-improving action catalogue that grows organically without manual authoring.</p>
+
+<div class="diagram">
+Deterministic Arbitration
+         |
+    Winner found? ──YES──&gt; Serve catalogued action (existing behaviour)
+         |
+         NO
+         |
+         v
+  LLM Composition Agent
+  (composes novel treatment from decision context)
+         |
+         v
++─────────────────────────────────────────────────────────+
+|  CONSTITUTIONAL RAILS VALIDATION                        |
+|  Same Apex methods as catalogued action validation:     |
+|  |-- Budget cap check                                   |
+|  |-- Contact frequency policy                           |
+|  |-- Global suppression lookup                          |
+|  |-- Segment eligibility verification                   |
+|  |-- Regulatory hold check                              |
+|                                                         |
+|  ANY rail fails -> composition REJECTED (logged, never  |
+|  shown to human). Agent cannot override.                |
++─────────────────────────────────────────────────────────+
+         |
+    All rails pass
+         |
+         v
+  Human Approval Queue
+  (Composition Queue in Decisioning Hub)
+         |
+    +────+────+
+ Approve    Reject
+    |         |
+    v         v
+  Execute   Log rationale
+  treatment  (learning signal)
+    |
+    v
+  Track outcome via Einstein Studio
+    |
+    v
+  Positive outcome? ──YES──&gt; Candidate for catalogue promotion
+                              (composed action -> NBAAction__c)
+</div>
+</section>
+
+<!-- 3. Architecture -->
+<section id="architecture">
+  <h2>3. Detailed Architecture</h2>
+
+  <h3>3.1 Deterministic Arbitration (existing foundation)</h3>
+  <p>For a given customer contact, the system:</p>
+  <ol>
+    <li>Queries active NBA modules (<code>NBA_Module__c</code>)</li>
+    <li>Retrieves a propensity score from an Einstein Studio predictive model via a scoring Flow</li>
+    <li>Filters a catalogue of pre-defined actions (<code>NBAAction__c</code>) through eligibility rules: score thresholds, date windows, budget caps, segment membership, channel frequency policies, global suppressions</li>
+    <li>If one or more actions pass all filters, the highest-weighted action is selected and served &mdash; no composition is invoked</li>
+  </ol>
+
+  <h3>3.2 Composition Trigger</h3>
+  <p>When deterministic arbitration produces <strong>no eligible action</strong> (all catalogued actions filtered out), the system invokes the composition path instead of writing a null-action decision. The trigger passes the full decision context to the LLM, including:</p>
+  <ul>
+    <li>Customer propensity score and segment memberships</li>
+    <li>Every action that was considered and the specific reason each was dropped (score below threshold, budget exhausted, channel frequency cap, segment mismatch, etc.)</li>
+    <li>Customer's recent decision history</li>
+    <li>Active experiment constraints (if any)</li>
+    <li>Module-level business context (outcome type, priority)</li>
+  </ul>
+
+  <h3>3.3 LLM Treatment Composition</h3>
+  <p>An Agentforce-hosted LLM agent receives the decision context and composes a novel treatment &mdash; a customer action that does not exist in the pre-defined catalogue. The composed treatment includes:</p>
+
+  <table>
+    <tr><th>Field</th><th>Type</th><th>Purpose</th></tr>
+    <tr><td><code>Channel__c</code></td><td>Picklist</td><td>Delivery channel (email, SMS, push, outbound call, in-app)</td></tr>
+    <tr><td><code>Offer_Value__c</code></td><td>Currency</td><td>Monetary value of the offer, if applicable</td></tr>
+    <tr><td><code>Content_Draft__c</code></td><td>Long Text</td><td>Agent-drafted outreach content</td></tr>
+    <tr><td><code>Composition_Rationale__c</code></td><td>Long Text</td><td>Natural language reasoning explaining appropriateness</td></tr>
+    <tr><td><code>Composed_From_Actions__c</code></td><td>Multi-lookup</td><td>Parent <code>NBAAction__c</code> records if composed from existing elements</td></tr>
+    <tr><td><code>Confidence__c</code></td><td>Number</td><td>Agent's confidence score (0.00&ndash;1.00)</td></tr>
+    <tr><td><code>Rails_Checked__c</code></td><td>JSON</td><td>Full audit trail of every rail evaluated (see 3.4)</td></tr>
+    <tr><td><code>Status__c</code></td><td>Picklist</td><td>draft / pending_approval / approved / rejected / sent</td></tr>
+  </table>
+</section>
+
+<!-- 4. Constitutional Rails -->
+<section id="rails">
+  <h2>4. Constitutional Rails Validation</h2>
+
+  <div class="callout callout-critical">
+    <p class="callout-title">Core Innovation</p>
+    <p>The composed treatment is validated by the <strong>identical</strong> deterministic compliance methods that catalogued actions pass through. There is no separate "LLM compliance path." The composed treatment is marshalled into the same data structure and run through the same Apex validation methods.</p>
+  </div>
+
+  <p>The validation method <code>ComposeTreatment.validateAgainstRails()</code> runs the following checks against the composed treatment:</p>
+
+  <ol>
+    <li><strong>Budget cap:</strong> If the treatment includes an offer value, validate against the module's budget ceiling. Uses the same <code>Budget_Used__c</code> / <code>Max_Offer_Budget__c</code> comparison with <code>FOR UPDATE</code> row locking as catalogued actions.</li>
+    <li><strong>Contact frequency policy:</strong> The treatment's channel is checked against the customer's recent contact history using the same pre-queried channel maps (latest contact datetime, 7-day count) and <code>NBA_Channel_Policy__c</code> rules.</li>
+    <li><strong>Global suppression:</strong> Customer checked against active <code>NBA_Global_Suppression__c</code> records (opt-outs, regulatory holds, segment-based blocks).</li>
+    <li><strong>Segment eligibility:</strong> If the treatment targets a specific segment, customer membership is verified against the eligibility segment list.</li>
+    <li><strong>Cross-module cooldown:</strong> Checked against the configurable cooldown window to prevent over-contacting across modules.</li>
+  </ol>
+
+  <p>Each rail evaluation is logged to a <code>Rails_Checked__c</code> JSON field with pass/fail status, the value checked, and the threshold applied. If <strong>any</strong> rail fails, the composition is rejected before human review.</p>
+
+  <div class="callout callout-warn">
+    <p class="callout-title">Non-Negotiability Principle</p>
+    <p>The LLM agent cannot override, negotiate with, or circumvent the rails layer. Rails enforcement is deterministic Apex code, not prompted. Humans never see compositions that breached a rail &mdash; a failed-rail composition is a rejected error, logged for diagnostics, not a "composition pending review." The rails are constitutional: set by compliance/legal/finance stakeholders, enforced by deterministic code, not subject to LLM reasoning.</p>
+  </div>
+
+  <h3>Rails-as-Code Design Properties</h3>
+  <ol>
+    <li><strong>Deterministic</strong> &mdash; not prompted. Actual Apex code that runs with the same logic regardless of the LLM's output.</li>
+    <li><strong>Auditable</strong> &mdash; logs every rail evaluated, value checked, pass/fail result to <code>Rails_Checked__c</code>.</li>
+    <li><strong>Non-negotiable</strong> &mdash; if any rail fails, the composition is rejected BEFORE human review. Agent cannot "convince" the rails layer.</li>
+    <li><strong>Unified</strong> &mdash; any future compliance rule added to the catalogued action path automatically applies to composed treatments without additional implementation.</li>
+  </ol>
+</section>
+
+<!-- 5. Approval Queue -->
+<section id="approval">
+  <h2>5. Human Approval Queue</h2>
+  <p>Composed treatments that pass all rails checks are written with status <code>pending_approval</code> and surfaced in a <strong>Composition Queue</strong> tab within the Decisioning Hub. The reviewer sees:</p>
+  <ul>
+    <li>Full decision context (score, segments, dropped actions with reasons)</li>
+    <li>The composed treatment (channel, offer, content draft)</li>
+    <li>Composition rationale (LLM's natural language reasoning)</li>
+    <li>Rails validation audit trail (every check, pass/fail)</li>
+    <li>Agent confidence score</li>
+  </ul>
+  <p>Available actions:</p>
+  <ul>
+    <li><strong>Approve &amp; Send</strong> &mdash; triggers execution through the standard channel delivery</li>
+    <li><strong>Reject</strong> &mdash; logged with rationale for future model learning</li>
+    <li><strong>Edit &amp; Approve</strong> &mdash; human modifies the treatment before approving</li>
+  </ul>
+</section>
+
+<!-- 6. Catalogue Promotion -->
+<section id="promotion">
+  <h2>6. Evidence-Gated Catalogue Promotion</h2>
+  <p class="lead">The composition-to-catalogue loop is the mechanism by which the system self-improves without manual action authoring.</p>
+
+  <p>Approved compositions that are executed follow the same outcome tracking pipeline as catalogued actions &mdash; customer responses are recorded as <code>NBADecision__c</code> outcomes and fed back into Einstein Studio for model retraining.</p>
+
+  <p>Composed treatments that are approved and subsequently generate positive customer outcomes become candidates for promotion to first-class catalogue entries. A promoted composition becomes a permanent <code>NBAAction__c</code> record with:</p>
+  <ul>
+    <li>Score threshold derived from the propensity score at which it was originally composed</li>
+    <li>Channel, offer value, and eligibility rules derived from the composition context</li>
+    <li>Priority weight informed by the outcome acceptance rate</li>
+  </ul>
+
+  <div class="callout">
+    <p class="callout-title">The Closed Loop</p>
+    <p>The LLM generates hypotheses. Deterministic rails enforce boundaries. A human gates quality. Real-world outcome data gates promotion. The catalogue grows organically from proven compositions &mdash; the system self-improves without a product manager manually designing new actions.</p>
+  </div>
+</section>
+
+<!-- 7. Null-Score Pattern -->
+<section id="null-score">
+  <h2>7. Null-Score Suppression Pattern</h2>
+  <p>A supporting innovation within the arbitration engine: when the Einstein Studio predictive model is unavailable or untrained, the system writes a deliberate <strong>"restraint" decision</strong> &mdash; a null-action decision with reason "Model not connected" &mdash; rather than using a fabricated fallback score or failing silently.</p>
+
+  <p>This restraint decision is:</p>
+  <ul>
+    <li>Tracked as a first-class outcome in the decision audit trail</li>
+    <li>Fed back into Einstein Studio training as a "do not contact" signal</li>
+    <li>Visible in the Decisioning Hub UI with a clear explanation</li>
+  </ul>
+  <p>This ensures the system never makes decisions based on fabricated data, and the model learns from the system's honest uncertainty rather than from actions taken on fake scores.</p>
+</section>
+
+<!-- 8. Differentiators -->
+<section id="differentiators">
+  <h2>8. Key Differentiators</h2>
+
+  <h3>8.1 Single-Path Constitutional Validation</h3>
+  <p>LLM-composed treatments are validated by the <strong>identical</strong> deterministic compliance methods as pre-defined catalogue actions. No separate "LLM validation path" exists. Any compliance rule added to the catalogued action path automatically applies to composed treatments without additional implementation. This eliminates <strong>governance drift</strong> &mdash; the risk inherent in systems that maintain parallel validation paths for human-authored and machine-generated content.</p>
+
+  <h3>8.2 Evidence-Gated Composition-to-Catalogue Promotion</h3>
+  <p>The closed-loop promotion pattern &mdash; compose &rarr; validate against rails &rarr; human approval &rarr; execute &rarr; measure outcome &rarr; promote to catalogue &mdash; creates a <strong>self-improving decisioning system</strong>. The catalogue evolves based on treatments that have been validated at every layer: deterministic compliance, human judgment, and real-world customer outcomes. No manual action authoring is required for the catalogue to grow.</p>
+</section>
+
+<!-- 9. Implementation -->
+<section id="implementation">
+  <h2>9. Implementation Platform</h2>
+
+  <table>
+    <tr><th>Component</th><th>Technology</th></tr>
+    <tr><td>Arbitration engine</td><td>Apex (<code>InvokeArbitration.cls</code>), invoked via Salesforce Flow or InvocableMethod</td></tr>
+    <tr><td>Propensity scoring</td><td>Einstein Studio predictive models via scoring Flow (<code>NBA_Get_Churn_Score</code>)</td></tr>
+    <tr><td>LLM composition</td><td>Agentforce GenAiFunction calling connected LLM via Einstein AI or Named Credential</td></tr>
+    <tr><td>Rails enforcement</td><td>Deterministic Apex &mdash; same methods as catalogued action validation</td></tr>
+    <tr><td>Composition Queue UI</td><td>Lightning Web Component within Decisioning Hub Lightning App</td></tr>
+    <tr><td>Decision audit trail</td><td>JSON stored in <code>NBADecision__c.Decision_Trace__c</code></td></tr>
+    <tr><td>Outcome tracking</td><td>Einstein Studio model feedback via <code>NBA_Outcome_Event__e</code> platform event</td></tr>
+    <tr><td>Package distribution</td><td>Salesforce 2GP unlocked package</td></tr>
+  </table>
+
+  <h3>Build Sequence</h3>
+  <ol>
+    <li><strong>Rails-as-code enforcement layer</strong> &mdash; <code>ComposeTreatment.validateAgainstRails()</code> as pure Apex with unit tests. Safety foundation; must exist before any composition.</li>
+    <li><strong><code>NBA_Composed_Action__c</code> object</strong> &mdash; schema, page layout, permissions.</li>
+    <li><strong><code>ComposeTreatment</code> Apex class</strong> &mdash; composition path in <code>InvokeArbitration</code>, Agent API integration, record write.</li>
+    <li><strong>Composition Queue LWC</strong> &mdash; human approval UX.</li>
+    <li><strong>Novel-signal detection trigger</strong> &mdash; low-confidence path in <code>InvokeArbitration</code>.</li>
+    <li><strong>Cockpit stats integration</strong> &mdash; composition ratio on Decision Activity tab.</li>
+    <li><strong>Catalogue promotion flow</strong> &mdash; successful compositions promoted to <code>NBAAction__c</code>.</li>
+  </ol>
+</section>
+
+</main>
+
+<footer>
+  <p>Salesforce Confidential &mdash; Invention Disclosure &mdash; Stuart Dunlop &mdash; April 2026</p>
+  <p>NBA Decisioning Accelerator &middot; v5.7.0 &middot; Cloud: Einstein AI</p>
+</footer>
+
+<script src="gate.js" data-page="Patent Disclosure — Constitutional Composition"></script>
+
+</body>
+</html>
