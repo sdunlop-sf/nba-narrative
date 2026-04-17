@@ -10966,5 +10966,17 @@
     "location": "Sydney, New South Wales, Australia",
     "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
     "returning": "yes"
+  },
+  {
+    "timestamp": "Fri, 17 Apr 2026 03:26:12 GMT",
+    "name": "Nick",
+    "company": "Salesforce",
+    "position": "SVP",
+    "page": "Vibe POV Keynote",
+    "url": "https://sdunlop-sf.github.io/nba-narrative/vibe-pov-keynote.html",
+    "ip": "147.161.214.166",
+    "location": "Sydney, New South Wales, Australia",
+    "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
+    "returning": "yes"
   }
 ]
