@@ -11122,5 +11122,17 @@
     "location": "Vancouver, British Columbia, Canada",
     "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
     "returning": "no"
+  },
+  {
+    "timestamp": "Sat, 18 Apr 2026 08:57:15 GMT",
+    "name": "Nick",
+    "company": "Salesforce",
+    "position": "SVP",
+    "page": "Patent Disclosure — Constitutional Composition",
+    "url": "https://sdunlop-sf.github.io/nba-narrative/patent-disclosure.html",
+    "ip": "147.161.214.166",
+    "location": "Sydney, New South Wales, Australia",
+    "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
+    "returning": "yes"
   }
 ]
