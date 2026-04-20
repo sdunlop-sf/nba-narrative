@@ -11410,5 +11410,17 @@
     "location": "Los Angeles, California, United States",
     "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
     "returning": "no"
+  },
+  {
+    "timestamp": "Mon, 20 Apr 2026 19:16:45 GMT",
+    "name": "Stu",
+    "company": "SF",
+    "position": "AE",
+    "page": "Patent Disclosure — Constitutional Composition",
+    "url": "https://sdunlop-sf.github.io/nba-narrative/patent-disclosure.html",
+    "ip": "122.107.179.17",
+    "location": "Sydney, New South Wales, Australia",
+    "ua": "Mozilla/5.0 (iPhone; CPU iPhone OS 26_4_1 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) CriOS/147.0.7727.99 Mobile/15E148 Safari/604.1",
+    "returning": "yes"
   }
 ]
