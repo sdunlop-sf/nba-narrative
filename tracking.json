@@ -11674,5 +11674,17 @@
     "location": "Sydney, New South Wales, Australia",
     "ua": "Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.4 Mobile/15E148 Safari/604.1",
     "returning": "yes"
+  },
+  {
+    "timestamp": "Tue, 21 Apr 2026 23:38:44 GMT",
+    "name": "Rob",
+    "company": "Salesforce",
+    "position": "Sittingdown",
+    "page": "NBA Narrative · Xero Workshop",
+    "url": "https://sdunlop-sf.github.io/nba-narrative/xero-workshop.html",
+    "ip": "147.161.214.184",
+    "location": "Sydney, New South Wales, Australia",
+    "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
+    "returning": "yes"
   }
 ]
