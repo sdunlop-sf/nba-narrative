@@ -1315,7 +1315,7 @@
           <div class="scope-item"><div class="dot" style="background:#007A72;"></div>Arbitration engine: InvokeArbitration + InvokeCrossModuleArbitration (both global)</div>
           <div class="scope-item"><div class="dot" style="background:#007A72;"></div>Six Calculated Insights · cadence-gated NBARetrainingScheduler + Queueable</div>
           <div class="scope-item"><div class="dot" style="background:#007A72;"></div>Decisioning Hub LWC app: Overview, Catalogue, Contact Policy, Live Simulator, Review Queue, Experiments, Engine Settings, Insight Queue</div>
-          <div class="scope-item"><div class="dot" style="background:#007A72;"></div>Setup Agent · Management Agent · 15 GenAiFunctions</div>
+          <div class="scope-item"><div class="dot" style="background:#007A72;"></div>Management Agent · 15 GenAiFunctions · PostInstallSeeder</div>
           <div class="scope-item"><div class="dot" style="background:#007A72;"></div>Slack surface: insight alerts, daily digest, Tier 2 approval cards, approve-from-Slack via Site</div>
           <div class="scope-item"><div class="dot" style="background:#007A72;"></div>Proactive agent queueables: Model Debug, Segment Strategy, Journey Suggestion</div>
           <div class="scope-item"><div class="dot" style="background:#007A72;"></div>Channel Execution Framework: Slack, Sales Cloud LWC, MC Next Flow, Webhook dispatchers</div>
@@ -1324,8 +1324,8 @@
         <div>
           <div class="scope-col-label" style="color:var(--lblue-d);">⚙ Configured post-install</div>
           <div class="scope-item"><div class="dot" style="background:var(--lblue-d);"></div>Data Cloud bundles (Sales + Service) — org-level prerequisite, not package metadata</div>
-          <div class="scope-item"><div class="dot" style="background:var(--lblue-d);"></div>NBAAction catalogue — Setup Agent seeds defaults; customer tunes offers, weights, segments</div>
-          <div class="scope-item"><div class="dot" style="background:var(--lblue-d);"></div>Einstein Studio model training — first run via Setup Agent after CIs and Data Stream are live</div>
+          <div class="scope-item"><div class="dot" style="background:var(--lblue-d);"></div>NBAAction catalogue — PostInstallSeeder loads defaults; customer tunes offers, weights, segments via the Catalogue Manager</div>
+          <div class="scope-item"><div class="dot" style="background:var(--lblue-d);"></div>Einstein Studio model training — run once from the Model Health card after CIs and the outcome Data Stream are live</div>
           <div class="scope-item"><div class="dot" style="background:var(--lblue-d);"></div>Tier1ReasoningArbiter + Tier2AgentDrafter + CompositionComposer — <em>.forceignored</em>, direct-deployed on orgs with <em>aiplatform</em></div>
           <div class="scope-item"><div class="dot" style="background:var(--lblue-d);"></div>Named Credentials: Einstein Trust Layer, Slack webhook, external model endpoints</div>
           <div class="scope-item"><div class="dot" style="background:var(--lblue-d);"></div>Real-Time Segment + Data Action per trigger — Data Cloud configuration, not metadata</div>
@@ -1336,7 +1336,7 @@
       </div>
     </div>
 
-    <p style="font-size: 12.5px; color: var(--muted); margin-top: 20px; line-height: 1.7;"><strong style="color: var(--ink);">Post-install loop:</strong> install the package → assign <em>Decisioning_Admin</em> permission set → launch the Setup Agent → answer a handful of business questions → the agent creates CIs, trains the model, seeds the catalogue, wires the triggers, and runs a verification decision. The operator's first deliberate decision is which actions to keep in the catalogue — not which Apex class to deploy.</p>
+    <p style="font-size: 12.5px; color: var(--muted); margin-top: 20px; line-height: 1.7;"><strong style="color: var(--ink);">Post-install loop:</strong> install the package → assign <em>Decisioning_Admin</em> permission set → PostInstallSeeder creates CIs, seeds the catalogue, wires the Hub, schedules the agents → admin trains the model, wires the outcome Data Stream, and deploys the reasoning/drafter/composer classes. The operator's first deliberate decision is which actions to keep in the catalogue — not which Apex class to deploy.</p>
   </div>
 
   <!-- BUILD EFFORT -->
@@ -1352,24 +1352,24 @@
 
       <div class="effort-grid">
         <div class="effort-card">
-          <div class="effort-card-num">2–4w</div>
-          <div class="effort-card-label">Data Cloud foundation</div>
-          <div class="effort-card-desc">Sales + Service bundles land Contact / Account / Case / Opportunity correctly. Identity Resolution configured. Longest dependency if Data Cloud isn't already live — compresses to a week if it is.</div>
+          <div class="effort-card-num">2–4h</div>
+          <div class="effort-card-label">Data Cloud basics</div>
+          <div class="effort-card-desc">Sales + Service bundles land Contact / Account / Case / Opportunity correctly. Identity Resolution runs. Hours, not weeks — the package assumes Data Cloud is already enabled on the org.</div>
         </div>
         <div class="effort-card" style="border-top-color:#007A72;">
-          <div class="effort-card-num" style="color:#007A72;">1–2w</div>
-          <div class="effort-card-label">Setup Agent run</div>
-          <div class="effort-card-desc">Conversational setup creates six CIs, trains the first Einstein model, seeds the NBAAction catalogue, wires a real-time trigger, and runs a verification decision. Business answers the business questions; agent does the rest.</div>
+          <div class="effort-card-num" style="color:#007A72;">Minutes</div>
+          <div class="effort-card-label">Package install</div>
+          <div class="effort-card-desc"><em>sf package install</em> the unlocked package. PostInstallSeeder creates six CIs, seeds the NBAAction catalogue, wires the Decisioning Hub, and schedules the retraining + insight agents. Done in minutes.</div>
         </div>
         <div class="effort-card" style="border-top-color:#C89000;">
-          <div class="effort-card-num" style="color:#C89000;">1w</div>
-          <div class="effort-card-label">Catalogue &amp; rails</div>
-          <div class="effort-card-desc">Commercial alignment on actions, offer values, priority weights, segments, and contact policy — stakeholder conversation, not technical work. Catalogue Manager UI handles the mechanics.</div>
+          <div class="effort-card-num" style="color:#C89000;">2 days</div>
+          <div class="effort-card-label">Manual config</div>
+          <div class="effort-card-desc">Train the first Einstein model · wire the NBA_Decision outcome Data Stream · configure Named Credentials (Trust Layer, Slack) · deploy the <em>.forceignored</em> reasoning / drafter / composer classes · Real-Time Segment + Data Action per trigger. Genuinely manual, not automatable.</div>
         </div>
         <div class="effort-card" style="border-top-color:var(--teal-d);">
-          <div class="effort-card-num" style="color:var(--teal-d);">0.5–1w</div>
-          <div class="effort-card-label">Agentic tiers</div>
-          <div class="effort-card-desc">Post-install deploy of <em>Tier1ReasoningArbiter</em>, <em>Tier2AgentDrafter</em>, <em>CompositionComposer</em> on orgs with Einstein 1 AI Platform. Flip killswitches in Engine Settings after validating the Trust Layer.</div>
+          <div class="effort-card-num" style="color:var(--teal-d);">Go live</div>
+          <div class="effort-card-label">First decision fires</div>
+          <div class="effort-card-desc">Commercial alignment on offers, weights, segments, and contact policy happens in parallel via Catalogue Manager. Once the first module's rails are tuned, flip the trigger to real-time and the engine is live — first Decision record lands inside the hour.</div>
         </div>
       </div>
     </div>
