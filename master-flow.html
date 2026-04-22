@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>The Master Flow · NBA Decisioning Engine</title>
+  <title>The Master Flow · NBA Decisioning Accelerator</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
@@ -19,6 +19,8 @@
       --lblue-d: #0057B8;
       --gold:   #FCC003;
       --gold-d: #A87700;
+      --purple: #7A3DD6;
+      --purple-d: #5521A8;
       --ink:    #002775;
       --muted:  rgba(0, 39, 117, 0.55);
       --text:   rgba(0, 39, 117, 0.85);
@@ -45,7 +47,6 @@
       min-height: 100vh;
     }
 
-    /* Noise texture overlay */
     body::before {
       content: '';
       position: fixed;
@@ -58,7 +59,6 @@
       background-size: 200px 200px;
     }
 
-    /* All content sits above noise */
     nav, .hero, .flow-strip-wrap, .section, .section-alt, hr.divider { position: relative; z-index: 1; }
 
     /* ── NAV ── */
@@ -73,24 +73,14 @@
       box-shadow: 0 1px 0 rgba(0,39,117,0.06), 0 2px 12px rgba(0,39,117,0.06);
     }
 
-    .nav-brand {
-      display: flex; align-items: center; gap: 12px;
-    }
-
+    .nav-brand { display: flex; align-items: center; gap: 12px; }
     .nav-logo { height: 24px; width: auto; }
-
-    .nav-divider {
-      width: 1px; height: 18px;
-      background: rgba(0, 39, 117, 0.14);
-    }
-
+    .nav-divider { width: 1px; height: 18px; background: rgba(0, 39, 117, 0.14); }
     .nav-title {
       font-size: 11px; font-weight: 700; letter-spacing: 0.08em;
       text-transform: uppercase; color: var(--ink);
     }
-
     .nav-sub { font-size: 11px; color: var(--muted); }
-
     .nav-pill {
       font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
       background: rgba(2, 42, 192, 0.08); color: var(--blue2);
@@ -130,9 +120,21 @@
     }
 
     .hero-sub {
-      font-size: 17px; color: var(--muted); max-width: 580px; margin: 0 auto;
+      font-size: 17px; color: var(--muted); max-width: 640px; margin: 0 auto;
       line-height: 1.75;
     }
+
+    .hero-version {
+      display: inline-flex; align-items: center; gap: 8px;
+      margin-top: 22px;
+      padding: 6px 14px; border-radius: 20px;
+      background: rgba(2, 42, 192, 0.08);
+      border: 1px solid rgba(2, 42, 192, 0.2);
+      font-size: 11px; font-weight: 700; letter-spacing: 0.08em;
+      color: var(--blue2); text-transform: uppercase;
+    }
+
+    .hero-version .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); }
 
     /* ── FLOW STRIP ── */
     .flow-strip-wrap {
@@ -146,7 +148,7 @@
 
     .flow-strip {
       display: flex; align-items: center;
-      min-width: 700px; max-width: 1100px;
+      min-width: 900px; max-width: 1300px;
       margin: 0 auto;
     }
 
@@ -220,6 +222,48 @@
       color: var(--blue2); margin-bottom: 14px;
     }
 
+    /* ── TIER CARDS (three-tier + composition grid) ── */
+    .tier-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px;
+      margin-bottom: 20px;
+    }
+
+    .tier-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      display: flex; flex-direction: column;
+    }
+
+    .tier-card-head {
+      padding: 14px 18px;
+      display: flex; align-items: center; gap: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .tier-card-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+    .tier-card-tier {
+      font-size: 10px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase;
+    }
+    .tier-card-share {
+      margin-left: auto;
+      font-size: 9px; font-weight: 700;
+      border-radius: 20px; padding: 2px 8px;
+      white-space: nowrap;
+    }
+
+    .tier-card-body { padding: 20px; flex: 1; display: flex; flex-direction: column; }
+    .tier-card-title { font-size: 14px; font-weight: 800; color: var(--ink); margin-bottom: 8px; }
+    .tier-card-desc { font-size: 12.5px; color: var(--muted); line-height: 1.65; flex: 1; }
+    .tier-card-cue {
+      margin-top: 14px;
+      font-size: 10.5px; font-weight: 600;
+      color: var(--text);
+      padding-top: 12px; border-top: 1px dashed var(--border);
+    }
+
     /* ── TRIGGER CARDS ── */
     .trigger-primary {
       background: var(--card);
@@ -247,9 +291,7 @@
     .trigger-primary p { font-size: 15px; line-height: 1.75; color: var(--text); }
     .trigger-primary strong { color: var(--ink); }
 
-    .trigger-alts {
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
-    }
+    .trigger-alts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
 
     .trigger-alt {
       background: var(--card);
@@ -259,7 +301,6 @@
       box-shadow: var(--shadow-sm);
       transition: box-shadow 0.2s, border-color 0.2s, transform 0.2s;
     }
-
     .trigger-alt:hover { background: var(--card-h); border-color: rgba(2,42,192,0.22); box-shadow: var(--shadow); transform: translateY(-1px); }
 
     .trigger-alt-icon { font-size: 20px; margin-bottom: 10px; }
@@ -288,7 +329,7 @@
     .catalogue-rows { padding: 6px 0; }
 
     .catalogue-row {
-      display: grid; grid-template-columns: 40px 1fr 1fr 80px;
+      display: grid; grid-template-columns: 40px 1.3fr 1fr 90px 90px;
       align-items: center; gap: 16px;
       padding: 11px 24px;
       border-bottom: 1px solid rgba(0, 39, 117, 0.05);
@@ -301,11 +342,48 @@
     .cr-id { font-family: var(--mono); color: var(--muted); }
     .cr-name { color: var(--text); font-weight: 500; }
     .cr-criteria { color: var(--muted); }
-    .cr-model {
+    .cr-chip {
       font-family: var(--mono); font-size: 10px;
-      background: rgba(0, 87, 184, 0.08); color: var(--lblue-d);
-      border: 1px solid rgba(0, 87, 184, 0.18);
       border-radius: 6px; padding: 2px 8px; text-align: center;
+      font-weight: 600;
+    }
+    .cr-mode-model { background: rgba(0, 87, 184, 0.08); color: var(--lblue-d); border: 1px solid rgba(0, 87, 184, 0.18); }
+    .cr-mode-segment { background: rgba(0, 122, 114, 0.08); color: var(--teal-d); border: 1px solid rgba(0, 122, 114, 0.22); }
+    .cr-mode-rule { background: rgba(200, 144, 0, 0.08); color: var(--gold-d); border: 1px solid rgba(200, 144, 0, 0.22); }
+    .cr-channel { color: var(--muted); font-family: var(--mono); font-size: 10.5px; }
+
+    /* ── RAILS ── */
+    .rails-wrap {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 22px 24px;
+      box-shadow: var(--shadow);
+    }
+
+    .rails-label {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--red); margin-bottom: 16px;
+    }
+
+    .rail-row {
+      display: grid; grid-template-columns: 140px 1fr 100px;
+      align-items: center; gap: 14px;
+      padding: 10px 0;
+      border-bottom: 1px dashed var(--border);
+      font-size: 13px;
+    }
+    .rail-row:last-child { border-bottom: none; }
+    .rail-name { font-weight: 700; color: var(--ink); font-size: 12.5px; }
+    .rail-desc { color: var(--muted); font-size: 12.5px; line-height: 1.5; }
+    .rail-tag {
+      justify-self: end;
+      font-size: 9.5px; font-weight: 700; letter-spacing: 0.06em;
+      padding: 3px 10px; border-radius: 20px;
+      background: rgba(196, 28, 0, 0.06);
+      color: var(--red);
+      border: 1px solid rgba(196, 28, 0, 0.22);
+      text-transform: uppercase;
     }
 
     /* ── LOOP ── */
@@ -356,27 +434,6 @@
 
     .loop-arr { text-align: center; color: rgba(2, 42, 192, 0.25); font-size: 18px; }
 
-    .eligibility-rules {
-      background: rgba(0, 122, 114, 0.05);
-      border: 1px solid rgba(0, 122, 114, 0.18);
-      border-radius: 12px;
-      padding: 18px 22px;
-      margin-top: 16px;
-    }
-
-    .eligibility-rules .er-label {
-      font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
-      color: var(--teal-d); margin-bottom: 12px;
-    }
-
-    .er-rule {
-      display: flex; align-items: flex-start; gap: 10px;
-      font-size: 13px; color: var(--muted); margin-bottom: 8px; line-height: 1.5;
-    }
-
-    .er-rule:last-child { margin-bottom: 0; }
-    .er-rule::before { content: '✗'; color: var(--red); flex-shrink: 0; margin-top: 1px; opacity: 0.7; }
-
     /* ── CODE BLOCK ── */
     .code-block {
       background: #0D1B2E;
@@ -397,10 +454,8 @@
     .code-block .c-str     { color: #FFB454; }
     .code-block .c-num     { color: #FCC003; font-weight: 700; }
 
-    /* ── ARBITRATION ── */
-    .arb-rules {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 12px;
-    }
+    /* ── ARBITRATION RULES ── */
+    .arb-rules { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 
     .arb-rule {
       background: var(--card);
@@ -426,7 +481,7 @@
 
     /* ── EXECUTION CHANNELS ── */
     .exec-channels {
-      display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;
       margin-bottom: 16px;
     }
 
@@ -468,7 +523,7 @@
 
     /* ── FEEDBACK LOOP ── */
     .feedback-loop {
-      display: grid; grid-template-columns: 1fr 40px 1fr 40px 1fr;
+      display: grid; grid-template-columns: 1fr 40px 1fr 40px 1fr 40px 1fr;
       align-items: center;
       margin-bottom: 20px;
     }
@@ -477,7 +532,7 @@
       background: var(--card);
       border: 1px solid var(--border);
       border-radius: 14px;
-      padding: 22px 18px;
+      padding: 22px 16px;
       text-align: center;
       box-shadow: var(--shadow-sm);
     }
@@ -511,38 +566,86 @@
     .rc-body { font-size: 14px; color: var(--text); line-height: 1.75; }
     .rc-body strong { color: var(--ink); }
 
-    /* ── REALITY CHECK ── */
-    .reality-wrap {
+    /* ── PROACTIVE AGENTS ── */
+    .agents-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .agent-card {
       background: var(--card);
-      border: 1px solid rgba(196, 28, 0, 0.18);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+    .agent-card:hover { box-shadow: var(--shadow); transform: translateY(-1px); }
+
+    .agent-head {
+      padding: 14px 18px;
+      background: rgba(122, 61, 214, 0.06);
+      border-bottom: 1px solid rgba(122, 61, 214, 0.2);
+      display: flex; align-items: center; gap: 10px;
+    }
+    .agent-head .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--purple); }
+    .agent-title { font-size: 12px; font-weight: 800; color: var(--purple-d); letter-spacing: 0.05em; text-transform: uppercase; }
+
+    .agent-body { padding: 16px 18px; }
+    .agent-body p { font-size: 12.5px; color: var(--muted); line-height: 1.65; }
+    .agent-body strong { color: var(--text); }
+
+    /* ── HEADLESS SURFACES ── */
+    .headless-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+
+    .headless-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 22px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .headless-card-label {
+      font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 0.08em;
+      color: var(--blue2); text-transform: uppercase; margin-bottom: 10px;
+    }
+
+    .headless-card-title { font-size: 14px; font-weight: 700; color: var(--ink); margin-bottom: 8px; }
+    .headless-card-desc { font-size: 12px; color: var(--muted); line-height: 1.6; }
+
+    /* ── PACKAGE SCOPE ── */
+    .scope-wrap {
+      background: var(--card);
+      border: 1px solid rgba(0, 122, 114, 0.22);
       border-radius: 16px;
       padding: 28px 32px;
       box-shadow: var(--shadow);
     }
 
-    .reality-label {
+    .scope-label {
       font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
-      color: rgba(196, 28, 0, 0.8); margin-bottom: 22px;
+      color: var(--teal-d); margin-bottom: 22px;
     }
 
-    .reality-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+    .scope-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
 
-    .reality-col-label {
+    .scope-col-label {
       font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
       margin-bottom: 16px;
     }
 
-    .reality-item {
+    .scope-item {
       display: flex; align-items: flex-start; gap: 10px;
       font-size: 13px; color: var(--muted); margin-bottom: 10px; line-height: 1.55;
     }
 
-    .reality-item .dot {
+    .scope-item .dot {
       flex-shrink: 0; width: 6px; height: 6px; border-radius: 50%; margin-top: 6px;
     }
 
-    /* ── BUILD EFFORT ── */
-    .effort-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 24px; }
+    /* ── EFFORT GRID ── */
+    .effort-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 24px; }
 
     .effort-card {
       background: var(--card);
@@ -574,8 +677,14 @@
     /* ── DIVIDER ── */
     hr.divider { border: none; border-top: 1px solid var(--border); position: relative; z-index: 1; }
 
-    /* Inline muted text */
     .muted-p { color: var(--muted); margin-bottom: 24px; font-size: 15px; line-height: 1.75; }
+
+    /* Tier/escalation badge styling helpers */
+    .badge-inline {
+      display: inline-flex; align-items: center;
+      font-size: 10px; font-weight: 700; padding: 3px 10px;
+      border-radius: 20px;
+    }
 
     /* ── RESPONSIVE ── */
     @media (max-width: 768px) {
@@ -591,11 +700,16 @@
       .exec-channels { grid-template-columns: 1fr; }
       .feedback-loop { grid-template-columns: 1fr; }
       .fb-arr { transform: rotate(90deg); }
-      .reality-grid { grid-template-columns: 1fr; }
+      .scope-grid { grid-template-columns: 1fr; }
       .effort-grid { grid-template-columns: 1fr; }
+      .tier-grid { grid-template-columns: 1fr; }
+      .agents-grid { grid-template-columns: 1fr; }
+      .headless-grid { grid-template-columns: 1fr; }
       .catalogue-row { grid-template-columns: 40px 1fr; }
-      .catalogue-row .cr-criteria, .catalogue-row .cr-model { display: none; }
+      .catalogue-row .cr-criteria, .catalogue-row .cr-chip, .catalogue-row .cr-channel { display: none; }
       .flow-strip-wrap { padding: 20px; }
+      .rail-row { grid-template-columns: 1fr; }
+      .rail-tag { justify-self: start; }
     }
   </style>
 </head>
@@ -607,17 +721,18 @@
       <img src="sf-logo-cloud.png" class="nav-logo" alt="Salesforce">
       <div class="nav-divider"></div>
       <span class="nav-title">Master Flow</span>
-      <span class="nav-sub">/ NBA Decisioning Engine</span>
+      <span class="nav-sub">/ NBA Decisioning Accelerator</span>
     </div>
-    <div class="nav-pill">Internal Reference</div>
+    <div class="nav-pill">v9 · Shipped</div>
   </nav>
 
   <!-- HERO -->
   <div class="hero">
     <div class="accent-line"></div>
     <div class="hero-eyebrow">Salesforce · Data Cloud · Einstein Studio · Agentforce · Flow</div>
-    <h1>How the NBA engine<br/><span class="hl">actually runs</span></h1>
-    <p class="hero-sub">A practical guide to the two-mode decisioning engine — from trigger to execution to feedback loop. Mode 1 handles scale with ML. Mode 2 handles complexity with reasoning. Both learn.</p>
+    <h1>How the Decisioning Accelerator<br/><span class="hl">actually runs</span></h1>
+    <p class="hero-sub">A practical guide to the shipped decisioning engine — from trigger to execution to feedback loop. Deterministic when it can be. Reasoning when it should be. Creative when it has to be. Rails hold in every mode.</p>
+    <div class="hero-version"><span class="dot"></span>v9.0.0 · Unlocked Package · Live in SDO</div>
   </div>
 
   <!-- FLOW STRIP -->
@@ -626,98 +741,120 @@
       <div class="fs-node">
         <div class="fs-icon" style="background:rgba(2,42,192,0.1);color:#022AC0;border-color:rgba(2,42,192,0.18);">⚡</div>
         <div class="fs-label">Trigger</div>
-        <div class="fs-sub">Segment change / CRM event</div>
+        <div class="fs-sub">Segment · event · API</div>
+      </div>
+      <div class="fs-arrow">›</div>
+      <div class="fs-node">
+        <div class="fs-icon" style="background:rgba(196,28,0,0.08);color:#C41C00;border-color:rgba(196,28,0,0.22);">🛡️</div>
+        <div class="fs-label">Rails</div>
+        <div class="fs-sub">Suppressions · policy</div>
       </div>
       <div class="fs-arrow">›</div>
       <div class="fs-node">
         <div class="fs-icon" style="background:rgba(4,225,203,0.15);color:#007A72;border-color:rgba(4,225,203,0.3);">📋</div>
-        <div class="fs-label">Load Catalogue</div>
-        <div class="fs-sub">5–15 active NBAs</div>
+        <div class="fs-label">Catalogue</div>
+        <div class="fs-sub">Eligible actions</div>
       </div>
       <div class="fs-arrow">›</div>
       <div class="fs-node">
         <div class="fs-icon" style="background:rgba(0,87,184,0.12);color:#0057B8;border-color:rgba(0,87,184,0.2);">🔁</div>
-        <div class="fs-label">Loop</div>
-        <div class="fs-sub">Eligibility · Score · Gate</div>
+        <div class="fs-label">Score</div>
+        <div class="fs-sub">Model · segment · rule</div>
       </div>
       <div class="fs-arrow">›</div>
       <div class="fs-node">
         <div class="fs-icon" style="background:rgba(252,192,3,0.15);color:#A87700;border-color:rgba(252,192,3,0.3);">⚖️</div>
         <div class="fs-label">Arbitrate</div>
-        <div class="fs-sub">Flow · or · Agentforce</div>
+        <div class="fs-sub">Tier 1 · 1.5 · 2 · compose</div>
       </div>
       <div class="fs-arrow">›</div>
       <div class="fs-node">
         <div class="fs-icon" style="background:rgba(4,225,203,0.15);color:#007A72;border-color:rgba(4,225,203,0.3);">🚀</div>
         <div class="fs-label">Execute</div>
-        <div class="fs-sub">Agentforce M&amp;P · Rep · Portal</div>
+        <div class="fs-sub">Slack · Sales · MC · HTTP</div>
       </div>
       <div class="fs-arrow">›</div>
       <div class="fs-node">
         <div class="fs-icon" style="background:rgba(2,42,192,0.1);color:#022AC0;border-color:rgba(2,42,192,0.18);">🔄</div>
-        <div class="fs-label">Feedback</div>
-        <div class="fs-sub">Retrain Einstein</div>
+        <div class="fs-label">Learn</div>
+        <div class="fs-sub">Outcome · retrain</div>
       </div>
     </div>
   </div>
 
-  <!-- TWO MODES -->
+  <!-- THREE TIERS + COMPOSITION -->
   <div class="section-alt">
     <div class="section">
       <div class="eyebrow">Architecture</div>
       <div class="step-head" style="margin-bottom: 24px;">
         <div class="step-num" style="background:rgba(2,42,192,0.08);color:#022AC0;border-color:rgba(2,42,192,0.2);font-size:22px;">⚙️</div>
         <div>
-          <div class="step-title">Two modes. One engine.</div>
-          <div class="step-desc">The decisioning engine operates in two modes depending on decision complexity. Both feed the same feedback loop and improve the same model over time.</div>
+          <div class="step-title">Deterministic when it can be. Reasoning when it should be. Creative when it has to be.</div>
+          <div class="step-desc">The engine runs in four modes depending on decision difficulty. Most decisions never leave Tier 1. The harder the call, the more reasoning gets applied — and the rails hold in every mode.</div>
         </div>
       </div>
 
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px;">
-
-        <!-- Mode 1 -->
-        <div style="background: var(--card); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; box-shadow: var(--shadow);">
-          <div style="background: rgba(2,42,192,0.05); border-bottom: 1px solid var(--border); padding: 14px 22px; display: flex; align-items: center; gap: 10px;">
-            <div style="width: 8px; height: 8px; border-radius: 50%; background: var(--blue2); flex-shrink: 0;"></div>
-            <div style="font-size: 11px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: var(--blue2);">Mode 1 · ML at Scale</div>
-            <div style="margin-left: auto; font-size: 10px; background: rgba(2,42,192,0.08); border: 1px solid rgba(2,42,192,0.2); border-radius: 20px; padding: 2px 10px; color: var(--blue2); font-weight: 700; white-space: nowrap;">~85% of decisions</div>
+      <div class="tier-grid">
+        <!-- Tier 1 -->
+        <div class="tier-card">
+          <div class="tier-card-head" style="background: rgba(2,42,192,0.05);">
+            <div class="tier-card-dot" style="background: var(--blue2);"></div>
+            <div class="tier-card-tier" style="color: var(--blue2);">Tier 1</div>
+            <div class="tier-card-share" style="background: rgba(2,42,192,0.08); color: var(--blue2); border: 1px solid rgba(2,42,192,0.2);">~85%</div>
           </div>
-          <div style="padding: 22px;">
-            <div style="font-size: 15px; font-weight: 700; color: var(--ink); margin-bottom: 10px;">Einstein Studio + Flow</div>
-            <p style="font-size: 14px; color: var(--muted); line-height: 1.7; margin-bottom: 16px;">An ML model scores every eligible NBA. Flow arbitrates the winner — highest score plus priority and fatigue rules. Fast, deterministic, and auditable. Processes the entire customer base without human intervention.</p>
-            <div style="display: flex; flex-wrap: wrap; gap: 6px;">
-              <span style="font-size: 10px; font-weight: 700; padding: 3px 10px; border-radius: 20px; background: rgba(2,42,192,0.07); border: 1px solid rgba(2,42,192,0.18); color: var(--blue2);">Real-time</span>
-              <span style="font-size: 10px; font-weight: 700; padding: 3px 10px; border-radius: 20px; background: rgba(2,42,192,0.07); border: 1px solid rgba(2,42,192,0.18); color: var(--blue2);">Deterministic</span>
-              <span style="font-size: 10px; font-weight: 700; padding: 3px 10px; border-radius: 20px; background: rgba(2,42,192,0.07); border: 1px solid rgba(2,42,192,0.18); color: var(--blue2);">Auditable</span>
-              <span style="font-size: 10px; font-weight: 700; padding: 3px 10px; border-radius: 20px; background: rgba(2,42,192,0.07); border: 1px solid rgba(2,42,192,0.18); color: var(--blue2);">Scales to millions</span>
-            </div>
+          <div class="tier-card-body">
+            <div class="tier-card-title">Deterministic Arbitration</div>
+            <div class="tier-card-desc">Weighted score per eligible action — <em>module_score × priority × response_weight</em>. Winner is clear, rails pass, decision stamped. Sub-second. No LLM in the hot path.</div>
+            <div class="tier-card-cue">Fires when: clear score gap, rails pass</div>
           </div>
         </div>
 
-        <!-- Mode 2 -->
-        <div style="background: var(--card); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; box-shadow: var(--shadow);">
-          <div style="background: rgba(0,122,114,0.05); border-bottom: 1px solid var(--border); padding: 14px 22px; display: flex; align-items: center; gap: 10px;">
-            <div style="width: 8px; height: 8px; border-radius: 50%; background: var(--teal-d); flex-shrink: 0;"></div>
-            <div style="font-size: 11px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: var(--teal-d);">Mode 2 · Agentic Reasoning</div>
-            <div style="margin-left: auto; font-size: 10px; background: rgba(0,122,114,0.08); border: 1px solid rgba(0,122,114,0.2); border-radius: 20px; padding: 2px 10px; color: var(--teal-d); font-weight: 700; white-space: nowrap;">~15% of decisions</div>
+        <!-- Tier 1.5 -->
+        <div class="tier-card">
+          <div class="tier-card-head" style="background: rgba(0,87,184,0.05);">
+            <div class="tier-card-dot" style="background: var(--lblue-d);"></div>
+            <div class="tier-card-tier" style="color: var(--lblue-d);">Tier 1.5</div>
+            <div class="tier-card-share" style="background: rgba(0,87,184,0.08); color: var(--lblue-d); border: 1px solid rgba(0,87,184,0.2);">10–15%</div>
           </div>
-          <div style="padding: 22px;">
-            <div style="font-size: 15px; font-weight: 700; color: var(--ink); margin-bottom: 10px;">Agentforce</div>
-            <p style="font-size: 14px; color: var(--muted); line-height: 1.7; margin-bottom: 16px;">When signals are conflicting or context is ambiguous, an Agentforce agent evaluates the full customer situation using live reasoning. Handles the nuance and edge cases that ML scores and rules can't resolve on their own.</p>
-            <div style="display: flex; flex-wrap: wrap; gap: 6px;">
-              <span style="font-size: 10px; font-weight: 700; padding: 3px 10px; border-radius: 20px; background: rgba(0,122,114,0.07); border: 1px solid rgba(0,122,114,0.18); color: var(--teal-d);">Contextual reasoning</span>
-              <span style="font-size: 10px; font-weight: 700; padding: 3px 10px; border-radius: 20px; background: rgba(0,122,114,0.07); border: 1px solid rgba(0,122,114,0.18); color: var(--teal-d);">Edge cases</span>
-              <span style="font-size: 10px; font-weight: 700; padding: 3px 10px; border-radius: 20px; background: rgba(0,122,114,0.07); border: 1px solid rgba(0,122,114,0.18); color: var(--teal-d);">Explainable</span>
-              <span style="font-size: 10px; font-weight: 700; padding: 3px 10px; border-radius: 20px; background: rgba(0,122,114,0.07); border: 1px solid rgba(0,122,114,0.18); color: var(--teal-d);">Works in tandem</span>
-            </div>
+          <div class="tier-card-body">
+            <div class="tier-card-title">Reasoning Re-Rank</div>
+            <div class="tier-card-desc">Top two scores within <span style="font-family: var(--mono); font-size: 11px;">Reasoning_Gap_Threshold</span>. Claude Haiku re-ranks the shortlist with context. 3s CPU circuit breaker. Parse failures fall through silently to the deterministic winner.</div>
+            <div class="tier-card-cue">Fires when: narrow-gap or low confidence</div>
           </div>
         </div>
 
+        <!-- Tier 2 -->
+        <div class="tier-card">
+          <div class="tier-card-head" style="background: rgba(0,122,114,0.05);">
+            <div class="tier-card-dot" style="background: var(--teal-d);"></div>
+            <div class="tier-card-tier" style="color: var(--teal-d);">Tier 2</div>
+            <div class="tier-card-share" style="background: rgba(0,122,114,0.08); color: var(--teal-d); border: 1px solid rgba(0,122,114,0.2);">2–5%</div>
+          </div>
+          <div class="tier-card-body">
+            <div class="tier-card-title">Human-in-the-Loop</div>
+            <div class="tier-card-desc">Drafter agent writes a rationale and a recommended action into the Decision record. Slack approval card + Review Queue in the Hub. Human picks from eligible actions or dismisses. Siblings in the same run supersede.</div>
+            <div class="tier-card-cue">Fires when: still ambiguous after Tier 1.5</div>
+          </div>
+        </div>
+
+        <!-- Composition -->
+        <div class="tier-card">
+          <div class="tier-card-head" style="background: rgba(122, 61, 214, 0.06);">
+            <div class="tier-card-dot" style="background: var(--purple);"></div>
+            <div class="tier-card-tier" style="color: var(--purple-d);">Compose</div>
+            <div class="tier-card-share" style="background: rgba(122, 61, 214, 0.08); color: var(--purple-d); border: 1px solid rgba(122, 61, 214, 0.2);">&lt;1%</div>
+          </div>
+          <div class="tier-card-body">
+            <div class="tier-card-title">Novel Treatment</div>
+            <div class="tier-card-desc">No catalogued action clears threshold. Composer async-drafts a new treatment — channel, offer, content — then re-runs every rail deterministically. Rails-checked drafts land in the unified Review Queue for approval.</div>
+            <div class="tier-card-cue">Fires when: catalogue has a gap</div>
+          </div>
+        </div>
       </div>
 
       <div style="background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 16px 22px; display: flex; align-items: center; gap: 14px; box-shadow: var(--shadow-sm);">
         <div style="font-size: 20px; flex-shrink: 0;">🔀</div>
-        <p style="font-size: 13px; color: var(--muted); line-height: 1.65;"><strong style="color: var(--ink);">How the mode is selected:</strong> Mode 1 runs first — always. If the arbitration step cannot resolve a clear winner (scores too close, conflicting eligibility flags, or a high-value edge case is flagged), the engine escalates to Mode 2. Agentforce receives the full context, reasons to a decision, and returns a recommendation with rationale. Both outcomes are written back to Data Cloud as training signals.</p>
+        <p style="font-size: 13px; color: var(--muted); line-height: 1.65;"><strong style="color: var(--ink);">How tiers are selected:</strong> Tier 1 runs first — always. If the score gap is narrow or the winner is low-confidence, Tier 1.5 re-ranks. If the picture is still ambiguous, Tier 2 escalates to a human with an agent-drafted rationale. If <em>nothing</em> in the catalogue fits, composition kicks in. Every tier writes the same audit trace to <span style="font-family: var(--mono); font-size: 11px;">Decision_Trace__c</span> — schema-versioned JSON with eligibility, scores, reasoning, and rails evaluated.</p>
       </div>
     </div>
   </div>
@@ -728,269 +865,322 @@
       <div class="step-num" style="background:rgba(2,42,192,0.1);color:#022AC0;border-color:rgba(2,42,192,0.2);font-size:26px;">⚡</div>
       <div>
         <div class="step-title">The Trigger</div>
-        <div class="step-desc">What fires the flow and starts the decisioning process</div>
+        <div class="step-desc">What fires arbitration — configured per module as <em>manual</em>, <em>scheduled</em>, or <em>real-time</em></div>
       </div>
     </div>
 
     <div class="trigger-primary">
-      <div class="trigger-primary-label">Primary trigger — Data Cloud Segment Membership Change</div>
-      <p>You define a real-time segment in Data Cloud — e.g. <strong>"customer hasn't ordered a new SKU in 60 days and has 3+ tap handles active."</strong> The moment a customer enters that segment, Data Cloud fires a <strong>Data Action</strong> — essentially a platform event — into Salesforce. That platform event is what kicks off the Flow. The customer is processed immediately, in real time, without waiting for a batch run.</p>
+      <div class="trigger-primary-label">Primary trigger — Data Cloud real-time segment activation</div>
+      <p>Every module has its own <strong>NBA_Module_Trigger__c</strong> rows. In <em>real_time</em> mode, a Data Cloud Real-Time Segment publishes a generic <strong>NBA_Decision_Trigger__e</strong> platform event. A handler Flow resolves the Contact, stamps the module + trigger type, and invokes the arbitration engine. Sub-second from segment entry to Decision record.</p>
     </div>
 
     <div class="trigger-alts">
       <div class="trigger-alt">
         <div class="trigger-alt-icon">🕐</div>
-        <div class="trigger-alt-title">Scheduled Flow</div>
-        <div class="trigger-alt-desc">Daily batch run across all accounts. Useful for morning rep briefings — every rep starts the day with fresh NBA priorities across their territory.</div>
+        <div class="trigger-alt-title">Scheduled</div>
+        <div class="trigger-alt-desc"><strong>NBASegmentTriggerSchedulable</strong> — hourly Apex. Walks every active <em>scheduled</em> trigger, evaluates its segment, and fires arbitration for each member. Useful for morning rep briefings and nightly nurture sweeps.</div>
       </div>
       <div class="trigger-alt">
-        <div class="trigger-alt-icon">📝</div>
-        <div class="trigger-alt-title">CRM Record Change</div>
-        <div class="trigger-alt-desc">Contract renewal date crosses a threshold. Opportunity stage changes. Account health score drops. Any Salesforce record update can kick the flow.</div>
+        <div class="trigger-alt-icon">🔌</div>
+        <div class="trigger-alt-title">Real-Time API</div>
+        <div class="trigger-alt-desc"><strong>POST /services/apexrest/nba/v1/decide</strong> — upstream systems get a decision synchronously. Verbose mode returns the full trace. Same response contract as the MCP tool.</div>
       </div>
       <div class="trigger-alt">
-        <div class="trigger-alt-icon">🛒</div>
-        <div class="trigger-alt-title">Inbound Signal</div>
-        <div class="trigger-alt-desc">Customer logs into SAP Commerce portal. Clicks a product category. Abandons a cart. An API call from an external system fires the platform event.</div>
+        <div class="trigger-alt-icon">🤖</div>
+        <div class="trigger-alt-title">Manual / Agent</div>
+        <div class="trigger-alt-desc">Management Agent, Live Simulator, or an MCP tool call via <strong>InvokeArbitration</strong> (global @InvocableMethod). Used for testing, rep-initiated decisions, and agent-driven orchestration.</div>
       </div>
     </div>
   </div>
 
   <hr class="divider" />
 
-  <!-- STEP 1 -->
+  <!-- RAILS -->
   <div class="section">
     <div class="step-head">
-      <div class="step-num" style="background:rgba(4,225,203,0.15);color:#007A72;border-color:rgba(4,225,203,0.35);">01</div>
+      <div class="step-num" style="background:rgba(196,28,0,0.08);color:#C41C00;border-color:rgba(196,28,0,0.2);">🛡️</div>
       <div>
-        <div class="step-title">Load the NBA Catalogue</div>
-        <div class="step-desc">Query every active NBA available to this customer's segment and region</div>
+        <div class="step-title">The Rails</div>
+        <div class="step-desc">Constitutional checks. Enforced in Apex. Never bypassed by reasoning.</div>
       </div>
     </div>
 
-    <p class="muted-p">The Flow's first action is a SOQL query against a custom object (or custom metadata) that holds your NBA definitions. Each record defines one possible next best action — what it is, who it's for, and which Einstein model scores it.</p>
+    <p class="muted-p">Every decision — Tier 1, Tier 1.5, Tier 2, composed — runs through the same rails. They exist precisely because agents can be wrong. Agents <em>cannot</em> convince the rails layer. Humans configure them. Compliance, finance, and operations own them.</p>
 
-    <div class="catalogue-wrap">
-      <div class="catalogue-header">
-        <div class="catalogue-header-dot"></div>
-        <div class="catalogue-header-label">NBA__c object · Active records for current segment</div>
+    <div class="rails-wrap">
+      <div class="rails-label">Rails evaluated per decision · persisted to Decision_Trace__c</div>
+
+      <div class="rail-row">
+        <div class="rail-name">Global suppression</div>
+        <div class="rail-desc">Opted-out, vulnerable customer, regulatory block. Writes a null_action row with the specific reason. The unbreakable floor.</div>
+        <div class="rail-tag">Constitutional</div>
       </div>
-      <div class="catalogue-rows">
-        <div class="catalogue-row header">
-          <div>ID</div><div>NBA Name</div><div>Eligibility Gate</div><div>Model</div>
+      <div class="rail-row">
+        <div class="rail-name">Channel policy</div>
+        <div class="rail-desc">Per-channel cadence and cooldown (e.g. email 2/48h, SMS 1/72h). Bypassable only by <em>Urgent</em> or <em>Critical</em> flagged actions with a stamped bypass reason.</div>
+        <div class="rail-tag">Configurable</div>
+      </div>
+      <div class="rail-row">
+        <div class="rail-name">Cross-module cooldown</div>
+        <div class="rail-desc">Same contact doesn't get hit by multiple modules within N hours. Only <em>Critical</em> actions (fraud, security, regulatory) punch through.</div>
+        <div class="rail-tag">Configurable</div>
+      </div>
+      <div class="rail-row">
+        <div class="rail-name">Eligibility</div>
+        <div class="rail-desc">Per-action segment / exclusion / product holding / date bounds. Actions failing eligibility are dropped before scoring.</div>
+        <div class="rail-tag">Per action</div>
+      </div>
+      <div class="rail-row">
+        <div class="rail-name">Budget cap</div>
+        <div class="rail-desc">Each action has an offer budget. Budget_Used__c increments on every accepted outcome; arbitration drops the action the moment the cap is hit.</div>
+        <div class="rail-tag">Per action</div>
+      </div>
+      <div class="rail-row">
+        <div class="rail-name">Score threshold</div>
+        <div class="rail-desc">Per-action <em>MinScoreThreshold__c</em>. A low-confidence winner is the signal that either composition should fire (catalogue gap) or restraint is the right answer.</div>
+        <div class="rail-tag">Per action</div>
+      </div>
+    </div>
+
+    <p style="font-size: 13px; color: var(--muted); margin-top: 18px; line-height: 1.7;"><strong style="color: var(--ink);">Restraint is a first-class outcome.</strong> When every action fails a rail, the engine writes a <em>null_action</em> row with the specific suppression reason rather than silently returning nothing. Einstein Studio trains on these rows too — "we chose not to speak to this contact" is a training signal, not an absence of one.</p>
+  </div>
+
+  <!-- STEP 1 -->
+  <div class="section-alt">
+    <div class="section">
+      <div class="step-head">
+        <div class="step-num" style="background:rgba(4,225,203,0.15);color:#007A72;border-color:rgba(4,225,203,0.35);">01</div>
+        <div>
+          <div class="step-title">Load the NBA Catalogue</div>
+          <div class="step-desc">Query the eligible actions for this module · packaged as first-class <em>NBAAction__c</em> records — not rules, not code</div>
         </div>
-        <div class="catalogue-row">
-          <div class="cr-id">001</div>
-          <div class="cr-name">Cross-category upsell — Cider</div>
-          <div class="cr-criteria">Beer-only account, no cider orders in 90d</div>
-          <div class="cr-model">ES-CID-01</div>
+      </div>
+
+      <p class="muted-p">Actions are data. The catalogue is a SOQL query against <strong>NBAAction__c</strong> records scoped to the module. Each record defines channel, offer value, priority weight, response weight, score threshold, eligibility and exclusion segments, bypass flags, and an <em>ExperienceRef</em> pointing at the downstream fulfilment asset (MC Next journey ID, Flow ID, web rule ID).</p>
+
+      <div class="catalogue-wrap">
+        <div class="catalogue-header">
+          <div class="catalogue-header-dot"></div>
+          <div class="catalogue-header-label">NBAAction__c · Active records for Churn Prevention module</div>
         </div>
-        <div class="catalogue-row">
-          <div class="cr-id">002</div>
-          <div class="cr-name">Tap handle expansion</div>
-          <div class="cr-criteria">≥2 handles, venue capacity &gt; current SKU count</div>
-          <div class="cr-model">ES-TAP-01</div>
+        <div class="catalogue-rows">
+          <div class="catalogue-row header">
+            <div>ID</div><div>Action</div><div>Eligibility</div><div>Scoring</div><div>Channel</div>
+          </div>
+          <div class="catalogue-row">
+            <div class="cr-id">A01</div>
+            <div class="cr-name">Retention Discount 20%</div>
+            <div class="cr-criteria">Score ≥ 0.60, budget &lt; cap</div>
+            <div class="cr-chip cr-mode-model">model</div>
+            <div class="cr-channel">email</div>
+          </div>
+          <div class="catalogue-row">
+            <div class="cr-id">A02</div>
+            <div class="cr-name">Loyalty Reward</div>
+            <div class="cr-criteria">Score ≥ 0.50, Loyalty_Tier ≥ 2</div>
+            <div class="cr-chip cr-mode-model">model</div>
+            <div class="cr-channel">push</div>
+          </div>
+          <div class="catalogue-row">
+            <div class="cr-id">A03</div>
+            <div class="cr-name">Relationship Manager Call</div>
+            <div class="cr-criteria">Score ≥ 0.75, CLV high</div>
+            <div class="cr-chip cr-mode-model">model</div>
+            <div class="cr-channel">outbound_call</div>
+          </div>
+          <div class="catalogue-row">
+            <div class="cr-id">A04</div>
+            <div class="cr-name">Contract Renewal Nudge</div>
+            <div class="cr-criteria">Segment: Renewal Window</div>
+            <div class="cr-chip cr-mode-segment">segment</div>
+            <div class="cr-channel">email</div>
+          </div>
+          <div class="catalogue-row">
+            <div class="cr-id">A05</div>
+            <div class="cr-name">Fraud Alert <span class="badge-inline" style="background: rgba(196,28,0,0.08); color: var(--red); border: 1px solid rgba(196,28,0,0.25); margin-left: 6px;">CRITICAL</span></div>
+            <div class="cr-criteria">Rule: Fraud_Flag__c = true</div>
+            <div class="cr-chip cr-mode-rule">rule</div>
+            <div class="cr-channel">sms</div>
+          </div>
         </div>
-        <div class="catalogue-row">
-          <div class="cr-id">003</div>
-          <div class="cr-name">Contract renewal offer</div>
-          <div class="cr-criteria">Renewal date within 60 days</div>
-          <div class="cr-model">ES-REN-01</div>
-        </div>
-        <div class="catalogue-row">
-          <div class="cr-id">004</div>
-          <div class="cr-name">Range gap — Premium lager</div>
-          <div class="cr-criteria">Distribution gap vs. peer segment</div>
-          <div class="cr-model">ES-RNG-01</div>
-        </div>
-        <div class="catalogue-row" style="opacity:0.4;">
-          <div class="cr-id">...</div>
-          <div class="cr-name">+ 11 more active NBAs</div>
-          <div class="cr-criteria">Various criteria</div>
-          <div class="cr-model">—</div>
+      </div>
+
+      <!-- SCORING MODE CALLOUT -->
+      <div style="margin-top: 20px; background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 22px 26px; box-shadow: var(--shadow-sm);">
+        <div style="font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--blue2); margin-bottom: 14px;">v9 · Scoring Mode Abstraction</div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 18px;">
+          <div>
+            <div style="font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 5px;"><span class="cr-chip cr-mode-model" style="margin-right:6px;">model</span> Predictive</div>
+            <div style="font-size: 12px; color: var(--muted); line-height: 1.6;">Einstein Studio or external model returns 0–1. Weighted by priority and response_weight.</div>
+          </div>
+          <div>
+            <div style="font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 5px;"><span class="cr-chip cr-mode-segment" style="margin-right:6px;">segment</span> Membership</div>
+            <div style="font-size: 12px; color: var(--muted); line-height: 1.6;">All qualifying contacts score 1.0. No model required. Fast path for list-based plays.</div>
+          </div>
+          <div>
+            <div style="font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 5px;"><span class="cr-chip cr-mode-rule" style="margin-right:6px;">rule</span> Deterministic</div>
+            <div style="font-size: 12px; color: var(--muted); line-height: 1.6;">Pass/fail on a criterion. Pass = 1.0. Used for compliance-driven and emergency actions.</div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 
   <!-- STEP 2 -->
-  <div class="section-alt">
-    <div class="section">
-      <div class="step-head">
-        <div class="step-num" style="background:rgba(0,87,184,0.12);color:#0057B8;border-color:rgba(0,87,184,0.25);">02</div>
-        <div>
-          <div class="step-title">The Loop</div>
-          <div class="step-desc">For each NBA in the catalogue, run three sub-steps in sequence</div>
+  <div class="section">
+    <div class="step-head">
+      <div class="step-num" style="background:rgba(0,87,184,0.12);color:#0057B8;border-color:rgba(0,87,184,0.25);">02</div>
+      <div>
+        <div class="step-title">Score &amp; Arbitrate</div>
+        <div class="step-desc">For every eligible action, three sub-steps — then the winner is weighted-ranked deterministically</div>
+      </div>
+    </div>
+
+    <div class="loop-wrap">
+      <div class="loop-label">For each eligible NBAAction__c in module</div>
+      <div class="loop-steps">
+        <div class="loop-step">
+          <div class="loop-step-num" style="color:#007A72;">① Eligibility</div>
+          <div class="loop-step-title">Rails gate</div>
+          <div class="loop-step-desc">Segments, exclusions, dates, product holdings, budget. Pure logic. Most drop-outs happen here — no model call needed.</div>
+          <div class="loop-step-tag" style="background:rgba(0,122,114,0.08);color:#007A72;border:1px solid rgba(0,122,114,0.25);">Rules only</div>
+        </div>
+        <div class="loop-arr">›</div>
+        <div class="loop-step">
+          <div class="loop-step-num" style="color:var(--blue2);">② Score</div>
+          <div class="loop-step-title">Mode-aware scoring</div>
+          <div class="loop-step-desc">v9 branches on <em>Scoring_Mode__c</em> — Einstein/external callout for <em>model</em>, hardcoded 1.0 for <em>segment</em>, criterion evaluation for <em>rule</em>. Zero callouts when not needed.</div>
+          <div class="loop-step-tag" style="background:rgba(2,42,192,0.08);color:var(--blue2);border:1px solid rgba(2,42,192,0.22);">Model · Segment · Rule</div>
+        </div>
+        <div class="loop-arr">›</div>
+        <div class="loop-step">
+          <div class="loop-step-num" style="color:#C89000;">③ Weight</div>
+          <div class="loop-step-title">score × priority × response_weight</div>
+          <div class="loop-step-desc">Admin-tunable multipliers bias the fast path without writing a reasoning prompt. Top two scores feed the tier decision.</div>
+          <div class="loop-step-tag" style="background:rgba(200,144,0,0.08);color:#C89000;border:1px solid rgba(200,144,0,0.25);">Deterministic</div>
         </div>
       </div>
+    </div>
 
-      <div class="loop-wrap">
-        <div class="loop-label">For each NBA in catalogue</div>
-        <div class="loop-steps">
-          <div class="loop-step">
-            <div class="loop-step-num" style="color:#007A72;">① Eligibility</div>
-            <div class="loop-step-title">Gate check</div>
-            <div class="loop-step-desc">Pure logic. No ML. Fast and cheap. Most NBAs are knocked out here before Einstein is ever called.</div>
-            <div class="loop-step-tag" style="background:rgba(0,122,114,0.08);color:#007A72;border:1px solid rgba(0,122,114,0.25);">Rules only</div>
+    <div class="code-block">
+      <span class="c-comment">// InvokeArbitration — the one @InvocableMethod that runs a decision</span><br/>
+      <span class="c-key">ArbitrationOutput</span> result = <span class="c-key">InvokeArbitration</span>.invoke(new <span class="c-key">Input</span> {<br/>
+      &nbsp;&nbsp;<span class="c-str">contactId</span>: <span class="c-val">contactId</span>,<br/>
+      &nbsp;&nbsp;<span class="c-str">moduleName</span>: <span class="c-val">'Churn Prevention'</span>,<br/>
+      &nbsp;&nbsp;<span class="c-str">triggerType</span>: <span class="c-val">'segment_realtime'</span>,<br/>
+      &nbsp;&nbsp;<span class="c-str">excludeActionIds</span>: <span class="c-val">chaseHistory</span>  <span class="c-comment">// outcome chasing</span><br/>
+      });<br/>
+      <span class="c-comment">// → winner, tier, score_gap, low_confidence, reasoning_used, decision_trace</span><br/>
+      <span class="c-comment">// → written to NBADecision__c with Decision_Trace__c populated inline</span>
+    </div>
+
+    <!-- Tier 1.5 / Tier 2 / Composition escalation ladder -->
+    <div style="margin-top: 20px; background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 24px 26px; box-shadow: var(--shadow);">
+      <div style="font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink); margin-bottom: 20px;">Escalation ladder — when Tier 1 isn't enough</div>
+
+      <div style="display: grid; grid-template-columns: 1fr; gap: 14px;">
+        <!-- Tier 1.5 -->
+        <div style="display: grid; grid-template-columns: 140px 1fr; gap: 18px; padding: 16px 0; border-bottom: 1px dashed var(--border);">
+          <div>
+            <div style="font-family: var(--mono); font-size: 10px; font-weight: 700; color: var(--lblue-d); margin-bottom: 4px;">TIER 1.5</div>
+            <div style="font-size: 13px; font-weight: 700; color: var(--ink);">Re-rank</div>
           </div>
-          <div class="loop-arr">›</div>
-          <div class="loop-step">
-            <div class="loop-step-num" style="color:var(--blue2);">② Score</div>
-            <div class="loop-step-title">Einstein Studio</div>
-            <div class="loop-step-desc">Invocable action call. Passes the unified Data Cloud profile. Returns a probability score 0–1 per NBA.</div>
-            <div class="loop-step-tag" style="background:rgba(2,42,192,0.08);color:var(--blue2);border:1px solid rgba(2,42,192,0.22);">ML inference</div>
-          </div>
-          <div class="loop-arr">›</div>
-          <div class="loop-step">
-            <div class="loop-step-num" style="color:#C89000;">③ Gate</div>
-            <div class="loop-step-title">Threshold filter</div>
-            <div class="loop-step-desc">If score &lt; 0.4, drop it. You're left with eligible, high-confidence NBAs only.</div>
-            <div class="loop-step-tag" style="background:rgba(200,144,0,0.08);color:#C89000;border:1px solid rgba(200,144,0,0.25);">Score ≥ 0.4</div>
+          <div>
+            <div style="font-size: 13px; color: var(--text); line-height: 1.65;"><strong>Top two scores within <em>Reasoning_Gap_Threshold__c</em>.</strong> <code style="font-family: var(--mono); font-size: 12px; background: rgba(0,87,184,0.06); padding: 1px 6px; border-radius: 4px;">Tier1ReasoningArbiter</code> dispatches the shortlist + full context to Claude Haiku via Einstein Trust Layer. JSON returned, validated, winner swapped if the model has clear contextual rationale. Hard 3s CPU budget. Parse failures are silent fallbacks — the deterministic winner stands.</div>
           </div>
         </div>
-      </div>
 
-      <div class="eligibility-rules">
-        <div class="er-label">Example eligibility rules — knocked out before Einstein is called</div>
-        <div class="er-rule">Customer already received this offer in the last 30 days → exclude</div>
-        <div class="er-rule">Product not available in customer's state/territory → exclude</div>
-        <div class="er-rule">Rep has already manually actioned this NBA this week → exclude</div>
-        <div class="er-rule">Customer has an open complaint or credit dispute → exclude</div>
-      </div>
+        <!-- Tier 2 -->
+        <div style="display: grid; grid-template-columns: 140px 1fr; gap: 18px; padding: 16px 0; border-bottom: 1px dashed var(--border);">
+          <div>
+            <div style="font-family: var(--mono); font-size: 10px; font-weight: 700; color: var(--teal-d); margin-bottom: 4px;">TIER 2</div>
+            <div style="font-size: 13px; font-weight: 700; color: var(--ink);">Human review</div>
+          </div>
+          <div>
+            <div style="font-size: 13px; color: var(--text); line-height: 1.65;"><strong>Still ambiguous or flagged for mandatory review.</strong> <code style="font-family: var(--mono); font-size: 12px; background: rgba(0,122,114,0.06); padding: 1px 6px; border-radius: 4px;">Tier2AgentDrafterQueueable</code> async-writes an <em>Agent_Rationale__c</em> + recommended action onto the Decision. Slack Block Kit approval card fires. Approver sees the agent's pick, the deterministic winner, and every eligible action in the module — picks, swaps, or dismisses. Siblings in the same run supersede.</div>
+          </div>
+        </div>
 
-      <div class="code-block" style="margin-top:24px;">
-        <span class="c-comment">// Simplified Flow invocable action call to Einstein Studio</span><br/>
-        <span class="c-key">EinsteinPrediction</span>.predict(<br/>
-        &nbsp;&nbsp;<span class="c-str">modelId</span>: nba.<span class="c-val">Einstein_Model_ID__c</span>,<br/>
-        &nbsp;&nbsp;<span class="c-str">profileData</span>: {<br/>
-        &nbsp;&nbsp;&nbsp;&nbsp;<span class="c-str">purchaseHistory</span>: profile.<span class="c-val">Last_90d_Orders__c</span>,<br/>
-        &nbsp;&nbsp;&nbsp;&nbsp;<span class="c-str">segmentMemberships</span>: profile.<span class="c-val">Active_Segments__c</span>,<br/>
-        &nbsp;&nbsp;&nbsp;&nbsp;<span class="c-str">recency</span>: profile.<span class="c-val">Days_Since_Last_Order__c</span>,<br/>
-        &nbsp;&nbsp;&nbsp;&nbsp;<span class="c-str">calculatedInsights</span>: profile.<span class="c-val">Distribution_Gap_Score__c</span><br/>
-        &nbsp;&nbsp;}<br/>
-        ) → returns <span class="c-num">0.73</span> <span class="c-comment">// probability score</span>
+        <!-- Composition -->
+        <div style="display: grid; grid-template-columns: 140px 1fr; gap: 18px; padding: 16px 0;">
+          <div>
+            <div style="font-family: var(--mono); font-size: 10px; font-weight: 700; color: var(--purple-d); margin-bottom: 4px;">COMPOSE</div>
+            <div style="font-size: 13px; font-weight: 700; color: var(--ink);">Novel treatment</div>
+          </div>
+          <div>
+            <div style="font-size: 13px; color: var(--text); line-height: 1.65;"><strong>No action clears threshold — catalogue gap.</strong> <code style="font-family: var(--mono); font-size: 12px; background: rgba(122,61,214,0.06); padding: 1px 6px; border-radius: 4px;">CompositionQueueable</code> async-invokes a composer model, drafts channel + offer + content, then <em>re-runs every rail deterministically</em>. Rails-checked drafts land in <em>NBA_Composed_Treatment__c</em> as <em>pending_approval</em> with a full Rails_Checked__c audit trail. Approved compositions can be promoted to first-class catalogued actions.</div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 
   <!-- STEP 3 -->
-  <div class="section">
-    <div class="step-head">
-      <div class="step-num" style="background:rgba(252,192,3,0.15);color:#A87700;border-color:rgba(252,192,3,0.35);">03</div>
-      <div>
-        <div class="step-title">Arbitration</div>
-        <div class="step-desc">Multiple NBAs have passed. Pick the one that gets executed.</div>
-      </div>
-    </div>
-
-    <p class="muted-p">After the loop, you have a shortlist — typically 2–5 NBAs that are eligible and scored above threshold. Arbitration logic picks the winner. The output is a single NBA (or a ranked list of 2–3 for rep discretion).</p>
-
-    <div class="arb-rules">
-      <div class="arb-rule">
-        <div class="arb-rule-icon" style="background:rgba(2,42,192,0.08);">🏆</div>
-        <div>
-          <div class="arb-rule-title">Highest score wins</div>
-          <div class="arb-rule-desc">The simplest approach. Einstein's top-scoring NBA gets executed. No overrides needed in most cases.</div>
-        </div>
-      </div>
-      <div class="arb-rule">
-        <div class="arb-rule-icon" style="background:rgba(0,122,114,0.08);">📈</div>
-        <div>
-          <div class="arb-rule-title">Priority rules</div>
-          <div class="arb-rule-desc">Revenue-generating NBAs rank above retention NBAs when scores are within 0.1 of each other. Configurable per business context.</div>
-        </div>
-      </div>
-      <div class="arb-rule">
-        <div class="arb-rule-icon" style="background:rgba(0,87,184,0.08);">😴</div>
-        <div>
-          <div class="arb-rule-title">Fatigue rules</div>
-          <div class="arb-rule-desc">If this customer received the top-scoring NBA on the last rep visit, serve the second-ranked. Prevents reps delivering the same message every call.</div>
-        </div>
-      </div>
-      <div class="arb-rule">
-        <div class="arb-rule-icon" style="background:rgba(200,144,0,0.08);">📡</div>
-        <div>
-          <div class="arb-rule-title">Channel constraints</div>
-          <div class="arb-rule-desc">If the trigger was a portal login, only surface portal-deliverable NBAs. Rep-only NBAs are filtered out for digital triggers.</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Mode 2 escalation -->
-    <div style="margin-top: 20px; background: rgba(0,122,114,0.04); border: 1px solid rgba(0,122,114,0.2); border-radius: 14px; padding: 24px 26px;">
-      <div style="font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--teal-d); margin-bottom: 16px; display: flex; align-items: center; gap: 8px;">
-        <div style="width: 6px; height: 6px; border-radius: 50%; background: var(--teal-d);"></div>
-        Mode 2 · When Flow arbitration can't resolve
-      </div>
-      <div style="display: grid; grid-template-columns: 1fr 36px 1fr; align-items: center; gap: 0;">
-        <div>
-          <div style="font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 6px;">Conflicting signals</div>
-          <div style="font-size: 13px; color: var(--muted); line-height: 1.65;">Two NBAs score within 0.05 of each other. Priority rules are tied. Fatigue hasn't resolved it. Or a high-value customer flag triggers mandatory escalation regardless of scores.</div>
-        </div>
-        <div style="text-align: center; color: rgba(0,122,114,0.35); font-size: 22px;">›</div>
-        <div>
-          <div style="font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 6px;">Agentforce adjudicates</div>
-          <div style="font-size: 13px; color: var(--muted); line-height: 1.65;">The agent receives the full customer context — unified profile, both NBAs, their Einstein scores, and the arbitration rationale — reasons to a decision, and returns a recommendation with a plain-language explanation.</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- STEP 4 -->
   <div class="section-alt">
     <div class="section">
       <div class="step-head">
-        <div class="step-num" style="background:rgba(4,225,203,0.15);color:#007A72;border-color:rgba(4,225,203,0.35);">04</div>
+        <div class="step-num" style="background:rgba(252,192,3,0.15);color:#A87700;border-color:rgba(252,192,3,0.35);">03</div>
         <div>
-          <div class="step-title">Execute</div>
-          <div class="step-desc">The winning NBA gets delivered. Channel depends on the trigger. Agentforce Marketing &amp; Personalization handles two-way communication and real-time in-channel personalisation.</div>
+          <div class="step-title">Channel Execution</div>
+          <div class="step-desc">v8 shipped a pluggable dispatcher framework — four channels live, more via <em>Type.forName</em> probe chain</div>
         </div>
       </div>
+
+      <p class="muted-p">Every approved decision triggers <strong>ExecutionDispatcher</strong>. The dispatcher resolves the right channel handler for the winning action's channel, stamps <em>Execution_Status__c</em> and <em>Execution_Error__c</em> on the Decision, and fires the outbound payload. Exploration mode optionally re-weights channel choice using Laplace-smoothed acceptance rates updated nightly.</p>
 
       <div class="exec-channels">
         <div class="exec-channel">
           <div class="ec-head">
-            <div class="ec-icon">👤</div>
-            <div class="ec-title">Rep Visit Brief</div>
-          </div>
-          <div class="ec-body">
-            <p>Flow creates or updates a Salesforce <strong>Task</strong> on the account. Includes the NBA detail, talking points, and any linked Promotion &amp; Offer. Rep sees it in their CRM view before the visit.</p>
-          </div>
-        </div>
-        <div class="exec-channel">
-          <div class="ec-head">
-            <div class="ec-icon">🖥️</div>
-            <div class="ec-title">Real-time Personalisation</div>
-          </div>
-          <div class="ec-body">
-            <p><strong>Agentforce Marketing &amp; Personalization</strong> renders the recommendation in the customer portal in real time. Offer content adapts to the customer's current session context — no structural rebuild required.</p>
-          </div>
-        </div>
-        <div class="exec-channel">
-          <div class="ec-head">
             <div class="ec-icon">💬</div>
-            <div class="ec-title">Agentic Two-Way Comms</div>
+            <div class="ec-title">Slack</div>
           </div>
           <div class="ec-body">
-            <p>Agentforce initiates an outbound message — email, SMS, or in-app — and <strong>handles the reply conversation autonomously</strong>. Customer responses are captured, fed back as outcome signals, and update the CampaignMember record.</p>
+            <p><strong>Info cards</strong> for auto-decisions, <strong>approval cards</strong> for Tier 2 and compositions, <strong>outbound-call briefs</strong> for rep actions. Block Kit, interactive buttons, threaded replies. The primary surface for operators.</p>
+          </div>
+        </div>
+        <div class="exec-channel">
+          <div class="ec-head">
+            <div class="ec-icon">👤</div>
+            <div class="ec-title">Sales Cloud</div>
+          </div>
+          <div class="ec-body">
+            <p><strong>nbaRecommendationPanel</strong> LWC on Contact + Account pages. Real-time list of recommended actions with talking points and one-click accept/decline. Outcome writes back to the Decision record.</p>
+          </div>
+        </div>
+        <div class="exec-channel">
+          <div class="ec-head">
+            <div class="ec-icon">📧</div>
+            <div class="ec-title">MC Next Flow</div>
+          </div>
+          <div class="ec-body">
+            <p><strong>ExecutionMCNextFlowHandler</strong> invokes a configurable Autolaunched Flow that triggers the MC Next journey specified on <em>NBAAction__c.ExperienceRef__c</em>. Journey handles templating, rendering, and delivery.</p>
+          </div>
+        </div>
+        <div class="exec-channel">
+          <div class="ec-head">
+            <div class="ec-icon">🔗</div>
+            <div class="ec-title">Webhook</div>
+          </div>
+          <div class="ec-body">
+            <p>Generic HTTPS POST to any endpoint configured on <em>NBA_Module_Config__mdt</em>. For custom channels, third-party systems, and the "we ship the decision, you deliver it" pattern.</p>
           </div>
         </div>
       </div>
 
       <div class="exec-parallel">
-        <div class="exec-parallel-icon">⚡</div>
-        <p><strong>All three in parallel:</strong> Flow branches at execution and fires all channels simultaneously — rep gets the Task, customer gets the personalised portal experience, Agentforce opens the two-way conversation in the background. One NBA decision, three coordinated touchpoints, one feedback loop.</p>
+        <div class="exec-parallel-icon">🧪</div>
+        <p><strong>Exploration mode:</strong> a configurable percentage of Tier 1 decisions deliberately re-weight channel or action choice using Thompson sampling over Laplace-smoothed acceptance rates. Nightly batch updates the weights. Contextual bandit behaviour — the engine keeps learning which channels actually work for which segments, rather than always serving the historical winner.</p>
       </div>
     </div>
   </div>
 
-  <!-- STEP 5 -->
+  <!-- STEP 4 -->
   <div class="section">
     <div class="step-head">
-      <div class="step-num" style="background:rgba(0,87,184,0.12);color:#0057B8;border-color:rgba(0,87,184,0.25);">05</div>
+      <div class="step-num" style="background:rgba(0,87,184,0.12);color:#0057B8;border-color:rgba(0,87,184,0.25);">04</div>
       <div>
         <div class="step-title">Feedback Loop</div>
-        <div class="step-desc">What makes it a learning system rather than a static rules engine</div>
+        <div class="step-desc">Outcome capture · Data Cloud ingestion · cadence-gated retraining · external model feedback</div>
       </div>
     </div>
 
@@ -998,62 +1188,155 @@
       <div class="fb-node">
         <div class="fb-node-icon">✅</div>
         <div class="fb-node-title">Outcome captured</div>
-        <div class="fb-node-desc">Rep marks Task complete. Customer responds to offer. Portal click results in order.</div>
+        <div class="fb-node-desc">Accepted / declined / converted / null_action. Every tier writes — including restraint rows.</div>
       </div>
       <div class="fb-arr">›</div>
       <div class="fb-node">
         <div class="fb-node-icon">☁️</div>
-        <div class="fb-node-title">Written to Data Cloud</div>
-        <div class="fb-node-desc">Outcome written back as an engagement event. Mapped to the customer's unified profile via CampaignMember DMO.</div>
+        <div class="fb-node-title">Data Cloud stream</div>
+        <div class="fb-node-desc">NBA_Decision__dlm ingests every row. Six Calculated Insights aggregate served, accepted, declined, and null_action counts per Unified Individual.</div>
       </div>
       <div class="fb-arr">›</div>
       <div class="fb-node">
         <div class="fb-node-icon">🧠</div>
-        <div class="fb-node-title">Einstein retrains</div>
-        <div class="fb-node-desc">Weekly or fortnightly retrain on new outcome signals. Scores improve over time.</div>
+        <div class="fb-node-title">Retrain</div>
+        <div class="fb-node-desc"><em>NBARetrainingScheduler</em> gates per-module cadence (20h/6d/28d). Refreshes CIs, waits for IR, triggers Einstein Studio training.</div>
+      </div>
+      <div class="fb-arr">›</div>
+      <div class="fb-node">
+        <div class="fb-node-icon">📡</div>
+        <div class="fb-node-title">External feedback</div>
+        <div class="fb-node-desc">Vertex / SageMaker / Azure endpoints receive symmetric <em>{features, outcome}</em> posts so BYOM models learn too.</div>
       </div>
     </div>
 
     <div class="retrain-callout">
-      <div class="rc-label">Why this matters</div>
-      <div class="rc-body">On day one, Einstein is scoring based on historical CRM and ERP data — it's a good starting point but not yet tuned to your specific reps, regions, and customers. <strong>Every accepted NBA, every responded offer, every portal conversion is a new training signal.</strong> After 3–4 months of live operation the model has seen thousands of real outcomes and the scores become meaningfully more accurate than any rules-based approach could deliver.</div>
+      <div class="rc-label">Why the loop matters</div>
+      <div class="rc-body">On day one, Einstein scores on historical CRM and ERP data — a good starting point, not yet tuned to this org's reps, regions, and contacts. <strong>Every accepted action, every declined offer, every null_action restraint row is a training signal.</strong> The scheduler refuses to retrain while Identity Resolution is running (IR re-runs spike credits), skips locked CIs, and posts a Block Kit summary on success. After a few retraining cycles the model is meaningfully more accurate than any rules-based approach — and the composition agent has learned which catalogue gaps to fill.</div>
     </div>
   </div>
 
   <hr class="divider" />
 
-  <!-- REALITY CHECK -->
+  <!-- PROACTIVE AGENTS -->
   <div class="section">
     <div class="step-head">
-      <div class="step-num" style="background:rgba(196,28,0,0.1);color:#C41C00;border-color:rgba(196,28,0,0.2);">⚠️</div>
+      <div class="step-num" style="background:rgba(122, 61, 214, 0.08);color:#5521A8;border-color:rgba(122, 61, 214, 0.25);font-size:22px;">🧭</div>
       <div>
-        <div class="step-title">What's Real vs. Simulated in the Demo</div>
-        <div class="step-desc">Meridian and Xero demos simulate this flow — here's the honest breakdown</div>
+        <div class="step-title">The Proactive Agentic Layer</div>
+        <div class="step-desc">The engine reasons about itself daily — not just per-decision. Operator reviews suggestions instead of watching dashboards.</div>
       </div>
     </div>
 
-    <div class="reality-wrap">
-      <div class="reality-label">Demo architecture audit</div>
-      <div class="reality-grid">
-        <div>
-          <div class="reality-col-label" style="color:#007A72;">✓ Actually built</div>
-          <div class="reality-item"><div class="dot" style="background:#007A72;"></div>Data Cloud unified profile schema and CampaignMember DMO</div>
-          <div class="reality-item"><div class="dot" style="background:#007A72;"></div>Einstein Studio models created (waiting on training data)</div>
-          <div class="reality-item"><div class="dot" style="background:#007A72;"></div>Salesforce Flows deployed: Get_Pending_Signals, Get_Available_NBAs, Create_Campaign_Offer, ARIA_Score_Customer</div>
-          <div class="reality-item"><div class="dot" style="background:#007A72;"></div>Campaign + CampaignMember write-back on NBA approval</div>
-          <div class="reality-item"><div class="dot" style="background:#007A72;"></div>Status progression: Sent → Responded → Accepted</div>
-          <div class="reality-item"><div class="dot" style="background:#007A72;"></div>Xero: NBA catalogue from live Promotions objects</div>
+    <p class="muted-p">Three queueable agents run nightly, reading the Decision Audit Trace and outcome-chase chains. They notice patterns, propose changes, and drop insights into the unified Review Queue. Nothing self-applies by default — the human approves. Over time, approvals train which insights are worth surfacing.</p>
+
+    <div class="agents-grid">
+      <div class="agent-card">
+        <div class="agent-head">
+          <div class="dot"></div>
+          <div class="agent-title">Model Debug Agent</div>
         </div>
-        <div>
-          <div class="reality-col-label" style="color:#C41C00;">✗ Simulated</div>
-          <div class="reality-item"><div class="dot" style="background:#C41C00;"></div>Eligibility, scoring, arbitration — all done by Claude Haiku/Opus, not a real Flow loop</div>
-          <div class="reality-item"><div class="dot" style="background:#C41C00;"></div>Einstein scores are fabricated per scenario, not real inference calls</div>
-          <div class="reality-item"><div class="dot" style="background:#C41C00;"></div>Trigger is a button click, not a Data Cloud segment membership event</div>
-          <div class="reality-item"><div class="dot" style="background:#C41C00;"></div>No real master Flow loop in Salesforce</div>
-          <div class="reality-item"><div class="dot" style="background:#C41C00;"></div>Einstein models have no training data yet — would return random scores if called</div>
+        <div class="agent-body">
+          <p>Watches Einstein scores. Flags <strong>score collapse</strong> (stddev &lt; 0.05), <strong>low-confidence spikes</strong> (7d vs 30d), and <strong>distribution anomalies</strong> (&gt;80% extreme). Drafts plain-language explanations of suspected drift.</p>
+        </div>
+      </div>
+      <div class="agent-card">
+        <div class="agent-head">
+          <div class="dot"></div>
+          <div class="agent-title">Segment Strategy Agent</div>
+        </div>
+        <div class="agent-body">
+          <p>Parses Decision_Trace__c for high segment-mismatch drop rates and narrow eligibility funnels. Proposes segment tweaks, new excluded-segment links, or catalogue extensions.</p>
+        </div>
+      </div>
+      <div class="agent-card">
+        <div class="agent-head">
+          <div class="dot"></div>
+          <div class="agent-title">Journey Suggestion Agent</div>
+        </div>
+        <div class="agent-body">
+          <p>Reads outcome-chase chains. When a pattern (e.g. discount → follow-up → escalation) repeats 5+ times with high acceptance, drafts a concrete Flow / MC Next journey spec.</p>
         </div>
       </div>
     </div>
+
+    <div style="margin-top: 16px; background: rgba(122, 61, 214, 0.04); border: 1px solid rgba(122, 61, 214, 0.2); border-radius: 12px; padding: 18px 22px;">
+      <p style="font-size: 13px; color: var(--text); line-height: 1.65;"><strong style="color: var(--purple-d);">This is the architectural move.</strong> Agents that reason <em>about the system</em>, not just per decision. Cannot be retrofitted onto a rules engine — rules are deterministic, reasoning is non-deterministic. Architecturally incompatible unless you design for it from day one. The operator's job shifts from "watch dashboards and adjust" to "review suggestions and approve."</p>
+    </div>
+  </div>
+
+  <!-- HEADLESS -->
+  <div class="section-alt">
+    <div class="section">
+      <div class="step-head">
+        <div class="step-num" style="background:rgba(2,42,192,0.08);color:#022AC0;border-color:rgba(2,42,192,0.2);">🔌</div>
+        <div>
+          <div class="step-title">Headless Surfaces</div>
+          <div class="step-desc">The decisioning engine is a callable service · same arbitration, three entry points</div>
+        </div>
+      </div>
+
+      <div class="headless-grid">
+        <div class="headless-card">
+          <div class="headless-card-label">REST API</div>
+          <div class="headless-card-title">POST /services/apexrest/nba/v1/decide</div>
+          <div class="headless-card-desc">Input validation, verbose trace mode, structured error envelope. The pattern for upstream marketing orchestration and third-party integrations.</div>
+        </div>
+        <div class="headless-card">
+          <div class="headless-card-label">MCP Server</div>
+          <div class="headless-card-title">18 tools · JWT auth · stdio transport</div>
+          <div class="headless-card-desc">Typescript MCP server exposes arbitration, composition, outcomes, experiments, insights, and engine settings as agent-callable tools. Agents orchestrate across modules.</div>
+        </div>
+        <div class="headless-card">
+          <div class="headless-card-label">Apex</div>
+          <div class="headless-card-title">InvokeArbitration.invoke (global)</div>
+          <div class="headless-card-desc">@InvocableMethod — callable from Flow, another Apex class, or a Salesforce-hosted agent. Same response contract as REST and MCP.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PACKAGE SCOPE -->
+  <div class="section">
+    <div class="step-head">
+      <div class="step-num" style="background:rgba(0,122,114,0.1);color:#007A72;border-color:rgba(0,122,114,0.25);">📦</div>
+      <div>
+        <div class="step-title">What's in the Package</div>
+        <div class="step-desc">v9.0.0 unlocked package · what ships vs what the customer configures post-install</div>
+      </div>
+    </div>
+
+    <div class="scope-wrap">
+      <div class="scope-label">Package scope audit</div>
+      <div class="scope-grid">
+        <div>
+          <div class="scope-col-label" style="color:#007A72;">✓ Ships in the package</div>
+          <div class="scope-item"><div class="dot" style="background:#007A72;"></div>Core objects: NBAAction, NBADecision, NBA_Module, NBA_Module_Trigger, NBA_Composed_Treatment, NBA_Experiment, NBA_Agent_Memory</div>
+          <div class="scope-item"><div class="dot" style="background:#007A72;"></div>Arbitration engine: InvokeArbitration + InvokeCrossModuleArbitration (both global)</div>
+          <div class="scope-item"><div class="dot" style="background:#007A72;"></div>Six Calculated Insights · cadence-gated NBARetrainingScheduler + Queueable</div>
+          <div class="scope-item"><div class="dot" style="background:#007A72;"></div>Decisioning Hub LWC app: Overview, Catalogue, Contact Policy, Live Simulator, Review Queue, Experiments, Engine Settings, Insight Queue</div>
+          <div class="scope-item"><div class="dot" style="background:#007A72;"></div>Setup Agent · Management Agent · 15 GenAiFunctions</div>
+          <div class="scope-item"><div class="dot" style="background:#007A72;"></div>Slack surface: insight alerts, daily digest, Tier 2 approval cards, approve-from-Slack via Site</div>
+          <div class="scope-item"><div class="dot" style="background:#007A72;"></div>Proactive agent queueables: Model Debug, Segment Strategy, Journey Suggestion</div>
+          <div class="scope-item"><div class="dot" style="background:#007A72;"></div>Channel Execution Framework: Slack, Sales Cloud LWC, MC Next Flow, Webhook dispatchers</div>
+          <div class="scope-item"><div class="dot" style="background:#007A72;"></div>REST API + MCP server (18 tools) · Decisioning_Admin permission set</div>
+        </div>
+        <div>
+          <div class="scope-col-label" style="color:var(--lblue-d);">⚙ Configured post-install</div>
+          <div class="scope-item"><div class="dot" style="background:var(--lblue-d);"></div>Data Cloud bundles (Sales + Service) — org-level prerequisite, not package metadata</div>
+          <div class="scope-item"><div class="dot" style="background:var(--lblue-d);"></div>NBAAction catalogue — Setup Agent seeds defaults; customer tunes offers, weights, segments</div>
+          <div class="scope-item"><div class="dot" style="background:var(--lblue-d);"></div>Einstein Studio model training — first run via Setup Agent after CIs and Data Stream are live</div>
+          <div class="scope-item"><div class="dot" style="background:var(--lblue-d);"></div>Tier1ReasoningArbiter + Tier2AgentDrafter + CompositionComposer — <em>.forceignored</em>, direct-deployed on orgs with <em>aiplatform</em></div>
+          <div class="scope-item"><div class="dot" style="background:var(--lblue-d);"></div>Named Credentials: Einstein Trust Layer, Slack webhook, external model endpoints</div>
+          <div class="scope-item"><div class="dot" style="background:var(--lblue-d);"></div>Real-Time Segment + Data Action per trigger — Data Cloud configuration, not metadata</div>
+          <div class="scope-item"><div class="dot" style="background:var(--lblue-d);"></div>NBA_Decision__c → Data Cloud outcome stream — manual DMO setup via SetupCreateOutcomeStream walkthrough</div>
+          <div class="scope-item"><div class="dot" style="background:var(--lblue-d);"></div>GenAiPlugin topic metadata — on-org schema has drifted from the repo, tuned via Agentforce Builder UI</div>
+          <div class="scope-item"><div class="dot" style="background:var(--lblue-d);"></div>Decision Record Page flexipage activation — manual App Builder step per org default</div>
+        </div>
+      </div>
+    </div>
+
+    <p style="font-size: 12.5px; color: var(--muted); margin-top: 20px; line-height: 1.7;"><strong style="color: var(--ink);">Post-install loop:</strong> install the package → assign <em>Decisioning_Admin</em> permission set → launch the Setup Agent → answer a handful of business questions → the agent creates CIs, trains the model, seeds the catalogue, wires the triggers, and runs a verification decision. The operator's first deliberate decision is which actions to keep in the catalogue — not which Apex class to deploy.</p>
   </div>
 
   <!-- BUILD EFFORT -->
@@ -1062,31 +1345,31 @@
       <div class="step-head">
         <div class="step-num" style="background:rgba(2,42,192,0.1);color:#022AC0;border-color:rgba(2,42,192,0.2);">🏗️</div>
         <div>
-          <div class="step-title">What It Takes to Build for Real</div>
-          <div class="step-desc">The Flow wiring is the fast part — here's where the real effort sits</div>
+          <div class="step-title">Install Timeline</div>
+          <div class="step-desc">What a real customer spin-up takes once the package is in the org</div>
         </div>
       </div>
 
-      <div class="effort-grid" style="grid-template-columns: repeat(4, 1fr);">
+      <div class="effort-grid">
         <div class="effort-card">
-          <div class="effort-card-num">4–6w</div>
-          <div class="effort-card-label">Unified Profile in Data Cloud</div>
-          <div class="effort-card-desc">Mapping source systems (CRM, ERP, Commerce) into clean DMOs. The longest dependency — everything else sits on top of it. If data is already clean in the ERP, compress to 3 weeks.</div>
+          <div class="effort-card-num">2–4w</div>
+          <div class="effort-card-label">Data Cloud foundation</div>
+          <div class="effort-card-desc">Sales + Service bundles land Contact / Account / Case / Opportunity correctly. Identity Resolution configured. Longest dependency if Data Cloud isn't already live — compresses to a week if it is.</div>
         </div>
         <div class="effort-card" style="border-top-color:#007A72;">
-          <div class="effort-card-num" style="color:#007A72;">2–4w</div>
-          <div class="effort-card-label">Mode 1 — Train Einstein Studio</div>
-          <div class="effort-card-desc">Models exist in the org. Need historical outcome data: what NBAs were offered, which converted. Start with rules-based scoring if historical data is patchy — replace with ML as signal accumulates.</div>
+          <div class="effort-card-num" style="color:#007A72;">1–2w</div>
+          <div class="effort-card-label">Setup Agent run</div>
+          <div class="effort-card-desc">Conversational setup creates six CIs, trains the first Einstein model, seeds the NBAAction catalogue, wires a real-time trigger, and runs a verification decision. Business answers the business questions; agent does the rest.</div>
         </div>
         <div class="effort-card" style="border-top-color:#C89000;">
-          <div class="effort-card-num" style="color:#C89000;">2–3w</div>
-          <div class="effort-card-label">Mode 1 — Master Flow + Catalogue</div>
-          <div class="effort-card-desc">Flow orchestration once the data foundation is in place. The NBA catalogue needs commercial alignment — that's a stakeholder conversation, not a technical one.</div>
+          <div class="effort-card-num" style="color:#C89000;">1w</div>
+          <div class="effort-card-label">Catalogue &amp; rails</div>
+          <div class="effort-card-desc">Commercial alignment on actions, offer values, priority weights, segments, and contact policy — stakeholder conversation, not technical work. Catalogue Manager UI handles the mechanics.</div>
         </div>
         <div class="effort-card" style="border-top-color:var(--teal-d);">
-          <div class="effort-card-num" style="color:var(--teal-d);">1–2w</div>
-          <div class="effort-card-label">Mode 2 — Agentforce Agent</div>
-          <div class="effort-card-desc">Configure the Agentforce agent with a system prompt, tools to fetch customer context, and escalation triggers. Relatively fast to stand up once Mode 1 is running — it only activates for the edge cases Flow can't resolve.</div>
+          <div class="effort-card-num" style="color:var(--teal-d);">0.5–1w</div>
+          <div class="effort-card-label">Agentic tiers</div>
+          <div class="effort-card-desc">Post-install deploy of <em>Tier1ReasoningArbiter</em>, <em>Tier2AgentDrafter</em>, <em>CompositionComposer</em> on orgs with Einstein 1 AI Platform. Flip killswitches in Engine Settings after validating the Trust Layer.</div>
         </div>
       </div>
     </div>
