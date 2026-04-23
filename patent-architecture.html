@@ -171,10 +171,10 @@
 <!-- Figure 1 -->
 <section>
   <h2>Figure 1 &mdash; High-Level System Architecture</h2>
-  <p>End-to-end data flow from customer context through deterministic arbitration, LLM composition, constitutional-rails validation, human approval, and evidence-gated catalogue promotion. Numbered components correspond to the reference table below.</p>
+  <p>End-to-end data flow from customer context through deterministic arbitration, LLM composition, constitutional-rails validation, tiered confidence gating, human approval, and evidence-gated catalogue promotion. Numbered components correspond to the reference table below.</p>
 
   <div class="fig-container">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 1580" width="100%" height="auto">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 820 1720" width="100%" height="auto">
       <defs>
         <marker id="arrow" viewBox="0 0 10 7" refX="10" refY="3.5" markerWidth="10" markerHeight="7" orient="auto-start-reverse">
           <polygon points="0 0, 10 3.5, 0 7" fill="#444"/>
@@ -187,6 +187,9 @@
         </marker>
         <marker id="arrow-blue" viewBox="0 0 10 7" refX="10" refY="3.5" markerWidth="10" markerHeight="7" orient="auto-start-reverse">
           <polygon points="0 0, 10 3.5, 0 7" fill="#0176D3"/>
+        </marker>
+        <marker id="arrow-purple" viewBox="0 0 10 7" refX="10" refY="3.5" markerWidth="10" markerHeight="7" orient="auto-start-reverse">
+          <polygon points="0 0, 10 3.5, 0 7" fill="#7B1FA2"/>
         </marker>
         <filter id="shadow" x="-4%" y="-4%" width="108%" height="112%">
           <feDropShadow dx="0" dy="1" stdDeviation="2" flood-color="#000" flood-opacity="0.08"/>
@@ -260,7 +263,7 @@
       <text x="672" y="446" text-anchor="middle" font-size="11.5" font-weight="600" fill="#1a1a1a">Serve Catalogued Action</text>
 
       <!-- Dashed bypass: box 6 down right side to channel execution -->
-      <path d="M672,458 L672,480 L740,480 L740,1250 L530,1250" stroke="#2E7D32" stroke-width="1.2" stroke-dasharray="6,4" fill="none" marker-end="url(#arrow-green)"/>
+      <path d="M672,458 L672,480 L740,480 L740,1390 L530,1390" stroke="#2E7D32" stroke-width="1.2" stroke-dasharray="6,4" fill="none" marker-end="url(#arrow-green)"/>
 
       <!-- NO down -->
       <line x1="405" y1="480" x2="405" y2="535" stroke="#C23934" stroke-width="1.5" marker-end="url(#arrow-red)"/>
@@ -339,66 +342,89 @@
       <text x="420" y="1108" font-size="10" font-weight="700" fill="#2E7D32">PASS</text>
 
       <!-- ═══════════════════════════════════════ -->
-      <!-- ROW 8: HUMAN APPROVAL (y=1130)         -->
+      <!-- ROW 8: CONFIDENCE GATE (y=1130)        -->
       <!-- ═══════════════════════════════════════ -->
 
-      <rect x="205" y="1130" width="400" height="56" rx="8" fill="#E3F2FD" stroke="#1565C0" stroke-width="1.8" filter="url(#shadow)"/>
-      <text x="405" y="1154" text-anchor="middle" font-size="11" font-weight="700" fill="#1565C0">12 &#8212; Human Approval Queue</text>
-      <text x="405" y="1172" text-anchor="middle" font-size="10.5" fill="#444">Composition Queue in Decisioning Hub (LWC)</text>
+      <polygon points="405,1130 490,1175 405,1220 320,1175" fill="#F3E5F5" stroke="#7B1FA2" stroke-width="1.5" filter="url(#shadow)"/>
+      <text x="405" y="1167" text-anchor="middle" font-size="10" font-weight="700" fill="#7B1FA2">12</text>
+      <text x="405" y="1182" text-anchor="middle" font-size="9.5" font-weight="600" fill="#333">Auto-approve on?</text>
 
-      <line x1="405" y1="1186" x2="405" y2="1228" stroke="#444" stroke-width="1.2" marker-end="url(#arrow)"/>
+      <!-- TIER 1 (auto-approve enabled, high confidence, no conflict) → right -->
+      <line x1="490" y1="1175" x2="575" y2="1175" stroke="#2E7D32" stroke-width="1.5" marker-end="url(#arrow-green)"/>
+      <text x="528" y="1165" font-size="9" font-weight="700" fill="#2E7D32">TIER 1</text>
 
-      <!-- ═══════════════════════════════════════ -->
-      <!-- ROW 9: CHANNEL EXECUTION (y=1233)      -->
-      <!-- ═══════════════════════════════════════ -->
+      <rect x="580" y="1152" width="195" height="46" rx="6" fill="#E8F5E9" stroke="#2E7D32" stroke-width="1.5" filter="url(#shadow)"/>
+      <text x="677" y="1171" text-anchor="middle" font-size="10" font-weight="700" fill="#2E7D32">12a</text>
+      <text x="677" y="1186" text-anchor="middle" font-size="11" font-weight="600" fill="#1a1a1a">Auto-Approve</text>
 
-      <rect x="275" y="1233" width="260" height="46" rx="6" fill="#E8F5E9" stroke="#2E7D32" stroke-width="1.5" filter="url(#shadow)"/>
-      <text x="405" y="1252" text-anchor="middle" font-size="10" font-weight="700" fill="#2E7D32">13</text>
-      <text x="405" y="1267" text-anchor="middle" font-size="11.5" font-weight="600" fill="#1a1a1a">Channel Execution</text>
+      <!-- Auto-approve routes down to channel execution -->
+      <path d="M677,1198 L677,1220 L710,1220 L710,1390 L530,1390" stroke="#2E7D32" stroke-width="1.2" stroke-dasharray="6,4" fill="none" marker-end="url(#arrow-green)"/>
 
-      <line x1="405" y1="1279" x2="405" y2="1318" stroke="#444" stroke-width="1.2" marker-end="url(#arrow)"/>
-
-      <!-- ═══════════════════════════════════════ -->
-      <!-- ROW 10: OUTCOME TRACKING (y=1323)      -->
-      <!-- ═══════════════════════════════════════ -->
-
-      <rect x="215" y="1323" width="380" height="55" rx="6" fill="#E8F0FE" stroke="#032D60" stroke-width="1.5" filter="url(#shadow)"/>
-      <text x="405" y="1345" text-anchor="middle" font-size="11" font-weight="700" fill="#032D60">14 &#8212; Outcome Tracking</text>
-      <text x="405" y="1363" text-anchor="middle" font-size="10" fill="#444">NBADecision__c + NBA_Outcome_Event__e</text>
-
-      <line x1="405" y1="1378" x2="405" y2="1420" stroke="#444" stroke-width="1.2" marker-end="url(#arrow)"/>
+      <!-- TIER 2 (lower confidence or conflict) → down to human queue -->
+      <line x1="405" y1="1220" x2="405" y2="1270" stroke="#7B1FA2" stroke-width="1.5" marker-end="url(#arrow-purple)"/>
+      <text x="420" y="1253" font-size="9" font-weight="700" fill="#7B1FA2">TIER 2</text>
 
       <!-- ═══════════════════════════════════════ -->
-      <!-- ROW 11: EVIDENCE GATE (y=1425)         -->
+      <!-- ROW 9: HUMAN APPROVAL (y=1275)         -->
       <!-- ═══════════════════════════════════════ -->
 
-      <polygon points="405,1425 475,1465 405,1505 335,1465" fill="#FFF3E0" stroke="#E65100" stroke-width="1.5" filter="url(#shadow)"/>
-      <text x="405" y="1460" text-anchor="middle" font-size="10" font-weight="700" fill="#E65100">15</text>
-      <text x="405" y="1475" text-anchor="middle" font-size="9.5" font-weight="600" fill="#333">Positive outcome?</text>
+      <rect x="205" y="1275" width="400" height="56" rx="8" fill="#E3F2FD" stroke="#1565C0" stroke-width="1.8" filter="url(#shadow)"/>
+      <text x="405" y="1299" text-anchor="middle" font-size="11" font-weight="700" fill="#1565C0">13 &#8212; Human Approval Queue</text>
+      <text x="405" y="1317" text-anchor="middle" font-size="10.5" fill="#444">Composition Queue in Decisioning Hub (LWC)</text>
+
+      <line x1="405" y1="1331" x2="405" y2="1370" stroke="#444" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+      <!-- ═══════════════════════════════════════ -->
+      <!-- ROW 10: CHANNEL EXECUTION (y=1375)     -->
+      <!-- ═══════════════════════════════════════ -->
+
+      <rect x="275" y="1375" width="260" height="46" rx="6" fill="#E8F5E9" stroke="#2E7D32" stroke-width="1.5" filter="url(#shadow)"/>
+      <text x="405" y="1394" text-anchor="middle" font-size="10" font-weight="700" fill="#2E7D32">14</text>
+      <text x="405" y="1409" text-anchor="middle" font-size="11.5" font-weight="600" fill="#1a1a1a">Channel Execution</text>
+
+      <line x1="405" y1="1421" x2="405" y2="1460" stroke="#444" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+      <!-- ═══════════════════════════════════════ -->
+      <!-- ROW 11: OUTCOME TRACKING (y=1465)      -->
+      <!-- ═══════════════════════════════════════ -->
+
+      <rect x="215" y="1465" width="380" height="55" rx="6" fill="#E8F0FE" stroke="#032D60" stroke-width="1.5" filter="url(#shadow)"/>
+      <text x="405" y="1487" text-anchor="middle" font-size="11" font-weight="700" fill="#032D60">15 &#8212; Outcome Tracking</text>
+      <text x="405" y="1505" text-anchor="middle" font-size="10" fill="#444">NBADecision__c + NBA_Outcome_Event__e</text>
+
+      <line x1="405" y1="1520" x2="405" y2="1560" stroke="#444" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+      <!-- ═══════════════════════════════════════ -->
+      <!-- ROW 12: EVIDENCE GATE (y=1565)         -->
+      <!-- ═══════════════════════════════════════ -->
+
+      <polygon points="405,1565 475,1605 405,1645 335,1605" fill="#FFF3E0" stroke="#E65100" stroke-width="1.5" filter="url(#shadow)"/>
+      <text x="405" y="1600" text-anchor="middle" font-size="10" font-weight="700" fill="#E65100">16</text>
+      <text x="405" y="1615" text-anchor="middle" font-size="9.5" font-weight="600" fill="#333">Positive outcome?</text>
 
       <!-- YES right -->
-      <line x1="475" y1="1465" x2="575" y2="1465" stroke="#2E7D32" stroke-width="1.5" marker-end="url(#arrow-green)"/>
-      <text x="520" y="1457" font-size="10" font-weight="700" fill="#2E7D32">YES</text>
+      <line x1="475" y1="1605" x2="575" y2="1605" stroke="#2E7D32" stroke-width="1.5" marker-end="url(#arrow-green)"/>
+      <text x="520" y="1597" font-size="10" font-weight="700" fill="#2E7D32">YES</text>
 
-      <rect x="580" y="1442" width="195" height="46" rx="6" fill="#E8F5E9" stroke="#2E7D32" stroke-width="1.8" filter="url(#shadow)"/>
-      <text x="677" y="1461" text-anchor="middle" font-size="10" font-weight="700" fill="#2E7D32">16</text>
-      <text x="677" y="1476" text-anchor="middle" font-size="11.5" font-weight="600" fill="#1a1a1a">Catalogue Promotion</text>
+      <rect x="580" y="1582" width="195" height="46" rx="6" fill="#E8F5E9" stroke="#2E7D32" stroke-width="1.8" filter="url(#shadow)"/>
+      <text x="677" y="1601" text-anchor="middle" font-size="10" font-weight="700" fill="#2E7D32">17</text>
+      <text x="677" y="1616" text-anchor="middle" font-size="11.5" font-weight="600" fill="#1a1a1a">Catalogue Promotion</text>
 
       <!-- ═══════════════════════════════════════ -->
       <!-- FEEDBACK LOOPS                         -->
       <!-- ═══════════════════════════════════════ -->
 
       <!-- Loop A: Outcome Tracking left side up to Einstein Studio (model retraining) -->
-      <path d="M215,1350 L40,1350 L40,60 L50,60" stroke="#0176D3" stroke-width="1.5" fill="none" stroke-dasharray="6,3" marker-end="url(#arrow-blue)"/>
-      <text x="30" y="720" font-size="9" fill="#0176D3" transform="rotate(-90, 30, 720)">model retraining signal</text>
+      <path d="M215,1492 L40,1492 L40,60 L50,60" stroke="#0176D3" stroke-width="1.5" fill="none" stroke-dasharray="6,3" marker-end="url(#arrow-blue)"/>
+      <text x="30" y="780" font-size="9" fill="#0176D3" transform="rotate(-90, 30, 780)">model retraining signal</text>
 
       <!-- Loop B: Catalogue Promotion right side up to Action Catalogue -->
-      <path d="M775,1465 L790,1465 L790,236 L760,236" stroke="#0176D3" stroke-width="1.5" fill="none" stroke-dasharray="6,3" marker-end="url(#arrow-blue)"/>
-      <text x="802" y="720" font-size="9" fill="#0176D3" transform="rotate(90, 802, 720)">promoted to NBAAction__c catalogue</text>
+      <path d="M775,1605 L790,1605 L790,236 L760,236" stroke="#0176D3" stroke-width="1.5" fill="none" stroke-dasharray="6,3" marker-end="url(#arrow-blue)"/>
+      <text x="802" y="780" font-size="9" fill="#0176D3" transform="rotate(90, 802, 780)">promoted to NBAAction__c catalogue</text>
 
     </svg>
     <p class="fig-label">Figure 1</p>
-    <p class="fig-caption">Constitutional Composition Architecture &mdash; end-to-end system data flow with feedback loops.</p>
+    <p class="fig-caption">Constitutional Composition Architecture &mdash; end-to-end system data flow with tiered confidence gating and feedback loops.</p>
   </div>
 </section>
 
@@ -423,11 +449,13 @@
     <tr><td><strong>9</strong></td><td>Constitutional Rails Validator</td><td><code>ComposeTreatment.validateAgainstRails()</code></td><td>Same Apex validation as catalogued actions &mdash; deterministic, not prompted</td></tr>
     <tr><td><strong>10</strong></td><td>Rails Gate</td><td>Conditional in <code>ComposeTreatment</code></td><td>Any rail failure = composition rejected before human review</td></tr>
     <tr><td><strong>11</strong></td><td>Rejection Log</td><td><code>Rails_Checked__c</code> JSON audit</td><td>Failed compositions logged with rail, value checked, threshold</td></tr>
-    <tr><td><strong>12</strong></td><td>Human Approval Queue</td><td>Composition Queue LWC (Decisioning Hub)</td><td>Human reviewer sees context, rationale, rails audit; approve/reject/edit</td></tr>
-    <tr><td><strong>13</strong></td><td>Channel Execution</td><td>Standard channel delivery</td><td>Approved treatment sent via selected channel</td></tr>
-    <tr><td><strong>14</strong></td><td>Outcome Tracking</td><td><code>NBADecision__c</code> + <code>NBA_Outcome_Event__e</code></td><td>Customer response captured, fed to Einstein Studio</td></tr>
-    <tr><td><strong>15</strong></td><td>Evidence Gate</td><td>Promotion criteria evaluation</td><td>Positive outcome = candidate for catalogue promotion</td></tr>
-    <tr><td><strong>16</strong></td><td>Catalogue Promotion</td><td>Composed action &#x2192; <code>NBAAction__c</code></td><td>Proven compositions become permanent catalogue entries</td></tr>
+    <tr><td><strong>12</strong></td><td>Confidence Gate</td><td>Configurable tier routing based on auto-approve setting, confidence score, and conflict signals</td><td>When auto-approve is enabled: Tier 1 compositions (high confidence, no conflicting signals) proceed directly to execution. All others route to Tier 2 human review. When auto-approve is off: all compositions route to human review.</td></tr>
+    <tr><td><strong>12a</strong></td><td>Tier 1 Auto-Approve</td><td>Automatic approval when auto-approve is enabled, confidence &ge; threshold, and no conflicting signals</td><td>High-confidence, unambiguous compositions proceed to execution without human intervention</td></tr>
+    <tr><td><strong>13</strong></td><td>Human Approval Queue</td><td>Composition Queue LWC (Decisioning Hub)</td><td>Tier 2: human reviewer sees context, rationale, conflict details, rails audit; approve/reject/edit</td></tr>
+    <tr><td><strong>14</strong></td><td>Channel Execution</td><td>Standard channel delivery</td><td>Approved treatment sent via selected channel</td></tr>
+    <tr><td><strong>15</strong></td><td>Outcome Tracking</td><td><code>NBADecision__c</code> + <code>NBA_Outcome_Event__e</code></td><td>Customer response captured, fed to Einstein Studio</td></tr>
+    <tr><td><strong>16</strong></td><td>Evidence Gate</td><td>Promotion criteria evaluation</td><td>Positive outcome = candidate for catalogue promotion</td></tr>
+    <tr><td><strong>17</strong></td><td>Catalogue Promotion</td><td>Composed action &#x2192; <code>NBAAction__c</code></td><td>Proven compositions become permanent catalogue entries</td></tr>
   </table>
 </section>
 
@@ -463,19 +491,25 @@
       <td>Pass (all rails) or reject (any rail fails) + JSON audit trail</td>
     </tr>
     <tr>
-      <td><strong>Human Approval</strong> (12)</td>
-      <td>Rails-validated composition with full context</td>
+      <td><strong>Confidence Gate</strong> (12)</td>
+      <td>Rails-validated composition with agent confidence score and signal analysis</td>
+      <td>When auto-approve is enabled: evaluate confidence threshold and check for conflicting signals. When off: route all to human review.</td>
+      <td>Tier 1: auto-approved for execution (auto-approve on, high confidence, no conflicts). Tier 2: routed to human approval queue.</td>
+    </tr>
+    <tr>
+      <td><strong>Human Approval</strong> (13)</td>
+      <td>Tier 2 composition with full context and conflict details</td>
       <td>Human judgment: approve, reject, or edit</td>
       <td>Approved treatment ready for execution</td>
     </tr>
     <tr>
-      <td><strong>Outcome Capture</strong> (14)</td>
+      <td><strong>Outcome Capture</strong> (15)</td>
       <td>Customer response to executed treatment</td>
       <td>Response mapped to outcome event, published to Einstein Studio</td>
       <td>Training signal for model retraining + promotion candidacy</td>
     </tr>
     <tr>
-      <td><strong>Promotion</strong> (16)</td>
+      <td><strong>Promotion</strong> (17)</td>
       <td>Composed action with positive outcome evidence</td>
       <td>Derive score threshold, eligibility rules, priority weight from composition context + outcomes</td>
       <td>New <code>NBAAction__c</code> catalogue entry &mdash; participates in future arbitration</td>
