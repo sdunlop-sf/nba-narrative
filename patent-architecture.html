@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>System Architecture — Constitutional Composition Architecture</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Salesforce Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    color: #1a1a1a;
+    line-height: 1.65;
+    background: #f7f9fc;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    background: linear-gradient(135deg, #1B2A4A 0%, #032D60 50%, #0176D3 100%);
+    color: white;
+    padding: 80px 20px 60px;
+    text-align: center;
+  }
+  .hero-inner { max-width: 820px; margin: 0 auto; }
+  .eyebrow {
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    font-size: 11px;
+    opacity: 0.75;
+    margin-bottom: 16px;
+    font-weight: 600;
+  }
+  .conf-badge {
+    display: inline-block;
+    background: rgba(194, 57, 52, 0.9);
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    padding: 5px 14px;
+    border-radius: 4px;
+    margin-bottom: 24px;
+  }
+  .hero h1 {
+    font-size: 36px;
+    line-height: 1.15;
+    font-weight: 700;
+    margin-bottom: 16px;
+    letter-spacing: -0.5px;
+  }
+  .hero .tagline {
+    font-size: 17px;
+    opacity: 0.88;
+    font-weight: 300;
+    max-width: 680px;
+    margin: 0 auto 20px;
+  }
+  .hero-meta {
+    font-size: 13px;
+    opacity: 0.55;
+    font-weight: 400;
+  }
+  .hero-meta a { color: white; text-decoration: underline; opacity: 0.8; }
+  .hero-meta a:hover { opacity: 1; }
+
+  /* ── MAIN ── */
+  main {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 48px 24px 100px;
+  }
+  section { margin-bottom: 64px; }
+  section h2 {
+    font-size: 28px;
+    color: #032D60;
+    margin-bottom: 20px;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+  }
+  section p {
+    font-size: 16px;
+    margin-bottom: 16px;
+    color: #2a2a2a;
+  }
+  .fig-container {
+    background: white;
+    border: 1px solid #e0e5ec;
+    border-radius: 8px;
+    padding: 32px 16px 16px;
+    margin: 24px 0;
+    box-shadow: 0 2px 12px rgba(3,45,96,0.06);
+    overflow-x: auto;
+  }
+  .fig-caption {
+    text-align: center;
+    font-size: 14px;
+    color: #555;
+    margin-top: 12px;
+    font-style: italic;
+  }
+  .fig-label {
+    text-align: center;
+    font-size: 13px;
+    font-weight: 700;
+    color: #032D60;
+    margin-top: 16px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  /* ── TABLES ── */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 16px 0 24px;
+    font-size: 14px;
+  }
+  th {
+    background: #032D60;
+    color: white;
+    padding: 10px 14px;
+    text-align: left;
+    font-weight: 600;
+  }
+  td {
+    padding: 10px 14px;
+    border-bottom: 1px solid #e5e5e5;
+    vertical-align: top;
+  }
+  tr:nth-child(even) td { background: #f9f9f9; }
+  code {
+    background: #eef2f7;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-size: 13px;
+    font-family: 'SF Mono', 'Fira Code', monospace;
+    color: #0b4f8a;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 24px;
+    border-top: 1px solid #e5e5e5;
+    font-size: 12px;
+    color: #999;
+  }
+
+  /* ── SVG STYLING ── */
+  svg text { font-family: 'Salesforce Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+</style>
+</head>
+<body>
+
+<!-- ── HERO ── -->
+<div class="hero">
+  <div class="hero-inner">
+    <div class="conf-badge">Salesforce Confidential &mdash; Invention Disclosure</div>
+    <div class="eyebrow">NBA Decisioning Accelerator</div>
+    <h1>System Architecture</h1>
+    <p class="tagline">Constitutional Composition Architecture for Next-Best-Action Decisioning</p>
+    <p class="hero-meta">Supplementary to <a href="patent-disclosure.html">Invention Disclosure</a> &middot; Stuart Dunlop &middot; April 2026</p>
+  </div>
+</div>
+
+<!-- ── MAIN ── -->
+<main>
+
+<!-- Figure 1 -->
+<section>
+  <h2>Figure 1 &mdash; High-Level System Architecture</h2>
+  <p>End-to-end data flow from customer context through deterministic arbitration, LLM composition, constitutional-rails validation, human approval, and evidence-gated catalogue promotion. Numbered components correspond to the reference table below.</p>
+
+  <div class="fig-container">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1380" width="100%" height="auto">
+      <defs>
+        <marker id="arrow" viewBox="0 0 10 7" refX="10" refY="3.5" markerWidth="10" markerHeight="7" orient="auto-start-reverse">
+          <polygon points="0 0, 10 3.5, 0 7" fill="#444"/>
+        </marker>
+        <marker id="arrow-green" viewBox="0 0 10 7" refX="10" refY="3.5" markerWidth="10" markerHeight="7" orient="auto-start-reverse">
+          <polygon points="0 0, 10 3.5, 0 7" fill="#2E7D32"/>
+        </marker>
+        <marker id="arrow-red" viewBox="0 0 10 7" refX="10" refY="3.5" markerWidth="10" markerHeight="7" orient="auto-start-reverse">
+          <polygon points="0 0, 10 3.5, 0 7" fill="#C23934"/>
+        </marker>
+        <marker id="arrow-blue" viewBox="0 0 10 7" refX="10" refY="3.5" markerWidth="10" markerHeight="7" orient="auto-start-reverse">
+          <polygon points="0 0, 10 3.5, 0 7" fill="#0176D3"/>
+        </marker>
+        <filter id="shadow" x="-4%" y="-4%" width="108%" height="112%">
+          <feDropShadow dx="0" dy="1" stdDeviation="2" flood-color="#000" flood-opacity="0.08"/>
+        </filter>
+      </defs>
+
+      <!-- ════════════════════════════════════════════════ -->
+      <!-- ROW 1: DATA SOURCES                              -->
+      <!-- ════════════════════════════════════════════════ -->
+
+      <!-- 1 — Customer Record -->
+      <rect x="20" y="30" width="230" height="64" rx="6" fill="#E8F0FE" stroke="#032D60" stroke-width="1.5" filter="url(#shadow)"/>
+      <text x="135" y="55" text-anchor="middle" font-size="11" font-weight="700" fill="#032D60">1</text>
+      <text x="135" y="73" text-anchor="middle" font-size="13" font-weight="600" fill="#1a1a1a">Customer Record (CRM)</text>
+
+      <!-- 2 — Data Cloud -->
+      <rect x="285" y="30" width="230" height="64" rx="6" fill="#E8F0FE" stroke="#032D60" stroke-width="1.5" filter="url(#shadow)"/>
+      <text x="400" y="55" text-anchor="middle" font-size="11" font-weight="700" fill="#032D60">2</text>
+      <text x="400" y="73" text-anchor="middle" font-size="13" font-weight="600" fill="#1a1a1a">Data Cloud Segments</text>
+
+      <!-- 3 — Einstein Studio -->
+      <rect x="550" y="30" width="230" height="64" rx="6" fill="#E8F0FE" stroke="#032D60" stroke-width="1.5" filter="url(#shadow)"/>
+      <text x="665" y="55" text-anchor="middle" font-size="11" font-weight="700" fill="#032D60">3</text>
+      <text x="665" y="73" text-anchor="middle" font-size="13" font-weight="600" fill="#1a1a1a">Einstein Studio Model</text>
+
+      <!-- Arrows: data sources → arbitration engine -->
+      <line x1="135" y1="94" x2="135" y2="150" stroke="#444" stroke-width="1.2" marker-end="url(#arrow)"/>
+      <line x1="400" y1="94" x2="400" y2="150" stroke="#444" stroke-width="1.2" marker-end="url(#arrow)"/>
+      <line x1="665" y1="94" x2="665" y2="150" stroke="#444" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+      <!-- Labels on arrows -->
+      <text x="145" y="128" font-size="9" fill="#666">contact data</text>
+      <text x="410" y="128" font-size="9" fill="#666">segments</text>
+      <text x="675" y="128" font-size="9" fill="#666">propensity score</text>
+
+      <!-- ════════════════════════════════════════════════ -->
+      <!-- ROW 2: ARBITRATION ENGINE                        -->
+      <!-- ════════════════════════════════════════════════ -->
+
+      <!-- 4 — Arbitration Engine (outer box) -->
+      <rect x="20" y="155" width="760" height="190" rx="8" fill="#fff" stroke="#032D60" stroke-width="2" filter="url(#shadow)"/>
+      <text x="400" y="178" text-anchor="middle" font-size="14" font-weight="700" fill="#032D60">4 &mdash; Deterministic Arbitration Engine</text>
+      <text x="400" y="194" text-anchor="middle" font-size="11" fill="#666">InvokeArbitration.cls</text>
+
+      <!-- Sub-boxes inside -->
+      <!-- 4a — Module Registry -->
+      <rect x="40" y="210" width="170" height="50" rx="4" fill="#F0F4FF" stroke="#5B8DEF" stroke-width="1"/>
+      <text x="125" y="230" text-anchor="middle" font-size="10" font-weight="600" fill="#032D60">4a</text>
+      <text x="125" y="246" text-anchor="middle" font-size="11" fill="#1a1a1a">Module Registry</text>
+
+      <!-- 4b — Action Catalogue -->
+      <rect x="230" y="210" width="170" height="50" rx="4" fill="#F0F4FF" stroke="#5B8DEF" stroke-width="1"/>
+      <text x="315" y="230" text-anchor="middle" font-size="10" font-weight="600" fill="#032D60">4b</text>
+      <text x="315" y="246" text-anchor="middle" font-size="11" fill="#1a1a1a">Action Catalogue</text>
+
+      <!-- 4c — Eligibility Filters -->
+      <rect x="420" y="210" width="340" height="50" rx="4" fill="#F0F4FF" stroke="#5B8DEF" stroke-width="1"/>
+      <text x="590" y="230" text-anchor="middle" font-size="10" font-weight="600" fill="#032D60">4c</text>
+      <text x="590" y="246" text-anchor="middle" font-size="11" fill="#1a1a1a">Eligibility Filter Chain</text>
+
+      <!-- Filter pipeline inside engine -->
+      <rect x="40" y="275" width="720" height="54" rx="4" fill="#F8FAFD" stroke="#C5D3E8" stroke-width="1" stroke-dasharray="4,3"/>
+      <text x="400" y="296" text-anchor="middle" font-size="11" font-weight="600" fill="#444">Score Threshold</text>
+      <text x="400" y="314" text-anchor="middle" font-size="10" fill="#666">&#x2192; Budget Cap &#x2192; Contact Frequency &#x2192; Global Suppression &#x2192; Segment Eligibility &#x2192; Winner Selection</text>
+
+      <!-- ════════════════════════════════════════════════ -->
+      <!-- ROW 3: DECISION — ELIGIBLE ACTION?               -->
+      <!-- ════════════════════════════════════════════════ -->
+
+      <!-- Arrow down from arbitration to diamond -->
+      <line x1="400" y1="345" x2="400" y2="385" stroke="#444" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+      <!-- 5 — Decision diamond -->
+      <polygon points="400,390 470,430 400,470 330,430" fill="#FFF3E0" stroke="#E65100" stroke-width="1.5" filter="url(#shadow)"/>
+      <text x="400" y="426" text-anchor="middle" font-size="10" font-weight="700" fill="#E65100">5</text>
+      <text x="400" y="440" text-anchor="middle" font-size="10.5" font-weight="600" fill="#333">Eligible action?</text>
+
+      <!-- YES path → right -->
+      <line x1="470" y1="430" x2="550" y2="430" stroke="#2E7D32" stroke-width="1.5" marker-end="url(#arrow-green)"/>
+      <text x="505" y="422" font-size="10" font-weight="700" fill="#2E7D32">YES</text>
+
+      <!-- 6 — Serve Catalogued Action -->
+      <rect x="555" y="405" width="220" height="50" rx="6" fill="#E8F5E9" stroke="#2E7D32" stroke-width="1.5" filter="url(#shadow)"/>
+      <text x="665" y="425" text-anchor="middle" font-size="10" font-weight="700" fill="#2E7D32">6</text>
+      <text x="665" y="440" text-anchor="middle" font-size="12" font-weight="600" fill="#1a1a1a">Serve Catalogued Action</text>
+
+      <!-- Arrow from catalogued action down to execution (joins at row 9) -->
+      <line x1="665" y1="455" x2="665" y2="1095" stroke="#2E7D32" stroke-width="1.2" stroke-dasharray="6,4"/>
+      <line x1="665" y1="1095" x2="550" y2="1095" stroke="#2E7D32" stroke-width="1.2" marker-end="url(#arrow-green)"/>
+
+      <!-- NO path → down -->
+      <line x1="400" y1="470" x2="400" y2="510" stroke="#C23934" stroke-width="1.5" marker-end="url(#arrow-red)"/>
+      <text x="415" y="497" font-size="10" font-weight="700" fill="#C23934">NO</text>
+
+      <!-- ════════════════════════════════════════════════ -->
+      <!-- ROW 4: COMPOSITION TRIGGER + LLM AGENT           -->
+      <!-- ════════════════════════════════════════════════ -->
+
+      <!-- 7 — Composition Trigger -->
+      <rect x="215" y="515" width="370" height="44" rx="6" fill="#FFF8E1" stroke="#F9A825" stroke-width="1.5" filter="url(#shadow)"/>
+      <text x="400" y="535" text-anchor="middle" font-size="10" font-weight="700" fill="#E65100">7</text>
+      <text x="400" y="548" text-anchor="middle" font-size="12" font-weight="600" fill="#1a1a1a">Composition Trigger (no eligible action)</text>
+
+      <!-- Arrow down -->
+      <line x1="400" y1="559" x2="400" y2="590" stroke="#444" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+      <!-- Context passed label -->
+      <text x="280" y="580" font-size="9" fill="#666">full decision context: scores, segments, dropped actions + reasons</text>
+
+      <!-- 8 — LLM Composition Agent -->
+      <rect x="180" y="595" width="440" height="70" rx="8" fill="#EDE7F6" stroke="#5E35B1" stroke-width="1.8" filter="url(#shadow)"/>
+      <text x="400" y="620" text-anchor="middle" font-size="11" font-weight="700" fill="#5E35B1">8 &mdash; LLM Composition Agent</text>
+      <text x="400" y="638" text-anchor="middle" font-size="11" fill="#444">Agentforce GenAiFunction</text>
+      <text x="400" y="654" text-anchor="middle" font-size="10" fill="#777">Composes novel treatment: channel, offer, content, rationale</text>
+
+      <!-- Arrow down to rails -->
+      <line x1="400" y1="665" x2="400" y2="705" stroke="#444" stroke-width="1.2" marker-end="url(#arrow)"/>
+      <text x="270" y="692" font-size="9" fill="#666">NBA_Composed_Action__c record</text>
+
+      <!-- ════════════════════════════════════════════════ -->
+      <!-- ROW 5: CONSTITUTIONAL RAILS                      -->
+      <!-- ════════════════════════════════════════════════ -->
+
+      <!-- 9 — Constitutional Rails Validator (outer box) -->
+      <rect x="80" y="710" width="640" height="130" rx="8" fill="#FFF" stroke="#C23934" stroke-width="2.5" filter="url(#shadow)"/>
+      <text x="400" y="733" text-anchor="middle" font-size="12" font-weight="700" fill="#C23934">9 &mdash; Constitutional Rails Validator</text>
+      <text x="400" y="749" text-anchor="middle" font-size="10" fill="#666">ComposeTreatment.validateAgainstRails() &mdash; deterministic Apex, not prompted</text>
+
+      <!-- Individual rail boxes inside -->
+      <rect x="100" y="762" width="108" height="34" rx="3" fill="#FFEBEE" stroke="#E57373" stroke-width="1"/>
+      <text x="154" y="783" text-anchor="middle" font-size="10" fill="#333">Budget Cap</text>
+
+      <rect x="220" y="762" width="108" height="34" rx="3" fill="#FFEBEE" stroke="#E57373" stroke-width="1"/>
+      <text x="274" y="783" text-anchor="middle" font-size="10" fill="#333">Frequency</text>
+
+      <rect x="340" y="762" width="108" height="34" rx="3" fill="#FFEBEE" stroke="#E57373" stroke-width="1"/>
+      <text x="394" y="783" text-anchor="middle" font-size="10" fill="#333">Suppression</text>
+
+      <rect x="460" y="762" width="108" height="34" rx="3" fill="#FFEBEE" stroke="#E57373" stroke-width="1"/>
+      <text x="514" y="783" text-anchor="middle" font-size="10" fill="#333">Segment</text>
+
+      <rect x="580" y="762" width="120" height="34" rx="3" fill="#FFEBEE" stroke="#E57373" stroke-width="1"/>
+      <text x="640" y="783" text-anchor="middle" font-size="10" fill="#333">Cooldown</text>
+
+      <!-- Key property labels -->
+      <text x="400" y="818" text-anchor="middle" font-size="9.5" font-weight="600" fill="#C23934">Identical validation path for catalogued AND composed actions &mdash; any rail fails = rejected before human review</text>
+
+      <!-- Arrow down to rails decision -->
+      <line x1="400" y1="840" x2="400" y2="875" stroke="#444" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+      <!-- ════════════════════════════════════════════════ -->
+      <!-- ROW 6: RAILS DECISION                            -->
+      <!-- ════════════════════════════════════════════════ -->
+
+      <!-- 10 — Rails decision diamond -->
+      <polygon points="400,880 465,915 400,950 335,915" fill="#FFF3E0" stroke="#E65100" stroke-width="1.5" filter="url(#shadow)"/>
+      <text x="400" y="911" text-anchor="middle" font-size="10" font-weight="700" fill="#E65100">10</text>
+      <text x="400" y="925" text-anchor="middle" font-size="10" font-weight="600" fill="#333">All rails pass?</text>
+
+      <!-- NO → right to rejection -->
+      <line x1="465" y1="915" x2="560" y2="915" stroke="#C23934" stroke-width="1.5" marker-end="url(#arrow-red)"/>
+      <text x="508" y="907" font-size="10" font-weight="700" fill="#C23934">FAIL</text>
+
+      <!-- 11 — Rejection Log -->
+      <rect x="565" y="893" width="200" height="44" rx="6" fill="#FFEBEE" stroke="#C23934" stroke-width="1.5" filter="url(#shadow)"/>
+      <text x="665" y="912" text-anchor="middle" font-size="10" font-weight="700" fill="#C23934">11</text>
+      <text x="665" y="926" text-anchor="middle" font-size="11" font-weight="600" fill="#333">Rejected &amp; Logged</text>
+
+      <!-- YES → down -->
+      <line x1="400" y1="950" x2="400" y2="985" stroke="#2E7D32" stroke-width="1.5" marker-end="url(#arrow-green)"/>
+      <text x="415" y="974" font-size="10" font-weight="700" fill="#2E7D32">PASS</text>
+
+      <!-- ════════════════════════════════════════════════ -->
+      <!-- ROW 7: HUMAN APPROVAL                            -->
+      <!-- ════════════════════════════════════════════════ -->
+
+      <!-- 12 — Human Approval Queue -->
+      <rect x="195" y="990" width="410" height="60" rx="8" fill="#E3F2FD" stroke="#1565C0" stroke-width="1.8" filter="url(#shadow)"/>
+      <text x="400" y="1015" text-anchor="middle" font-size="11" font-weight="700" fill="#1565C0">12 &mdash; Human Approval Queue</text>
+      <text x="400" y="1033" text-anchor="middle" font-size="11" fill="#444">Composition Queue in Decisioning Hub (LWC)</text>
+
+      <!-- Arrow down -->
+      <line x1="400" y1="1050" x2="400" y2="1075" stroke="#444" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+      <!-- ════════════════════════════════════════════════ -->
+      <!-- ROW 8: EXECUTION & OUTCOME TRACKING              -->
+      <!-- ════════════════════════════════════════════════ -->
+
+      <!-- 13 — Channel Execution -->
+      <rect x="270" y="1080" width="260" height="44" rx="6" fill="#E8F5E9" stroke="#2E7D32" stroke-width="1.5" filter="url(#shadow)"/>
+      <text x="400" y="1098" text-anchor="middle" font-size="10" font-weight="700" fill="#2E7D32">13</text>
+      <text x="400" y="1113" text-anchor="middle" font-size="12" font-weight="600" fill="#1a1a1a">Channel Execution</text>
+
+      <!-- Arrow down -->
+      <line x1="400" y1="1124" x2="400" y2="1160" stroke="#444" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+      <!-- 14 — Outcome Tracking -->
+      <rect x="200" y="1165" width="400" height="55" rx="6" fill="#E8F0FE" stroke="#032D60" stroke-width="1.5" filter="url(#shadow)"/>
+      <text x="400" y="1186" text-anchor="middle" font-size="11" font-weight="700" fill="#032D60">14 &mdash; Outcome Tracking</text>
+      <text x="400" y="1204" text-anchor="middle" font-size="10.5" fill="#444">NBADecision__c + NBA_Outcome_Event__e &#x2192; Einstein Studio</text>
+
+      <!-- ════════════════════════════════════════════════ -->
+      <!-- ROW 9: EVIDENCE GATE & CATALOGUE PROMOTION       -->
+      <!-- ════════════════════════════════════════════════ -->
+
+      <!-- Arrow down to evidence diamond -->
+      <line x1="400" y1="1220" x2="400" y2="1255" stroke="#444" stroke-width="1.2" marker-end="url(#arrow)"/>
+
+      <!-- 15 — Evidence gate diamond -->
+      <polygon points="400,1260 465,1295 400,1330 335,1295" fill="#FFF3E0" stroke="#E65100" stroke-width="1.5" filter="url(#shadow)"/>
+      <text x="400" y="1291" text-anchor="middle" font-size="10" font-weight="700" fill="#E65100">15</text>
+      <text x="400" y="1305" text-anchor="middle" font-size="9.5" font-weight="600" fill="#333">Positive outcome?</text>
+
+      <!-- YES → right to promotion -->
+      <line x1="465" y1="1295" x2="555" y2="1295" stroke="#2E7D32" stroke-width="1.5" marker-end="url(#arrow-green)"/>
+      <text x="505" y="1287" font-size="10" font-weight="700" fill="#2E7D32">YES</text>
+
+      <!-- 16 — Catalogue Promotion -->
+      <rect x="560" y="1272" width="210" height="46" rx="6" fill="#E8F5E9" stroke="#2E7D32" stroke-width="1.8" filter="url(#shadow)"/>
+      <text x="665" y="1291" text-anchor="middle" font-size="10" font-weight="700" fill="#2E7D32">16</text>
+      <text x="665" y="1306" text-anchor="middle" font-size="11.5" font-weight="600" fill="#1a1a1a">Catalogue Promotion</text>
+
+      <!-- ════════════════════════════════════════════════ -->
+      <!-- FEEDBACK LOOPS                                   -->
+      <!-- ════════════════════════════════════════════════ -->
+
+      <!-- Loop A: Outcome → Einstein Studio (model retraining) -->
+      <!-- Left side: from outcome tracking up to Einstein Studio -->
+      <path d="M200,1192 L30,1192 L30,62 L20,62" stroke="#0176D3" stroke-width="1.5" fill="none" stroke-dasharray="6,3" marker-end="url(#arrow-blue)"/>
+      <text x="36" y="640" font-size="9" fill="#0176D3" transform="rotate(-90, 36, 640)">model retraining signal</text>
+
+      <!-- Loop B: Catalogue Promotion → back to Action Catalogue -->
+      <path d="M770,1295 L780,1295 L780,235 L760,235" stroke="#0176D3" stroke-width="1.5" fill="none" stroke-dasharray="6,3" marker-end="url(#arrow-blue)"/>
+      <text x="790" y="640" font-size="9" fill="#0176D3" transform="rotate(90, 790, 640)">promoted to NBAAction__c catalogue</text>
+      <line x1="770" y1="1295" x2="770" y2="1295" stroke="none"/>
+
+      <!-- Connect promotion box to right edge -->
+      <line x1="770" y1="1295" x2="780" y2="1295" stroke="#0176D3" stroke-width="1.5" fill="none" stroke-dasharray="6,3"/>
+
+      <!-- ════════════════════════════════════════════════ -->
+      <!-- ZONE LABELS (right side)                         -->
+      <!-- ════════════════════════════════════════════════ -->
+
+      <!-- Colour zones / brackets on far left for conceptual grouping -->
+      <rect x="4" y="28" width="6" height="68" rx="3" fill="#5B8DEF" opacity="0.5"/>
+      <rect x="4" y="153" width="6" height="195" rx="3" fill="#032D60" opacity="0.5"/>
+      <rect x="4" y="510" width="6" height="160" rx="3" fill="#5E35B1" opacity="0.5"/>
+      <rect x="4" y="708" width="6" height="135" rx="3" fill="#C23934" opacity="0.5"/>
+      <rect x="4" y="988" width="6" height="65" rx="3" fill="#1565C0" opacity="0.5"/>
+      <rect x="4" y="1078" width="6" height="260" rx="3" fill="#2E7D32" opacity="0.5"/>
+
+    </svg>
+    <p class="fig-label">Figure 1</p>
+    <p class="fig-caption">Constitutional Composition Architecture &mdash; end-to-end system data flow with feedback loops.</p>
+  </div>
+</section>
+
+<!-- Component Reference Table -->
+<section>
+  <h2>Component Reference</h2>
+  <p>Numbered components from Figure 1, with implementation mapping.</p>
+
+  <table>
+    <tr><th>#</th><th>Component</th><th>Implementation</th><th>Role</th></tr>
+    <tr><td><strong>1</strong></td><td>Customer Record</td><td>CRM Contact / Account</td><td>Source contact data, interaction history, preferences</td></tr>
+    <tr><td><strong>2</strong></td><td>Data Cloud Segments</td><td>Data Cloud Calculated Insights, Segments</td><td>Real-time segment membership, behavioural signals</td></tr>
+    <tr><td><strong>3</strong></td><td>Einstein Studio Model</td><td>Einstein Studio Binary Classification</td><td>Propensity scores per outcome type (churn, upsell, etc.)</td></tr>
+    <tr><td><strong>4</strong></td><td>Deterministic Arbitration Engine</td><td><code>InvokeArbitration.cls</code> (Apex InvocableMethod)</td><td>Orchestrates scoring, filtering, and winner selection</td></tr>
+    <tr><td><strong>4a</strong></td><td>Module Registry</td><td><code>NBA_Module__c</code></td><td>Registered decisioning modules (churn, upsell, retention, etc.)</td></tr>
+    <tr><td><strong>4b</strong></td><td>Action Catalogue</td><td><code>NBAAction__c</code></td><td>Pre-defined actions with score thresholds and eligibility rules</td></tr>
+    <tr><td><strong>4c</strong></td><td>Eligibility Filter Chain</td><td>Apex methods within <code>InvokeArbitration</code></td><td>Sequential filters: score, budget, frequency, suppression, segment</td></tr>
+    <tr><td><strong>5</strong></td><td>Eligibility Gate</td><td>Conditional branch in <code>InvokeArbitration</code></td><td>Routes to standard delivery or composition path</td></tr>
+    <tr><td><strong>6</strong></td><td>Catalogued Action Delivery</td><td>Standard channel execution</td><td>Existing behaviour &mdash; serve the highest-weighted eligible action</td></tr>
+    <tr><td><strong>7</strong></td><td>Composition Trigger</td><td>Conditional invocation in <code>InvokeArbitration</code></td><td>Activates when all catalogue actions are filtered out</td></tr>
+    <tr><td><strong>8</strong></td><td>LLM Composition Agent</td><td>Agentforce GenAiFunction</td><td>Composes novel treatment from full decision context</td></tr>
+    <tr><td><strong>9</strong></td><td>Constitutional Rails Validator</td><td><code>ComposeTreatment.validateAgainstRails()</code></td><td>Same Apex validation as catalogued actions &mdash; deterministic, not prompted</td></tr>
+    <tr><td><strong>10</strong></td><td>Rails Gate</td><td>Conditional in <code>ComposeTreatment</code></td><td>Any rail failure = composition rejected before human review</td></tr>
+    <tr><td><strong>11</strong></td><td>Rejection Log</td><td><code>Rails_Checked__c</code> JSON audit</td><td>Failed compositions logged with rail, value checked, threshold</td></tr>
+    <tr><td><strong>12</strong></td><td>Human Approval Queue</td><td>Composition Queue LWC (Decisioning Hub)</td><td>Human reviewer sees context, rationale, rails audit; approve/reject/edit</td></tr>
+    <tr><td><strong>13</strong></td><td>Channel Execution</td><td>Standard channel delivery</td><td>Approved treatment sent via selected channel</td></tr>
+    <tr><td><strong>14</strong></td><td>Outcome Tracking</td><td><code>NBADecision__c</code> + <code>NBA_Outcome_Event__e</code></td><td>Customer response captured, fed to Einstein Studio</td></tr>
+    <tr><td><strong>15</strong></td><td>Evidence Gate</td><td>Promotion criteria evaluation</td><td>Positive outcome = candidate for catalogue promotion</td></tr>
+    <tr><td><strong>16</strong></td><td>Catalogue Promotion</td><td>Composed action &#x2192; <code>NBAAction__c</code></td><td>Proven compositions become permanent catalogue entries</td></tr>
+  </table>
+</section>
+
+<!-- Data Flow Summary -->
+<section>
+  <h2>Data Transformation Summary</h2>
+  <p>How data is transformed at each stage of the pipeline.</p>
+
+  <table>
+    <tr><th>Stage</th><th>Input</th><th>Transformation</th><th>Output</th></tr>
+    <tr>
+      <td><strong>Scoring</strong> (1-3 &#x2192; 4)</td>
+      <td>Contact ID, segment memberships</td>
+      <td>Einstein Studio model inference</td>
+      <td>Propensity score (0.00&ndash;1.00) per outcome type</td>
+    </tr>
+    <tr>
+      <td><strong>Arbitration</strong> (4)</td>
+      <td>Scores, module catalogue, eligibility rules</td>
+      <td>Sequential filter chain with deterministic elimination</td>
+      <td>Ranked list of eligible actions (may be empty)</td>
+    </tr>
+    <tr>
+      <td><strong>Composition</strong> (7-8)</td>
+      <td>Full decision context: scores, segments, dropped actions with rejection reasons</td>
+      <td>LLM generates novel treatment grounded in decision context</td>
+      <td><code>NBA_Composed_Action__c</code> record with channel, offer, content, rationale</td>
+    </tr>
+    <tr>
+      <td><strong>Rails Validation</strong> (9)</td>
+      <td>Composed treatment marshalled to standard data structure</td>
+      <td>Identical Apex validation methods as catalogued actions</td>
+      <td>Pass (all rails) or reject (any rail fails) + JSON audit trail</td>
+    </tr>
+    <tr>
+      <td><strong>Human Approval</strong> (12)</td>
+      <td>Rails-validated composition with full context</td>
+      <td>Human judgment: approve, reject, or edit</td>
+      <td>Approved treatment ready for execution</td>
+    </tr>
+    <tr>
+      <td><strong>Outcome Capture</strong> (14)</td>
+      <td>Customer response to executed treatment</td>
+      <td>Response mapped to outcome event, published to Einstein Studio</td>
+      <td>Training signal for model retraining + promotion candidacy</td>
+    </tr>
+    <tr>
+      <td><strong>Promotion</strong> (16)</td>
+      <td>Composed action with positive outcome evidence</td>
+      <td>Derive score threshold, eligibility rules, priority weight from composition context + outcomes</td>
+      <td>New <code>NBAAction__c</code> catalogue entry &mdash; participates in future arbitration</td>
+    </tr>
+  </table>
+</section>
+
+</main>
+
+<footer>
+  <p>Salesforce Confidential &mdash; Invention Disclosure &mdash; Stuart Dunlop &mdash; April 2026</p>
+  <p>NBA Decisioning Accelerator &middot; System Architecture Supplement &middot; Cloud: Einstein AI</p>
+</footer>
+
+<script src="gate.js" data-page="Patent Architecture — Constitutional Composition"></script>
+
+</body>
+</html>
