@@ -12118,5 +12118,17 @@
     "location": "Sydney, New South Wales, Australia",
     "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
     "returning": "no"
+  },
+  {
+    "timestamp": "Fri, 24 Apr 2026 06:01:01 GMT",
+    "name": "Garth",
+    "company": "Salesforce",
+    "position": "AE",
+    "page": "Decisioning Hub Framing v2 Lite",
+    "url": "https://sdunlop-sf.github.io/decisioning-hub-framing/v2-lite.html",
+    "ip": "147.161.215.13",
+    "location": "Sydney, New South Wales, Australia",
+    "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
+    "returning": "yes"
   }
 ]
