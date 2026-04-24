@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Memory Approach · NBA Decisioning</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:     #C8E4FD;
+      --bg-alt: #D8ECFE;
+      --blue2:  #022AC0;
+      --teal:   #04E1CB;
+      --teal-d: #007A72;
+      --lblue-d: #0057B8;
+      --gold:   #FCC003;
+      --gold-d: #A87700;
+      --purple: #7A3DD6;
+      --purple-d: #5521A8;
+      --ink:    #002775;
+      --muted:  rgba(0, 39, 117, 0.55);
+      --text:   rgba(0, 39, 117, 0.85);
+      --card:   #FFFFFF;
+      --card-h: #F4FAFF;
+      --border: rgba(0, 39, 117, 0.1);
+      --shadow: 0 1px 3px rgba(0,39,117,0.07), 0 4px 18px rgba(0,39,117,0.07);
+      --shadow-sm: 0 1px 2px rgba(0,39,117,0.06), 0 2px 8px rgba(0,39,117,0.05);
+      --red:    #C41C00;
+      --green:  #007A72;
+      --mono:   'JetBrains Mono', 'Courier New', monospace;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      background-attachment: fixed;
+      color: var(--ink);
+      font-family: 'Segoe UI', Arial, sans-serif;
+      font-size: 15px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      min-height: 100vh;
+    }
+
+    body::before {
+      content: '';
+      position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: 0.012;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-repeat: repeat; background-size: 200px 200px;
+    }
+
+    nav, .hero, .flow-strip-wrap, .section, .section-alt, hr.divider { position: relative; z-index: 1; }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      height: 56px;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 40px;
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(0, 39, 117, 0.1);
+      box-shadow: 0 1px 0 rgba(0,39,117,0.06), 0 2px 12px rgba(0,39,117,0.06);
+    }
+
+    .nav-brand { display: flex; align-items: center; gap: 12px; }
+    .nav-logo { height: 24px; width: auto; }
+    .nav-divider { width: 1px; height: 18px; background: rgba(0, 39, 117, 0.14); }
+    .nav-title { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink); }
+    .nav-sub { font-size: 11px; color: var(--muted); }
+    .nav-links { display: flex; gap: 8px; }
+    .nav-pill {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+      background: rgba(2, 42, 192, 0.08); color: var(--blue2);
+      border: 1px solid rgba(2, 42, 192, 0.22); border-radius: 20px;
+      padding: 3px 12px; text-decoration: none;
+    }
+    .nav-pill:hover { background: rgba(2, 42, 192, 0.14); }
+    .nav-pill.active { background: var(--blue2); color: #fff; border-color: var(--blue2); }
+
+    .hero {
+      padding: 120px 40px 72px;
+      max-width: 900px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .accent-line {
+      width: 40px; height: 3px; border-radius: 2px;
+      margin: 0 auto 20px;
+      background: linear-gradient(90deg, var(--blue2), var(--teal));
+    }
+
+    .hero-eyebrow {
+      font-size: 12px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--blue2); margin-bottom: 16px;
+    }
+
+    .hero h1 {
+      font-size: clamp(32px, 5vw, 52px);
+      font-weight: 900; line-height: 1.05; letter-spacing: -0.03em;
+      color: var(--ink); margin-bottom: 20px;
+    }
+
+    .hero h1 .hl {
+      background: linear-gradient(135deg, var(--blue2) 0%, #04E1CB 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-sub {
+      font-size: 17px; color: var(--muted); max-width: 680px; margin: 0 auto;
+      line-height: 1.75;
+    }
+
+    .hero-version {
+      display: inline-flex; align-items: center; gap: 8px;
+      margin-top: 22px;
+      padding: 6px 14px; border-radius: 20px;
+      background: rgba(2, 42, 192, 0.08);
+      border: 1px solid rgba(2, 42, 192, 0.2);
+      font-size: 11px; font-weight: 700; letter-spacing: 0.08em;
+      color: var(--blue2); text-transform: uppercase;
+    }
+
+    .hero-version .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); }
+
+    /* ── FLOW STRIP ── */
+    .flow-strip-wrap {
+      background: var(--card);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+      padding: 28px 40px;
+      overflow-x: auto;
+    }
+
+    .flow-strip {
+      display: flex; align-items: center;
+      min-width: 700px; max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .fs-node {
+      flex: 1;
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      text-align: center;
+    }
+
+    .fs-icon {
+      width: 48px; height: 48px; border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px;
+      border: 1px solid var(--border);
+    }
+
+    .fs-label { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink); }
+    .fs-sub { font-size: 10px; color: var(--muted); }
+
+    .fs-arrow {
+      flex-shrink: 0;
+      color: rgba(2, 42, 192, 0.3);
+      font-size: 18px;
+      padding: 0 4px;
+      margin-bottom: 22px;
+    }
+
+    .fs-loop-arrow {
+      flex-shrink: 0;
+      color: rgba(122, 61, 214, 0.4);
+      font-size: 14px;
+      padding: 0 2px;
+      margin-bottom: 22px;
+      font-weight: 700;
+    }
+
+    /* ── SECTION ── */
+    .section {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 72px 40px;
+    }
+
+    .section + .section { border-top: 1px solid var(--border); }
+
+    .section-alt {
+      background: var(--bg-alt);
+      border-top: 1px solid rgba(0,39,117,0.12);
+      border-bottom: 1px solid rgba(0,39,117,0.12);
+    }
+
+    .section-alt .section { padding: 72px 40px; }
+
+    .step-head {
+      display: flex; align-items: flex-start; gap: 20px;
+      margin-bottom: 36px;
+    }
+
+    .step-num {
+      flex-shrink: 0;
+      width: 48px; height: 48px; border-radius: 14px;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--mono); font-size: 14px; font-weight: 700;
+      border: 2px solid var(--border);
+      background: var(--card);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .step-title {
+      font-size: 26px; font-weight: 800; color: var(--ink);
+      letter-spacing: -0.02em; line-height: 1.2;
+    }
+
+    .step-desc { font-size: 15px; color: var(--muted); margin-top: 6px; line-height: 1.6; }
+
+    .eyebrow {
+      font-size: 12px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase;
+      color: var(--blue2); margin-bottom: 14px;
+    }
+
+    .muted-p { color: var(--muted); margin-bottom: 24px; font-size: 15px; line-height: 1.75; }
+
+    hr.divider { border: none; border-top: 1px solid var(--border); position: relative; z-index: 1; }
+
+    /* ── PRIMITIVE CARDS ── */
+    .prim-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .prim-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      display: flex; flex-direction: column;
+    }
+
+    .prim-card-head {
+      padding: 16px 22px;
+      display: flex; align-items: center; gap: 10px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .prim-card-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+    .prim-card-label {
+      font-size: 10px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase;
+    }
+
+    .prim-card-body { padding: 22px; flex: 1; display: flex; flex-direction: column; }
+    .prim-card-title { font-size: 16px; font-weight: 800; color: var(--ink); margin-bottom: 10px; }
+    .prim-card-desc { font-size: 13px; color: var(--muted); line-height: 1.7; flex: 1; }
+    .prim-card-cue {
+      margin-top: 16px;
+      font-size: 11px; font-weight: 600;
+      color: var(--text);
+      padding-top: 14px; border-top: 1px dashed var(--border);
+    }
+
+    /* ── COMPARISON ── */
+    .compare-grid {
+      display: grid; grid-template-columns: 1fr 60px 1fr; gap: 0;
+      margin-bottom: 24px;
+    }
+
+    .compare-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px;
+      box-shadow: var(--shadow);
+    }
+
+    .compare-vs {
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; font-weight: 800; color: var(--muted);
+    }
+
+    .compare-label {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+      margin-bottom: 16px;
+    }
+
+    .compare-item {
+      display: flex; align-items: flex-start; gap: 10px;
+      font-size: 13px; color: var(--text); margin-bottom: 12px; line-height: 1.55;
+    }
+
+    .compare-item .dot {
+      flex-shrink: 0; width: 6px; height: 6px; border-radius: 50%; margin-top: 7px;
+    }
+
+    /* ── CALLOUT ── */
+    .callout {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 24px 28px;
+      position: relative; overflow: hidden;
+      box-shadow: var(--shadow);
+      margin-bottom: 20px;
+    }
+
+    .callout-left { border-left: 4px solid var(--blue2); }
+    .callout-left::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, var(--blue2), transparent); opacity: 0.4;
+    }
+
+    .callout-purple { border-left: 4px solid var(--purple); }
+    .callout-purple::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, var(--purple), transparent); opacity: 0.4;
+    }
+
+    .callout-teal { border-left: 4px solid var(--teal-d); }
+    .callout-teal::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+      background: linear-gradient(90deg, var(--teal-d), transparent); opacity: 0.4;
+    }
+
+    .callout-label {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .callout-body { font-size: 14px; color: var(--text); line-height: 1.75; }
+    .callout-body strong { color: var(--ink); }
+
+    /* ── INVERSION DIAGRAM ── */
+    .inversion-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
+      margin-bottom: 24px;
+    }
+
+    .inversion-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 28px;
+      box-shadow: var(--shadow);
+    }
+
+    .inversion-label {
+      font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+      margin-bottom: 20px;
+      display: flex; align-items: center; gap: 8px;
+    }
+
+    .inversion-step {
+      display: flex; align-items: center; gap: 12px;
+      padding: 10px 14px;
+      border-radius: 10px;
+      margin-bottom: 8px;
+      font-size: 13px; font-weight: 600;
+    }
+
+    .inversion-step-icon {
+      width: 32px; height: 32px; border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; flex-shrink: 0;
+    }
+
+    .inversion-arrow {
+      text-align: center;
+      color: rgba(0,39,117,0.2);
+      font-size: 12px;
+      margin-bottom: 8px;
+    }
+
+    /* ── MARKET GAP ── */
+    .gap-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px;
+      margin-bottom: 20px;
+    }
+
+    .gap-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 22px;
+      box-shadow: var(--shadow-sm);
+      transition: box-shadow 0.2s, transform 0.2s;
+    }
+
+    .gap-card:hover { box-shadow: var(--shadow); transform: translateY(-1px); }
+
+    .gap-card-icon { font-size: 20px; margin-bottom: 10px; }
+    .gap-card-title { font-size: 14px; font-weight: 700; color: var(--ink); margin-bottom: 8px; }
+    .gap-card-desc { font-size: 12.5px; color: var(--muted); line-height: 1.65; }
+
+    /* ── VENDOR GRID ── */
+    .vendor-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;
+      margin-bottom: 20px;
+    }
+
+    .vendor-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .vendor-head {
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; gap: 10px;
+      background: #F4FAFF;
+    }
+
+    .vendor-head-dot { width: 7px; height: 7px; border-radius: 50%; }
+    .vendor-title { font-size: 12px; font-weight: 800; letter-spacing: 0.05em; text-transform: uppercase; }
+    .vendor-body { padding: 16px 18px; }
+    .vendor-body p { font-size: 12.5px; color: var(--muted); line-height: 1.65; }
+    .vendor-body strong { color: var(--text); }
+
+    .vendor-tag {
+      display: inline-block; margin-top: 10px;
+      font-size: 10px; font-weight: 600; letter-spacing: 0.06em;
+      border-radius: 20px; padding: 3px 10px;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 0 20px; }
+      .nav-sub { display: none; }
+      .hero { padding: 88px 24px 52px; }
+      .section { padding: 52px 20px; }
+      .section-alt .section { padding: 52px 20px; }
+      .prim-grid { grid-template-columns: 1fr; }
+      .compare-grid { grid-template-columns: 1fr; }
+      .compare-vs { transform: rotate(90deg); padding: 10px 0; }
+      .inversion-grid { grid-template-columns: 1fr; }
+      .gap-grid { grid-template-columns: 1fr; }
+      .vendor-grid { grid-template-columns: 1fr; }
+      .flow-strip-wrap { padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-brand">
+      <img src="sf-logo-cloud.png" class="nav-logo" alt="Salesforce">
+      <div class="nav-divider"></div>
+      <span class="nav-title">Memory-First Decisioning</span>
+      <span class="nav-sub">/ NBA Decisioning</span>
+    </div>
+    <div class="nav-links">
+      <a href="memory-approach.html" class="nav-pill active">Narrative</a>
+      <a href="memory-architecture.html" class="nav-pill">Architecture</a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="accent-line"></div>
+    <div class="hero-eyebrow">A new mental model for enterprise decisioning</div>
+    <h1>Stop building a smarter brain.<br/><span class="hl">Start building a better memory.</span></h1>
+    <p class="hero-sub">The brain changes every few years &mdash; rules engines, then ML models, now LLMs. The memory is durable: what we did, what happened, what we learned, what constraints apply. A clean-sheet design optimizes for the memory, not the brain.</p>
+    <div class="hero-version"><span class="dot"></span>Design thesis &middot; April 2026</div>
+  </div>
+
+  <!-- FLOW STRIP -->
+  <div class="flow-strip-wrap">
+    <div class="flow-strip">
+      <div class="fs-node">
+        <div class="fs-icon" style="background:rgba(0,122,114,0.12);color:#007A72;border-color:rgba(0,122,114,0.25);">&#x1f91d;</div>
+        <div class="fs-label">Relationship</div>
+        <div class="fs-sub">State + trajectory</div>
+      </div>
+      <div class="fs-arrow">&rsaquo;</div>
+      <div class="fs-node">
+        <div class="fs-icon" style="background:rgba(196,28,0,0.08);color:#C41C00;border-color:rgba(196,28,0,0.22);">&#x1f6e1;&#xfe0f;</div>
+        <div class="fs-label">Action Space</div>
+        <div class="fs-sub">Pre-constrained</div>
+      </div>
+      <div class="fs-arrow">&rsaquo;</div>
+      <div class="fs-node">
+        <div class="fs-icon" style="background:rgba(252,192,3,0.15);color:#A87700;border-color:rgba(252,192,3,0.3);">&#x2696;&#xfe0f;</div>
+        <div class="fs-label">Value Function</div>
+        <div class="fs-sub">Composable objective</div>
+      </div>
+      <div class="fs-arrow">&rsaquo;</div>
+      <div class="fs-node">
+        <div class="fs-icon" style="background:rgba(2,42,192,0.1);color:#022AC0;border-color:rgba(2,42,192,0.18);">&#x1f9e0;</div>
+        <div class="fs-label">Reasoning</div>
+        <div class="fs-sub">Pluggable brain</div>
+      </div>
+      <div class="fs-arrow">&rsaquo;</div>
+      <div class="fs-node">
+        <div class="fs-icon" style="background:rgba(122,61,214,0.08);color:#5521A8;border-color:rgba(122,61,214,0.25);">&#x1f504;</div>
+        <div class="fs-label">Learning Loop</div>
+        <div class="fs-sub">The real product</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- THE INSIGHT -->
+  <div class="section-alt">
+    <div class="section">
+      <div class="eyebrow">The core insight</div>
+      <div class="step-head" style="margin-bottom: 24px;">
+        <div class="step-num" style="background:rgba(122,61,214,0.08);color:#5521A8;border-color:rgba(122,61,214,0.2);font-size:22px;">&#x1f4a1;</div>
+        <div>
+          <div class="step-title">The system's value is in the memory, not the brain.</div>
+          <div class="step-desc">An LLM can make a decent decision on day 1 with zero history. But on month 6, a system with a learning loop is making decisions that an LLM alone can never make &mdash; because it knows what actually worked for customers like this one.</div>
+        </div>
+      </div>
+
+      <div class="callout callout-purple">
+        <div class="callout-label" style="color: var(--purple-d);">Why this matters now</div>
+        <div class="callout-body">Every vendor is building a smarter brain. Rules engines gave way to ML models, ML models are giving way to LLMs and agents. The brain is commoditizing &mdash; reasoning capability is approaching parity across platforms. <strong>What compounds is the memory:</strong> the accumulating record of decisions made, outcomes observed, constraints learned, and relationships understood. The system that maintains this memory makes every future decision better. The system that only has a brain starts from scratch every time.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOUR PRIMITIVES -->
+  <div class="section">
+    <div class="step-head">
+      <div class="step-num" style="background:rgba(2,42,192,0.1);color:#022AC0;border-color:rgba(2,42,192,0.2);">01</div>
+      <div>
+        <div class="step-title">Four Primitives</div>
+        <div class="step-desc">Instead of the traditional strategy-interaction-treatment model, a memory-first architecture builds on four primitives that separate the durable assets from the swappable reasoning layer.</div>
+      </div>
+    </div>
+
+    <div class="prim-grid">
+
+      <!-- Relationship State -->
+      <div class="prim-card">
+        <div class="prim-card-head" style="background: rgba(0,122,114,0.05);">
+          <div class="prim-card-dot" style="background: var(--teal-d);"></div>
+          <div class="prim-card-label" style="color: var(--teal-d);">Primitive 1</div>
+        </div>
+        <div class="prim-card-body">
+          <div class="prim-card-title">Relationship State</div>
+          <div class="prim-card-desc">Not "customer data" but the living model of each customer relationship. Current state, trajectory (getting better or worse), decision history, sentiment, constraints, value. The question the system answers isn't "what are this customer's attributes?" but <strong>"what is the state of this relationship and where is it heading?"</strong></div>
+          <div class="prim-card-cue">CRM + Data Cloud + Decision Journal fused into a queryable state per customer</div>
+        </div>
+      </div>
+
+      <!-- Action Space -->
+      <div class="prim-card">
+        <div class="prim-card-head" style="background: rgba(196,28,0,0.05);">
+          <div class="prim-card-dot" style="background: var(--red);"></div>
+          <div class="prim-card-label" style="color: var(--red);">Primitive 2</div>
+        </div>
+        <div class="prim-card-body">
+          <div class="prim-card-title">Action Space</div>
+          <div class="prim-card-desc">Everything you could do, constrained by everything you shouldn't. Policy, budget, eligibility, fatigue, legal constraints, channel availability &mdash; all evaluated <strong>before</strong> the reasoning engine sees a single action. The brain operates within pre-constrained boundaries. It never evaluates an illegal action.</div>
+          <div class="prim-card-cue">Policy is the wall of the space, not a post-filter on the output</div>
+        </div>
+      </div>
+
+      <!-- Value Function -->
+      <div class="prim-card">
+        <div class="prim-card-head" style="background: rgba(252,192,3,0.08);">
+          <div class="prim-card-dot" style="background: var(--gold-d);"></div>
+          <div class="prim-card-label" style="color: var(--gold-d);">Primitive 3</div>
+        </div>
+        <div class="prim-card-body">
+          <div class="prim-card-title">Value Function</div>
+          <div class="prim-card-desc">What are we optimizing, measured how? Not hardcoded to propensity (most likely to accept) or engagement (most likely to click). <strong>Composable:</strong> a bank weights 40% CLV + 40% compliance + 20% satisfaction. A telco weights 80% CLV + 20% churn risk. The value function IS the business strategy, expressed as math.</div>
+          <div class="prim-card-cue">Industry templates ship a value function, not just a catalogue</div>
+        </div>
+      </div>
+
+      <!-- Learning Loop -->
+      <div class="prim-card">
+        <div class="prim-card-head" style="background: rgba(122,61,214,0.06);">
+          <div class="prim-card-dot" style="background: var(--purple);"></div>
+          <div class="prim-card-label" style="color: var(--purple-d);">Primitive 4</div>
+        </div>
+        <div class="prim-card-body">
+          <div class="prim-card-title">Learning Loop</div>
+          <div class="prim-card-desc">This is the actual product. Every decision produces an outcome. Every outcome updates the relationship state and refines the value function. The decision journal, outcome attribution, adaptive weights, model retraining &mdash; this is the infrastructure that compounds. <strong>Month 6 should be measurably smarter than month 1.</strong></div>
+          <div class="prim-card-cue">The brain is pluggable. The loop is the moat.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout callout-left">
+      <div class="callout-label" style="color: var(--blue2);">The reasoning engine is deliberately absent from the primitives</div>
+      <div class="callout-body">The brain &mdash; rules, ML, LLM, hybrid &mdash; queries the relationship state, operates within the action space, optimizes the value function, and feeds the learning loop. It's the consumer of all four primitives, not one of them. <strong>Today's brain is deterministic scoring with LLM re-rank. Tomorrow's could be a full LLM planner, a contextual bandit, or something that doesn't exist yet.</strong> Because it operates against well-defined interfaces, the swap is clean.</div>
+    </div>
+  </div>
+
+  <hr class="divider" />
+
+  <!-- THE ARCHITECTURAL INVERSION -->
+  <div class="section">
+    <div class="step-head">
+      <div class="step-num" style="background:rgba(0,87,184,0.12);color:#0057B8;border-color:rgba(0,87,184,0.25);">02</div>
+      <div>
+        <div class="step-title">The Architectural Inversion</div>
+        <div class="step-desc">Traditional decisioning puts the scoring engine at the center. Everything feeds it. Memory-first puts relationship state at the center. Reasoning reads from it.</div>
+      </div>
+    </div>
+
+    <div class="inversion-grid">
+      <!-- Traditional -->
+      <div class="inversion-card">
+        <div class="inversion-label" style="color: var(--muted);"><span style="width:8px;height:8px;border-radius:50%;background:var(--muted);display:inline-block;"></span> Traditional &mdash; brain at the center</div>
+
+        <div class="inversion-step" style="background:rgba(0,39,117,0.03); color:var(--muted);">
+          <div class="inversion-step-icon" style="background:rgba(0,39,117,0.06); border:1px solid rgba(0,39,117,0.1);">&#x1f4ca;</div>
+          Data assembled at decision time
+        </div>
+        <div class="inversion-arrow">&darr;</div>
+        <div class="inversion-step" style="background:rgba(0,39,117,0.03); color:var(--muted);">
+          <div class="inversion-step-icon" style="background:rgba(0,39,117,0.06); border:1px solid rgba(0,39,117,0.1);">&#x1f9e0;</div>
+          Scoring engine (the center of gravity)
+        </div>
+        <div class="inversion-arrow">&darr;</div>
+        <div class="inversion-step" style="background:rgba(0,39,117,0.03); color:var(--muted);">
+          <div class="inversion-step-icon" style="background:rgba(0,39,117,0.06); border:1px solid rgba(0,39,117,0.1);">&#x1f6e1;&#xfe0f;</div>
+          Policy filters applied post-scoring
+        </div>
+        <div class="inversion-arrow">&darr;</div>
+        <div class="inversion-step" style="background:rgba(0,39,117,0.03); color:var(--muted);">
+          <div class="inversion-step-icon" style="background:rgba(0,39,117,0.06); border:1px solid rgba(0,39,117,0.1);">&#x1f4dd;</div>
+          Decision logged (reporting afterthought)
+        </div>
+      </div>
+
+      <!-- Memory-first -->
+      <div class="inversion-card" style="border-color: rgba(2,42,192,0.2);">
+        <div class="inversion-label" style="color: var(--blue2);"><span style="width:8px;height:8px;border-radius:50%;background:var(--blue2);display:inline-block;"></span> Memory-first &mdash; state at the center</div>
+
+        <div class="inversion-step" style="background:rgba(0,122,114,0.06); color:var(--teal-d);">
+          <div class="inversion-step-icon" style="background:rgba(0,122,114,0.1); border:1px solid rgba(0,122,114,0.2);">&#x1f91d;</div>
+          Relationship state (always current)
+        </div>
+        <div class="inversion-arrow">&darr;</div>
+        <div class="inversion-step" style="background:rgba(196,28,0,0.04); color:var(--red);">
+          <div class="inversion-step-icon" style="background:rgba(196,28,0,0.06); border:1px solid rgba(196,28,0,0.15);">&#x1f6e1;&#xfe0f;</div>
+          Action space pre-constrained by policy
+        </div>
+        <div class="inversion-arrow">&darr;</div>
+        <div class="inversion-step" style="background:rgba(252,192,3,0.06); color:var(--gold-d);">
+          <div class="inversion-step-icon" style="background:rgba(252,192,3,0.1); border:1px solid rgba(252,192,3,0.2);">&#x2696;&#xfe0f;</div>
+          Value function defines the objective
+        </div>
+        <div class="inversion-arrow">&darr;</div>
+        <div class="inversion-step" style="background:rgba(2,42,192,0.04); color:var(--blue2);">
+          <div class="inversion-step-icon" style="background:rgba(2,42,192,0.08); border:1px solid rgba(2,42,192,0.18);">&#x1f9e0;</div>
+          Reasoning engine (pluggable, swappable)
+        </div>
+        <div class="inversion-arrow">&darr;</div>
+        <div class="inversion-step" style="background:rgba(122,61,214,0.05); color:var(--purple-d);">
+          <div class="inversion-step-icon" style="background:rgba(122,61,214,0.08); border:1px solid rgba(122,61,214,0.18);">&#x1f504;</div>
+          Learning loop (the compounding asset)
+        </div>
+      </div>
+    </div>
+
+    <div style="background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 16px 22px; display: flex; align-items: center; gap: 14px; box-shadow: var(--shadow-sm);">
+      <div style="font-size: 20px; flex-shrink: 0;">&#x1f500;</div>
+      <p style="font-size: 13px; color: var(--muted); line-height: 1.65;"><strong style="color: var(--ink);">The shift is conceptual, not structural.</strong> You're not rewriting systems &mdash; you're extracting implicit primitives (relationship state, action space, value function, learning loop) into explicit, first-class constructs. The reasoning engine becomes a service that reads from well-defined interfaces, not the center of gravity that everything else orbits.</p>
+    </div>
+  </div>
+
+  <!-- WHAT DECISIONING ACTUALLY REQUIRES -->
+  <div class="section-alt">
+    <div class="section">
+      <div class="step-head">
+        <div class="step-num" style="background:rgba(196,28,0,0.08);color:#C41C00;border-color:rgba(196,28,0,0.2);">03</div>
+        <div>
+          <div class="step-title">What Decisioning Actually Requires</div>
+          <div class="step-desc">The "fluid" characterisation works for one-shot reasoning. In practice, operationalising decisions at scale needs four things that a stateless agent cannot provide.</div>
+        </div>
+      </div>
+
+      <div class="gap-grid">
+        <div class="gap-card">
+          <div class="gap-card-icon">&#x23f3;</div>
+          <div class="gap-card-title">Decisions managed across time</div>
+          <div class="gap-card-desc">Cooldown windows, fatigue scoring, contact policy &mdash; you can't ask "what's the best action now?" without knowing what you already did yesterday. An LLM with a prompt doesn't track that a customer got 3 emails this week and the marginal value of a 4th is negative. <strong>That's state. That's a system.</strong></div>
+        </div>
+        <div class="gap-card">
+          <div class="gap-card-icon">&#x1f6e4;&#xfe0f;</div>
+          <div class="gap-card-title">Rails, not just reasoning</div>
+          <div class="gap-card-desc">The LLM composes a novel treatment, but it runs through budget caps, contact policy, and confidence thresholds before it touches a customer. In regulated industries, <strong>the rails ARE the product.</strong> Governance, auditability, and deterministic enforcement aren't features &mdash; they're the foundation.</div>
+        </div>
+        <div class="gap-card">
+          <div class="gap-card-icon">&#x1f4c8;</div>
+          <div class="gap-card-title">Closed-loop learning</div>
+          <div class="gap-card-desc">Value optimization requires feedback loops that compound over time. Adaptive weights, attribution, retraining triggers. The "infinite software" thesis can build a decisioning agent in an afternoon. It cannot build the infrastructure that makes that agent <strong>better in month 3 than month 1.</strong></div>
+        </div>
+        <div class="gap-card">
+          <div class="gap-card-icon">&#x1f4cb;</div>
+          <div class="gap-card-title">The action catalogue</div>
+          <div class="gap-card-desc">"Decisioning isn't owned by anyone" is true for the reasoning step. But someone has to maintain the catalogue of actions, eligibility rules, expected values, budget constraints, channel routing, and treatments. <strong>That's operational infrastructure, not a prompt.</strong></div>
+        </div>
+      </div>
+
+      <div class="callout callout-teal">
+        <div class="callout-label" style="color: var(--teal-d);">The one-sentence version</div>
+        <div class="callout-body" style="font-size: 16px; font-weight: 600;">Everyone builds a smarter brain and bolts memory on as reporting. Nobody builds the memory first and treats the brain as pluggable.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WHERE THE MARKET IS -->
+  <div class="section">
+    <div class="step-head">
+      <div class="step-num" style="background:rgba(252,192,3,0.15);color:#A87700;border-color:rgba(252,192,3,0.35);">04</div>
+      <div>
+        <div class="step-title">Where the Market Is Today</div>
+        <div class="step-desc">Pieces exist. Nobody has unified them with relationship state at the center and the learning loop as the primary asset.</div>
+      </div>
+    </div>
+
+    <div class="vendor-grid">
+      <div class="vendor-card">
+        <div class="vendor-head">
+          <div class="vendor-head-dot" style="background: var(--red);"></div>
+          <div class="vendor-title" style="color: var(--red);">Traditional CDH</div>
+        </div>
+        <div class="vendor-body">
+          <p>Adaptive models, action management, contact policy, next-best-action. <strong>Brain-centric:</strong> the scoring engine is the center of gravity. Relationship context assembled at decision time, not maintained. Learning loop exists as a feature of scoring, not the architectural foundation.</p>
+          <div class="vendor-tag" style="background:rgba(196,28,0,0.06); color:var(--red); border:1px solid rgba(196,28,0,0.2);">Pre-cloud, pre-LLM infrastructure</div>
+        </div>
+      </div>
+      <div class="vendor-card">
+        <div class="vendor-head">
+          <div class="vendor-head-dot" style="background: var(--lblue-d);"></div>
+          <div class="vendor-title" style="color: var(--lblue-d);">Journey Optimizers</div>
+        </div>
+        <div class="vendor-body">
+          <p>Offer decisioning with eligibility and capping. <strong>Journey-centric:</strong> answers "which offer at this journey step" not "what's the optimal next action in this relationship's trajectory." Learning loop optimizes engagement metrics (clicks, opens) not relationship value.</p>
+          <div class="vendor-tag" style="background:rgba(0,87,184,0.06); color:var(--lblue-d); border:1px solid rgba(0,87,184,0.2);">Optimizes tactics, not strategy</div>
+        </div>
+      </div>
+      <div class="vendor-card">
+        <div class="vendor-head">
+          <div class="vendor-head-dot" style="background: var(--teal-d);"></div>
+          <div class="vendor-title" style="color: var(--teal-d);">Feature Stores</div>
+        </div>
+        <div class="vendor-body">
+          <p>Closest to "relationship state as infrastructure" &mdash; maintain point-in-time feature vectors per entity. <strong>Plumbing, not a product.</strong> No decisioning layer, no action space, no value function, no learning loop. The foundation without the building.</p>
+          <div class="vendor-tag" style="background:rgba(0,122,114,0.06); color:var(--teal-d); border:1px solid rgba(0,122,114,0.2);">Data layer only</div>
+        </div>
+      </div>
+    </div>
+
+    <div style="font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink); margin-bottom: 18px; margin-top: 32px;">What nobody has</div>
+
+    <div class="gap-grid">
+      <div class="gap-card">
+        <div class="gap-card-title" style="font-size: 13px;">Composable value function</div>
+        <div class="gap-card-desc">Everyone hardcodes their optimization objective. Nobody lets you configure "40% CLV + 40% compliance + 20% satisfaction" and swap that per industry.</div>
+      </div>
+      <div class="gap-card">
+        <div class="gap-card-title" style="font-size: 13px;">Decision journal as primary data model</div>
+        <div class="gap-card-desc">Everyone treats decisions as output (logs). Nobody treats the journal as the input &mdash; the accumulating asset that makes every future decision better.</div>
+      </div>
+      <div class="gap-card">
+        <div class="gap-card-title" style="font-size: 13px;">Pre-constrained action space</div>
+        <div class="gap-card-desc">Everyone post-filters: score everything, then check policy. Nobody defines the legal action space first and hands a constrained set to the reasoning engine.</div>
+      </div>
+      <div class="gap-card">
+        <div class="gap-card-title" style="font-size: 13px;">Explicitly swappable reasoning</div>
+        <div class="gap-card-desc">Every vendor's brain is welded in. Nobody has separated state/space/value/loop from the brain cleanly enough to make the reasoning engine a pluggable layer.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TIME AS A DIMENSION -->
+  <div class="section-alt">
+    <div class="section">
+      <div class="step-head">
+        <div class="step-num" style="background:rgba(122,61,214,0.08);color:#5521A8;border-color:rgba(122,61,214,0.2);">05</div>
+        <div>
+          <div class="step-title">Time as a First-Class Dimension</div>
+          <div class="step-desc">Not "what's the best action now?" but "what's the best next action in this relationship's trajectory?"</div>
+        </div>
+      </div>
+
+      <p class="muted-p">The system knows that sending a retention offer, then an upsell, then a satisfaction survey has a different expected value than the reverse order &mdash; because the learning loop has seen both sequences play out. This is sequence-aware decisioning. It's impossible without the decision journal and the learning loop working together.</p>
+
+      <div class="callout callout-purple">
+        <div class="callout-label" style="color: var(--purple-d);">The compounding effect</div>
+        <div class="callout-body">
+          <strong>Day 1:</strong> The engine scores on historical CRM data. A good starting point. An LLM alone can do roughly this well with the right prompt and context.<br/><br/>
+          <strong>Month 1:</strong> The learning loop has observed 10,000 outcomes. Adaptive weights have shifted. The engine knows which actions work for which segments &mdash; not from training data, but from its own decisions.<br/><br/>
+          <strong>Month 6:</strong> The decision journal contains sequence patterns. The value function has been calibrated against real attribution data. The system has observed which action sequences compound relationship value and which erode it. <strong>No stateless agent can match this.</strong><br/><br/>
+          <strong>Year 1:</strong> The memory is the moat. A competitor can replicate the reasoning engine in a weekend. They cannot replicate 12 months of compounding institutional memory. The switching cost isn't the software &mdash; it's the loss of everything the system has learned.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- WHY SALESFORCE -->
+  <div class="section">
+    <div class="step-head">
+      <div class="step-num" style="background:rgba(0,122,114,0.1);color:#007A72;border-color:rgba(0,122,114,0.25);">06</div>
+      <div>
+        <div class="step-title">Why This Belongs on CRM</div>
+        <div class="step-desc">The primitives map naturally to platform capabilities that already exist.</div>
+      </div>
+    </div>
+
+    <div class="prim-grid">
+      <div class="prim-card">
+        <div class="prim-card-head" style="background:rgba(0,122,114,0.05);">
+          <div class="prim-card-dot" style="background: var(--teal-d);"></div>
+          <div class="prim-card-label" style="color: var(--teal-d);">Relationship State</div>
+        </div>
+        <div class="prim-card-body">
+          <div class="prim-card-desc">CRM + Data Cloud is already the system of record for customer relationships. Contact, Account, Opportunity, Case &mdash; fused with Data Cloud's unified profile and identity resolution. The decision journal lives alongside the relationship it's about.</div>
+          <div class="prim-card-cue">Data Cloud + CRM = relationship state infrastructure</div>
+        </div>
+      </div>
+
+      <div class="prim-card">
+        <div class="prim-card-head" style="background:rgba(196,28,0,0.05);">
+          <div class="prim-card-dot" style="background: var(--red);"></div>
+          <div class="prim-card-label" style="color: var(--red);">Action Space</div>
+        </div>
+        <div class="prim-card-body">
+          <div class="prim-card-desc">Real Time Offer Management provides the promotion catalogue with eligibility, margin, and content natively. Governance, permission sets, and sharing rules are what CRM was built for. The rails layer inherits decades of enterprise-grade infrastructure.</div>
+          <div class="prim-card-cue">RTOM + governance + sharing = pre-constrained action space</div>
+        </div>
+      </div>
+
+      <div class="prim-card">
+        <div class="prim-card-head" style="background:rgba(252,192,3,0.08);">
+          <div class="prim-card-dot" style="background: var(--gold-d);"></div>
+          <div class="prim-card-label" style="color: var(--gold-d);">Value Function</div>
+        </div>
+        <div class="prim-card-body">
+          <div class="prim-card-desc">Einstein Studio models + Data Cloud calculated insights provide the signals. The value function composes them with configurable weights. Industry templates ship pre-tuned objective functions &mdash; banking weights compliance, telco weights churn risk.</div>
+          <div class="prim-card-cue">Einstein Studio + Data Cloud CIs = composable signals</div>
+        </div>
+      </div>
+
+      <div class="prim-card">
+        <div class="prim-card-head" style="background:rgba(122,61,214,0.06);">
+          <div class="prim-card-dot" style="background: var(--purple);"></div>
+          <div class="prim-card-label" style="color: var(--purple-d);">Learning Loop</div>
+        </div>
+        <div class="prim-card-body">
+          <div class="prim-card-desc">Outcomes write back to CRM and Data Cloud. CIs aggregate decision patterns. Einstein Studio retrains on outcome data. Agentforce agents reason about the system itself &mdash; not just per-decision, but about whether the decisions are collectively working.</div>
+          <div class="prim-card-cue">CRM outcomes + Data Cloud + Einstein Studio = closed loop</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout callout-teal">
+      <div class="callout-label" style="color: var(--teal-d);">The strategic position</div>
+      <div class="callout-body">This space has been historically ceded to specialist vendors. The platform is better positioned for it now than they are. <strong>Data Cloud gives us the semantic layer. Agentforce gives us the reasoning. CRM gives us the business process and governance that make it enterprise-safe.</strong> The gap is the orchestration layer that ties them together &mdash; the memory-first decisioning system that turns platform capabilities into compounding relationship intelligence.</div>
+    </div>
+  </div>
+
+  <script src="gate.js" data-page="Memory Approach"></script>
+
+</body>
+</html>
