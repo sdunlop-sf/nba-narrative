@@ -12478,5 +12478,17 @@
     "location": "Arlington, Virginia, United States",
     "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36 Edg/147.0.0.0",
     "returning": "yes"
+  },
+  {
+    "timestamp": "Mon, 27 Apr 2026 21:33:55 GMT",
+    "name": "Stuart Dunlop",
+    "company": "Salesforce",
+    "position": "Solutions",
+    "page": "FINS Summit Slides",
+    "url": "https://sdunlop-sf.github.io/nba-narrative/fins-summit-slides.html",
+    "ip": "147.161.219.29",
+    "location": "Canberra, Australian Capital Territory, Australia",
+    "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
+    "returning": "yes"
   }
 ]
