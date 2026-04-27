@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Make Marketing Intelligent Again — FINS Summit Keynote</title>
+<title>Scale Personalisation with Agentforce Marketing and Trusted AI</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   html { scroll-behavior: smooth; }
@@ -277,18 +277,6 @@
   .mode li:last-child { border-bottom: none; }
   .mode li strong { color: #032D60; }
 
-  /* ── PROOF POINTS ───────────────────────────── */
-  .proof {
-    background: white;
-    padding: 20px 24px;
-    margin-bottom: 12px;
-    border-radius: 8px;
-    border-left: 3px solid #10b981;
-    font-size: 16px;
-    box-shadow: 0 1px 6px rgba(0,0,0,0.04);
-  }
-  .proof strong { color: #032D60; }
-
   /* ── PILLAR CARDS ───────────────────────────── */
   .pillars {
     display: grid;
@@ -310,6 +298,34 @@
     font-weight: 700;
   }
   .pillar p { font-size: 15px; color: #444; margin-bottom: 0; line-height: 1.6; }
+
+  /* ── SCENARIO CARDS ─────────────────────────── */
+  .scenarios {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin: 28px 0;
+  }
+  .scenario {
+    background: white;
+    padding: 28px;
+    border-radius: 10px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+    border-left: 4px solid #0176D3;
+  }
+  .scenario h4 {
+    font-size: 17px;
+    color: #032D60;
+    margin-bottom: 10px;
+    font-weight: 700;
+  }
+  .scenario p { font-size: 15px; color: #444; margin-bottom: 0; line-height: 1.6; }
+  .scenario .outcome {
+    margin-top: 12px;
+    font-size: 14px;
+    color: #059669;
+    font-weight: 600;
+  }
 
   /* ── SPEED BANNER ───────────────────────────── */
   .speed-banner {
@@ -401,59 +417,6 @@
     line-height: 1.5;
   }
 
-  /* ── EVOLUTION TIMELINE ─────────────────────── */
-  .evo-stack {
-    margin: 32px 0;
-    position: relative;
-    padding-left: 32px;
-    border-left: 3px solid #e5e5e5;
-  }
-  .evo-item {
-    position: relative;
-    padding-bottom: 28px;
-  }
-  .evo-item:last-child { padding-bottom: 0; }
-  .evo-item::before {
-    content: '';
-    position: absolute;
-    left: -39px;
-    top: 4px;
-    width: 14px;
-    height: 14px;
-    border-radius: 50%;
-    background: white;
-    border: 3px solid #9ca3af;
-  }
-  .evo-item.current::before {
-    border-color: #0176D3;
-    background: #0176D3;
-    width: 18px;
-    height: 18px;
-    left: -41px;
-    top: 2px;
-    box-shadow: 0 0 0 5px rgba(1,118,211,0.12);
-  }
-  .evo-item .era-year {
-    font-size: 12px;
-    font-weight: 700;
-    color: #888;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    margin-bottom: 2px;
-  }
-  .evo-item.current .era-year { color: #0176D3; }
-  .evo-item .era-title {
-    font-size: 19px;
-    font-weight: 700;
-    color: #032D60;
-    margin-bottom: 6px;
-  }
-  .evo-item .era-desc {
-    font-size: 15px;
-    color: #555;
-    line-height: 1.55;
-  }
-
   /* ── SPEAKER NOTES ──────────────────────────── */
   .speaker-note {
     background: #fffbeb;
@@ -489,7 +452,7 @@
   @media (max-width: 720px) {
     .hero h1 { font-size: 32px; }
     .hero .tagline { font-size: 17px; }
-    .shift-grid, .modes, .pillars, .cta-steps { grid-template-columns: 1fr; }
+    .shift-grid, .modes, .pillars, .scenarios, .cta-steps { grid-template-columns: 1fr; }
     .slide h2 { font-size: 28px; }
     .stat-callout { font-size: 48px; }
     .speed-banner .speed-stat { font-size: 40px; }
@@ -501,255 +464,196 @@
 
 <div class="hero">
   <div class="hero-inner">
-    <div class="eyebrow">Salesforce FINS Summit &mdash; Keynote</div>
-    <h1>Make Marketing Intelligent Again</h1>
-    <p class="tagline">The industry spent years adding complexity. It's time to strip it back, add intelligence, and get real use cases into production &mdash; in days, not quarters.</p>
-    <span class="runtime">15 minutes &middot; 6 sections &middot; 1 ask</span>
+    <div class="eyebrow">Salesforce FINS Summit</div>
+    <h1>Scale Personalisation with Agentforce Marketing and Trusted AI</h1>
+    <p class="tagline">The marketer's job hasn't changed &mdash; right offer, right time, right customer. What's changed is how fast you can get there, and how much smarter the system gets every time.</p>
+    <span class="runtime">15 minutes &middot; 5 beats &middot; 1 ask</span>
   </div>
 </div>
 
 <nav class="toc">
   <ul>
-    <li><a href="#honest">The Honest Open</a></li>
-    <li><a href="#reality">Market Reality</a></li>
-    <li><a href="#why-sf">Why Salesforce</a></li>
+    <li><a href="#open">The Honest Open</a></li>
+    <li><a href="#memory">The Memory Problem</a></li>
     <li><a href="#two-ways">Two Ways In</a></li>
-    <li><a href="#rails">The Rails</a></li>
-    <li><a href="#ask">The Ask</a></li>
+    <li><a href="#why-sf">Why Salesforce</a></li>
+    <li><a href="#ask">Partner With Us</a></li>
   </ul>
 </nav>
 
 <main>
 
 <!-- ═══════════════════════════════════════════════════════════════
-     SECTION 1 — THE HONEST OPEN (Minutes 0–3)
+     BEAT 1 — THE HONEST OPEN (Minutes 0–3)
      ═══════════════════════════════════════════════════════════════ -->
-<section class="slide" id="honest">
+<section class="slide" id="open">
   <span class="slide-time">Minutes 0&ndash;3 &middot; The Honest Open</span>
-  <h2>Let's start with something uncomfortable.</h2>
+  <h2>Quick show of hands.</h2>
 
-  <p class="lead">Salesforce implementations have historically taken too long. We know it. You know it. Six-month programmes that become twelve-month programmes. Custom objects breeding custom objects. Consultancies billing by the quarter. The platform was powerful, but the path to value was slow.</p>
+  <p class="lead">Who's using ChatGPT? Who's using it at work? Who's tried Claude? Does your business know about it?</p>
 
-  <p>That was the reality. And if we stand up here and pretend it wasn't, you shouldn't trust anything else we say.</p>
+  <p>Australia has the highest ChatGPT adoption rate of any large English-speaking economy. Your teams are using AI. Your customers expect it. This isn't a future conversation &mdash; it's already happening inside your organisation.</p>
 
-  <p>But here's what's changed &mdash; and I mean structurally changed, not "we updated the marketing":</p>
-
-  <div class="shift-grid">
-    <div class="shift-col old">
-      <h4>What slowed you down</h4>
-      <ul>
-        <li>Custom data models from scratch</li>
-        <li>Months of integration work</li>
-        <li>Separate tools for every channel</li>
-        <li>Rules logic maintained by specialists</li>
-        <li>Insight trapped in dashboards</li>
-        <li>"Phase 2" that never arrived</li>
-      </ul>
-    </div>
-    <div class="shift-col new">
-      <h4>What's different now</h4>
-      <ul>
-        <li>Data Cloud &mdash; unified profiles, zero-copy</li>
-        <li>Industry data models out of the box</li>
-        <li>Agentforce &mdash; actions, not integrations</li>
-        <li>Headless APIs for programmatic access</li>
-        <li>AI reasoning at the platform level</li>
-        <li>Packages that deploy in days</li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="big-claim">The platform shifted from "build everything custom" to "configure, connect, deploy." The speed-to-value equation has fundamentally changed. And today I'm going to show you what that looks like for marketing decisioning in financial services.</div>
-
-  <div class="speaker-note">This is your trust moment. You're not defending the past &mdash; you're naming it. Every practitioner in the room has lived the slow implementation. Acknowledge it, then show how the architecture moved. The credibility for the rest of the talk comes from this opening.</div>
-</section>
-
-<!-- ═══════════════════════════════════════════════════════════════
-     SECTION 2 — THE MARKET REALITY (Minutes 3–5)
-     ═══════════════════════════════════════════════════════════════ -->
-<section class="slide" id="reality">
-  <span class="slide-time">Minutes 3&ndash;5 &middot; Market Reality</span>
-  <h2>Everyone's adopting AI. Almost nobody's getting it to production.</h2>
-
-  <p class="lead">Australia has the highest ChatGPT adoption rate among large English-speaking economies. Your teams are using it. Your customers expect it. The question isn't adoption &mdash; it's implementation.</p>
+  <p>But here's what hasn't changed: <strong>the marketer's job is still the same.</strong> Right offer, right time, right customer. Cheaper, faster. The jobs to be done are identical. AI just changes how quickly you can do them &mdash; and how well.</p>
 
   <div class="stat-callout">88%</div>
   <div class="stat-label">of AI pilots never make it to production <span style="color:#999;">&mdash; Beam, 2025</span></div>
 
-  <p>Why? Because pilots solve one channel, one segment, one campaign &mdash; then can't scale. No arbitration across competing offers. No feedback loop. No audit trail. No contact policy. The model works in a notebook but there's no production wrapper.</p>
+  <p>So why are marketers getting stuck? It's not because the AI doesn't work. It's because prototypes don't survive contact with compliance, multi-channel reality, and enterprise IT.</p>
 
-  <p>And here's the Australian twist: this country also has <strong>the highest rate of scepticism about AI data handling</strong> among English-speaking nations. Your customers are sophisticated AND suspicious. They expect intelligence but demand governance. You can't hack your way to that.</p>
+  <h3>A personal story</h3>
 
-  <div class="big-claim">The problem was never "should we use AI?" The problem is: how do you get from a working prototype to production-grade decisioning &mdash; fast, auditable, and compliant &mdash; without another twelve-month programme?</div>
+  <p>I built a production app recently. One person, one week. A golf coaching app &mdash; twelve point solutions stitched together. Brilliant to build. Genuinely fast.</p>
 
-  <div class="speaker-note">The 88% stat is your anchor. You'll return to it in the close: "That's how you join the 12%." The scepticism stat makes the room feel seen &mdash; you've done the homework on the Australian market, not just recycled a US deck.</div>
+  <p>Now try getting that through enterprise procurement. Twelve vendors, twelve security questionnaires, twelve data residency policies. <strong>The path to value doesn't have to look like that for enterprises anymore.</strong> We can substantially reduce that barrier &mdash; and we want to work with you on it.</p>
+
+  <div class="speaker-note">The ChatGPT question gets hands up and energy in the room. The 88% stat is your anchor &mdash; you'll return to it at the close. The golf app story is the vulnerability moment: you built the ungoverned thing yourself, you loved it, AND you can see why it doesn't work at scale. That's your credibility for the rest of the talk.</div>
 </section>
 
 <!-- ═══════════════════════════════════════════════════════════════
-     SECTION 3 — WHY SALESFORCE HAS TO BE IN THIS CONVERSATION
-     (Minutes 5–8)
+     BEAT 2 — THE MEMORY PROBLEM (Minutes 3–6)
      ═══════════════════════════════════════════════════════════════ -->
-<section class="slide" id="why-sf">
-  <span class="slide-time">Minutes 5&ndash;8 &middot; Why Salesforce</span>
-  <h2>Why Salesforce has to be in the AI decisioning conversation.</h2>
+<section class="slide" id="memory">
+  <span class="slide-time">Minutes 3&ndash;6 &middot; The Memory Problem Nobody's Naming</span>
+  <h2>Your AI is brilliant. It just can't remember anything.</h2>
 
-  <p class="lead">Not because we make AI models. Because we're where the customer data already lives, where the trust layer already exists, and where the actions already execute.</p>
+  <p class="lead">Most AI marketing tools reason really well about a customer snapshot. Who is this person right now? What should we offer? But they start from scratch every single time. They don't remember.</p>
 
-  <h3>The vibe-code reality</h3>
-
-  <p>Let me tell you about my side project. I built a full production app in one week. One person. Evenings and weekends. $200 a month in tooling. Nine vendors &mdash; Claude, OpenAI, Vercel, Supabase, Stripe, ElevenLabs, Meta, Resend, GitHub. Brilliant to build. Genuinely fast.</p>
-
-  <p>Now imagine asking your compliance team where the customer data went.</p>
-
-  <div class="shift-grid">
-    <div class="shift-col old" style="border-top-color: #8B5CF6;">
-      <h4 style="color: #8B5CF6;">The 9-vendor reality</h4>
-      <ul>
-        <li>9 separate vendor relationships</li>
-        <li>9 separate data residency policies</li>
-        <li>9 separate security questionnaires</li>
-        <li>Customer data flowing between all of them</li>
-        <li>No unified audit trail</li>
-        <li>When legal asks "where's the data?" &mdash; good luck</li>
-      </ul>
+  <div class="scenarios">
+    <div class="scenario">
+      <h4>The Rejected Offer</h4>
+      <p>Customer calls to cancel. System sees churn risk, offers 20% discount. They decline, stay anyway. Three months later &mdash; same call, same system, same 20% offer. Customer: "You offered me that last time."</p>
+      <p class="outcome">A system with memory knows the discount was rejected &mdash; and that the customer stayed without it.</p>
     </div>
-    <div class="shift-col new">
-      <h4>One governed platform</h4>
-      <ul>
-        <li>All customer data in Data Cloud</li>
-        <li>Industry data model for financial services</li>
-        <li>AI calls through Einstein Trust Layer</li>
-        <li>Every decision auditable end-to-end</li>
-        <li>Actions execute in the same system of record</li>
-        <li>Compliance is structural, not bolted on</li>
-      </ul>
+    <div class="scenario">
+      <h4>The Channel Contradiction</h4>
+      <p>Marketing sends a credit card upsell by email on Monday. Customer ignores it. Tuesday, they walk into a branch. The banker pitches the same card &mdash; because the branch system doesn't know about the email.</p>
+      <p class="outcome">A system with memory suppresses the card offer and surfaces the mortgage conversation their data supports.</p>
+    </div>
+    <div class="scenario">
+      <h4>The Slow Burn</h4>
+      <p>New customer, moderate spend, one product. A snapshot says: standard cross-sell. But spend has increased 15% every month for five months. Support tickets dropped to zero. NPS moved from 6 to 8.</p>
+      <p class="outcome">A system with memory sees trajectory, not just position &mdash; and recommends the premium tier.</p>
+    </div>
+    <div class="scenario">
+      <h4>The Compliance Question</h4>
+      <p>Regulator asks: why was this customer flagged for enhanced review? A model score isn't an answer. "Three signals crossed threshold within 14 days, triggering policy rule FIN-2847" &mdash; that's an answer.</p>
+      <p class="outcome">Deterministic decisions over remembered state create a full audit trail.</p>
     </div>
   </div>
 
-  <p>Someone on your team has already built something like the left column. Maybe ten teams. That's not an innovation problem &mdash; <strong>it's a governance crisis in progress.</strong></p>
+  <p>Here's the distinction that matters: every marketing platform has <strong>channel memory</strong> &mdash; did they open the email, which variant won the A/B test, what's the optimal send time. That's useful.</p>
 
-  <div class="pillars">
-    <div class="pillar">
-      <h4>Data is already here</h4>
-      <p>Unified customer profiles. Industry-specific data model. Segments, eligibility, features, customer state &mdash; already maintained by your teams. No separate "AI data layer" to build.</p>
-    </div>
-    <div class="pillar">
-      <h4>Trust is already here</h4>
-      <p>Einstein Trust Layer for every LLM interaction. Data residency. Audit trails. Compliance-ready in a regulatory environment that's watching AI adoption closely.</p>
-    </div>
-    <div class="pillar">
-      <h4>Actions are already here</h4>
-      <p>Campaign execution, service interactions, partner channels, digital touchpoints &mdash; the actions happen in Salesforce already. Decisioning should live where the actions live.</p>
-    </div>
-    <div class="pillar">
-      <h4>Headless access is here now</h4>
-      <p>APIs for everything. Programmatic access to the decisioning engine, the data, the actions. Not locked behind a UI &mdash; embeddable into any architecture, any channel, any workflow.</p>
-    </div>
-  </div>
+  <p>What almost nobody has is <strong>relationship memory</strong> &mdash; the cross-lifecycle state that knows the service case from last week should change the marketing decision today. The trajectory across sales, service, and marketing signals, compounding into a single view that gets smarter over time.</p>
 
-  <div class="big-claim">Salesforce isn't in this conversation because it makes AI. It's in this conversation because AI without governed data, structured actions, and an audit trail is just a very expensive prototype.</div>
+  <div class="big-claim">Channel memory optimises campaigns. Relationship memory changes which decisions you make. Your CRM already holds this data. The question is whether your decisioning engine uses it.</div>
 
-  <div class="speaker-note">The vibe-code story is your vulnerability moment. You built it, you loved building it, AND you can see why it doesn't work at enterprise scale. Don't lecture about governance &mdash; confess that you did the ungoverned thing yourself and show why one approach scales and the other doesn't.</div>
+  <div class="speaker-note">This is the "here's something you haven't thought about" moment. Every FINS person in the room manages relationship businesses &mdash; banking, insurance, wealth. They intuitively know that forgetting what happened last time is the problem. You're naming it. The four scenarios should feel painfully familiar. Don't rush them &mdash; let the room nod.</div>
 </section>
 
 <!-- ═══════════════════════════════════════════════════════════════
-     SECTION 4 — TWO WAYS IN (Minutes 8–11)
+     BEAT 3 — TWO WAYS IN (Minutes 6–11)
      ═══════════════════════════════════════════════════════════════ -->
 <section class="slide" id="two-ways">
-  <span class="slide-time">Minutes 8&ndash;11 &middot; Two Ways In</span>
+  <span class="slide-time">Minutes 6&ndash;11 &middot; Two Ways In</span>
   <h2>Off the shelf. Or build your own. Same platform, your choice.</h2>
 
-  <p class="lead">We're not asking you to pick one path. Some teams want turnkey. Some want total control. The platform supports both &mdash; and they're not mutually exclusive.</p>
+  <p class="lead">The path to value doesn't require a twelve-month programme. We can show you two ways to get there &mdash; and they're not mutually exclusive.</p>
 
   <div class="modes">
     <div class="mode off-shelf">
-      <div class="mode-label">Mode A</div>
+      <div class="mode-label">Buy</div>
       <h3>Off the Shelf</h3>
-      <p>Pre-built accelerators and packaged solutions. Configure, deploy, run. Production-grade decisioning without building from scratch.</p>
+      <p>Pre-built Agentforce Marketing capabilities. Configure, deploy, run. Production-grade personalisation without building from scratch.</p>
       <ul>
-        <li><strong>Unlocked packages</strong> &mdash; deploy in days, not months</li>
-        <li><strong>Pre-built flows</strong> &mdash; arbitration, scoring, feedback loops</li>
-        <li><strong>Agentforce actions</strong> &mdash; 15+ structured tools, ready to go</li>
-        <li><strong>Industry templates</strong> &mdash; financial services patterns baked in</li>
-        <li><strong>Guided setup</strong> &mdash; conversational, not a 40-page guide</li>
+        <li><strong>Agentforce campaigns</strong> &mdash; AI-powered audience selection and content</li>
+        <li><strong>Journey orchestration</strong> &mdash; multi-channel, multi-step, adaptive</li>
+        <li><strong>Einstein decisioning</strong> &mdash; scoring, eligibility, next-best-action</li>
+        <li><strong>Industry templates</strong> &mdash; financial services patterns out of the box</li>
       </ul>
       <p style="margin-top: 16px; font-size: 14px; color: #059669; font-weight: 600;">Best for: teams that want fast time-to-value with proven patterns.</p>
     </div>
     <div class="mode build-own">
-      <div class="mode-label">Mode B</div>
-      <h3>Build Your Own</h3>
-      <p>Headless APIs. Composable primitives. Full programmatic control. Build your decisioning engine on the platform, your way.</p>
+      <div class="mode-label">Build</div>
+      <h3>Build Your Own with Headless 360</h3>
+      <p>Headless APIs. Composable primitives. Full programmatic control. Build a decisioning engine on the platform, your way.</p>
       <ul>
         <li><strong>Headless API</strong> &mdash; every capability accessible programmatically</li>
         <li><strong>Composable actions</strong> &mdash; assemble your own decisioning logic</li>
         <li><strong>BYOM</strong> &mdash; bring your own models alongside Einstein</li>
         <li><strong>Custom arbitration</strong> &mdash; your rules, your weighting, your policies</li>
-        <li><strong>Platform as infrastructure</strong> &mdash; data + trust + execution layer</li>
       </ul>
-      <p style="margin-top: 16px; font-size: 14px; color: #7c3aed; font-weight: 600;">Best for: teams with strong engineering who want full architectural control.</p>
+      <p style="margin-top: 16px; font-size: 14px; color: #7c3aed; font-weight: 600;">Best for: teams with engineering capability who want full architectural control.</p>
     </div>
   </div>
 
-  <p>Both modes share the same foundation: <strong>Data Cloud for the unified profile. Einstein Trust Layer for governance. Deterministic rails for the hot path. Agentic reasoning at the edges.</strong> The difference is how you get there &mdash; configured or coded.</p>
+  <h3>Let me show you what "Build" looks like</h3>
 
-  <div class="big-claim">This is "Make Marketing Great Again" for headless. The intelligence doesn't live in a UI you have to click through. It lives in APIs, actions, and composable primitives &mdash; accessible from anywhere, governed everywhere.</div>
+  <p>We built a decisioning engine in a couple of weeks. It's available from Salesforce Labs &mdash; you can download it today. Here's how it works in practice:</p>
 
-  <div class="speaker-note">The two-modes framing defuses the "Salesforce is too opinionated" objection AND the "Salesforce is too complex" objection at the same time. Mode A is for the COO who wants results Thursday. Mode B is for the CTO who wants architectural control. Both are real. Both are valid. Let the room self-select.</div>
+  <p>A marketer gets a notification in Slack. The system has identified a customer at risk, evaluated the available actions against scores, eligibility, channel policies, and budget &mdash; and it's recommending a specific treatment. The marketer reviews the rationale, approves the action, and it executes. The customer's response feeds back into the system, making the next decision smarter.</p>
+
+  <p><strong>That's relationship memory in action.</strong> The system didn't just score this customer against a model. It remembered what was offered before, what the customer responded to, which channels they prefer, and how their trajectory has changed over time. The decisioning is deterministic and auditable for the clear calls &mdash; with agentic reasoning for the genuinely ambiguous ones.</p>
+
+  <p>Both modes share the same foundation: <strong>Data Cloud profiles as the relationship memory layer. Einstein Trust Layer for governance. Deterministic rails for the hot path. Agentic reasoning at the edges.</strong></p>
+
+  <div class="speaker-note">Vignette 1 (Buy) can be a quick OOTB demo &mdash; show a campaign being created with Agentforce assistance. Vignette 2 (Build) is the decisioning engine &mdash; the Slack notification, the marketer approving, then a quick look under the hood to show what's powering it. The "couple of weeks" framing is important: it makes the audience believe they could do this too. Mention it's on Salesforce Labs &mdash; free, downloadable, real code.</div>
 </section>
 
 <!-- ═══════════════════════════════════════════════════════════════
-     SECTION 5 — DETERMINISTIC RAILS (Minutes 11–13)
+     BEAT 4 — WHY SALESFORCE (Minutes 11–13)
      ═══════════════════════════════════════════════════════════════ -->
-<section class="slide" id="rails">
-  <span class="slide-time">Minutes 11&ndash;13 &middot; Compliance &amp; Flexibility</span>
-  <h2>Deterministic rails. Agentic intelligence. Both.</h2>
+<section class="slide" id="why-sf">
+  <span class="slide-time">Minutes 11&ndash;13 &middot; Why Salesforce</span>
+  <h2>We're not asking you to slow down. We're asking you to do it on better infrastructure.</h2>
 
-  <p class="lead">In financial services, "the AI decided" is not an acceptable answer to a regulator. Every decision needs to be explainable, auditable, and reproducible. That means deterministic rails for the vast majority of decisions &mdash; with intelligence at the edges where it actually matters.</p>
+  <p class="lead">Your teams are already building with Claude, Codex, Gemini &mdash; that's great. We don't want to stop that. We want you to do it in a way that's governed, scalable, and compounds value over time.</p>
 
-  <div class="modes">
-    <div class="mode" style="border-top: 5px solid #10b981;">
-      <div class="mode-label" style="color: #10b981;">The Rails</div>
-      <h3>Deterministic at Scale</h3>
-      <p>99% of decisions are not ambiguous. A customer hits a threshold, eligible actions are clear, one wins on a weighted score. Sub-second. Auditable. Explainable. Cheap. <strong>No LLM in the hot path.</strong></p>
-      <p>This is what well-built decisioning has looked like for twenty years &mdash; done right, with modern tooling. We don't claim this is revolutionary. We claim it's the correct modern implementation.</p>
+  <div class="pillars">
+    <div class="pillar">
+      <h4>Context</h4>
+      <p>Unified profiles with relationship memory that compounds &mdash; not just last-click data. Industry-specific data model for financial services. Segments, eligibility, customer state &mdash; already maintained by your teams.</p>
     </div>
-    <div class="mode" style="border-top: 5px solid #8b5cf6;">
-      <div class="mode-label" style="color: #8b5cf6;">The Intelligence</div>
-      <h3>Agentic at the Edges</h3>
-      <p>The 1% that are ambiguous &mdash; conflicting signals, novel patterns, high-stakes decisions &mdash; escalate to an agent that reasons with full context. It recommends a treatment, drafts the content, writes rationale. A human approves.</p>
-      <p>This is the genuinely new part. And it only works because the rails handle everything else.</p>
+    <div class="pillar">
+      <h4>Trust</h4>
+      <p>Einstein Trust Layer for every AI interaction. Zero data retention. Auditable decisions. Compliance-ready in a regulatory environment that's watching AI adoption closely. "The AI decided" is not an answer to APRA.</p>
+    </div>
+    <div class="pillar">
+      <h4>Scale</h4>
+      <p>From pilot to production without re-architecting. The same platform that runs your CRM runs your decisioning. No new infrastructure to provision, no new vendor to onboard. That's how you join the 12%.</p>
+    </div>
+    <div class="pillar">
+      <h4>Channels</h4>
+      <p>Email, SMS, push, in-app, branch, call centre, partner &mdash; every channel, natively. Decisions execute where the actions happen. Not another system that generates recommendations nobody acts on.</p>
     </div>
   </div>
 
-  <p><strong>Neither is new on its own.</strong> Deterministic arbitration has existed for decades. LLM reasoning is everywhere now. The combination is new &mdash; and it's the only architecture that satisfies both the compliance team AND the marketing team.</p>
+  <p>And here's the part that matters most for financial services: <strong>deterministic decisions over remembered state give you a full audit trail.</strong> Every signal, every threshold, every policy rule &mdash; timestamped and explainable. That's not a feature. In this industry, that's a requirement.</p>
 
-  <h3>The closed loop</h3>
-  <p>Every decision writes an outcome signal back to the platform. Decision leads to action. Action leads to customer response. Response feeds the model. Model improves the next decision. <strong>Automated. Continuous. No manual retraining cycles.</strong></p>
-
-  <div class="big-claim">Compliance officers want deterministic rails they can audit. Marketing wants intelligence that adapts. You don't pick one. You architect both &mdash; and you let each do what it's good at.</div>
-
-  <div class="speaker-note">The honest framing matters here: "The deterministic core is good engineering, not a revolution. The agentic layer is the genuinely new part." Owning this distinction builds more credibility than overclaiming. The audience includes people who've built rules engines &mdash; they'll respect the honesty.</div>
+  <div class="speaker-note">This beat is compressed &mdash; two minutes, not five. The pillars do the heavy lifting visually. The APRA reference lands with the FINS audience specifically. The "join the 12%" line ties back to the 88% stat from Beat 1. Don't belabour the trust message &mdash; state it, show the pillars, move to the ask.</div>
 </section>
 
 <!-- ═══════════════════════════════════════════════════════════════
-     SECTION 6 — THE ASK (Minutes 13–15)
+     BEAT 5 — PARTNER WITH US (Minutes 13–15)
      ═══════════════════════════════════════════════════════════════ -->
 <section class="slide" id="ask">
-  <span class="slide-time">Minutes 13&ndash;15 &middot; The Ask</span>
-  <h2>Here's what we're actually asking you to do.</h2>
+  <span class="slide-time">Minutes 13&ndash;15 &middot; Partner With Us</span>
+  <h2>Don't wait. Set up sandboxes. Point your innovation at us.</h2>
 
-  <p class="lead">We're not asking you to buy a platform. We're not asking you to commit to a twelve-month programme. We're asking you to run a pilot. A real one. With us. On a real use case, with real customer data, producing real outcomes &mdash; in weeks, not quarters.</p>
+  <p class="lead">We're not asking you to commit to a programme. We're asking you to pick a use case and run it &mdash; with us, on real data, producing real outcomes in weeks.</p>
 
   <div class="speed-banner">
     <div class="speed-stat">Weeks, not quarters.</div>
     <div class="speed-label">From use case to production-grade decisioning</div>
   </div>
 
-  <p>The 88% failure rate isn't because the AI doesn't work. It's because pilots get stranded &mdash; no path from prototype to production. We're offering the path. Not a proof of concept that lives in a slide deck. A deployed solution on governed infrastructure that your compliance team can sign off on.</p>
+  <p>The 88% failure rate isn't because the AI doesn't work. It's because pilots get stranded &mdash; no path from prototype to production, no governance wrapper, no feedback loop. We're offering the path.</p>
+
+  <p>Retention. Cross-sell. Churn intervention. Loyalty. Whatever keeps you up at night &mdash; we can scope it together and have it running on governed infrastructure in weeks. And the system gets smarter with every decision, because every outcome feeds back into the memory layer.</p>
 
   <div class="cta-section">
     <h2>Partner with us to move real use cases.</h2>
-    <p>Pick a use case. We'll scope it together. We'll deploy it on the platform &mdash; with your data, your rules, your channels. Weeks, not quarters. And if it doesn't deliver, you'll know fast.</p>
+    <p>Pick a use case. We'll deploy it on the platform &mdash; with your data, your rules, your channels. And if it doesn't deliver, you'll know fast.</p>
 
     <div class="cta-steps">
       <div class="cta-step">
@@ -766,16 +670,16 @@
       </div>
     </div>
 
-    <p class="cta-closing">"We've been through upload-and-blast, journey builders, decision trees. Each was the right answer for its era. This is the answer for an era where data is unified, reasoning is possible, and your customers expect you to act in the moment that matters &mdash; not the next campaign cycle. Let's prove it together."</p>
+    <p class="cta-closing">"Every interaction your customer has is a signal. Every decision you make is a chance to learn. The organisations that build relationship memory &mdash; not just campaign memory &mdash; will compound their advantage every month. Let's start building yours."</p>
   </div>
 
-  <div class="speaker-note">The CTA is specific and low-commitment: partner on a pilot, not sign a contract. The audience should leave thinking "I have a use case that could work" &mdash; retention, cross-sell, churn intervention, whatever is top of mind for their business. Your job in the follow-up conversations is to help them name that use case.</div>
+  <div class="speaker-note">The closing line ties the entire narrative together: from the 88% problem, through the memory insight, to the practical path forward. The audience should leave thinking "I have a use case that could work" and "this is different from what I've heard before because of the memory framing." Your job in follow-up conversations is to help them name that use case and connect it to their data.</div>
 </section>
 
 </main>
 
 <footer>
-  Salesforce FINS Summit &mdash; Keynote Talk Track &middot; April 2026
+  Salesforce FINS Summit &middot; Stuart Dunlop &amp; Jordan &middot; April 2026
 </footer>
 
 <script src="gate.js" data-page="FINS Summit Keynote"></script>
