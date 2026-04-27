@@ -1,0 +1,890 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scale Personalisation with Agentforce Marketing &amp; Trusted AI &middot; FINS Summit</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        :root {
+            --navy:   #CFE9FE;
+            --navy2:  #EAF5FE;
+            --blue:   #022AC0;
+            --blue2:  #022AC0;
+            --royal:  #022AC0;
+            --teal:   #04E1CB;
+            --lblue:  #90D0FE;
+            --gold:   #F6BC06;
+            --white:  #002775;
+            --text:   #002775;
+            --card:   rgba(0, 39, 117, 0.06);
+            --card-h: rgba(0, 39, 117, 0.12);
+            --border: rgba(0, 39, 117, 0.14);
+            --muted:  rgba(0, 39, 117, 0.6);
+            --dim:    rgba(0, 39, 117, 0.72);
+            --red:    #C23934;
+            --green:  #027A38;
+            --amber:  #A05C00;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+            background: var(--navy);
+            color: var(--text);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .bg-base {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            background: radial-gradient(ellipse 90% 70% at 100% 0%, rgba(2, 42, 192, 0.07) 0%, transparent 55%),
+                        radial-gradient(ellipse 60% 50% at 0% 100%, rgba(4, 225, 203, 0.04) 0%, transparent 50%),
+                        linear-gradient(170deg, #CFE9FE 0%, #D8EFFE 60%, #CFE9FE 100%);
+        }
+
+        .bg-noise {
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            opacity: 0.012;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+            background-repeat: repeat;
+            background-size: 200px 200px;
+        }
+
+        .deck {
+            width: 100%;
+            height: 100vh;
+            position: relative;
+            z-index: 1;
+        }
+
+        .slide {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 64px 108px 88px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.45s cubic-bezier(0.4, 0, 0.2, 1), transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+            transform: translateY(22px);
+            text-align: center;
+        }
+
+        .slide.active {
+            opacity: 1;
+            pointer-events: all;
+            transform: translateY(0);
+        }
+
+        .slide.exit {
+            opacity: 0;
+            transform: translateY(-18px);
+            transition: opacity 0.26s ease, transform 0.26s ease;
+        }
+
+        /* ── NAV BAR ── */
+        .nav-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            height: 56px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 40px;
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(0, 39, 117, 0.1);
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .nav-sf-logo {
+            height: 24px;
+            width: auto;
+        }
+
+        .nav-divider {
+            width: 1px;
+            height: 18px;
+            background: rgba(0, 39, 117, 0.14);
+        }
+
+        .nav-title {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: rgba(0, 39, 117, 0.5);
+        }
+
+        .nav-controls {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .nav-btn {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border: 1px solid rgba(2, 42, 192, 0.3);
+            background: none;
+            color: rgba(0, 39, 117, 0.7);
+            font-size: 15px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .nav-btn:hover {
+            border-color: var(--blue2);
+            color: var(--blue2);
+            background: rgba(2, 42, 192, 0.06);
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.28;
+            cursor: default;
+        }
+
+        .nav-counter {
+            font-size: 11px;
+            color: var(--muted);
+            min-width: 40px;
+            text-align: center;
+            letter-spacing: 0.04em;
+        }
+
+        .nav-dots {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .dot {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: rgba(0, 39, 117, 0.2);
+            cursor: pointer;
+            transition: all 0.3s;
+            border: none;
+            padding: 0;
+            flex-shrink: 0;
+        }
+
+        .dot.active {
+            background: var(--blue2);
+            width: 16px;
+            border-radius: 3px;
+        }
+
+        .key-hint {
+            position: fixed;
+            bottom: 66px;
+            right: 36px;
+            font-size: 9px;
+            color: rgba(0, 39, 117, 0.22);
+            letter-spacing: 0.06em;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .key {
+            padding: 2px 5px;
+            border-radius: 3px;
+            border: 1px solid rgba(0, 39, 117, 0.14);
+            font-size: 8px;
+        }
+
+        /* ── TYPOGRAPHY ── */
+        .eyebrow {
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--blue2);
+            margin-bottom: 16px;
+        }
+
+        .big {
+            font-size: clamp(40px, 4.5vw, 66px);
+            font-weight: 900;
+            line-height: 1.05;
+            letter-spacing: -0.03em;
+            margin-bottom: 24px;
+            color: var(--text);
+        }
+
+        .sub {
+            font-size: clamp(17px, 1.6vw, 21px);
+            color: var(--muted);
+            line-height: 1.8;
+            max-width: 540px;
+        }
+
+        .hl       { color: var(--blue2); }
+        .hl-teal  { color: #007A72; }
+        .hl-gold  { color: #C89000; }
+
+        .accent-line {
+            width: 40px;
+            height: 3px;
+            border-radius: 2px;
+            margin-bottom: 20px;
+            background: linear-gradient(90deg, var(--blue2), var(--teal));
+        }
+
+        /* ── STAT LOCKUP ── */
+        .stat-huge {
+            font-size: clamp(80px, 12vw, 160px);
+            font-weight: 900;
+            letter-spacing: -0.05em;
+            line-height: 1;
+            color: var(--blue2);
+            margin-bottom: 8px;
+        }
+
+        .stat-unit {
+            font-size: clamp(40px, 6vw, 72px);
+            font-weight: 900;
+            color: var(--blue2);
+            opacity: 0.4;
+        }
+
+        .stat-desc {
+            font-size: clamp(16px, 1.5vw, 20px);
+            color: var(--muted);
+            margin-top: 4px;
+        }
+
+        /* ── SCENARIO CARDS ── */
+        .scenario-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            width: 100%;
+            max-width: 920px;
+        }
+
+        .scenario-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 24px;
+            text-align: left;
+            transition: background 0.2s;
+        }
+
+        .scenario-card:hover { background: var(--card-h); }
+
+        .scenario-card h4 {
+            font-size: 16px;
+            font-weight: 800;
+            color: var(--text);
+            margin-bottom: 8px;
+        }
+
+        .scenario-card p {
+            font-size: 14px;
+            color: var(--muted);
+            line-height: 1.6;
+            margin-bottom: 0;
+        }
+
+        .scenario-card .outcome {
+            margin-top: 10px;
+            font-size: 13px;
+            font-weight: 700;
+            color: #007A72;
+            line-height: 1.5;
+        }
+
+        /* ── TWO-COL CARDS ── */
+        .two-col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            width: 100%;
+            max-width: 920px;
+        }
+
+        .col-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 32px;
+            text-align: left;
+        }
+
+        .col-card h3 {
+            font-size: 22px;
+            font-weight: 800;
+            color: var(--text);
+            margin-bottom: 12px;
+        }
+
+        .col-card p {
+            font-size: 15px;
+            color: var(--muted);
+            line-height: 1.65;
+            margin-bottom: 0;
+        }
+
+        .col-card .card-label {
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .col-card.buy  { border-top: 4px solid #007A72; }
+        .col-card.buy  .card-label { color: #007A72; }
+        .col-card.build { border-top: 4px solid var(--blue2); }
+        .col-card.build .card-label { color: var(--blue2); }
+
+        .col-card ul {
+            list-style: none;
+            margin-top: 14px;
+        }
+
+        .col-card li {
+            font-size: 14px;
+            color: var(--dim);
+            padding: 6px 0;
+            border-bottom: 1px solid rgba(0, 39, 117, 0.06);
+            line-height: 1.5;
+        }
+
+        .col-card li:last-child { border-bottom: none; }
+        .col-card li strong { color: var(--text); }
+
+        /* ── PILLAR GRID ── */
+        .pillar-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+            width: 100%;
+            max-width: 920px;
+        }
+
+        .pillar-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 24px;
+            text-align: left;
+        }
+
+        .pillar-card h4 {
+            font-size: 17px;
+            font-weight: 800;
+            color: var(--text);
+            margin-bottom: 8px;
+        }
+
+        .pillar-card p {
+            font-size: 14px;
+            color: var(--muted);
+            line-height: 1.6;
+            margin-bottom: 0;
+        }
+
+        /* ── CTA BANNER ── */
+        .cta-banner {
+            background: rgba(2, 42, 192, 0.06);
+            border: 1px solid rgba(2, 42, 192, 0.18);
+            border-radius: 16px;
+            padding: 40px;
+            max-width: 720px;
+            width: 100%;
+        }
+
+        .cta-steps {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 16px;
+            margin: 28px 0;
+        }
+
+        .cta-step {
+            background: rgba(2, 42, 192, 0.05);
+            border: 1px solid rgba(2, 42, 192, 0.12);
+            border-radius: 12px;
+            padding: 20px 14px;
+            text-align: center;
+        }
+
+        .cta-step .step-num {
+            font-size: 24px;
+            font-weight: 900;
+            color: var(--blue2);
+            opacity: 0.3;
+            margin-bottom: 6px;
+        }
+
+        .cta-step .step-text {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--text);
+            line-height: 1.4;
+        }
+
+        /* ── DECORATIONS ── */
+        .star-deco {
+            position: absolute;
+            pointer-events: none;
+            user-select: none;
+            z-index: 2;
+        }
+
+        .star-deco img {
+            display: block;
+            width: 28px;
+            height: 28px;
+            opacity: 0.3;
+        }
+
+        .char {
+            position: absolute;
+            pointer-events: none;
+            user-select: none;
+            z-index: 2;
+        }
+
+        .char img {
+            display: block;
+            height: 180px;
+            width: auto;
+        }
+
+        /* ── MEMORY VS CHANNEL ── */
+        .memory-contrast {
+            display: grid;
+            grid-template-columns: 1fr auto 1fr;
+            gap: 0;
+            width: 100%;
+            max-width: 860px;
+            align-items: center;
+        }
+
+        .memory-box {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 28px;
+            text-align: left;
+        }
+
+        .memory-box.rel {
+            border-color: rgba(2, 42, 192, 0.25);
+            background: rgba(2, 42, 192, 0.05);
+        }
+
+        .memory-box h4 {
+            font-size: 15px;
+            font-weight: 800;
+            margin-bottom: 10px;
+            letter-spacing: 0.04em;
+        }
+
+        .memory-box.chan h4 { color: var(--muted); }
+        .memory-box.rel h4  { color: var(--blue2); }
+
+        .memory-box li {
+            font-size: 14px;
+            color: var(--dim);
+            line-height: 1.7;
+            list-style: none;
+            padding: 3px 0;
+        }
+
+        .memory-arrow {
+            font-size: 28px;
+            color: rgba(0, 39, 117, 0.2);
+            padding: 0 20px;
+            font-weight: 300;
+        }
+
+        /* ── MOBILE ── */
+        @media (max-width: 900px) {
+            .slide { padding: 48px 64px 80px; }
+        }
+
+        @media (max-width: 768px) {
+            html, body { overflow-y: auto; height: auto; }
+            .deck { height: auto; }
+
+            .slide {
+                position: relative;
+                opacity: 1 !important;
+                transform: none !important;
+                pointer-events: all;
+                display: none;
+                flex-direction: column;
+                align-items: center;
+                justify-content: flex-start;
+                padding: 32px 20px 88px;
+                gap: 20px;
+                min-height: 100svh;
+            }
+            .slide.active { display: flex; }
+
+            .eyebrow { font-size: 11px; letter-spacing: 0.14em; margin-bottom: 10px; }
+            .big { font-size: clamp(26px, 7vw, 38px); }
+            .sub { font-size: 15px; line-height: 1.75; }
+
+            .scenario-grid, .two-col, .pillar-grid, .memory-contrast { grid-template-columns: 1fr; }
+            .cta-steps { grid-template-columns: 1fr; }
+            .memory-arrow { transform: rotate(90deg); padding: 10px 0; }
+
+            .nav-bar { padding: 0 16px; }
+            .nav-title { display: none; }
+            .nav-divider { display: none; }
+            .nav-dots { display: none; }
+            .key-hint, .star-deco, .char { display: none; }
+        }
+
+        @media (max-width: 480px) {
+            .slide { padding: 24px 16px 84px; }
+            .big { font-size: 26px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-base"></div>
+    <div class="bg-noise"></div>
+
+    <div id="deck" class="deck">
+
+        <!-- ═══════════ 1: TITLE ═══════════ -->
+        <section class="slide">
+            <div style="text-align: center; max-width: 820px;">
+                <div class="accent-line" style="margin: 0 auto 20px;"></div>
+                <div class="eyebrow">Salesforce &middot; FINS Summit</div>
+                <h1 class="big">Scale Personalisation with<br><span class="hl">Agentforce Marketing</span><br>&amp; Trusted AI</h1>
+                <p class="sub" style="margin: 0 auto;">Right offer. Right time. Right customer.<br>The job hasn't changed. How fast you get there has.</p>
+            </div>
+            <div class="star-deco" style="top: 100px; right: 120px;"><img src="sf-star-gold.png" alt=""></div>
+            <div class="star-deco" style="top: 140px; right: 80px; opacity: 0.2;"><img src="sf-star-gold.png" style="width:16px;height:16px;opacity:1;"></div>
+            <div class="char" style="bottom: 56px; right: 80px;"><img src="char-agent-astro-2.png" alt=""></div>
+        </section>
+
+        <!-- ═══════════ 2: THE PROBLEM ═══════════ -->
+        <section class="slide">
+            <div style="text-align: center; max-width: 640px;">
+                <div class="accent-line" style="margin: 0 auto 20px;"></div>
+                <div class="eyebrow">The Honest Open</div>
+                <div class="stat-huge">88<span class="stat-unit">%</span></div>
+                <p class="sub" style="margin: 0 auto; font-size: clamp(18px, 1.8vw, 24px); font-weight: 600; color: var(--text);">of AI pilots never make it to production.</p>
+                <p class="sub" style="margin: 16px auto 0; max-width: 500px;">Not because the AI doesn't work. Because prototypes don't survive compliance, multi-channel reality, and enterprise IT.</p>
+                <p class="stat-desc" style="margin-top: 24px; font-size: 13px; opacity: 0.5;">Beam, 2025</p>
+            </div>
+        </section>
+
+        <!-- ═══════════ 3: PATH TO VALUE ═══════════ -->
+        <section class="slide">
+            <div style="text-align: center; max-width: 640px;">
+                <div class="accent-line" style="margin: 0 auto 20px;"></div>
+                <div class="eyebrow">Path to Value</div>
+                <h2 class="big" style="font-size: clamp(30px, 3.5vw, 48px);">12 vendors.<br>12 security questionnaires.<br><span class="hl">1 governance nightmare.</span></h2>
+                <p class="sub" style="margin: 0 auto; max-width: 480px;">The path to value doesn't have to look like that for enterprises anymore. We can substantially reduce that barrier.</p>
+            </div>
+        </section>
+
+        <!-- ═══════════ 4: THE MEMORY PROBLEM ═══════════ -->
+        <section class="slide">
+            <div style="text-align: center; max-width: 720px;">
+                <div class="accent-line" style="margin: 0 auto 20px;"></div>
+                <div class="eyebrow">The Memory Problem</div>
+                <h2 class="big" style="font-size: clamp(30px, 3.5vw, 50px); margin-bottom: 16px;">Your AI is brilliant.<br><span class="hl">It just can't remember anything.</span></h2>
+                <p class="sub" style="margin: 0 auto; max-width: 520px;">Most AI marketing tools reason well about a snapshot. But they start from scratch every time. They don't know what happened last week, last month, or last year.</p>
+            </div>
+        </section>
+
+        <!-- ═══════════ 5: FOUR SCENARIOS ═══════════ -->
+        <section class="slide">
+            <div style="max-width: 960px; width: 100%;">
+                <div class="accent-line" style="margin-bottom: 12px;"></div>
+                <div class="eyebrow" style="text-align: left; margin-bottom: 8px;">What Forgetting Looks Like</div>
+                <h2 class="big" style="font-size: clamp(22px, 2.5vw, 34px); text-align: left; margin-bottom: 20px;">Four scenarios your customers experience today.</h2>
+
+                <div class="scenario-grid">
+                    <div class="scenario-card">
+                        <h4>The Rejected Offer</h4>
+                        <p>Customer declines a 20% discount. Three months later, the system offers the same discount again.</p>
+                        <div class="outcome">With memory: knows the offer was rejected, and the customer stayed anyway.</div>
+                    </div>
+                    <div class="scenario-card">
+                        <h4>The Channel Contradiction</h4>
+                        <p>Marketing emails a credit card upsell Monday. Tuesday, the banker pitches the same card in-branch.</p>
+                        <div class="outcome">With memory: suppresses the card, surfaces the mortgage conversation instead.</div>
+                    </div>
+                    <div class="scenario-card">
+                        <h4>The Slow Burn</h4>
+                        <p>Moderate spend, one product. A snapshot says: standard cross-sell. But spend is up 15% every month for five months.</p>
+                        <div class="outcome">With memory: sees trajectory, not just position. Recommends premium tier.</div>
+                    </div>
+                    <div class="scenario-card">
+                        <h4>The Compliance Question</h4>
+                        <p>Regulator asks: why was this customer flagged? "The model scored them 0.82" is not an answer.</p>
+                        <div class="outcome">With memory: three signals, two thresholds, one policy rule. Full audit trail.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════════ 6: CHANNEL vs RELATIONSHIP MEMORY ═══════════ -->
+        <section class="slide">
+            <div style="text-align: center; max-width: 920px; width: 100%;">
+                <div class="accent-line" style="margin: 0 auto 20px;"></div>
+                <div class="eyebrow">The Distinction That Matters</div>
+                <h2 class="big" style="font-size: clamp(26px, 3vw, 42px); margin-bottom: 32px;">Channel memory <span style="font-weight: 400; opacity: 0.4;">vs</span> <span class="hl">Relationship memory.</span></h2>
+
+                <div class="memory-contrast">
+                    <div class="memory-box chan">
+                        <h4>Channel Memory</h4>
+                        <ul>
+                            <li>Did they open the email?</li>
+                            <li>Which variant won the A/B test?</li>
+                            <li>What's the optimal send time?</li>
+                            <li>Which campaign drove conversion?</li>
+                        </ul>
+                        <p style="font-size: 13px; color: var(--muted); margin-top: 12px; font-weight: 600;">Everyone has this.</p>
+                    </div>
+                    <div class="memory-arrow">&rarr;</div>
+                    <div class="memory-box rel">
+                        <h4>Relationship Memory</h4>
+                        <ul>
+                            <li>What was offered before &mdash; and what they said</li>
+                            <li>Service case last week that changes today's decision</li>
+                            <li>Trajectory across sales, service, and marketing</li>
+                            <li>Contact policy across every channel and team</li>
+                        </ul>
+                        <p style="font-size: 13px; color: var(--blue2); margin-top: 12px; font-weight: 700;">Almost nobody has this.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════════ 7: TWO WAYS IN ═══════════ -->
+        <section class="slide">
+            <div style="max-width: 960px; width: 100%;">
+                <div class="accent-line" style="margin-bottom: 12px;"></div>
+                <div class="eyebrow" style="text-align: left; margin-bottom: 8px;">Two Ways In</div>
+                <h2 class="big" style="font-size: clamp(26px, 3vw, 42px); text-align: left; margin-bottom: 22px;">Off the shelf. <span style="font-weight: 400; opacity: 0.4;">Or</span> build your own.</h2>
+
+                <div class="two-col">
+                    <div class="col-card buy">
+                        <div class="card-label">Buy</div>
+                        <h3>Agentforce Marketing</h3>
+                        <p>Pre-built capabilities. Configure, deploy, run.</p>
+                        <ul>
+                            <li><strong>AI-powered</strong> audience selection &amp; content</li>
+                            <li><strong>Journey orchestration</strong> &mdash; multi-channel, adaptive</li>
+                            <li><strong>Einstein decisioning</strong> &mdash; scoring &amp; NBA</li>
+                            <li><strong>Industry templates</strong> &mdash; FINS patterns OOTB</li>
+                        </ul>
+                    </div>
+                    <div class="col-card build">
+                        <div class="card-label">Build</div>
+                        <h3>Headless 360</h3>
+                        <p>APIs. Composable primitives. Full control.</p>
+                        <ul>
+                            <li><strong>Headless API</strong> &mdash; every capability programmatic</li>
+                            <li><strong>BYOM</strong> &mdash; bring your own models</li>
+                            <li><strong>Custom arbitration</strong> &mdash; your rules, your weights</li>
+                            <li><strong>Platform as infrastructure</strong> &mdash; data + trust + execution</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <p style="text-align: center; margin-top: 22px; font-size: clamp(14px, 1.3vw, 17px); font-weight: 700; color: var(--text);">Same foundation: Data Cloud profiles. Einstein Trust Layer. Deterministic rails. Agentic reasoning at the edges.</p>
+            </div>
+        </section>
+
+        <!-- ═══════════ 8: WHY SALESFORCE ═══════════ -->
+        <section class="slide">
+            <div style="max-width: 960px; width: 100%;">
+                <div class="accent-line" style="margin-bottom: 12px;"></div>
+                <div class="eyebrow" style="text-align: left; margin-bottom: 8px;">Why Salesforce</div>
+                <h2 class="big" style="font-size: clamp(26px, 3vw, 42px); text-align: left; margin-bottom: 22px;">Not slower. <span class="hl">Safer.</span></h2>
+
+                <div class="pillar-grid">
+                    <div class="pillar-card">
+                        <h4>Context</h4>
+                        <p>Unified profiles with relationship memory that compounds. Industry data model for FINS. Not just last-click data.</p>
+                    </div>
+                    <div class="pillar-card">
+                        <h4>Trust</h4>
+                        <p>Einstein Trust Layer. Zero data retention. Auditable decisions. "The AI decided" is not an answer to APRA.</p>
+                    </div>
+                    <div class="pillar-card">
+                        <h4>Scale</h4>
+                        <p>Pilot to production without re-architecting. Same platform that runs your CRM runs your decisioning.</p>
+                    </div>
+                    <div class="pillar-card">
+                        <h4>Channels</h4>
+                        <p>Email, SMS, push, in-app, branch, call centre, partner. Decisions execute where the actions happen.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════════ 9: THE ASK ═══════════ -->
+        <section class="slide">
+            <div style="text-align: center; max-width: 720px;">
+                <div class="accent-line" style="margin: 0 auto 20px;"></div>
+                <div class="eyebrow">Partner With Us</div>
+                <h2 class="big" style="font-size: clamp(36px, 4.5vw, 60px); margin-bottom: 28px;">Weeks,<br>not quarters.</h2>
+
+                <div class="cta-banner">
+                    <div class="cta-steps">
+                        <div class="cta-step">
+                            <div class="step-num">01</div>
+                            <div class="step-text">Pick a use case<br>together</div>
+                        </div>
+                        <div class="cta-step">
+                            <div class="step-num">02</div>
+                            <div class="step-text">Deploy on<br>governed rails</div>
+                        </div>
+                        <div class="cta-step">
+                            <div class="step-num">03</div>
+                            <div class="step-text">Measure real<br>outcomes</div>
+                        </div>
+                    </div>
+                    <p style="font-size: 15px; color: var(--dim); line-height: 1.7; margin: 0;">The system gets smarter with every decision. Every outcome feeds back into the memory layer. The organisations that build relationship memory will compound their advantage every month.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ═══════════ 10: QUESTIONS ═══════════ -->
+        <section class="slide">
+            <div style="text-align: center; max-width: 640px;">
+                <div class="accent-line" style="margin: 0 auto 24px;"></div>
+                <h2 class="big" style="font-size: clamp(48px, 6vw, 80px); margin-bottom: 16px;">Questions?</h2>
+                <p class="sub" style="margin: 0 auto; font-size: 18px; color: var(--muted); letter-spacing: 0.04em;">Stuart Dunlop &amp; Jordan<br>Salesforce &middot; FINS Summit</p>
+            </div>
+            <div class="star-deco" style="top: 100px; right: 120px;"><img src="sf-star-gold.png" alt=""></div>
+            <div class="star-deco" style="top: 140px; right: 80px; opacity: 0.2;"><img src="sf-star-gold.png" style="width:16px;height:16px;opacity:1;"></div>
+            <div class="char" style="bottom: 56px; right: 80px;"><img src="char-agent-einstein-1.png" alt=""></div>
+        </section>
+
+    </div>
+
+    <!-- Navigation -->
+    <nav class="nav-bar" role="navigation" aria-label="Slide navigation">
+        <div class="nav-brand">
+            <img class="nav-sf-logo" src="sf-logo-cloud.png" alt="Salesforce">
+            <div class="nav-divider"></div>
+            <span class="nav-title">FINS Summit &middot; Scale Personalisation</span>
+        </div>
+        <div class="nav-dots" role="tablist" id="progress"></div>
+        <div class="nav-controls">
+            <button class="nav-btn" id="btn-prev" aria-label="Previous slide">&lsaquo;</button>
+            <span class="nav-counter" id="counter">1 / 10</span>
+            <button class="nav-btn" id="btn-next" aria-label="Next slide">&rsaquo;</button>
+        </div>
+    </nav>
+
+    <div class="key-hint">
+        <span class="key">&larr;&rarr;</span> navigate <span class="key">Space</span> advance
+    </div>
+
+    <script>
+        var slides  = document.querySelectorAll('#deck > .slide, #deck > section.slide');
+        var total   = slides.length;
+        var current = 0;
+        var busy    = false;
+        var prog    = document.getElementById('progress');
+
+        for (var i = 0; i < total; i++) {
+            var dot = document.createElement('button');
+            dot.className = 'dot' + (i === 0 ? ' active' : '');
+            dot.setAttribute('role', 'tab');
+            dot.setAttribute('aria-label', 'Slide ' + (i + 1));
+            dot.setAttribute('aria-selected', i === 0 ? 'true' : 'false');
+            dot.addEventListener('click', (function(idx) {
+                return function() { goTo(idx); };
+            })(i));
+            prog.appendChild(dot);
+        }
+
+        function goTo(idx) {
+            if (busy || idx === current || idx < 0 || idx >= total) return;
+            busy = true;
+            slides[current].classList.add('exit');
+            var prev = current;
+            current = idx;
+            setTimeout(function() {
+                slides[prev].classList.remove('active', 'exit');
+                slides[current].classList.add('active');
+                updateUI();
+                setTimeout(function() { busy = false; }, 450);
+            }, 260);
+        }
+
+        function navigate(dir) { goTo(current + dir); }
+
+        function updateUI() {
+            document.getElementById('counter').textContent = (current + 1) + ' / ' + total;
+            document.getElementById('btn-prev').disabled = current === 0;
+            document.getElementById('btn-next').disabled = current === total - 1;
+            document.querySelectorAll('.dot').forEach(function(d, i) {
+                d.classList.toggle('active', i === current);
+                d.setAttribute('aria-selected', i === current ? 'true' : 'false');
+            });
+        }
+
+        document.getElementById('btn-prev').addEventListener('click', function() { navigate(-1); });
+        document.getElementById('btn-next').addEventListener('click', function() { navigate(1); });
+
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowRight' || e.key === 'ArrowDown' || e.key === ' ') { e.preventDefault(); navigate(1); }
+            if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')                    { e.preventDefault(); navigate(-1); }
+        });
+
+        var tx = null;
+        document.addEventListener('touchstart', function(e) { tx = e.touches[0].clientX; });
+        document.addEventListener('touchend',   function(e) {
+            if (tx === null) return;
+            if (Math.abs(e.changedTouches[0].clientX - tx) > 50) navigate(e.changedTouches[0].clientX - tx < 0 ? 1 : -1);
+            tx = null;
+        });
+
+        slides[0].classList.add('active');
+        updateUI();
+    </script>
+    <script src="gate.js" data-page="FINS Summit Slides"></script>
+</body>
+</html>
