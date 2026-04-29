@@ -965,9 +965,15 @@
       </div>
       <div class="fs-arrow">&rsaquo;</div>
       <div class="fs-node">
+        <div class="fs-icon" style="background:rgba(0,87,184,0.08);color:#0057B8;border-color:rgba(0,87,184,0.18);">&#x1f4be;</div>
+        <div class="fs-label">Write</div>
+        <div class="fs-sub">Latent decision to Data Cloud</div>
+      </div>
+      <div class="fs-arrow">&rsaquo;</div>
+      <div class="fs-node">
         <div class="fs-icon" style="background:rgba(0,39,117,0.06);color:var(--ink);border-color:rgba(0,39,117,0.12);">&#x1f4e4;</div>
-        <div class="fs-label">Execute</div>
-        <div class="fs-sub">Channel dispatch + audit trace</div>
+        <div class="fs-label">Serve</div>
+        <div class="fs-sub">RT channel &rarr; offer + treatment</div>
       </div>
       <div class="fs-loop-arrow">&#x21ba;</div>
       <div class="fs-node">
@@ -1082,10 +1088,102 @@
     </div>
   </div>
 
+  <!-- DECIDING vs SERVING -->
+  <div class="section">
+    <div class="step-head">
+      <div class="step-num" style="background:rgba(0,87,184,0.12);color:#0057B8;border-color:rgba(0,87,184,0.25);">04</div>
+      <div>
+        <div class="step-title">Deciding vs. Serving</div>
+        <div class="step-desc">The Decisioning Hub writes latent decisions. The serving layer reads them in real-time. Clean boundary &mdash; the Hub owns the what, the serving layer owns the when and where.</div>
+      </div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1fr 40px 1fr; gap: 0; margin-bottom: 24px;">
+      <div style="background: var(--card); border: 1px solid rgba(2,42,192,0.2); border-radius: 16px; padding: 28px; box-shadow: var(--shadow);">
+        <div style="font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--blue2); margin-bottom: 16px;">Decisioning Hub</div>
+        <div style="font-size: 13px; color: var(--text); margin-bottom: 12px; line-height: 1.55; display: flex; align-items: flex-start; gap: 10px;"><span style="flex-shrink:0;width:6px;height:6px;border-radius:50%;background:var(--blue2);margin-top:7px;"></span>Batch / segment-triggered / event-driven</div>
+        <div style="font-size: 13px; color: var(--text); margin-bottom: 12px; line-height: 1.55; display: flex; align-items: flex-start; gap: 10px;"><span style="flex-shrink:0;width:6px;height:6px;border-radius:50%;background:var(--blue2);margin-top:7px;"></span>Selects the best <strong>promotion</strong> per customer</div>
+        <div style="font-size: 13px; color: var(--text); margin-bottom: 12px; line-height: 1.55; display: flex; align-items: flex-start; gap: 10px;"><span style="flex-shrink:0;width:6px;height:6px;border-radius:50%;background:var(--blue2);margin-top:7px;"></span>Writes latent decisions to Data Cloud</div>
+        <div style="font-size: 13px; color: var(--text); margin-bottom: 12px; line-height: 1.55; display: flex; align-items: flex-start; gap: 10px;"><span style="flex-shrink:0;width:6px;height:6px;border-radius:50%;background:var(--blue2);margin-top:7px;"></span>No Apex in the hot path</div>
+        <div style="font-size: 13px; color: var(--text); line-height: 1.55; display: flex; align-items: flex-start; gap: 10px;"><span style="flex-shrink:0;width:6px;height:6px;border-radius:50%;background:var(--blue2);margin-top:7px;"></span>Owns the learning loop</div>
+      </div>
+      <div style="display: flex; align-items: center; justify-content: center; font-size: 18px; color: rgba(0,39,117,0.2);">&rarr;</div>
+      <div style="background: var(--card); border: 1px solid rgba(0,122,114,0.2); border-radius: 16px; padding: 28px; box-shadow: var(--shadow);">
+        <div style="font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--teal-d); margin-bottom: 16px;">Serving Layer (SP / Agentforce / Console)</div>
+        <div style="font-size: 13px; color: var(--text); margin-bottom: 12px; line-height: 1.55; display: flex; align-items: flex-start; gap: 10px;"><span style="flex-shrink:0;width:6px;height:6px;border-radius:50%;background:var(--teal-d);margin-top:7px;"></span>Reads latent decisions from Data Cloud</div>
+        <div style="font-size: 13px; color: var(--text); margin-bottom: 12px; line-height: 1.55; display: flex; align-items: flex-start; gap: 10px;"><span style="flex-shrink:0;width:6px;height:6px;border-radius:50%;background:var(--teal-d);margin-top:7px;"></span>Selects the best <strong>offer, treatment, channel</strong></div>
+        <div style="font-size: 13px; color: var(--text); margin-bottom: 12px; line-height: 1.55; display: flex; align-items: flex-start; gap: 10px;"><span style="flex-shrink:0;width:6px;height:6px;border-radius:50%;background:var(--teal-d);margin-top:7px;"></span>Real-time rendering at any concurrency</div>
+        <div style="font-size: 13px; color: var(--text); margin-bottom: 12px; line-height: 1.55; display: flex; align-items: flex-start; gap: 10px;"><span style="flex-shrink:0;width:6px;height:6px;border-radius:50%;background:var(--teal-d);margin-top:7px;"></span>No governor limits in the serving path</div>
+        <div style="font-size: 13px; color: var(--text); line-height: 1.55; display: flex; align-items: flex-start; gap: 10px;"><span style="flex-shrink:0;width:6px;height:6px;border-radius:50%;background:var(--teal-d);margin-top:7px;"></span>Returns outcomes to the Hub</div>
+      </div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 24px;">
+      <div style="background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 18px; box-shadow: var(--shadow-sm); text-align: center;">
+        <div style="font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px;">Web / Marketing</div>
+        <div style="font-size: 13px; font-weight: 700; color: var(--teal-d);">Salesforce Personalisation</div>
+        <div style="font-size: 11px; color: var(--muted); margin-top: 4px;">Latent decisions from Data Cloud, real-time rendering</div>
+      </div>
+      <div style="background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 18px; box-shadow: var(--shadow-sm); text-align: center;">
+        <div style="font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px;">Service</div>
+        <div style="font-size: 13px; font-weight: 700; color: var(--blue2);">Agentforce / Console</div>
+        <div style="font-size: 11px; color: var(--muted); margin-top: 4px;">Live arbitration or cached decision</div>
+      </div>
+      <div style="background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 18px; box-shadow: var(--shadow-sm); text-align: center;">
+        <div style="font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px;">Sales</div>
+        <div style="font-size: 13px; font-weight: 700; color: var(--gold-d);">Agentforce / Record Page</div>
+        <div style="font-size: 11px; color: var(--muted); margin-top: 4px;">Live arbitration or cached decision</div>
+      </div>
+    </div>
+
+    <div class="callout callout-left">
+      <div class="callout-label" style="color: var(--blue2);">The pre-compute pattern</div>
+      <div class="callout-body">The Hub runs batch on its own schedule, writes latent decisions to Data Cloud, and the serving layer reads from Data Cloud at whatever concurrency it needs. <strong>No Apex in the hot path. No governor limits in the serving layer.</strong> SP without the Hub serves offers based on segments and rules. SP with the Hub serves offers backed by compounding relationship intelligence. That's the upgrade story.</div>
+    </div>
+  </div>
+
+  <hr class="divider" />
+
+  <!-- OUTCOME ATTRIBUTION -->
+  <div class="section-alt">
+    <div class="section">
+      <div class="step-head">
+        <div class="step-num" style="background:rgba(122,61,214,0.08);color:#5521A8;border-color:rgba(122,61,214,0.2);">05</div>
+        <div>
+          <div class="step-title">Outcome Attribution</div>
+          <div class="step-desc">"Accepted" is a proxy. The learning loop needs to know what actually happened &mdash; did the customer renew, buy, stay?</div>
+        </div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 24px;">
+        <div style="background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 22px; box-shadow: var(--shadow-sm);">
+          <div style="font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px;">Signal 1 &mdash; Immediate</div>
+          <div style="font-size: 14px; font-weight: 700; color: var(--ink); margin-bottom: 6px;">Decision Response</div>
+          <div style="font-size: 12.5px; color: var(--muted); line-height: 1.65;">Agent or system accepts/rejects the recommendation. CampaignMember status writes back to Data Cloud. <strong>Available today.</strong></div>
+        </div>
+        <div style="background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 22px; box-shadow: var(--shadow-sm);">
+          <div style="font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--blue2); margin-bottom: 10px;">Signal 2 &mdash; Near-term</div>
+          <div style="font-size: 14px; font-weight: 700; color: var(--ink); margin-bottom: 6px;">Business Outcome</div>
+          <div style="font-size: 12.5px; color: var(--muted); line-height: 1.65;">Match NBADecision__c to downstream CRM events (Opportunity closed, Case resolved, renewal completed) within a configurable <strong>attribution window</strong> per module.</div>
+        </div>
+        <div style="background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 22px; box-shadow: var(--shadow-sm);">
+          <div style="font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--purple-d); margin-bottom: 10px;">Signal 3 &mdash; Long-term</div>
+          <div style="font-size: 14px; font-weight: 700; color: var(--ink); margin-bottom: 6px;">Relationship Trajectory</div>
+          <div style="font-size: 12.5px; color: var(--muted); line-height: 1.65;">Did the sequence of decisions move pCLV up or down? Did churn risk decrease? The decision journal reveals which <strong>patterns compound value</strong> over months.</div>
+        </div>
+      </div>
+
+      <div class="callout callout-purple">
+        <div class="callout-label" style="color: var(--purple-d);">Signal quality determines loop quality</div>
+        <div class="callout-body">If "accepted" is the training signal, the system learns to optimise for agent agreement. If "renewed within 90 days" is the signal, it learns to optimise for business outcomes. <strong>The quality of the learning loop &mdash; and every future decision &mdash; depends on closing the gap between proxy metrics and real attribution.</strong></div>
+      </div>
+    </div>
+  </div>
+
   <!-- PLATFORM MAPPING -->
   <div class="section">
     <div class="step-head">
-      <div class="step-num" style="background:rgba(0,122,114,0.1);color:#007A72;border-color:rgba(0,122,114,0.25);">04</div>
+      <div class="step-num" style="background:rgba(0,122,114,0.1);color:#007A72;border-color:rgba(0,122,114,0.25);">06</div>
       <div>
         <div class="step-title">Platform Mapping</div>
         <div class="step-desc">Each primitive maps to Salesforce platform capabilities that already exist. The accelerator is the orchestration layer that connects them into a compounding system.</div>
@@ -1221,7 +1319,7 @@
   <!-- COMPOUNDING LIFECYCLE -->
   <div class="section">
     <div class="step-head">
-      <div class="step-num" style="background:rgba(122,61,214,0.08);color:#5521A8;border-color:rgba(122,61,214,0.2);">05</div>
+      <div class="step-num" style="background:rgba(122,61,214,0.08);color:#5521A8;border-color:rgba(122,61,214,0.2);">07</div>
       <div>
         <div class="step-title">The Compounding Lifecycle</div>
         <div class="step-desc">The system gets measurably better over time. Not because the brain improves, but because the memory accumulates. Each phase builds on the last.</div>
@@ -1268,7 +1366,7 @@
   <div class="section-alt">
     <div class="section">
       <div class="step-head">
-        <div class="step-num" style="background:rgba(0,87,184,0.12);color:#0057B8;border-color:rgba(0,87,184,0.25);">06</div>
+        <div class="step-num" style="background:rgba(0,87,184,0.12);color:#0057B8;border-color:rgba(0,87,184,0.25);">08</div>
         <div>
           <div class="step-title">Why This Wasn't Possible Before</div>
           <div class="step-desc">Three platform capabilities that didn't exist (or weren't mature) even 18 months ago make this architecture viable now.</div>

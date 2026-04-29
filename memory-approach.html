@@ -520,6 +520,11 @@
         <div class="callout-label" style="color: var(--purple-d);">Why this matters now</div>
         <div class="callout-body">Every vendor is building a smarter brain. Rules engines gave way to ML models, ML models are giving way to LLMs and agents. The brain is commoditizing &mdash; reasoning capability is approaching parity across platforms. <strong>What compounds is the memory:</strong> the accumulating record of decisions made, outcomes observed, constraints learned, and relationships understood. The system that maintains this memory makes every future decision better. The system that only has a brain starts from scratch every time.</div>
       </div>
+
+      <div class="callout callout-teal">
+        <div class="callout-label" style="color: var(--teal-d);">The reduction</div>
+        <div class="callout-body">In a future where reasoning is free and all data lives in one place, decisioning reduces to two things: <strong>memory</strong> (what happened, what worked, what constraints apply) and <strong>value</strong> (what matters, measured how). The infrastructure that maintains both &mdash; and connects them through a learning loop &mdash; is the entire product. Everything else is commoditized compute.</div>
+      </div>
     </div>
   </div>
 
@@ -720,7 +725,7 @@
       </div>
     </div>
 
-    <div class="vendor-grid">
+    <div class="vendor-grid" style="grid-template-columns: repeat(2, 1fr);">
       <div class="vendor-card">
         <div class="vendor-head">
           <div class="vendor-head-dot" style="background: var(--red);"></div>
@@ -744,11 +749,21 @@
       <div class="vendor-card">
         <div class="vendor-head">
           <div class="vendor-head-dot" style="background: var(--teal-d);"></div>
-          <div class="vendor-title" style="color: var(--teal-d);">Feature Stores</div>
+          <div class="vendor-title" style="color: var(--teal-d);">Feature Stores &amp; Data Platforms</div>
         </div>
         <div class="vendor-body">
-          <p>Closest to "relationship state as infrastructure" &mdash; maintain point-in-time feature vectors per entity. <strong>Plumbing, not a product.</strong> No decisioning layer, no action space, no value function, no learning loop. The foundation without the building.</p>
-          <div class="vendor-tag" style="background:rgba(0,122,114,0.06); color:var(--teal-d); border:1px solid rgba(0,122,114,0.2);">Data layer only</div>
+          <p>Closest to "relationship state as infrastructure" &mdash; maintain point-in-time feature vectors per entity. <strong>Plumbing, not a product.</strong> No decisioning layer, no action space, no value function, no learning loop. But strategically dangerous: if the decision memory lives here instead of in the engagement platform, the engine becomes a commodity and <strong>the data layer owner has the leverage.</strong></p>
+          <div class="vendor-tag" style="background:rgba(0,122,114,0.06); color:var(--teal-d); border:1px solid rgba(0,122,114,0.2);">Data layer &mdash; today's plumbing, tomorrow's moat competitor</div>
+        </div>
+      </div>
+      <div class="vendor-card">
+        <div class="vendor-head">
+          <div class="vendor-head-dot" style="background: var(--gold-d);"></div>
+          <div class="vendor-title" style="color: var(--gold-d);">Vibe-Coded Alternatives</div>
+        </div>
+        <div class="vendor-body">
+          <p>An LLM can generate a scoring engine, an action catalogue, and an arbitration layer in an afternoon. <strong>The code is not a moat.</strong> What it cannot generate: 12 months of accumulated decision outcomes, a calibrated value function, or learned contact policy constraints. In a world where reasoning is free, the only defensible asset is the accumulated memory.</p>
+          <div class="vendor-tag" style="background:rgba(252,192,3,0.06); color:var(--gold-d); border:1px solid rgba(252,192,3,0.2);">Commoditizes the engine, validates the memory thesis</div>
         </div>
       </div>
     </div>
@@ -800,10 +815,79 @@
     </div>
   </div>
 
+  <!-- DECIDING vs SERVING -->
+  <div class="section">
+    <div class="step-head">
+      <div class="step-num" style="background:rgba(0,87,184,0.12);color:#0057B8;border-color:rgba(0,87,184,0.25);">06</div>
+      <div>
+        <div class="step-title">Deciding vs. Serving</div>
+        <div class="step-desc">The Decisioning Hub decides what to do. It doesn't deliver the experience. That separation is the architecture.</div>
+      </div>
+    </div>
+
+    <div class="compare-grid">
+      <div class="compare-card">
+        <div class="compare-label" style="color: var(--blue2);">Decisioning Hub (batch, promotion-level)</div>
+        <div class="compare-item"><div class="dot" style="background: var(--blue2);"></div>Evaluates relationship state, constrains the action space, scores the value function, selects the best promotion</div>
+        <div class="compare-item"><div class="dot" style="background: var(--blue2);"></div>Writes <strong>latent decisions</strong> to Data Cloud &mdash; pre-computed, cached, ready for downstream consumption</div>
+        <div class="compare-item"><div class="dot" style="background: var(--blue2);"></div>Runs on its own schedule (batch, segment-triggered, event-driven). No Apex in the hot path.</div>
+        <div class="compare-item"><div class="dot" style="background: var(--blue2);"></div>Records everything in the decision journal. Owns the learning loop.</div>
+      </div>
+      <div class="compare-vs">vs</div>
+      <div class="compare-card">
+        <div class="compare-label" style="color: var(--teal-d);">Serving Layer (real-time, offer/treatment-level)</div>
+        <div class="compare-item"><div class="dot" style="background: var(--teal-d);"></div>Reads latent decisions from Data Cloud. Selects the best <strong>offer, treatment, and channel</strong> for the moment.</div>
+        <div class="compare-item"><div class="dot" style="background: var(--teal-d);"></div>Optimises in real-time: which creative, which channel, which time. This is what SP / Personalisation does natively.</div>
+        <div class="compare-item"><div class="dot" style="background: var(--teal-d);"></div>Operates at whatever concurrency the channel requires. No governor limits in the serving layer.</div>
+        <div class="compare-item"><div class="dot" style="background: var(--teal-d);"></div>Returns channel-level outcomes to the Hub for the learning loop.</div>
+      </div>
+    </div>
+
+    <div class="callout callout-left">
+      <div class="callout-label" style="color: var(--blue2);">The clean boundary</div>
+      <div class="callout-body">The Hub owns the <strong>what</strong> (which promotion, for whom, why). The serving layer owns the <strong>when and where</strong> (which offer, which treatment, which channel, right now). Without the Hub, the serving layer optimises tactics with no relationship intelligence. With the Hub, it serves offers backed by compounding memory. <strong>That's the upgrade story.</strong></div>
+    </div>
+  </div>
+
+  <hr class="divider" />
+
+  <!-- OUTCOME ATTRIBUTION -->
+  <div class="section-alt">
+    <div class="section">
+      <div class="step-head">
+        <div class="step-num" style="background:rgba(122,61,214,0.08);color:#5521A8;border-color:rgba(122,61,214,0.2);">07</div>
+        <div>
+          <div class="step-title">Closing the Loop for Real</div>
+          <div class="step-desc">The learning loop only compounds if outcomes reflect actual business results, not just agent clicks.</div>
+        </div>
+      </div>
+
+      <p class="muted-p">"Accepted" is a proxy metric &mdash; it means someone in the process approved the recommendation. It doesn't mean the customer bought the product, renewed the policy, or stayed another year. The gap between decision acceptance and business outcome is where attribution lives, and it's where most decisioning systems quietly stop.</p>
+
+      <div class="gap-grid">
+        <div class="gap-card">
+          <div class="gap-card-icon">&#x2705;</div>
+          <div class="gap-card-title">What we capture today</div>
+          <div class="gap-card-desc">Agent or system accepts/rejects the recommendation. CampaignMember status writes back to Data Cloud. Einstein Studio retrains on this signal. <strong>This is necessary but not sufficient.</strong></div>
+        </div>
+        <div class="gap-card">
+          <div class="gap-card-icon">&#x1f3af;</div>
+          <div class="gap-card-title">What the loop actually needs</div>
+          <div class="gap-card-desc">Match the decision to the downstream business event. Did the retention offer lead to a renewal? Did the upsell become an Opportunity? An <strong>attribution window</strong> that joins NBADecision to CRM transactions &mdash; configurable per module, closed by batch.</div>
+        </div>
+      </div>
+
+      <div class="callout callout-purple">
+        <div class="callout-label" style="color: var(--purple-d);">Why this is the next frontier</div>
+        <div class="callout-body">Adaptive weights and model retraining are only as good as the signal they train on. If "accepted" is the signal, the system learns to optimise for agent agreement. If "renewed within 90 days" is the signal, the system learns to optimise for business outcomes. <strong>The quality of the learning loop determines the quality of every future decision.</strong></div>
+      </div>
+    </div>
+  </div>
+
   <!-- WHY SALESFORCE -->
   <div class="section">
     <div class="step-head">
-      <div class="step-num" style="background:rgba(0,122,114,0.1);color:#007A72;border-color:rgba(0,122,114,0.25);">06</div>
+      <div class="step-num" style="background:rgba(0,122,114,0.1);color:#007A72;border-color:rgba(0,122,114,0.25);">08</div>
       <div>
         <div class="step-title">Why This Belongs on CRM</div>
         <div class="step-desc">The primitives map naturally to platform capabilities that already exist.</div>
