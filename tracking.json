@@ -13906,5 +13906,17 @@
     "location": "Canberra, Australian Capital Territory, Australia",
     "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
     "returning": "yes"
+  },
+  {
+    "timestamp": "Thu, 30 Apr 2026 12:34:18 GMT",
+    "name": "Stuart Dunlop",
+    "company": "Salesforce",
+    "position": "Solutions",
+    "page": "Amaysim Consumption Test",
+    "url": "https://sdunlop-sf.github.io/nba-narrative/amaysim-consumption.html",
+    "ip": "147.161.219.9",
+    "location": "Canberra, Australian Capital Territory, Australia",
+    "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
+    "returning": "yes"
   }
 ]
