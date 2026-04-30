@@ -230,7 +230,8 @@
 
       <div class="insight" style="margin-bottom:20px;">
         <div class="insight-title">How DC Segments Work in Every Scenario</div>
-        <p><strong>Trigger:</strong> DC batch segments (e.g. Cross_Sell_Prospects) identify which contacts to dispatch. DC RT segments fire instantly on profile changes.<br>
+        <p><strong>Batch trigger:</strong> DC batch segments (e.g. Cross_Sell_Prospects) identify which contacts to dispatch on a schedule. Tested in Tracks 13-15.<br>
+        <strong>RT trigger:</strong> DC real-time segments fire instantly when a contact's profile changes (e.g. new event, field update). Same arbitration engine, different DC trigger cost. Estimated in Track 16.<br>
         <strong>Action eligibility:</strong> Each action can require a DC segment (inclusion) or block one (exclusion). Tested: 3/9 Cross-Sell actions gated by Cross_Sell_Prospects segment, 1 excluded by Churn_Risk. Contacts outside the segment see fewer actions (6 instead of 9).</p>
       </div>
 
@@ -574,9 +575,30 @@
         </div>
       </div>
 
+      <!-- Track 16 -->
+      <div class="card" style="padding:0 24px;">
+        <div class="track-header" onclick="toggleTrack(this)">
+          <span class="track-chevron">&#9654;</span>
+          <span class="track-name">Track 16 — Real-Time Segment Trigger (estimated)</span>
+          <span class="track-pills"><span class="pill pill-dc">DC RT SEGMENT</span> <span class="pill pill-teal">CRM</span></span>
+        </div>
+        <div class="track-body">
+          <p style="font-size:13px; color:var(--muted); margin-bottom:12px;">RT segments fire on individual profile changes (e.g. contact updates a field, new event ingested). The CRM-side cost per contact is identical to batch — same InvokeArbitration call, same eligibility filtering, same scoring. The difference is DC-side: RT segment evaluation runs per-event rather than on a schedule.</p>
+          <table>
+            <tr><th>Component</th><th>Per-Event Cost</th><th>Notes</th></tr>
+            <tr><td>DC RT Segment Eval</td><td><span class="pill pill-dc">1 eval per profile change</span></td><td>DC evaluates segment rules against the changed individual in real time</td></tr>
+            <tr><td>DC Activation</td><td><span class="pill pill-dc">1 activation event</span></td><td>Membership change pushed to CRM</td></tr>
+            <tr><td>CRM Arbitration</td><td>Same as batch (~10 SOQL, ~0.13s)</td><td>Identical InvokeArbitration path — eligibility filtering, scoring, decision</td></tr>
+            <tr><td>CRM Decision record</td><td>1 NBADecision__c</td><td>Same storage as batch</td></tr>
+          </table>
+          <p style="font-size:13px; color:var(--muted); margin-top:12px;"><strong>Sizing for Amaysim:</strong> If 5% of 100k contacts trigger RT events daily (~5,000 events), that's ~5,000 RT segment evals + ~5,000 activation events + ~5,000 arbitration calls. CRM cost identical to dispatching 5,000 via batch. DC cost is the incremental RT segment evaluation.</p>
+          <p style="font-size:13px; color:var(--orange); margin-top:8px;"><strong>Not tested live:</strong> PE-triggered Flow chain (DC Activation → Flow → InvokeArbitration) not firing on NBA Testing Org. Tracked as production hardening item. The cost estimates above are derived from batch testing — the arbitration engine is the same code path.</p>
+        </div>
+      </div>
+
       <div class="card" style="background: var(--orange-lt); border-color: var(--orange-bd);">
         <p style="font-size:13px;"><strong>Track 9 (Identity Resolution):</strong> Skipped — API endpoint not available on this org edition. IR is scheduled via Setup UI.</p>
-        <p style="font-size:13px; margin-top:8px;"><strong>PE-triggered Flows:</strong> NBA_Handle_Decision_Trigger Flow not processing PE events (deployed but not firing). Tracked as production hardening item. Tracks 13-15 used SegmentDispatchBatch (direct Apex batch) which is the production dispatch path.</p>
+        <p style="font-size:13px; margin-top:8px;"><strong>PE-triggered Flows:</strong> NBA_Handle_Decision_Trigger Flow not processing PE events (deployed but not firing). Tracked as production hardening item. Tracks 13-15 used SegmentDispatchBatch (direct Apex batch) which is the production dispatch path. RT chain (Track 16) blocked by same issue.</p>
       </div>
 
     </div>
@@ -687,8 +709,9 @@
       <div class="card">
         <table>
           <tr><th>Meter</th><th>Monthly Estimate</th><th>Notes</th></tr>
-          <tr><td>DC Segment Compute</td><td>90-150 segment evals</td><td>3-5 segments x 30 days — scales with unified individual count</td></tr>
-          <tr><td>DC Segment Activation</td><td>~240k activation events</td><td>Membership changes pushed to CRM for eligibility filtering</td></tr>
+          <tr><td>DC Batch Segment Compute</td><td>90-150 segment evals</td><td>3-5 segments x 30 days — scales with unified individual count</td></tr>
+          <tr><td>DC RT Segment Compute</td><td>~150k RT evals</td><td>~5,000 profile changes/day x 30 — scales with event volume</td></tr>
+          <tr><td>DC Segment Activation</td><td>~240k batch + ~150k RT events</td><td>Membership changes pushed to CRM for eligibility filtering</td></tr>
           <tr><td>DC Compute (CIs)</td><td>210 CI refresh runs</td><td>7 CIs x 30 — scales with data volume</td></tr>
           <tr><td>DC Compute (queryv2)</td><td>30 batch reads</td><td>Lightweight</td></tr>
           <tr><td>DC Model Scoring</td><td>~240k scoring reads</td><td>8,000/day x 30 — Einstein prediction reads</td></tr>
