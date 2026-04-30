@@ -226,72 +226,82 @@
 
     <div class="section" style="margin-top:28px;">
       <div class="section-label">The Petrol Gauge</div>
-      <p class="section-desc">Six scenarios, each adding a layer of intelligence. Per 1,000 contacts dispatched daily. The customer dials up complexity — here's what each level costs.</p>
+      <p class="section-desc">Six scenarios, each adding a layer of intelligence. Per 1,000 contacts dispatched daily. <strong>Every scenario uses DC segments</strong> — batch segments trigger arbitration, and action-level eligibility/exclusion segments filter which actions apply per contact. DC is the foundation, not an add-on.</p>
+
+      <div class="insight" style="margin-bottom:20px;">
+        <div class="insight-title">How DC Segments Work in Every Scenario</div>
+        <p><strong>Trigger:</strong> DC batch segments (e.g. Cross_Sell_Prospects) identify which contacts to dispatch. DC RT segments fire instantly on profile changes.<br>
+        <strong>Action eligibility:</strong> Each action can require a DC segment (inclusion) or block one (exclusion). Tested: 3/9 Cross-Sell actions gated by Cross_Sell_Prospects segment, 1 excluded by Churn_Risk. Contacts outside the segment see fewer actions (6 instead of 9).</p>
+      </div>
 
       <div class="scenario-grid">
         <div class="scenario-card sc-basic">
           <div class="scenario-letter">A</div>
-          <div class="scenario-name">Basic Cross-Sell</div>
-          <div class="scenario-desc">1,000 contacts, 10 actions, segment mode, no LLM — rules pick the best action</div>
-          <div class="scenario-stat"><span class="label">DC Compute</span> <span class="value"><span class="pill pill-zero">ZERO</span></span></div>
-          <div class="scenario-stat"><span class="label">DC Activation</span> <span class="value">--</span></div>
+          <div class="scenario-name">Segment Rules Only</div>
+          <div class="scenario-desc">1,000 contacts from DC segment, 9 actions with eligibility filtering, segment mode scoring, no LLM</div>
+          <div class="scenario-stat"><span class="label">DC Segment Compute</span> <span class="value"><span class="pill pill-dc">1 batch segment eval</span></span></div>
+          <div class="scenario-stat"><span class="label">DC Activation</span> <span class="value"><span class="pill pill-dc">1,000 activation events</span></span></div>
           <div class="scenario-stat"><span class="label">Agentforce LLM</span> <span class="value"><span class="pill pill-zero">ZERO</span></span></div>
-          <div class="scenario-stat"><span class="label">CRM Storage</span> <span class="value">~1,000 records (0.5 MB)</span></div>
+          <div class="scenario-stat"><span class="label">CRM Storage</span> <span class="value">~1,000 decisions + ~1,000 eligibility records</span></div>
           <div class="scenario-stat"><span class="label">Monthly Cost</span> <span class="value"><span class="pill pill-red">Cam to fill</span></span></div>
         </div>
 
         <div class="scenario-card sc-basic">
           <div class="scenario-letter">B</div>
           <div class="scenario-name">+ Einstein Scoring</div>
-          <div class="scenario-desc">Same as A, but Einstein model scores each contact (reads from Data Cloud)</div>
-          <div class="scenario-stat"><span class="label">DC Compute</span> <span class="value"><span class="pill pill-dc">1,000 scoring reads</span></span></div>
-          <div class="scenario-stat"><span class="label">DC Activation</span> <span class="value">--</span></div>
+          <div class="scenario-desc">Same DC segment trigger + eligibility filtering, plus Einstein model scores each contact</div>
+          <div class="scenario-stat"><span class="label">DC Segment Compute</span> <span class="value"><span class="pill pill-dc">1 batch segment eval</span></span></div>
+          <div class="scenario-stat"><span class="label">DC Model Scoring</span> <span class="value"><span class="pill pill-dc">1,000 scoring reads</span></span></div>
+          <div class="scenario-stat"><span class="label">DC Activation</span> <span class="value"><span class="pill pill-dc">1,000 activation events</span></span></div>
           <div class="scenario-stat"><span class="label">Agentforce LLM</span> <span class="value"><span class="pill pill-zero">ZERO</span></span></div>
-          <div class="scenario-stat"><span class="label">CRM Storage</span> <span class="value">~1,000 records (0.5 MB)</span></div>
+          <div class="scenario-stat"><span class="label">CRM Storage</span> <span class="value">~1,000 decisions + ~1,000 eligibility records</span></div>
           <div class="scenario-stat"><span class="label">Monthly Cost</span> <span class="value"><span class="pill pill-red">Cam to fill</span></span></div>
         </div>
 
         <div class="scenario-card sc-mid">
           <div class="scenario-letter">C</div>
           <div class="scenario-name">+ LLM Reasoning</div>
-          <div class="scenario-desc">Same as A, plus Tier 1.5 rerank on close decisions (~7.5% of contacts)</div>
-          <div class="scenario-stat"><span class="label">DC Compute</span> <span class="value"><span class="pill pill-zero">ZERO</span></span></div>
-          <div class="scenario-stat"><span class="label">DC Activation</span> <span class="value">--</span></div>
+          <div class="scenario-desc">DC segments + segment scoring + Tier 1.5 rerank on close decisions (~7.5% of contacts)</div>
+          <div class="scenario-stat"><span class="label">DC Segment Compute</span> <span class="value"><span class="pill pill-dc">1 batch segment eval</span></span></div>
+          <div class="scenario-stat"><span class="label">DC Activation</span> <span class="value"><span class="pill pill-dc">1,000 activation events</span></span></div>
           <div class="scenario-stat"><span class="label">Agentforce LLM</span> <span class="value"><span class="pill pill-llm">~75 calls (~195k tokens)</span></span></div>
-          <div class="scenario-stat"><span class="label">CRM Storage</span> <span class="value">~1,000 records (0.5 MB)</span></div>
+          <div class="scenario-stat"><span class="label">CRM Storage</span> <span class="value">~1,000 decisions + ~1,000 eligibility records</span></div>
           <div class="scenario-stat"><span class="label">Monthly Cost</span> <span class="value"><span class="pill pill-red">Cam to fill</span></span></div>
         </div>
 
         <div class="scenario-card sc-mid">
           <div class="scenario-letter">D</div>
           <div class="scenario-name">Einstein + LLM</div>
-          <div class="scenario-desc">Model scoring AND LLM reasoning on close calls — the sweet spot</div>
-          <div class="scenario-stat"><span class="label">DC Compute</span> <span class="value"><span class="pill pill-dc">1,000 scoring reads</span></span></div>
-          <div class="scenario-stat"><span class="label">DC Activation</span> <span class="value">--</span></div>
+          <div class="scenario-desc">DC segments + model scoring + LLM reasoning on close calls — the sweet spot for Amaysim</div>
+          <div class="scenario-stat"><span class="label">DC Segment Compute</span> <span class="value"><span class="pill pill-dc">1 batch segment eval</span></span></div>
+          <div class="scenario-stat"><span class="label">DC Model Scoring</span> <span class="value"><span class="pill pill-dc">1,000 scoring reads</span></span></div>
+          <div class="scenario-stat"><span class="label">DC Activation</span> <span class="value"><span class="pill pill-dc">1,000 activation events</span></span></div>
           <div class="scenario-stat"><span class="label">Agentforce LLM</span> <span class="value"><span class="pill pill-llm">~75 calls (~195k tokens)</span></span></div>
-          <div class="scenario-stat"><span class="label">CRM Storage</span> <span class="value">~1,000 records (0.5 MB)</span></div>
+          <div class="scenario-stat"><span class="label">CRM Storage</span> <span class="value">~1,000 decisions + ~1,000 eligibility records</span></div>
           <div class="scenario-stat"><span class="label">Monthly Cost</span> <span class="value"><span class="pill pill-red">Cam to fill</span></span></div>
         </div>
 
         <div class="scenario-card sc-full">
           <div class="scenario-letter">E</div>
           <div class="scenario-name">Multi-Module + Tier 2</div>
-          <div class="scenario-desc">2 modules (20 actions), cross-module conflicts trigger full LLM adjudication (~15%)</div>
-          <div class="scenario-stat"><span class="label">DC Compute</span> <span class="value"><span class="pill pill-dc">1,000 scoring reads</span></span></div>
-          <div class="scenario-stat"><span class="label">DC Activation</span> <span class="value">--</span></div>
+          <div class="scenario-desc">2 modules, multiple DC segments (trigger + eligibility + exclusion), cross-module conflicts trigger LLM adjudication (~15%)</div>
+          <div class="scenario-stat"><span class="label">DC Segment Compute</span> <span class="value"><span class="pill pill-dc">2+ batch segment evals</span></span></div>
+          <div class="scenario-stat"><span class="label">DC Model Scoring</span> <span class="value"><span class="pill pill-dc">1,000 scoring reads</span></span></div>
+          <div class="scenario-stat"><span class="label">DC Activation</span> <span class="value"><span class="pill pill-dc">1,000+ activation events</span></span></div>
           <div class="scenario-stat"><span class="label">Agentforce LLM</span> <span class="value"><span class="pill pill-llm">~225 calls (~570k tokens)</span></span></div>
-          <div class="scenario-stat"><span class="label">CRM Storage</span> <span class="value">~1,000 records (0.5 MB)</span></div>
+          <div class="scenario-stat"><span class="label">CRM Storage</span> <span class="value">~1,000 decisions + ~2,000 eligibility records</span></div>
           <div class="scenario-stat"><span class="label">Monthly Cost</span> <span class="value"><span class="pill pill-red">Cam to fill</span></span></div>
         </div>
 
         <div class="scenario-card sc-full">
           <div class="scenario-letter">F</div>
           <div class="scenario-name">Full Stack + Composition</div>
-          <div class="scenario-desc">Everything: scoring + reasoning + Tier 2 + LLM-composed treatments (~5%)</div>
-          <div class="scenario-stat"><span class="label">DC Compute</span> <span class="value"><span class="pill pill-dc">1,000 scoring reads</span></span></div>
-          <div class="scenario-stat"><span class="label">DC Activation</span> <span class="value">--</span></div>
+          <div class="scenario-desc">Everything: DC segments + scoring + reasoning + Tier 2 + LLM-composed treatments (~5%)</div>
+          <div class="scenario-stat"><span class="label">DC Segment Compute</span> <span class="value"><span class="pill pill-dc">2+ batch segment evals</span></span></div>
+          <div class="scenario-stat"><span class="label">DC Model Scoring</span> <span class="value"><span class="pill pill-dc">1,000 scoring reads</span></span></div>
+          <div class="scenario-stat"><span class="label">DC Activation</span> <span class="value"><span class="pill pill-dc">1,000+ activation events</span></span></div>
           <div class="scenario-stat"><span class="label">Agentforce LLM</span> <span class="value"><span class="pill pill-llm">~275 calls (~685k tokens)</span></span></div>
-          <div class="scenario-stat"><span class="label">CRM Storage</span> <span class="value">~1,050 records (0.5 MB)</span></div>
+          <div class="scenario-stat"><span class="label">CRM Storage</span> <span class="value">~1,050 decisions + ~2,000 eligibility records</span></div>
           <div class="scenario-stat"><span class="label">Monthly Cost</span> <span class="value"><span class="pill pill-red">Cam to fill</span></span></div>
         </div>
       </div>
@@ -303,10 +313,11 @@
       <div class="card">
         <table>
           <tr><th>Operation</th><th>What It Uses</th><th>Billing Units</th></tr>
+          <tr><td>DC Segment compute (batch)</td><td><span class="pill pill-dc">DC compute</span> per segment — evaluates membership rules against unified individuals</td><td><span class="pill pill-red">Cam to fill</span></td></tr>
+          <tr><td>DC Segment activation (CRM)</td><td><span class="pill pill-dc">DC activation</span> per member — writes membership to CRM for eligibility filtering</td><td><span class="pill pill-red">Cam to fill</span></td></tr>
           <tr><td>CI refresh (7 CIs)</td><td><span class="pill pill-dc">DC compute</span> proportional to unified individual count (test: ~4,600 rows)</td><td><span class="pill pill-red">Cam to fill</span></td></tr>
           <tr><td>CLV writeback</td><td><span class="pill pill-dc">1 queryv2 batch read</span> (test: ~544 rows)</td><td><span class="pill pill-red">Cam to fill</span></td></tr>
           <tr><td>Relationship State batch</td><td><span class="pill pill-zero">ZERO DC</span> — pure CRM</td><td>0</td></tr>
-          <tr><td>DC Segment publish (if used)</td><td><span class="pill pill-dc">DC compute</span> for membership + activation to SFMC</td><td><span class="pill pill-red">Cam to fill</span></td></tr>
         </table>
       </div>
     </div>
@@ -315,9 +326,9 @@
       <h3>The Simple Answer We Want</h3>
       <p>Cam — fill in the billing units so we can tell Amaysim:</p>
       <ul>
-        <li><strong>Scenario A</strong> (basic, no AI): "1,000 cross-sell emails/day costs X DC credits + Y AF credits/month"</li>
-        <li><strong>Scenario D</strong> (Einstein + LLM reasoning): "same 1,000 but smarter — costs X + Y/month"</li>
-        <li><strong>Scenario F</strong> (full stack): "1,000 with full AI adjudication — costs X + Y/month"</li>
+        <li><strong>Scenario A</strong> (segment rules, no AI): "1,000 contacts/day dispatched from a DC segment with eligibility filtering costs X DC credits/month"</li>
+        <li><strong>Scenario D</strong> (Einstein + LLM): "same 1,000 but with model scoring + LLM reasoning — costs X DC + Y AF credits/month"</li>
+        <li><strong>Scenario F</strong> (full stack): "1,000 with full AI — costs X DC + Y AF credits/month"</li>
       </ul>
       <p style="margin-top:12px;">Then we multiply by their actual volume (8,000/day) and they have their monthly bill.</p>
     </div>
@@ -332,15 +343,16 @@
       <div class="card">
         <table>
           <tr><th>Operation</th><th>DC Compute</th><th>DC Storage</th><th>DC Activation</th><th>LLM Tokens</th><th>CRM Storage</th></tr>
-          <tr><td>Segment dispatch (segment mode)</td><td>--</td><td>--</td><td>--</td><td>--</td><td><span class="pill pill-teal">YES</span></td></tr>
-          <tr><td>Segment dispatch (model mode)</td><td><span class="pill pill-dc">YES</span></td><td>--</td><td>--</td><td>--</td><td><span class="pill pill-teal">YES</span></td></tr>
+          <tr><td>DC Segment compute (batch)</td><td><span class="pill pill-dc">YES</span></td><td>--</td><td>--</td><td>--</td><td>--</td></tr>
+          <tr><td>DC Segment activation (CRM)</td><td>--</td><td>--</td><td><span class="pill pill-dc">YES</span></td><td>--</td><td><span class="pill pill-teal">YES</span></td></tr>
+          <tr><td>Segment-triggered dispatch (segment mode)</td><td>--</td><td>--</td><td>--</td><td>--</td><td><span class="pill pill-teal">YES</span></td></tr>
+          <tr><td>Segment-triggered dispatch (model mode)</td><td><span class="pill pill-dc">YES</span></td><td>--</td><td>--</td><td>--</td><td><span class="pill pill-teal">YES</span></td></tr>
+          <tr><td>Action eligibility filtering (DC segments)</td><td>--</td><td>--</td><td>--</td><td>--</td><td>--</td></tr>
           <tr><td>Tier 1.5 LLM rerank</td><td>--</td><td>--</td><td>--</td><td><span class="pill pill-llm">YES</span></td><td>--</td></tr>
           <tr><td>Tier 2 LLM adjudication</td><td>--</td><td>--</td><td>--</td><td><span class="pill pill-llm">YES</span></td><td>--</td></tr>
           <tr><td>Composition (LLM)</td><td>--</td><td>--</td><td>--</td><td><span class="pill pill-llm">YES</span></td><td><span class="pill pill-teal">YES</span></td></tr>
           <tr><td>CI refresh</td><td><span class="pill pill-dc">YES</span></td><td><span class="pill pill-dc">YES</span></td><td>--</td><td>--</td><td>--</td></tr>
           <tr><td>CLV writeback (queryv2)</td><td><span class="pill pill-dc">YES</span></td><td>--</td><td>--</td><td>--</td><td><span class="pill pill-teal">YES</span></td></tr>
-          <tr><td>DC Segment compute</td><td><span class="pill pill-dc">YES</span></td><td>--</td><td>--</td><td>--</td><td>--</td></tr>
-          <tr><td>DC Segment activation</td><td>--</td><td>--</td><td><span class="pill pill-dc">YES</span></td><td>--</td><td>--</td></tr>
           <tr><td>Identity Resolution</td><td><span class="pill pill-dc">YES</span></td><td>--</td><td>--</td><td>--</td><td>--</td></tr>
           <tr><td>Einstein model retraining</td><td><span class="pill pill-dc">YES</span></td><td>--</td><td>--</td><td>--</td><td>--</td></tr>
           <tr><td>Relationship State batch</td><td>--</td><td>--</td><td>--</td><td>--</td><td><span class="pill pill-teal">YES</span></td></tr>
@@ -515,8 +527,56 @@
         </div>
       </div>
 
+      <!-- Track 13 -->
+      <div class="card" style="padding:0 24px;">
+        <div class="track-header" onclick="toggleTrack(this)">
+          <span class="track-chevron">&#9654;</span>
+          <span class="track-name">Track 13 — Segment-Triggered Dispatch + Eligibility Filtering</span>
+          <span class="track-pills"><span class="pill pill-dc">DC SEGMENTS</span> <span class="pill pill-teal">CRM</span></span>
+        </div>
+        <div class="track-body">
+          <p style="font-size:13px; color:var(--muted); margin-bottom:12px;">200 contacts dispatched from Cross_Sell_Prospects DC segment via SegmentDispatchBatch. 3/9 actions gated by Eligibility_Segment__c = Cross_Sell_Prospects (inclusion), 1 action gated by Excluded_Segment__c = Churn_Risk (exclusion). Tests the full DC segment → eligibility filtering → arbitration chain.</p>
+          <table>
+            <tr><th>Run</th><th>Start</th><th>End</th><th>Duration</th><th>Contacts</th><th>Actions (eligible)</th><th>Notes</th></tr>
+            <tr><td>13A</td><td>12:27:13</td><td>12:27:40</td><td>27s</td><td>200</td><td>9 (in-segment) / 6 (out-of-segment)</td><td>200 decisions, 0 errors. Contacts in Cross_Sell_Prospects see all 9 actions. Contacts outside see only 6 (3 dropped as segment_mismatch).</td></tr>
+          </table>
+        </div>
+      </div>
+
+      <!-- Track 14 -->
+      <div class="card" style="padding:0 24px;">
+        <div class="track-header" onclick="toggleTrack(this)">
+          <span class="track-chevron">&#9654;</span>
+          <span class="track-name">Track 14 — Eligibility Filtering Proof (Out-of-Segment Contacts)</span>
+          <span class="track-pills"><span class="pill pill-teal">CRM</span></span>
+        </div>
+        <div class="track-body">
+          <p style="font-size:13px; color:var(--muted); margin-bottom:12px;">3 contacts NOT in Cross_Sell_Prospects segment. Decision trace confirms 3 actions dropped with reason <code>segment_mismatch</code>: Plan Upgrade, Data Add-On, Family Plan. Only 6 of 9 actions remain eligible.</p>
+          <table>
+            <tr><th>Run</th><th>Start</th><th>Contacts</th><th>Actions Dropped</th><th>Notes</th></tr>
+            <tr><td>14A</td><td>12:28:53</td><td>3</td><td>3 per contact</td><td>Plan Upgrade, Data Add-On, Family Plan dropped. Insurance Bundle not excluded (contacts not in Churn_Risk).</td></tr>
+          </table>
+        </div>
+      </div>
+
+      <!-- Track 15 -->
+      <div class="card" style="padding:0 24px;">
+        <div class="track-header" onclick="toggleTrack(this)">
+          <span class="track-chevron">&#9654;</span>
+          <span class="track-name">Track 15 — Full Segment Cycle (repeat for consistency)</span>
+          <span class="track-pills"><span class="pill pill-dc">DC SEGMENTS</span> <span class="pill pill-teal">CRM</span></span>
+        </div>
+        <div class="track-body">
+          <table>
+            <tr><th>Run</th><th>Start</th><th>End</th><th>Duration</th><th>Contacts</th><th>Notes</th></tr>
+            <tr><td>15A</td><td>12:29:16</td><td>12:29:43</td><td>27s</td><td>200</td><td>Repeat of 13A — consistent 27s, 200 decisions, 0 errors</td></tr>
+          </table>
+        </div>
+      </div>
+
       <div class="card" style="background: var(--orange-lt); border-color: var(--orange-bd);">
         <p style="font-size:13px;"><strong>Track 9 (Identity Resolution):</strong> Skipped — API endpoint not available on this org edition. IR is scheduled via Setup UI.</p>
+        <p style="font-size:13px; margin-top:8px;"><strong>PE-triggered Flows:</strong> NBA_Handle_Decision_Trigger Flow not processing PE events (deployed but not firing). Tracked as production hardening item. Tracks 13-15 used SegmentDispatchBatch (direct Apex batch) which is the production dispatch path.</p>
       </div>
 
     </div>
@@ -556,9 +616,15 @@
     </div>
 
     <div class="section">
-      <div class="section-label">3. Data Cloud — Activation</div>
+      <div class="section-label">3. Data Cloud — Activation + Segment Eligibility</div>
       <div class="card">
-        <p>DC Segment publish (Run 8A) is the only activation event. Three segments published at 10:19:51 UTC with combined ~2,410 members.</p>
+        <p>DC Segment publish (Run 8A) is the activation event. Three segments published at 10:19:51 UTC with combined ~2,410 members.</p>
+        <p style="margin-top:12px;">Segment membership flows to CRM as NBA_Eligibility__c records. These power two things:</p>
+        <ul style="margin:8px 0 0 20px; font-size:13px;">
+          <li><strong>Trigger dispatch:</strong> NBASegmentTriggerSchedulable reads NBA_Eligibility__c for contacts in the trigger segment, publishes PE events</li>
+          <li><strong>Action eligibility filtering:</strong> InvokeArbitration loads contact's segments at line 286, filters actions at lines 546-569. Tested in Track 14: 3/9 actions dropped for contacts outside Cross_Sell_Prospects.</li>
+        </ul>
+        <p style="margin-top:12px; font-size:13px; color:var(--muted);">Activation cost scales with segment member count, not action count. 3 segments x ~1,400 members = ~4,200 activation events per publish cycle.</p>
       </div>
     </div>
 
@@ -599,18 +665,19 @@
 
     <div class="section" style="margin-top:28px;">
       <div class="section-label">Daily Consumption Estimate</div>
-      <p class="section-desc">Assumptions: ~8,000 contacts/day dispatched, daily cadence, segment mode (no Einstein scoring initially).</p>
+      <p class="section-desc">Assumptions: ~8,000 contacts/day dispatched from DC segments, daily batch + RT triggers, model-based scoring.</p>
       <div class="card">
         <table>
           <tr><th>Meter</th><th>Calculation</th><th>Daily Estimate</th></tr>
+          <tr><td>DC Segment Compute</td><td>3-5 segments evaluated against ~100k unified individuals</td><td>3-5 segment evals/day</td></tr>
+          <tr><td>DC Segment Activation</td><td>Membership changes pushed to CRM (NBA_Eligibility__c)</td><td>~8,000 activation events/day</td></tr>
           <tr><td>DC Compute — CIs</td><td>7 CI refreshes x scaled row count</td><td>7 CI runs/day</td></tr>
           <tr><td>DC Compute — queryv2</td><td>1 CLV writeback x ~8,000 rows</td><td>1 batch read/day</td></tr>
-          <tr><td>DC Compute — Segments</td><td>3 segment publishes</td><td>3 segment computes/day</td></tr>
-          <tr><td>DC Activation</td><td>3 segment activations to SFMC</td><td>~8,000 activation events/day</td></tr>
+          <tr><td>DC Model Scoring</td><td>8,000 contacts x Einstein prediction reads</td><td>~8,000 scoring reads/day</td></tr>
           <tr><td>LLM Tokens (Tier 1.5)</td><td>8,000 x 7.5% x 2,600 tokens</td><td>~1.56M tokens/day</td></tr>
           <tr><td>LLM Tokens (Tier 2)</td><td>~2% of decisions x 2,500</td><td>~400k tokens/day</td></tr>
           <tr><td>LLM Tokens (Composition)</td><td>~5% null_action x 2,300</td><td>~920k tokens/day</td></tr>
-          <tr><td>CRM Storage</td><td>8,000 records x ~500 bytes</td><td>~4MB/day</td></tr>
+          <tr><td>CRM Storage</td><td>8,000 decisions x ~500 bytes + eligibility records</td><td>~4MB/day</td></tr>
         </table>
       </div>
     </div>
@@ -620,9 +687,11 @@
       <div class="card">
         <table>
           <tr><th>Meter</th><th>Monthly Estimate</th><th>Notes</th></tr>
-          <tr><td>DC Compute (CIs)</td><td>210 CI refresh runs</td><td>Dominant DC cost — scales with data volume</td></tr>
+          <tr><td>DC Segment Compute</td><td>90-150 segment evals</td><td>3-5 segments x 30 days — scales with unified individual count</td></tr>
+          <tr><td>DC Segment Activation</td><td>~240k activation events</td><td>Membership changes pushed to CRM for eligibility filtering</td></tr>
+          <tr><td>DC Compute (CIs)</td><td>210 CI refresh runs</td><td>7 CIs x 30 — scales with data volume</td></tr>
           <tr><td>DC Compute (queryv2)</td><td>30 batch reads</td><td>Lightweight</td></tr>
-          <tr><td>DC Activation</td><td>~240k activation events</td><td>Only if pushing segments to SFMC</td></tr>
+          <tr><td>DC Model Scoring</td><td>~240k scoring reads</td><td>8,000/day x 30 — Einstein prediction reads</td></tr>
           <tr><td>LLM Tokens</td><td>~87M tokens/month</td><td>~47M T1.5 + ~12M T2 + ~28M Composition</td></tr>
           <tr><td>CRM Storage</td><td>~120MB/month (~240k records)</td><td>Needs retention strategy at 12-month</td></tr>
         </table>
