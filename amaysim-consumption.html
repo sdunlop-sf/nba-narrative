@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Amaysim · Consumption Test — Salesforce</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #f1f4fa;
+      --surface:   #ffffff;
+      --border:    #e2e8f0;
+      --text:      #0f172a;
+      --muted:     #64748b;
+      --blue:      #022AC0;
+      --blue-lt:   rgba(2,42,192,0.07);
+      --blue-bd:   rgba(2,42,192,0.18);
+      --teal:      #007A72;
+      --teal-lt:   rgba(0,122,114,0.07);
+      --teal-bd:   rgba(0,122,114,0.2);
+      --green:     #16a34a;
+      --green-lt:  rgba(22,163,74,0.08);
+      --green-bd:  rgba(22,163,74,0.2);
+      --purple:    #7c3aed;
+      --purple-lt: rgba(124,58,237,0.07);
+      --purple-bd: rgba(124,58,237,0.2);
+      --orange:    #c05621;
+      --orange-lt: rgba(192,86,33,0.07);
+      --orange-bd: rgba(192,86,33,0.2);
+      --red:       #ba0517;
+      --red-lt:    rgba(186,5,23,0.07);
+    }
+
+    body {
+      background: var(--bg);
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      color: var(--text);
+      padding: 40px 24px 80px;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .page { max-width: 1040px; margin: 0 auto; }
+
+    /* ── Header ── */
+    .page-header { margin-bottom: 36px; }
+    .page-eyebrow {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.16em;
+      text-transform: uppercase; color: var(--blue); margin-bottom: 10px;
+    }
+    .page-title {
+      font-size: clamp(26px, 4vw, 38px); font-weight: 800;
+      letter-spacing: -0.02em; line-height: 1.15; margin-bottom: 10px;
+    }
+    .page-sub { font-size: 15px; color: var(--muted); max-width: 700px; }
+
+    /* ── Meta bar ── */
+    .meta-bar {
+      display: flex; flex-wrap: wrap; gap: 24px; margin-bottom: 36px;
+      padding: 14px 20px; background: var(--surface); border: 1px solid var(--border);
+      border-radius: 12px; font-size: 13px;
+    }
+    .meta-item { display: flex; gap: 6px; }
+    .meta-label { font-weight: 700; color: var(--muted); }
+
+    /* ── Section ── */
+    .section { margin-bottom: 44px; }
+    .section-label {
+      font-size: 11px; font-weight: 800; letter-spacing: 0.16em;
+      text-transform: uppercase; color: var(--muted);
+      margin-bottom: 16px; padding-bottom: 8px; border-bottom: 1px solid var(--border);
+    }
+    .section-desc { font-size: 14px; color: var(--muted); margin-bottom: 20px; max-width: 760px; }
+
+    /* ── Cards ── */
+    .card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 12px; padding: 24px; margin-bottom: 16px;
+    }
+    .card-title {
+      font-size: 15px; font-weight: 700; margin-bottom: 8px;
+    }
+    .card-sub { font-size: 13px; color: var(--muted); margin-bottom: 16px; }
+
+    /* ── Insight card ── */
+    .insight {
+      background: var(--blue-lt); border: 1px solid var(--blue-bd);
+      border-radius: 12px; padding: 20px 24px; margin-bottom: 24px;
+    }
+    .insight-title { font-size: 13px; font-weight: 700; color: var(--blue); margin-bottom: 6px; }
+    .insight p { font-size: 14px; }
+
+    /* ── Tables ── */
+    table {
+      width: 100%; border-collapse: collapse; font-size: 13px; margin: 0;
+    }
+    th, td {
+      padding: 10px 14px; text-align: left;
+      border-bottom: 1px solid var(--border);
+    }
+    th {
+      font-size: 10px; font-weight: 800; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--muted);
+      background: rgba(0,0,0,0.015); white-space: nowrap;
+    }
+    tr:last-child td { border-bottom: none; }
+
+    /* ── Status pills ── */
+    .pill {
+      display: inline-block; padding: 2px 10px; border-radius: 20px;
+      font-size: 11px; font-weight: 700; letter-spacing: 0.04em;
+    }
+    .pill-zero { background: var(--green-lt); color: var(--green); border: 1px solid var(--green-bd); }
+    .pill-dc   { background: var(--blue-lt); color: var(--blue); border: 1px solid var(--blue-bd); }
+    .pill-llm  { background: var(--purple-lt); color: var(--purple); border: 1px solid var(--purple-bd); }
+    .pill-red  { background: var(--red-lt); color: var(--red); border: 1px solid rgba(186,5,23,0.2); }
+    .pill-teal { background: var(--teal-lt); color: var(--teal); border: 1px solid var(--teal-bd); }
+
+    /* ── Tabs ── */
+    .tab-bar {
+      display: flex; gap: 4px; margin-bottom: 0;
+      border-bottom: 2px solid var(--border);
+    }
+    .tab-btn {
+      font-size: 13px; font-weight: 700; padding: 10px 20px;
+      border: none; background: none; cursor: pointer; color: var(--muted);
+      border-bottom: 2px solid transparent; margin-bottom: -2px;
+      border-radius: 6px 6px 0 0; transition: color 0.15s, border-color 0.15s;
+    }
+    .tab-btn:hover { color: var(--text); }
+    .tab-btn.active { color: var(--blue); border-bottom-color: var(--blue); background: var(--blue-lt); }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* ── CTA ── */
+    .cta-card {
+      background: linear-gradient(135deg, #022AC0 0%, #0151d8 100%);
+      border-radius: 12px; padding: 28px 32px; color: #fff; margin-bottom: 16px;
+    }
+    .cta-card h3 { font-size: 17px; font-weight: 800; margin-bottom: 8px; }
+    .cta-card p { font-size: 14px; opacity: 0.85; }
+    .cta-card ul { margin: 12px 0 0 20px; font-size: 14px; opacity: 0.9; }
+    .cta-card li { margin: 4px 0; }
+
+    /* ── Scenario grid ── */
+    .scenario-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 16px; }
+    .scenario-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 12px; padding: 20px 24px; position: relative;
+      border-left: 4px solid var(--blue);
+    }
+    .scenario-card.sc-basic  { border-left-color: var(--green); }
+    .scenario-card.sc-mid    { border-left-color: var(--blue); }
+    .scenario-card.sc-full   { border-left-color: var(--purple); }
+    .scenario-letter {
+      font-size: 24px; font-weight: 900; color: var(--muted); opacity: 0.3;
+      position: absolute; top: 12px; right: 16px;
+    }
+    .scenario-name { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+    .scenario-desc { font-size: 12px; color: var(--muted); margin-bottom: 12px; }
+    .scenario-stat { display: flex; justify-content: space-between; font-size: 12px; padding: 4px 0; border-bottom: 1px solid rgba(0,0,0,0.04); }
+    .scenario-stat:last-child { border-bottom: none; }
+    .scenario-stat .label { color: var(--muted); }
+    .scenario-stat .value { font-weight: 700; }
+
+    /* ── Responsive ── */
+    @media (max-width: 700px) {
+      body { padding: 20px 12px 60px; }
+      .meta-bar { flex-direction: column; gap: 8px; }
+      th, td { padding: 8px 10px; font-size: 12px; }
+    }
+
+    /* ── Collapsible track ── */
+    .track-header {
+      display: flex; align-items: center; gap: 8px; cursor: pointer;
+      padding: 12px 0; user-select: none;
+    }
+    .track-header:hover { opacity: 0.8; }
+    .track-chevron {
+      font-size: 10px; color: var(--muted); transition: transform 0.2s;
+      width: 16px; text-align: center;
+    }
+    .track-header.open .track-chevron { transform: rotate(90deg); }
+    .track-name { font-size: 14px; font-weight: 700; }
+    .track-pills { margin-left: auto; display: flex; gap: 6px; }
+    .track-body { display: none; padding: 0 0 16px; }
+    .track-body.open { display: block; }
+  </style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- Header -->
+  <div class="page-header">
+    <div class="page-eyebrow">Salesforce · AI Decisioning Accelerator</div>
+    <h1 class="page-title">Amaysim Consumption Test</h1>
+    <p class="page-sub">Controlled test scenarios isolating every consumption meter — Data Cloud compute, storage, activation, Agentforce LLM tokens, and CRM platform storage. Timestamped for backend correlation.</p>
+  </div>
+
+  <div class="meta-bar">
+    <div class="meta-item"><span class="meta-label">Date</span> 30 Apr 2026</div>
+    <div class="meta-item"><span class="meta-label">Org</span> NBA Testing Org</div>
+    <div class="meta-item"><span class="meta-label">Org ID</span> 00DKh000003558i</div>
+    <div class="meta-item"><span class="meta-label">Contacts</span> 546</div>
+    <div class="meta-item"><span class="meta-label">Unified Individuals</span> ~1,400</div>
+    <div class="meta-item"><span class="meta-label">Modules</span> 2</div>
+    <div class="meta-item"><span class="meta-label">CIs</span> 7</div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <!-- TABS -->
+  <!-- ═══════════════════════════════════════════════════════════ -->
+
+  <div class="tab-bar">
+    <button class="tab-btn active" data-tab="scenarios">Scenario Pricing</button>
+    <button class="tab-btn" data-tab="runsheet">Run Sheet</button>
+    <button class="tab-btn" data-tab="findings">Findings</button>
+    <button class="tab-btn" data-tab="projections">Amaysim Projection</button>
+    <button class="tab-btn" data-tab="ask">What We Need</button>
+  </div>
+
+  <!-- ─── TAB: SCENARIOS ─── -->
+  <div class="tab-panel active" id="tab-scenarios">
+
+    <div class="section" style="margin-top:28px;">
+      <div class="section-label">The Petrol Gauge</div>
+      <p class="section-desc">Six scenarios, each adding a layer of intelligence. Per 1,000 contacts dispatched daily. The customer dials up complexity — here's what each level costs.</p>
+
+      <div class="scenario-grid">
+        <div class="scenario-card sc-basic">
+          <div class="scenario-letter">A</div>
+          <div class="scenario-name">Basic Cross-Sell</div>
+          <div class="scenario-desc">1,000 contacts, 10 actions, segment mode, no LLM — rules pick the best action</div>
+          <div class="scenario-stat"><span class="label">DC Compute</span> <span class="value"><span class="pill pill-zero">ZERO</span></span></div>
+          <div class="scenario-stat"><span class="label">DC Activation</span> <span class="value">--</span></div>
+          <div class="scenario-stat"><span class="label">Agentforce LLM</span> <span class="value"><span class="pill pill-zero">ZERO</span></span></div>
+          <div class="scenario-stat"><span class="label">CRM Storage</span> <span class="value">~1,000 records (0.5 MB)</span></div>
+          <div class="scenario-stat"><span class="label">Monthly Cost</span> <span class="value"><span class="pill pill-red">Cam to fill</span></span></div>
+        </div>
+
+        <div class="scenario-card sc-basic">
+          <div class="scenario-letter">B</div>
+          <div class="scenario-name">+ Einstein Scoring</div>
+          <div class="scenario-desc">Same as A, but Einstein model scores each contact (reads from Data Cloud)</div>
+          <div class="scenario-stat"><span class="label">DC Compute</span> <span class="value"><span class="pill pill-dc">1,000 scoring reads</span></span></div>
+          <div class="scenario-stat"><span class="label">DC Activation</span> <span class="value">--</span></div>
+          <div class="scenario-stat"><span class="label">Agentforce LLM</span> <span class="value"><span class="pill pill-zero">ZERO</span></span></div>
+          <div class="scenario-stat"><span class="label">CRM Storage</span> <span class="value">~1,000 records (0.5 MB)</span></div>
+          <div class="scenario-stat"><span class="label">Monthly Cost</span> <span class="value"><span class="pill pill-red">Cam to fill</span></span></div>
+        </div>
+
+        <div class="scenario-card sc-mid">
+          <div class="scenario-letter">C</div>
+          <div class="scenario-name">+ LLM Reasoning</div>
+          <div class="scenario-desc">Same as A, plus Tier 1.5 rerank on close decisions (~7.5% of contacts)</div>
+          <div class="scenario-stat"><span class="label">DC Compute</span> <span class="value"><span class="pill pill-zero">ZERO</span></span></div>
+          <div class="scenario-stat"><span class="label">DC Activation</span> <span class="value">--</span></div>
+          <div class="scenario-stat"><span class="label">Agentforce LLM</span> <span class="value"><span class="pill pill-llm">~75 calls (~195k tokens)</span></span></div>
+          <div class="scenario-stat"><span class="label">CRM Storage</span> <span class="value">~1,000 records (0.5 MB)</span></div>
+          <div class="scenario-stat"><span class="label">Monthly Cost</span> <span class="value"><span class="pill pill-red">Cam to fill</span></span></div>
+        </div>
+
+        <div class="scenario-card sc-mid">
+          <div class="scenario-letter">D</div>
+          <div class="scenario-name">Einstein + LLM</div>
+          <div class="scenario-desc">Model scoring AND LLM reasoning on close calls — the sweet spot</div>
+          <div class="scenario-stat"><span class="label">DC Compute</span> <span class="value"><span class="pill pill-dc">1,000 scoring reads</span></span></div>
+          <div class="scenario-stat"><span class="label">DC Activation</span> <span class="value">--</span></div>
+          <div class="scenario-stat"><span class="label">Agentforce LLM</span> <span class="value"><span class="pill pill-llm">~75 calls (~195k tokens)</span></span></div>
+          <div class="scenario-stat"><span class="label">CRM Storage</span> <span class="value">~1,000 records (0.5 MB)</span></div>
+          <div class="scenario-stat"><span class="label">Monthly Cost</span> <span class="value"><span class="pill pill-red">Cam to fill</span></span></div>
+        </div>
+
+        <div class="scenario-card sc-full">
+          <div class="scenario-letter">E</div>
+          <div class="scenario-name">Multi-Module + Tier 2</div>
+          <div class="scenario-desc">2 modules (20 actions), cross-module conflicts trigger full LLM adjudication (~15%)</div>
+          <div class="scenario-stat"><span class="label">DC Compute</span> <span class="value"><span class="pill pill-dc">1,000 scoring reads</span></span></div>
+          <div class="scenario-stat"><span class="label">DC Activation</span> <span class="value">--</span></div>
+          <div class="scenario-stat"><span class="label">Agentforce LLM</span> <span class="value"><span class="pill pill-llm">~225 calls (~570k tokens)</span></span></div>
+          <div class="scenario-stat"><span class="label">CRM Storage</span> <span class="value">~1,000 records (0.5 MB)</span></div>
+          <div class="scenario-stat"><span class="label">Monthly Cost</span> <span class="value"><span class="pill pill-red">Cam to fill</span></span></div>
+        </div>
+
+        <div class="scenario-card sc-full">
+          <div class="scenario-letter">F</div>
+          <div class="scenario-name">Full Stack + Composition</div>
+          <div class="scenario-desc">Everything: scoring + reasoning + Tier 2 + LLM-composed treatments (~5%)</div>
+          <div class="scenario-stat"><span class="label">DC Compute</span> <span class="value"><span class="pill pill-dc">1,000 scoring reads</span></span></div>
+          <div class="scenario-stat"><span class="label">DC Activation</span> <span class="value">--</span></div>
+          <div class="scenario-stat"><span class="label">Agentforce LLM</span> <span class="value"><span class="pill pill-llm">~275 calls (~685k tokens)</span></span></div>
+          <div class="scenario-stat"><span class="label">CRM Storage</span> <span class="value">~1,050 records (0.5 MB)</span></div>
+          <div class="scenario-stat"><span class="label">Monthly Cost</span> <span class="value"><span class="pill pill-red">Cam to fill</span></span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">Daily Overhead (same for all scenarios)</div>
+      <p class="section-desc">These run once per day regardless of how many contacts you dispatch.</p>
+      <div class="card">
+        <table>
+          <tr><th>Operation</th><th>What It Uses</th><th>Billing Units</th></tr>
+          <tr><td>CI refresh (7 CIs)</td><td><span class="pill pill-dc">DC compute</span> proportional to unified individual count (test: ~4,600 rows)</td><td><span class="pill pill-red">Cam to fill</span></td></tr>
+          <tr><td>CLV writeback</td><td><span class="pill pill-dc">1 queryv2 batch read</span> (test: ~544 rows)</td><td><span class="pill pill-red">Cam to fill</span></td></tr>
+          <tr><td>Relationship State batch</td><td><span class="pill pill-zero">ZERO DC</span> — pure CRM</td><td>0</td></tr>
+          <tr><td>DC Segment publish (if used)</td><td><span class="pill pill-dc">DC compute</span> for membership + activation to SFMC</td><td><span class="pill pill-red">Cam to fill</span></td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="cta-card">
+      <h3>The Simple Answer We Want</h3>
+      <p>Cam — fill in the billing units so we can tell Amaysim:</p>
+      <ul>
+        <li><strong>Scenario A</strong> (basic, no AI): "1,000 cross-sell emails/day costs X DC credits + Y AF credits/month"</li>
+        <li><strong>Scenario D</strong> (Einstein + LLM reasoning): "same 1,000 but smarter — costs X + Y/month"</li>
+        <li><strong>Scenario F</strong> (full stack): "1,000 with full AI adjudication — costs X + Y/month"</li>
+      </ul>
+      <p style="margin-top:12px;">Then we multiply by their actual volume (8,000/day) and they have their monthly bill.</p>
+    </div>
+
+  </div>
+
+  <!-- ─── TAB: RUN SHEET ─── -->
+  <div class="tab-panel" id="tab-runsheet">
+
+    <div class="section" style="margin-top:28px;">
+      <div class="section-label">Architecture — What Touches What</div>
+      <div class="card">
+        <table>
+          <tr><th>Operation</th><th>DC Compute</th><th>DC Storage</th><th>DC Activation</th><th>LLM Tokens</th><th>CRM Storage</th></tr>
+          <tr><td>Segment dispatch (segment mode)</td><td>--</td><td>--</td><td>--</td><td>--</td><td><span class="pill pill-teal">YES</span></td></tr>
+          <tr><td>Segment dispatch (model mode)</td><td><span class="pill pill-dc">YES</span></td><td>--</td><td>--</td><td>--</td><td><span class="pill pill-teal">YES</span></td></tr>
+          <tr><td>Tier 1.5 LLM rerank</td><td>--</td><td>--</td><td>--</td><td><span class="pill pill-llm">YES</span></td><td>--</td></tr>
+          <tr><td>Tier 2 LLM adjudication</td><td>--</td><td>--</td><td>--</td><td><span class="pill pill-llm">YES</span></td><td>--</td></tr>
+          <tr><td>Composition (LLM)</td><td>--</td><td>--</td><td>--</td><td><span class="pill pill-llm">YES</span></td><td><span class="pill pill-teal">YES</span></td></tr>
+          <tr><td>CI refresh</td><td><span class="pill pill-dc">YES</span></td><td><span class="pill pill-dc">YES</span></td><td>--</td><td>--</td><td>--</td></tr>
+          <tr><td>CLV writeback (queryv2)</td><td><span class="pill pill-dc">YES</span></td><td>--</td><td>--</td><td>--</td><td><span class="pill pill-teal">YES</span></td></tr>
+          <tr><td>DC Segment compute</td><td><span class="pill pill-dc">YES</span></td><td>--</td><td>--</td><td>--</td><td>--</td></tr>
+          <tr><td>DC Segment activation</td><td>--</td><td>--</td><td><span class="pill pill-dc">YES</span></td><td>--</td><td>--</td></tr>
+          <tr><td>Identity Resolution</td><td><span class="pill pill-dc">YES</span></td><td>--</td><td>--</td><td>--</td><td>--</td></tr>
+          <tr><td>Einstein model retraining</td><td><span class="pill pill-dc">YES</span></td><td>--</td><td>--</td><td>--</td><td>--</td></tr>
+          <tr><td>Relationship State batch</td><td>--</td><td>--</td><td>--</td><td>--</td><td><span class="pill pill-teal">YES</span></td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="insight">
+      <div class="insight-title">Key Architecture Insight</div>
+      <p>The decisioning engine runs almost entirely on the CRM platform (Apex). Data Cloud is only touched for CI refresh, Einstein scoring/training, segment operations, and queryv2 reads. LLM consumption goes through the Agentforce Platform Models API — not Data Cloud.</p>
+    </div>
+
+    <div class="section">
+      <div class="section-label">Run Log — All times UTC, 30 Apr 2026</div>
+
+      <!-- Track 1 -->
+      <div class="card" style="padding:0 24px;">
+        <div class="track-header" onclick="toggleTrack(this)">
+          <span class="track-chevron">&#9654;</span>
+          <span class="track-name">Track 1 — Segment Dispatch Baseline</span>
+          <span class="track-pills"><span class="pill pill-zero">NO DC</span> <span class="pill pill-zero">NO LLM</span></span>
+        </div>
+        <div class="track-body">
+          <table>
+            <tr><th>Run</th><th>Start</th><th>End</th><th>Duration</th><th>Contacts</th><th>Actions</th><th>DC</th><th>Notes</th></tr>
+            <tr><td>1A</td><td>09:18:13</td><td>09:18:26</td><td>13s</td><td>100</td><td>9</td><td><span class="pill pill-zero">ZERO</span></td><td>100 decisions</td></tr>
+            <tr><td>1B</td><td>09:20:54</td><td>09:21:21</td><td>27s</td><td>200</td><td>9</td><td><span class="pill pill-zero">ZERO</span></td><td>200 decisions</td></tr>
+            <tr><td>1C</td><td>09:21:54</td><td>09:23:02</td><td>68s</td><td>500</td><td>9</td><td><span class="pill pill-zero">ZERO</span></td><td>500 decisions</td></tr>
+            <tr><td>1D</td><td>09:26:27</td><td>09:26:58</td><td>31s</td><td>200</td><td>3</td><td><span class="pill pill-zero">ZERO</span></td><td>200 decisions, 6 actions off</td></tr>
+          </table>
+        </div>
+      </div>
+
+      <!-- Track 2 -->
+      <div class="card" style="padding:0 24px;">
+        <div class="track-header" onclick="toggleTrack(this)">
+          <span class="track-chevron">&#9654;</span>
+          <span class="track-name">Track 2 — Einstein Scoring</span>
+          <span class="track-pills"><span class="pill pill-dc">DC COMPUTE</span></span>
+        </div>
+        <div class="track-body">
+          <table>
+            <tr><th>Run</th><th>Start</th><th>End</th><th>Duration</th><th>Contacts</th><th>Scoring</th><th>DC</th><th>Notes</th></tr>
+            <tr><td>2A</td><td>09:27:39</td><td>09:28:04</td><td>25s</td><td>200</td><td>segment</td><td><span class="pill pill-zero">ZERO</span></td><td>Control</td></tr>
+            <tr><td>2B</td><td>09:28:46</td><td>09:29:08</td><td>22s</td><td>200</td><td>model</td><td><span class="pill pill-dc">DC reads</span></td><td>Model not trained, null scores</td></tr>
+          </table>
+        </div>
+      </div>
+
+      <!-- Track 3 -->
+      <div class="card" style="padding:0 24px;">
+        <div class="track-header" onclick="toggleTrack(this)">
+          <span class="track-chevron">&#9654;</span>
+          <span class="track-name">Track 3 — Tier 1.5 LLM Rerank</span>
+          <span class="track-pills"><span class="pill pill-llm">LLM TOKENS</span> <span class="pill pill-zero">NO DC</span></span>
+        </div>
+        <div class="track-body">
+          <table>
+            <tr><th>Run</th><th>Start</th><th>End</th><th>Duration</th><th>Contacts</th><th>Threshold</th><th>LLM Calls</th><th>Notes</th></tr>
+            <tr><td>3A</td><td>09:30:05</td><td>09:30:33</td><td>28s</td><td>200</td><td>OFF</td><td>0</td><td>Control</td></tr>
+            <tr><td>3B</td><td>09:31:13</td><td>09:33:40</td><td>147s</td><td>50</td><td>1.0 (forced)</td><td><span class="pill pill-llm">50</span></td><td>100% reranked, ~3s/call</td></tr>
+            <tr><td>3C</td><td>09:34:28</td><td>09:35:35</td><td>67s</td><td>200</td><td>0.05 (realistic)</td><td><span class="pill pill-llm">15</span></td><td>7.5% rerank rate</td></tr>
+          </table>
+        </div>
+      </div>
+
+      <!-- Track 4 -->
+      <div class="card" style="padding:0 24px;">
+        <div class="track-header" onclick="toggleTrack(this)">
+          <span class="track-chevron">&#9654;</span>
+          <span class="track-name">Track 4 — Tier 2 Adjudication</span>
+          <span class="track-pills"><span class="pill pill-llm">LLM TOKENS</span> <span class="pill pill-zero">NO DC</span></span>
+        </div>
+        <div class="track-body">
+          <table>
+            <tr><th>Run</th><th>Start</th><th>End</th><th>Duration</th><th>Contacts</th><th>LLM Calls</th><th>Notes</th></tr>
+            <tr><td>4A</td><td>10:12:11</td><td>10:12:19</td><td>8s</td><td>50</td><td><span class="pill pill-llm">~50</span></td><td>50/50 tier2, 5 queueables</td></tr>
+          </table>
+        </div>
+      </div>
+
+      <!-- Track 5 -->
+      <div class="card" style="padding:0 24px;">
+        <div class="track-header" onclick="toggleTrack(this)">
+          <span class="track-chevron">&#9654;</span>
+          <span class="track-name">Track 5 — Composition</span>
+          <span class="track-pills"><span class="pill pill-llm">LLM TOKENS</span> <span class="pill pill-zero">NO DC</span></span>
+        </div>
+        <div class="track-body">
+          <table>
+            <tr><th>Run</th><th>Start</th><th>End</th><th>Duration</th><th>Contacts</th><th>LLM Calls</th><th>Notes</th></tr>
+            <tr><td>5A</td><td>10:17:57</td><td>10:18:01</td><td>4s</td><td>20</td><td><span class="pill pill-llm">~20</span></td><td>20 null_action, 10 queueables</td></tr>
+          </table>
+        </div>
+      </div>
+
+      <!-- Track 6 -->
+      <div class="card" style="padding:0 24px;">
+        <div class="track-header" onclick="toggleTrack(this)">
+          <span class="track-chevron">&#9654;</span>
+          <span class="track-name">Track 6 — CI Refresh</span>
+          <span class="track-pills"><span class="pill pill-dc">DC COMPUTE</span> <span class="pill pill-dc">DC STORAGE</span></span>
+        </div>
+        <div class="track-body">
+          <table>
+            <tr><th>Run</th><th>Start</th><th>End</th><th>Duration</th><th>CIs</th><th>Notes</th></tr>
+            <tr><td>6A</td><td>09:36:03</td><td>~09:36:10</td><td>~7s</td><td>1 (churn_features)</td><td>~1,404 rows</td></tr>
+            <tr><td>6B</td><td>09:39:23</td><td>~09:39:38</td><td>~15s</td><td>3</td><td>~2,500 total rows</td></tr>
+            <tr><td>6C</td><td>09:45:15</td><td>~09:45:46</td><td>~31s</td><td>All 7</td><td>~4,600 total rows</td></tr>
+          </table>
+        </div>
+      </div>
+
+      <!-- Track 7 -->
+      <div class="card" style="padding:0 24px;">
+        <div class="track-header" onclick="toggleTrack(this)">
+          <span class="track-chevron">&#9654;</span>
+          <span class="track-name">Track 7 — CLV Writeback</span>
+          <span class="track-pills"><span class="pill pill-dc">DC QUERYV2</span></span>
+        </div>
+        <div class="track-body">
+          <table>
+            <tr><th>Run</th><th>Start</th><th>End</th><th>Duration</th><th>CI Source</th><th>Rows</th></tr>
+            <tr><td>7A</td><td>09:51:02</td><td>~09:52:00</td><td>~60s</td><td>customer_lifetime_value__cio</td><td>~544</td></tr>
+            <tr><td>7B</td><td>09:54:56</td><td>~09:56:00</td><td>~60s</td><td>churn_features__cio</td><td>~1,404</td></tr>
+          </table>
+        </div>
+      </div>
+
+      <!-- Track 8 -->
+      <div class="card" style="padding:0 24px;">
+        <div class="track-header" onclick="toggleTrack(this)">
+          <span class="track-chevron">&#9654;</span>
+          <span class="track-name">Track 8 — DC Segment Publish</span>
+          <span class="track-pills"><span class="pill pill-dc">DC COMPUTE</span> <span class="pill pill-dc">ACTIVATION</span></span>
+        </div>
+        <div class="track-body">
+          <table>
+            <tr><th>Run</th><th>Start</th><th>End</th><th>Duration</th><th>Segments</th><th>Notes</th></tr>
+            <tr><td>8A</td><td>10:19:51</td><td>10:21:22</td><td>~90s</td><td>3 published</td><td>Churn_Risk (503) + Cross_Sell (503) + RT_Test (1,404)</td></tr>
+          </table>
+        </div>
+      </div>
+
+      <!-- Track 10 -->
+      <div class="card" style="padding:0 24px;">
+        <div class="track-header" onclick="toggleTrack(this)">
+          <span class="track-chevron">&#9654;</span>
+          <span class="track-name">Track 10 — Einstein Retraining</span>
+          <span class="track-pills"><span class="pill pill-dc">DC COMPUTE</span></span>
+        </div>
+        <div class="track-body">
+          <table>
+            <tr><th>Run</th><th>Start</th><th>End</th><th>Duration</th><th>Notes</th></tr>
+            <tr><td>10A</td><td>10:21:36</td><td>~10:22:00</td><td>~30s</td><td>May have failed on CI name mismatch</td></tr>
+          </table>
+        </div>
+      </div>
+
+      <!-- Track 12 -->
+      <div class="card" style="padding:0 24px;">
+        <div class="track-header" onclick="toggleTrack(this)">
+          <span class="track-chevron">&#9654;</span>
+          <span class="track-name">Track 12 — Full Daily Lap</span>
+          <span class="track-pills"><span class="pill pill-dc">DC COMPUTE</span> <span class="pill pill-teal">CRM</span></span>
+        </div>
+        <div class="track-body">
+          <table>
+            <tr><th>Run</th><th>Start</th><th>End</th><th>Duration</th><th>What Ran</th><th>Notes</th></tr>
+            <tr><td>12-L1</td><td>10:01:37</td><td>10:03:38</td><td>121s</td><td>7 CIs + CLV + RelState + 500 dispatch</td><td>500 decisions, 506 rel states</td></tr>
+          </table>
+        </div>
+      </div>
+
+      <div class="card" style="background: var(--orange-lt); border-color: var(--orange-bd);">
+        <p style="font-size:13px;"><strong>Track 9 (Identity Resolution):</strong> Skipped — API endpoint not available on this org edition. IR is scheduled via Setup UI.</p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ─── TAB: FINDINGS ─── -->
+  <div class="tab-panel" id="tab-findings">
+
+    <div class="section" style="margin-top:28px;">
+      <div class="section-label">1. Data Cloud — Compute</div>
+      <p class="section-desc">Timestamps for Cam to correlate with backend DC consumption logs.</p>
+      <div class="card">
+        <table>
+          <tr><th>Operation</th><th>Run</th><th>Timestamp (UTC)</th><th>What to Look For</th></tr>
+          <tr><td>CI refresh — 1 CI, ~1,404 rows</td><td>6A</td><td>09:36:03</td><td>DC compute spike</td></tr>
+          <tr><td>CI refresh — 3 CIs, ~2,500 rows</td><td>6B</td><td>09:39:23</td><td>~3x spike vs 6A</td></tr>
+          <tr><td>CI refresh — 7 CIs, ~4,600 rows</td><td>6C</td><td>09:45:15</td><td>~7x spike vs 6A</td></tr>
+          <tr><td>CLV writeback queryv2 — 544 rows</td><td>7A</td><td>09:51:02</td><td>DC read volume</td></tr>
+          <tr><td>CLV writeback queryv2 — 1,404 rows</td><td>7B</td><td>09:54:56</td><td>~2.6x reads vs 7A</td></tr>
+          <tr><td>Einstein model scoring — 200 contacts</td><td>2B</td><td>09:28:46</td><td>DC reads for inference</td></tr>
+          <tr><td>DC Segment publish — 3 segments</td><td>8A</td><td>10:19:51</td><td>DC compute for membership</td></tr>
+          <tr><td>Einstein retraining</td><td>10A</td><td>10:21:36</td><td>Training data read</td></tr>
+          <tr><td>Full daily lap — all combined</td><td>12-L1</td><td>10:01:37</td><td>Combined CI + queryv2 + dispatch</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">2. Data Cloud — Storage</div>
+      <div class="card">
+        <p>CI refresh writes output tables. Growth is proportional to CI row count.</p>
+        <ul style="margin:12px 0 0 20px; font-size:13px; color: var(--muted);">
+          <li>7 CIs produce ~4,600 total rows per refresh</li>
+          <li>At Amaysim scale (~100k contacts): roughly ~100k rows per CI refresh cycle</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">3. Data Cloud — Activation</div>
+      <div class="card">
+        <p>DC Segment publish (Run 8A) is the only activation event. Three segments published at 10:19:51 UTC with combined ~2,410 members.</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">4. Agentforce — LLM Tokens</div>
+      <div class="card">
+        <table>
+          <tr><th>Operation</th><th>Run</th><th>LLM Calls</th><th>Tokens/Call</th><th>Total Tokens</th></tr>
+          <tr><td>Tier 1.5 rerank (forced)</td><td>3B</td><td>50</td><td>~2,600</td><td>~130,000</td></tr>
+          <tr><td>Tier 1.5 rerank (realistic 7.5%)</td><td>3C</td><td>15</td><td>~2,600</td><td>~39,000</td></tr>
+          <tr><td>Tier 2 adjudication</td><td>4A</td><td>~50</td><td>~2,500</td><td>~125,000</td></tr>
+          <tr><td>Composition</td><td>5A</td><td>~20</td><td>~2,300</td><td>~46,000</td></tr>
+        </table>
+      </div>
+      <div class="insight">
+        <div class="insight-title">Key Numbers</div>
+        <p>Tier 1.5 fires on ~7.5% of decisions at default threshold. Each call takes ~3 seconds and ~2,600 tokens. Tier 2 and Composition are heavier but fire less frequently.</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">5. CRM Platform — Storage</div>
+      <div class="card">
+        <table>
+          <tr><th>Object</th><th>Pre-test</th><th>Post-test</th><th>Delta</th></tr>
+          <tr><td>NBADecision__c</td><td>249</td><td>~2,769</td><td>+2,520</td></tr>
+          <tr><td>NBA_Relationship_State__c</td><td>14</td><td>506</td><td>+492</td></tr>
+          <tr><td>NBA_Eligibility__c</td><td>815</td><td>815</td><td>0 (stable)</td></tr>
+        </table>
+        <p style="margin-top:12px; font-size:13px; color: var(--muted);">Per 500-contact dispatch cycle: ~500 NBADecision__c records created.</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ─── TAB: PROJECTIONS ─── -->
+  <div class="tab-panel" id="tab-projections">
+
+    <div class="section" style="margin-top:28px;">
+      <div class="section-label">Daily Consumption Estimate</div>
+      <p class="section-desc">Assumptions: ~8,000 contacts/day dispatched, daily cadence, segment mode (no Einstein scoring initially).</p>
+      <div class="card">
+        <table>
+          <tr><th>Meter</th><th>Calculation</th><th>Daily Estimate</th></tr>
+          <tr><td>DC Compute — CIs</td><td>7 CI refreshes x scaled row count</td><td>7 CI runs/day</td></tr>
+          <tr><td>DC Compute — queryv2</td><td>1 CLV writeback x ~8,000 rows</td><td>1 batch read/day</td></tr>
+          <tr><td>DC Compute — Segments</td><td>3 segment publishes</td><td>3 segment computes/day</td></tr>
+          <tr><td>DC Activation</td><td>3 segment activations to SFMC</td><td>~8,000 activation events/day</td></tr>
+          <tr><td>LLM Tokens (Tier 1.5)</td><td>8,000 x 7.5% x 2,600 tokens</td><td>~1.56M tokens/day</td></tr>
+          <tr><td>LLM Tokens (Tier 2)</td><td>~2% of decisions x 2,500</td><td>~400k tokens/day</td></tr>
+          <tr><td>LLM Tokens (Composition)</td><td>~5% null_action x 2,300</td><td>~920k tokens/day</td></tr>
+          <tr><td>CRM Storage</td><td>8,000 records x ~500 bytes</td><td>~4MB/day</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">Monthly Projection</div>
+      <div class="card">
+        <table>
+          <tr><th>Meter</th><th>Monthly Estimate</th><th>Notes</th></tr>
+          <tr><td>DC Compute (CIs)</td><td>210 CI refresh runs</td><td>Dominant DC cost — scales with data volume</td></tr>
+          <tr><td>DC Compute (queryv2)</td><td>30 batch reads</td><td>Lightweight</td></tr>
+          <tr><td>DC Activation</td><td>~240k activation events</td><td>Only if pushing segments to SFMC</td></tr>
+          <tr><td>LLM Tokens</td><td>~87M tokens/month</td><td>~47M T1.5 + ~12M T2 + ~28M Composition</td></tr>
+          <tr><td>CRM Storage</td><td>~120MB/month (~240k records)</td><td>Needs retention strategy at 12-month</td></tr>
+        </table>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">Scaling Notes</div>
+      <div class="card">
+        <ol style="margin-left:20px; font-size:13px;">
+          <li style="margin-bottom:10px;"><strong>CIs scale with data volume, not contact count.</strong> If Amaysim has 500k unified individuals in DC (billing + usage + CRM), CI computation will be proportionally larger than our 1,400-individual test.</li>
+          <li style="margin-bottom:10px;"><strong>LLM token estimate is conservative.</strong> Tier 1.5 rerank rate (7.5%) was measured with uniform segment-mode scores. With real Einstein scores, the rate may be lower.</li>
+          <li style="margin-bottom:10px;"><strong>CRM storage is the long-term concern.</strong> At 8,000 decisions/day = ~2.9M records/year. Recommend 90-day rolling purge of superseded/expired decisions.</li>
+          <li><strong>Batch dispatch currently limited to batch size 1</strong> due to SOQL governor limits. At 8,000 contacts: ~15-20 min runtime. Bulkification fix scoped for next week (batch size 50+, ~2-3 min).</li>
+        </ol>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ─── TAB: WHAT WE NEED ─── -->
+  <div class="tab-panel" id="tab-ask">
+
+    <div class="section" style="margin-top:28px;">
+      <div class="section-label">Action Items for Cam</div>
+
+      <div class="cta-card">
+        <h3>Convert Technical Units to Billing Units</h3>
+        <p>We've measured per-unit technical consumption for every operation. We need you to convert these into the billing units Amaysim will see on their invoice.</p>
+      </div>
+
+      <div class="card">
+        <ol style="margin-left:20px; font-size:14px;">
+          <li style="margin-bottom:14px;"><strong>Confirm DC consumption</strong> for the timestamped runs — particularly CI refresh (6A/6B/6C at 09:36-09:45) and the full lap (12-L1 at 10:01). These should be the most visible.</li>
+          <li style="margin-bottom:14px;"><strong>Confirm Agentforce token consumption</strong> for the LLM runs (3B at 09:31, 3C at 09:34, 4A at 10:12, 5A at 10:17). Do the token volumes match our estimates?</li>
+          <li style="margin-bottom:14px;"><strong>Confirm baseline is zero</strong> — Tracks 1A-1D (09:18-09:27) and 3A (09:30) should show zero DC consumption. This proves the arbitration engine itself is DC-free.</li>
+          <li style="margin-bottom:14px;"><strong>Fill in billing units</strong> on the Scenario Pricing tab so we can give Amaysim a simple monthly cost per scenario.</li>
+          <li><strong>Flag anything unexpected</strong> — if you see consumption outside our timestamped windows, that's background DC jobs or something unaccounted for.</li>
+        </ol>
+      </div>
+
+      <div class="card" style="background: var(--orange-lt); border-color: var(--orange-bd);">
+        <p style="font-size:13px;"><strong>Tracks with caveats:</strong></p>
+        <ul style="margin:8px 0 0 20px; font-size:13px;">
+          <li><strong>Track 9 (Identity Resolution):</strong> Skipped — API not available. You can observe scheduled runs from your side.</li>
+          <li><strong>Track 2B (Einstein scoring):</strong> Model not trained — null scores. DC read attempt still occurred at 09:28:46.</li>
+          <li><strong>Track 10A (Retraining):</strong> May have failed on CI name mismatch. Check 10:21:36 for activity.</li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="section">
+      <div class="section-label">Where Our Numbers Come From</div>
+      <div class="card">
+        <table>
+          <tr><th>Metric</th><th>Source</th><th>Value</th></tr>
+          <tr><td>Tier 1.5 rerank rate</td><td>Measured in Run 3C (15/200 contacts at threshold 0.05)</td><td>7.5%</td></tr>
+          <tr><td>Tier 1.5 tokens/call</td><td>system (~500) + actions (~200 x 10) + response (~300)</td><td>~2,600</td></tr>
+          <tr><td>Tier 2 rate</td><td>Estimated for multi-module conflict scenarios</td><td>~15%</td></tr>
+          <tr><td>Tier 2 tokens/call</td><td>system (~800) + context (~500) + conflict (~400) + rationale (~800)</td><td>~2,500</td></tr>
+          <tr><td>Composition rate</td><td>Estimated for contacts with no viable action</td><td>~5%</td></tr>
+          <tr><td>Composition tokens/call</td><td>system (~600) + context (~400) + catalogue (~300) + treatment (~1,000)</td><td>~2,300</td></tr>
+          <tr><td>CRM storage/record</td><td>NBADecision__c with all fields populated</td><td>~500 bytes</td></tr>
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<!-- Tab logic -->
+<script>
+document.querySelectorAll('.tab-btn').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    document.querySelectorAll('.tab-btn').forEach(function(b) { b.classList.remove('active'); });
+    document.querySelectorAll('.tab-panel').forEach(function(p) { p.classList.remove('active'); });
+    btn.classList.add('active');
+    document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+  });
+});
+
+function toggleTrack(el) {
+  el.classList.toggle('open');
+  el.nextElementSibling.classList.toggle('open');
+}
+</script>
+
+<!-- Gate -->
+<script src="gate.js" data-page="Amaysim Consumption Test" data-password="Amaysim2026"></script>
+
+</body>
+</html>
