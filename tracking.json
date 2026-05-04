@@ -14902,5 +14902,17 @@
     "location": "Sydney, New South Wales, Australia",
     "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
     "returning": "yes"
+  },
+  {
+    "timestamp": "Mon, 04 May 2026 11:17:33 GMT",
+    "name": "Prewies",
+    "company": "Salesforce",
+    "position": "FDE",
+    "page": "{{Page Name Here}}",
+    "url": "file:///Users/pgaja/sf-narrative-project/template.html",
+    "ip": "-",
+    "location": "-",
+    "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
+    "returning": "no"
   }
 ]
