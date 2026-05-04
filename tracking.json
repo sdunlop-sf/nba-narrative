@@ -14914,5 +14914,17 @@
     "location": "-",
     "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
     "returning": "no"
+  },
+  {
+    "timestamp": "Mon, 04 May 2026 11:28:48 GMT",
+    "name": "Prewies",
+    "company": "Salesforce",
+    "position": "FDE",
+    "page": "Booking.com — Agentic Incident Management",
+    "url": "http://127.0.0.1:8001/booking.html",
+    "ip": "165.225.240.235",
+    "location": "Amsterdam, North Holland, The Netherlands",
+    "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
+    "returning": "no"
   }
 ]
