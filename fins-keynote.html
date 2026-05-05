@@ -624,35 +624,11 @@
             <div class="speaker-notes">There are two kinds of memory. Channel memory is what your platforms know &mdash; open rates, variant winners, optimal send times. Everyone in this room has channel memory, and the modernisation work many of you are doing right now gets you a much better version of it. Relationship memory is what your best human bankers know. What we&rsquo;ve offered, what they&rsquo;ve said, what&rsquo;s changed, what they need now. Almost nobody&rsquo;s systems have that. The question is whether yours can. Let me show you what it looks like when a system does have it.</div>
         </section>
 
-        <!-- ═══════════ SLIDE 8: Demo Handoff ═══════════ -->
-        <section class="slide">
-            <div style="max-width: 700px; text-align: center;">
-                <div class="accent-line" style="margin: 0 auto 20px;"></div>
-                <div class="eyebrow">Live Demo</div>
-                <h2 class="big" style="font-size: clamp(36px, 4.5vw, 60px); margin-bottom: 16px;">Over to <span class="hl">Jordan.</span></h2>
-                <p class="sub" style="margin: 0 auto 32px;">One architecture. Two surfaces.</p>
-
-                <div style="background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 24px 28px; box-shadow: var(--shadow); text-align: left; max-width: 520px; margin: 0 auto;">
-                    <div style="font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--blue2); margin-bottom: 14px;">What to watch for</div>
-                    <div style="font-size: 14px; color: var(--dim); margin-bottom: 10px; display: flex; align-items: flex-start; gap: 10px; line-height: 1.55;">
-                        <span style="flex-shrink:0;width:6px;height:6px;border-radius:50%;background:var(--blue2);margin-top:7px;"></span>
-                        What the agent knows about the customer that the rules engine couldn&rsquo;t.
-                    </div>
-                    <div style="font-size: 14px; color: var(--dim); display: flex; align-items: flex-start; gap: 10px; line-height: 1.55;">
-                        <span style="flex-shrink:0;width:6px;height:6px;border-radius:50%;background:var(--blue2);margin-top:7px;"></span>
-                        How fast a decision actually happens.
-                    </div>
-                </div>
-            </div>
-            <div class="speaker-notes">Jordan&rsquo;s going to show you the same agent and the same memory layer doing two different things &mdash; a marketer briefing the agent to shape a customer experience, and the same agent firing a real-time decision into a service moment. Pay attention to what&rsquo;s the same underneath even though the surfaces look different. That&rsquo;s the architecture working. Over to you.</div>
-            <div class="star-deco" style="top: 100px; right: 120px;"><img src="sf-star-gold.png" alt=""></div>
-        </section>
-
-        <!-- ═══════════ SLIDE 9: Agent Loop ═══════════ -->
+        <!-- ═══════════ SLIDE 8: The Engine (loop + formula) ═══════════ -->
         <section class="slide">
             <div style="max-width: 860px; width: 100%;">
                 <div class="accent-line" style="margin: 0 auto 16px;"></div>
-                <div class="eyebrow">What You Just Saw</div>
+                <div class="eyebrow">The Engine</div>
                 <h2 class="big" style="font-size: clamp(24px, 2.8vw, 38px); margin-bottom: 28px;">Read. Reason. Act. Learn.</h2>
 
                 <div class="loop-diagram">
@@ -682,9 +658,60 @@
                     <div class="loop-arrow" style="color: rgba(122,61,214,0.3);">&#x21ba;</div>
                 </div>
 
+                <div style="background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 24px 28px; box-shadow: var(--shadow); max-width: 740px; margin: 0 auto;">
+                    <div style="font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 12px;">Value Scoring Formula</div>
+                    <div style="font-family: var(--mono); font-size: clamp(12px, 1.2vw, 15px); font-weight: 500; color: var(--ink); padding: 14px 18px; background: rgba(2,42,192,0.03); border: 1px solid rgba(2,42,192,0.1); border-radius: 10px; margin-bottom: 14px; text-align: center; line-height: 1.8;">
+                        <span style="color: var(--teal-d);">weighted</span>&nbsp;=&nbsp;<span style="color: var(--blue2);">propensity</span>&nbsp;&times;&nbsp;<span style="color: var(--gold-d);">expectedValue</span>&nbsp;&times;&nbsp;<span style="color: var(--teal-d);">pclvMultiplier</span>&nbsp;&times;&nbsp;<span style="color: var(--red);">priority</span>&nbsp;&times;&nbsp;<span style="color: var(--purple);">adaptiveWeight</span>
+                    </div>
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px 16px; font-size: 11px; color: var(--muted); line-height: 1.4;">
+                        <div style="display: flex; align-items: center; gap: 6px;"><span style="width:6px;height:6px;border-radius:50%;background:var(--blue2);flex-shrink:0;"></span><strong style="color:var(--text);">Propensity</strong> &mdash; ML prediction</div>
+                        <div style="display: flex; align-items: center; gap: 6px;"><span style="width:6px;height:6px;border-radius:50%;background:var(--gold-d);flex-shrink:0;"></span><strong style="color:var(--text);">Value</strong> &mdash; business upside</div>
+                        <div style="display: flex; align-items: center; gap: 6px;"><span style="width:6px;height:6px;border-radius:50%;background:var(--teal-d);flex-shrink:0;"></span><strong style="color:var(--text);">pCLV</strong> &mdash; customer worth</div>
+                        <div style="display: flex; align-items: center; gap: 6px;"><span style="width:6px;height:6px;border-radius:50%;background:var(--red);flex-shrink:0;"></span><strong style="color:var(--text);">Priority</strong> &mdash; business urgency</div>
+                        <div style="display: flex; align-items: center; gap: 6px;"><span style="width:6px;height:6px;border-radius:50%;background:var(--purple);flex-shrink:0;"></span><strong style="color:var(--text);">Adaptive</strong> &mdash; learning loop</div>
+                        <div style="display: flex; align-items: center; gap: 6px;"><span style="width:6px;height:6px;border-radius:50%;background:var(--teal-d);flex-shrink:0;"></span><strong style="color:var(--text);">Weighted</strong> &mdash; the decision</div>
+                    </div>
+                </div>
+            </div>
+            <div class="speaker-notes">This is what&rsquo;s running under the hood. Four steps in a loop: read the customer&rsquo;s relationship state, reason within your constraints, act on the right channel, write the outcome back. Every cycle makes the next one smarter. The formula below is the value function &mdash; the math that turns all of this into a ranking. Propensity from the model. Expected value from the business. Customer lifetime value. Priority. And the adaptive weight &mdash; that&rsquo;s the learning loop. Actions that produce outcomes get boosted over time. The formula is the same across industries. The weights define the strategy. Let me show you what this looks like live.</div>
+        </section>
+
+        <!-- ═══════════ SLIDE 9: Demo Handoff ═══════════ -->
+        <section class="slide">
+            <div style="max-width: 700px; text-align: center;">
+                <div class="accent-line" style="margin: 0 auto 20px;"></div>
+                <div class="eyebrow">Live Demo</div>
+                <h2 class="big" style="font-size: clamp(36px, 4.5vw, 60px); margin-bottom: 16px;">Over to <span class="hl">Jordan.</span></h2>
+                <p class="sub" style="margin: 0 auto 32px;">One architecture. Two surfaces.</p>
+
+                <div style="background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 24px 28px; box-shadow: var(--shadow); text-align: left; max-width: 520px; margin: 0 auto;">
+                    <div style="font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--blue2); margin-bottom: 14px;">What to watch for</div>
+                    <div style="font-size: 14px; color: var(--dim); margin-bottom: 10px; display: flex; align-items: flex-start; gap: 10px; line-height: 1.55;">
+                        <span style="flex-shrink:0;width:6px;height:6px;border-radius:50%;background:var(--blue2);margin-top:7px;"></span>
+                        The formula running in real time &mdash; watch the scores change.
+                    </div>
+                    <div style="font-size: 14px; color: var(--dim); display: flex; align-items: flex-start; gap: 10px; line-height: 1.55;">
+                        <span style="flex-shrink:0;width:6px;height:6px;border-radius:50%;background:var(--blue2);margin-top:7px;"></span>
+                        How the agent remembers what was offered before.
+                    </div>
+                </div>
+            </div>
+            <div class="speaker-notes">Jordan&rsquo;s going to show you this engine running live &mdash; the same agent and the same memory layer doing two different things. A marketer briefing the agent to shape a customer experience, and the same agent firing a real-time decision into a service moment. Watch for the formula at work &mdash; propensity, value, priority all combining into a ranked decision. Over to you.</div>
+            <div class="star-deco" style="top: 100px; right: 120px;"><img src="sf-star-gold.png" alt=""></div>
+        </section>
+
+        <!-- ═══════════ SLIDE 10: What You Just Saw ═══════════ -->
+        <section class="slide">
+            <div style="max-width: 760px; width: 100%; text-align: center;">
+                <div class="accent-line" style="margin: 0 auto 16px;"></div>
+                <div class="eyebrow">What You Just Saw</div>
+                <h2 class="big" style="font-size: clamp(24px, 2.8vw, 38px); margin-bottom: 28px;">Every decision compounds.<br><span class="hl">That&rsquo;s the moat.</span></h2>
+
+                <div style="font-size: 15px; color: var(--dim); line-height: 1.8; max-width: 600px; margin: 0 auto 28px;">The reasoning engine is pluggable &mdash; today it&rsquo;s deterministic scoring with an LLM re-rank. The memory layer is permanent. A competitor can copy the brain in a weekend. They cannot copy twelve months of compounding institutional learning.</div>
+
                 <div class="quotable" style="text-align: center; max-width: 700px; margin: 0 auto;">Reasoning is pluggable.<br>The institutional learning is the foundation.</div>
             </div>
-            <div class="speaker-notes">That&rsquo;s the loop you just watched live. The agent reads the relationship state &mdash; not a snapshot, a trajectory. It reasons within the constraints you&rsquo;ve defined. It acts on the right channel at the right moment. And it writes the outcome back to memory. Every decision makes the next one smarter. The reasoning engine in the middle is pluggable. Today it&rsquo;s deterministic scoring with an LLM re-rank. In two years it&rsquo;ll be something we haven&rsquo;t named yet. That&rsquo;s fine. That&rsquo;s the point. A competitor can copy the brain in a weekend. They cannot copy twelve months of compounding institutional learning.</div>
+            <div class="speaker-notes">That&rsquo;s what you just watched. Every decision the system makes gets written back to memory. The adaptive weight in that formula? It&rsquo;s updating from real outcomes. The relationship state? It moved. The next decision for that customer is already different because this one happened. A competitor can replicate the formula. They cannot replicate your twelve months of compounding decisions. That&rsquo;s the moat.</div>
         </section>
 
         <!-- ═══════════ SLIDE 10: Eras → Profile ═══════════ -->
