@@ -200,7 +200,7 @@
   </div>
 
   <div class="meta-bar">
-    <div class="meta-item"><span class="meta-label">Date</span> 30 Apr 2026</div>
+    <div class="meta-item"><span class="meta-label">Date</span> 30 Apr + 5 May 2026</div>
     <div class="meta-item"><span class="meta-label">Org</span> NBA Testing Org</div>
     <div class="meta-item"><span class="meta-label">Org ID</span> 00DKh000003558i</div>
     <div class="meta-item"><span class="meta-label">Contacts</span> 546</div>
@@ -367,7 +367,7 @@
     </div>
 
     <div class="section">
-      <div class="section-label">Run Log — All times UTC, 30 Apr 2026</div>
+      <div class="section-label">Run Log — All times UTC, 30 Apr 2026 + 5 May 2026 (re-run with Digital Wallet)</div>
 
       <!-- Track 1 -->
       <div class="card" style="padding:0 24px;">
@@ -596,6 +596,213 @@
         </div>
       </div>
 
+      <!-- ═══ RUN 2 — 5 May 2026 (Digital Wallet enabled) ═══ -->
+      <div class="card" style="background: var(--green-lt); border-color: var(--green-bd); margin-top:32px;">
+        <p style="font-size:13px; font-weight:600; color:var(--green);">Run 2 — 5 May 2026 (Digital Wallet enabled)</p>
+        <p style="font-size:13px; margin-top:6px;">Re-run of all tracks with DC Digital Wallet configured so Cam can correlate billing units. Same org state: 546 contacts, ~1,400 unified individuals, 13 active actions, 11 CIs (all Active), 2 modules.</p>
+        <p style="font-size:13px; margin-top:6px;">Pre-test: 3,221 NBADecision__c | 506 NBA_Relationship_State__c | 1,420 NBA_Eligibility__c</p>
+        <p style="font-size:13px; margin-top:6px;">Post-test: 4,847 NBADecision__c | 506 NBA_Relationship_State__c | 1,468 NBA_Eligibility__c (+1,626 decisions, +48 eligibility)</p>
+      </div>
+
+      <!-- Run 2: Track 1 -->
+      <div class="card" style="padding:0 24px;">
+        <div class="track-header" onclick="toggleTrack(this)">
+          <span class="track-chevron">&#9654;</span>
+          <span class="track-name">Run 2: Track 1 — Segment Dispatch Baseline (5 May)</span>
+          <span class="track-pills"><span class="pill pill-zero">NO DC</span> <span class="pill pill-zero">NO LLM</span></span>
+        </div>
+        <div class="track-body">
+          <table>
+            <tr><th>Run</th><th>Start (UTC)</th><th>Duration</th><th>Contacts</th><th>DC</th><th>Notes</th></tr>
+            <tr><td>1B</td><td>05:42:49</td><td>~45s</td><td>200</td><td><span class="pill pill-zero">ZERO</span></td><td>200 decisions, rerank OFF, composition OFF</td></tr>
+            <tr><td>1C</td><td>05:44:03</td><td>~90s</td><td>201</td><td><span class="pill pill-zero">ZERO</span></td><td>201 decisions (capped by segment membership)</td></tr>
+          </table>
+        </div>
+      </div>
+
+      <!-- Run 2: Track 2 -->
+      <div class="card" style="padding:0 24px;">
+        <div class="track-header" onclick="toggleTrack(this)">
+          <span class="track-chevron">&#9654;</span>
+          <span class="track-name">Run 2: Track 2 — Einstein Scoring (5 May)</span>
+          <span class="track-pills"><span class="pill pill-dc">DC COMPUTE</span></span>
+        </div>
+        <div class="track-body">
+          <table>
+            <tr><th>Run</th><th>Start (UTC)</th><th>Duration</th><th>Contacts</th><th>Scoring</th><th>DC</th><th>Notes</th></tr>
+            <tr><td>2A</td><td>05:53:06</td><td>~60s</td><td>200</td><td>model</td><td><span class="pill pill-dc">DC reads</span></td><td>Model not trained — null scores, but DC read attempt occurred</td></tr>
+          </table>
+        </div>
+      </div>
+
+      <!-- Run 2: Track 3 -->
+      <div class="card" style="padding:0 24px;">
+        <div class="track-header" onclick="toggleTrack(this)">
+          <span class="track-chevron">&#9654;</span>
+          <span class="track-name">Run 2: Track 3 — Tier 1.5 LLM Rerank (5 May)</span>
+          <span class="track-pills"><span class="pill pill-llm">LLM TOKENS</span> <span class="pill pill-zero">NO DC</span></span>
+        </div>
+        <div class="track-body">
+          <table>
+            <tr><th>Run</th><th>Start (UTC)</th><th>Duration</th><th>Contacts</th><th>Threshold</th><th>LLM Calls</th><th>Notes</th></tr>
+            <tr><td>3B</td><td>05:54:36</td><td>~180s</td><td>50</td><td>1.0 (forced)</td><td><span class="pill pill-llm">50</span></td><td>100% reranked, ~3.6s/call</td></tr>
+            <tr><td>3C</td><td>05:57:58</td><td>~90s</td><td>200</td><td>0.05 (realistic)</td><td><span class="pill pill-llm">~15</span></td><td>~7.5% rerank rate</td></tr>
+          </table>
+        </div>
+      </div>
+
+      <!-- Run 2: Track 4 -->
+      <div class="card" style="padding:0 24px;">
+        <div class="track-header" onclick="toggleTrack(this)">
+          <span class="track-chevron">&#9654;</span>
+          <span class="track-name">Run 2: Track 4 — Tier 2 Adjudication (5 May)</span>
+          <span class="track-pills"><span class="pill pill-llm">LLM TOKENS</span> <span class="pill pill-zero">NO DC</span></span>
+        </div>
+        <div class="track-body">
+          <table>
+            <tr><th>Run</th><th>Start (UTC)</th><th>Duration</th><th>Contacts</th><th>LLM Calls</th><th>Notes</th></tr>
+            <tr><td>4A</td><td>06:00:49</td><td>~60s</td><td>50</td><td><span class="pill pill-llm">~50</span></td><td>Forced Tier 2 (proximity=1.0), rerank OFF</td></tr>
+          </table>
+        </div>
+      </div>
+
+      <!-- Run 2: Track 5 -->
+      <div class="card" style="padding:0 24px;">
+        <div class="track-header" onclick="toggleTrack(this)">
+          <span class="track-chevron">&#9654;</span>
+          <span class="track-name">Run 2: Track 5 — Composition (5 May)</span>
+          <span class="track-pills"><span class="pill pill-llm">LLM TOKENS</span> <span class="pill pill-zero">NO DC</span></span>
+        </div>
+        <div class="track-body">
+          <table>
+            <tr><th>Run</th><th>Start (UTC)</th><th>Duration</th><th>Contacts</th><th>LLM Calls</th><th>Notes</th></tr>
+            <tr><td>5A</td><td>06:02:32</td><td>~45s</td><td>14</td><td><span class="pill pill-llm">~14</span></td><td>14 contacts from Churn_Risk segment, composition enabled</td></tr>
+          </table>
+        </div>
+      </div>
+
+      <!-- Run 2: Track 6 -->
+      <div class="card" style="padding:0 24px;">
+        <div class="track-header" onclick="toggleTrack(this)">
+          <span class="track-chevron">&#9654;</span>
+          <span class="track-name">Run 2: Track 6 — CI Status Check (5 May)</span>
+          <span class="track-pills"><span class="pill pill-dc">DC COMPUTE</span> <span class="pill pill-dc">DC STORAGE</span></span>
+        </div>
+        <div class="track-body">
+          <table>
+            <tr><th>Run</th><th>Start (UTC)</th><th>Duration</th><th>CIs</th><th>Notes</th></tr>
+            <tr><td>6A</td><td>06:04:05</td><td>~4s</td><td>All 11</td><td>All 11 CIs already exist and active. No create needed — DC handles scheduled refresh.</td></tr>
+          </table>
+          <p style="font-size:13px; color:var(--muted); margin-top:8px;">CIs refresh on their DC-configured schedule. Look for scheduled refresh consumption between 05:00-06:00 UTC daily.</p>
+        </div>
+      </div>
+
+      <!-- Run 2: Track 7 -->
+      <div class="card" style="padding:0 24px;">
+        <div class="track-header" onclick="toggleTrack(this)">
+          <span class="track-chevron">&#9654;</span>
+          <span class="track-name">Run 2: Track 7 — CLV Writeback (5 May)</span>
+          <span class="track-pills"><span class="pill pill-dc">DC QUERYV2</span></span>
+        </div>
+        <div class="track-body">
+          <table>
+            <tr><th>Run</th><th>Start (UTC)</th><th>Duration</th><th>Notes</th></tr>
+            <tr><td>7A</td><td>06:04:34</td><td>~60s</td><td>Batch completed with 0 items (session ID null in batch context — requires Named Credential for unattended runs)</td></tr>
+          </table>
+          <p style="font-size:13px; color:var(--muted); margin-top:8px;">CLV queryv2 read works when triggered from user context. Batch context requires Named Credential (code supports it, admin config needed).</p>
+        </div>
+      </div>
+
+      <!-- Run 2: Track 8 -->
+      <div class="card" style="padding:0 24px;">
+        <div class="track-header" onclick="toggleTrack(this)">
+          <span class="track-chevron">&#9654;</span>
+          <span class="track-name">Run 2: Track 8 — Segment Trigger Dispatch (5 May)</span>
+          <span class="track-pills"><span class="pill pill-dc">DC SEGMENTS</span> <span class="pill pill-teal">CRM</span></span>
+        </div>
+        <div class="track-body">
+          <table>
+            <tr><th>Run</th><th>Start (UTC)</th><th>Duration</th><th>Contacts</th><th>Notes</th></tr>
+            <tr><td>8A</td><td>06:06:04</td><td>~3s</td><td>215</td><td>NBASegmentTriggerSchedulable dispatched 215 contacts via queueable chain from 2 triggers</td></tr>
+          </table>
+        </div>
+      </div>
+
+      <!-- Run 2: Track 10 -->
+      <div class="card" style="padding:0 24px;">
+        <div class="track-header" onclick="toggleTrack(this)">
+          <span class="track-chevron">&#9654;</span>
+          <span class="track-name">Run 2: Track 10 — Einstein Retraining (5 May)</span>
+          <span class="track-pills"><span class="pill pill-dc">DC COMPUTE</span></span>
+        </div>
+        <div class="track-body">
+          <table>
+            <tr><th>Run</th><th>Start (UTC)</th><th>Duration</th><th>Notes</th></tr>
+            <tr><td>10A</td><td>06:06:23</td><td>async</td><td>NBARetrainingQueueable enqueued — check DC consumption at this timestamp</td></tr>
+          </table>
+        </div>
+      </div>
+
+      <!-- Run 2: Track 12 -->
+      <div class="card" style="padding:0 24px;">
+        <div class="track-header" onclick="toggleTrack(this)">
+          <span class="track-chevron">&#9654;</span>
+          <span class="track-name">Run 2: Track 12 — Full Daily Lap (5 May)</span>
+          <span class="track-pills"><span class="pill pill-dc">DC COMPUTE</span> <span class="pill pill-llm">LLM TOKENS</span> <span class="pill pill-teal">CRM</span></span>
+        </div>
+        <div class="track-body">
+          <table>
+            <tr><th>Run</th><th>Start (UTC)</th><th>End (UTC)</th><th>Duration</th><th>What Ran</th><th>Notes</th></tr>
+            <tr><td>12-L1</td><td>06:07:37</td><td>~06:16:00</td><td>~503s</td><td>RelState batch + CLV writeback + 201-contact dispatch (all features on: rerank + composition)</td><td>201 decisions, rerank 7.5%, composition enabled</td></tr>
+          </table>
+        </div>
+      </div>
+
+      <!-- Run 2: Track 13 -->
+      <div class="card" style="padding:0 24px;">
+        <div class="track-header" onclick="toggleTrack(this)">
+          <span class="track-chevron">&#9654;</span>
+          <span class="track-name">Run 2: Track 13 — Segment Dispatch + Eligibility Filtering (5 May)</span>
+          <span class="track-pills"><span class="pill pill-dc">DC SEGMENTS</span> <span class="pill pill-teal">CRM</span></span>
+        </div>
+        <div class="track-body">
+          <table>
+            <tr><th>Run</th><th>Start (UTC)</th><th>End (UTC)</th><th>Duration</th><th>Contacts</th><th>Notes</th></tr>
+            <tr><td>13A</td><td>06:16:07</td><td>~06:20:00</td><td>~233s</td><td>200</td><td>Cross_Sell_Prospects segment, eligibility filtering active, all features on</td></tr>
+          </table>
+        </div>
+      </div>
+
+      <!-- Run 2: Track 14 -->
+      <div class="card" style="padding:0 24px;">
+        <div class="track-header" onclick="toggleTrack(this)">
+          <span class="track-chevron">&#9654;</span>
+          <span class="track-name">Run 2: Track 14 — Out-of-Segment Eligibility Proof (5 May)</span>
+          <span class="track-pills"><span class="pill pill-teal">CRM</span></span>
+        </div>
+        <div class="track-body">
+          <table>
+            <tr><th>Run</th><th>Start (UTC)</th><th>Contacts</th><th>Notes</th></tr>
+            <tr><td>14A</td><td>06:26:13</td><td>3 (from Churn_Risk, against cross_sell module)</td><td>Out-of-segment contacts dispatched to prove action eligibility filtering drops segment-gated actions</td></tr>
+          </table>
+        </div>
+      </div>
+
+      <!-- Run 2: Track 15 -->
+      <div class="card" style="padding:0 24px;">
+        <div class="track-header" onclick="toggleTrack(this)">
+          <span class="track-chevron">&#9654;</span>
+          <span class="track-name">Run 2: Track 15 — Repeat for Consistency (5 May)</span>
+          <span class="track-pills"><span class="pill pill-dc">DC SEGMENTS</span> <span class="pill pill-teal">CRM</span></span>
+        </div>
+        <div class="track-body">
+          <table>
+            <tr><th>Run</th><th>Start (UTC)</th><th>End (UTC)</th><th>Duration</th><th>Contacts</th><th>Notes</th></tr>
+            <tr><td>15A</td><td>06:36:16</td><td>~06:40:00</td><td>~224s</td><td>200</td><td>Repeat of 13A — consistent result, 200 decisions</td></tr>
+          </table>
+        </div>
+      </div>
+
       <div class="card" style="background: var(--orange-lt); border-color: var(--orange-bd);">
         <p style="font-size:13px;"><strong>Track 9 (Identity Resolution):</strong> Skipped — API endpoint not available on this org edition. IR is scheduled via Setup UI.</p>
         <p style="font-size:13px; margin-top:8px;"><strong>PE-triggered Flows:</strong> NBA_Handle_Decision_Trigger Flow not processing PE events (deployed but not firing). Tracked as production hardening item. Tracks 13-15 used SegmentDispatchBatch (direct Apex batch) which is the production dispatch path. RT chain (Track 16) blocked by same issue.</p>
@@ -622,6 +829,26 @@
           <tr><td>DC Segment publish — 3 segments</td><td>8A</td><td>10:19:51</td><td>DC compute for membership</td></tr>
           <tr><td>Einstein retraining</td><td>10A</td><td>10:21:36</td><td>Training data read</td></tr>
           <tr><td>Full daily lap — all combined</td><td>12-L1</td><td>10:01:37</td><td>Combined CI + queryv2 + dispatch</td></tr>
+        </table>
+      </div>
+      <div class="card" style="margin-top:16px; background: var(--green-lt); border-color: var(--green-bd);">
+        <p style="font-size:13px; font-weight:600; color:var(--green);">Run 2 — 5 May 2026 (Digital Wallet enabled)</p>
+        <table>
+          <tr><th>Operation</th><th>Run</th><th>Timestamp (UTC)</th><th>What to Look For</th></tr>
+          <tr><td>Segment dispatch baseline (200, no DC)</td><td>1B</td><td>05:42:49</td><td>Confirm ZERO DC</td></tr>
+          <tr><td>Einstein model scoring — 200 contacts</td><td>2A</td><td>05:53:06</td><td>DC reads for inference (model not trained)</td></tr>
+          <tr><td>Tier 1.5 LLM rerank — 50 forced</td><td>3B</td><td>05:54:36</td><td>LLM only, ZERO DC</td></tr>
+          <tr><td>Tier 1.5 LLM rerank — 200 realistic</td><td>3C</td><td>05:57:58</td><td>LLM only, ZERO DC</td></tr>
+          <tr><td>Tier 2 adjudication — 50 forced</td><td>4A</td><td>06:00:49</td><td>LLM only, ZERO DC</td></tr>
+          <tr><td>Composition — 14 contacts</td><td>5A</td><td>06:02:32</td><td>LLM only, ZERO DC</td></tr>
+          <tr><td>CI existence check (no create)</td><td>6A</td><td>06:04:05</td><td>Minimal — verify existence only</td></tr>
+          <tr><td>CLV writeback attempt</td><td>7A</td><td>06:04:34</td><td>queryv2 attempt (failed — session null)</td></tr>
+          <tr><td>Segment trigger dispatch — 215 contacts</td><td>8A</td><td>06:06:04</td><td>Reads NBA_Eligibility__c, dispatches via queueable</td></tr>
+          <tr><td>Einstein retraining</td><td>10A</td><td>06:06:23</td><td>Training data read</td></tr>
+          <tr><td>Full daily lap (RelState + CLV + 201 dispatch)</td><td>12-L1</td><td>06:07:37</td><td>Combined — all features on</td></tr>
+          <tr><td>Segment dispatch + eligibility (200)</td><td>13A</td><td>06:16:07</td><td>Cross_Sell_Prospects segment, eligibility active</td></tr>
+          <tr><td>Out-of-segment proof (3 contacts)</td><td>14A</td><td>06:26:13</td><td>Churn_Risk contacts against cross_sell module</td></tr>
+          <tr><td>Repeat dispatch for consistency (200)</td><td>15A</td><td>06:36:16</td><td>Same as 13A — verify consistent timing</td></tr>
         </table>
       </div>
     </div>
