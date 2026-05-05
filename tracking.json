@@ -15502,5 +15502,17 @@
     "location": "Sydney, New South Wales, Australia",
     "ua": "Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.4 Mobile/15E148 Safari/604.1",
     "returning": "yes"
+  },
+  {
+    "timestamp": "Tue, 05 May 2026 20:22:14 GMT",
+    "name": "Stu",
+    "company": "SF",
+    "position": "SE",
+    "page": "Decisioning Hub Framing v2 Lite",
+    "url": "https://sdunlop-sf.github.io/decisioning-hub-framing/v2-lite.html",
+    "ip": "2405:6e00:e38:52e8:7c57:1f0d:6ec0:ed49",
+    "location": "Evere, Brussels Capital, Belgium",
+    "ua": "Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.4 Mobile/15E148 Safari/604.1",
+    "returning": "yes"
   }
 ]
