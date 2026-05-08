@@ -17698,5 +17698,17 @@
     "location": "Canberra, Australian Capital Territory, Australia",
     "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
     "returning": "yes"
+  },
+  {
+    "timestamp": "Fri, 08 May 2026 05:50:10 GMT",
+    "name": "Export",
+    "company": "Export",
+    "position": "Export",
+    "page": "CumulusBank",
+    "url": "file:///Users/idobric/workspace/sf-narrative-project/CumulusBank.html",
+    "ip": "-",
+    "location": "-",
+    "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/147.0.0.0 Safari/537.36",
+    "returning": "yes"
   }
 ]
