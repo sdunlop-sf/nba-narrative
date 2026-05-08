@@ -723,76 +723,7 @@
             <div class="speaker-notes">Now zoom out. Each era stored its memory somewhere different. Batch and blast stored it in a list. Journeys stored it in a journey table. Decisioning engines stored it in a rules graph. What you just watched stores it in the unified profile &mdash; alongside the customer it&rsquo;s about. This is why the Data Cloud work many of you are already doing is the foundation. The profile is where memory lives now. And once memory lives there, the agent can read it &mdash; which is exactly what you saw Jordan do.</div>
         </section>
 
-        <!-- ═══════════ SLIDE 11: The Architectural Inversion ═══════════ -->
-        <section class="slide">
-            <div style="max-width: 980px; width: 100%; text-align: left;">
-                <div class="accent-line" style="margin-bottom: 12px;"></div>
-                <div class="eyebrow" style="margin-bottom: 8px;">The Inversion</div>
-                <h2 class="big" style="font-size: clamp(26px, 3vw, 42px); margin-bottom: 22px;">Everyone builds a smarter brain.<br>We build a <span class="hl">better memory.</span></h2>
-
-                <div style="display: grid; grid-template-columns: 1fr 40px 1fr; gap: 0; width: 100%; max-width: 900px; margin: 0 auto;">
-
-                    <!-- Traditional -->
-                    <div style="background: var(--card-t); border: 1px solid var(--border); border-radius: 14px; padding: 24px; display: flex; flex-direction: column; gap: 10px;">
-                        <div style="font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; display: flex; align-items: center; gap: 8px;">
-                            <span style="width: 7px; height: 7px; border-radius: 50%; background: var(--muted); display: inline-block;"></span>
-                            Traditional -- brain at the center
-                        </div>
-                        <div style="display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-radius: 10px; background: rgba(0,39,117,0.03); font-size: 13px; font-weight: 600; color: var(--muted);">
-                            <span style="font-size: 16px;">&#x1f4ca;</span> Data assembled at decision time
-                        </div>
-                        <div style="text-align: center; color: rgba(0,39,117,0.2); font-size: 12px;">&darr;</div>
-                        <div style="display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-radius: 10px; background: rgba(0,39,117,0.03); font-size: 13px; font-weight: 600; color: var(--muted);">
-                            <span style="font-size: 16px;">&#x1f9e0;</span> Scoring engine (the center of gravity)
-                        </div>
-                        <div style="text-align: center; color: rgba(0,39,117,0.2); font-size: 12px;">&darr;</div>
-                        <div style="display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-radius: 10px; background: rgba(0,39,117,0.03); font-size: 13px; font-weight: 600; color: var(--muted);">
-                            <span style="font-size: 16px;">&#x1f6e1;&#xfe0f;</span> Policy filters applied post-scoring
-                        </div>
-                        <div style="text-align: center; color: rgba(0,39,117,0.2); font-size: 12px;">&darr;</div>
-                        <div style="display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-radius: 10px; background: rgba(0,39,117,0.03); font-size: 13px; font-weight: 600; color: var(--muted);">
-                            <span style="font-size: 16px;">&#x1f4dd;</span> Decision logged (reporting afterthought)
-                        </div>
-                    </div>
-
-                    <!-- VS -->
-                    <div style="display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 800; color: var(--muted);">vs</div>
-
-                    <!-- Memory-first -->
-                    <div style="background: var(--card-t); border: 1px solid rgba(2,42,192,0.2); border-radius: 14px; padding: 24px; display: flex; flex-direction: column; gap: 10px;">
-                        <div style="font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--blue2); margin-bottom: 8px; display: flex; align-items: center; gap: 8px;">
-                            <span style="width: 7px; height: 7px; border-radius: 50%; background: var(--blue2); display: inline-block;"></span>
-                            Memory-first -- state at the center
-                        </div>
-                        <div style="display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-radius: 10px; background: rgba(0,122,114,0.06); font-size: 13px; font-weight: 600; color: var(--teal-d);">
-                            <span style="font-size: 16px;">&#x1f91d;</span> Relationship state (always current)
-                        </div>
-                        <div style="text-align: center; color: rgba(0,39,117,0.2); font-size: 12px;">&darr;</div>
-                        <div style="display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-radius: 10px; background: rgba(196,28,0,0.04); font-size: 13px; font-weight: 600; color: var(--red);">
-                            <span style="font-size: 16px;">&#x1f6e1;&#xfe0f;</span> Action space pre-constrained by policy
-                        </div>
-                        <div style="text-align: center; color: rgba(0,39,117,0.2); font-size: 12px;">&darr;</div>
-                        <div style="display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-radius: 10px; background: rgba(252,192,3,0.06); font-size: 13px; font-weight: 600; color: var(--gold-d);">
-                            <span style="font-size: 16px;">&#x2696;&#xfe0f;</span> Value function defines the objective
-                        </div>
-                        <div style="text-align: center; color: rgba(0,39,117,0.2); font-size: 12px;">&darr;</div>
-                        <div style="display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-radius: 10px; background: rgba(2,42,192,0.04); font-size: 13px; font-weight: 600; color: var(--blue2);">
-                            <span style="font-size: 16px;">&#x1f9e0;</span> Reasoning engine (pluggable, swappable)
-                        </div>
-                        <div style="text-align: center; color: rgba(0,39,117,0.2); font-size: 12px;">&darr;</div>
-                        <div style="display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-radius: 10px; background: rgba(122,61,214,0.05); font-size: 13px; font-weight: 600; color: var(--purple-d);">
-                            <span style="font-size: 16px;">&#x1f504;</span> Learning loop (the compounding asset)
-                        </div>
-                    </div>
-
-                </div>
-
-                <p style="text-align: center; font-size: clamp(14px, 1.4vw, 17px); font-weight: 700; color: var(--ink); margin: 20px 0 0; letter-spacing: -0.01em;">The brain is pluggable. The institutional learning is the foundation.</p>
-            </div>
-            <div class="speaker-notes">This is the architectural inversion. Traditional decisioning puts the scoring engine at the center &mdash; data assembled at decision time, filters applied after, and logging as an afterthought. Memory-first flips it. Relationship state is always current. The action space is pre-constrained by policy before scoring even begins. The value function defines the objective. The reasoning engine &mdash; whether ML or agentic &mdash; is pluggable. And the learning loop compounds every outcome back into state. The brain is swappable. The memory is the moat.</div>
-        </section>
-
-        <!-- ═══════════ SLIDE 12: The Compounding Effect ═══════════ -->
+        <!-- ═══════════ SLIDE 11: The Compounding Effect ═══════════ -->
         <section class="slide">
             <div style="max-width: 900px; width: 100%; text-align: left;">
                 <div class="accent-line" style="margin-bottom: 12px;"></div>
@@ -836,7 +767,7 @@
             <div class="speaker-notes">Here's the urgency. Day one you score from historical CRM data &mdash; any decent model can do that. Month one you have ten thousand observed outcomes and the adaptive weights have already shifted. Month six the decision journal contains sequence patterns &mdash; it knows which action sequences compound value. No stateless agent can match that. Year one? The memory is the foundation. Someone can replicate the engine in a weekend. They cannot replicate twelve months of compounding learning. The switching cost isn't the software &mdash; it's the loss of everything the system has learned.</div>
         </section>
 
-        <!-- ═══════════ SLIDE 13: 30 Headless Decisioning Actions ═══════════ -->
+        <!-- ═══════════ SLIDE 12: 30 Headless Decisioning Actions ═══════════ -->
         <section class="slide" style="padding-top: 28px; padding-bottom: 64px;">
             <div style="max-width: 1060px; width: 100%; margin: 0 auto; text-align: center;">
                 <div class="accent-line" style="margin: 0 auto 6px;"></div>
@@ -944,7 +875,7 @@
             <div class="speaker-notes">And here's why this matters for Agentforce. Thirty tools. Fully headless. Every capability the engine has is exposed as an MCP tool. An AI agent can query decisions, run simulations, execute actions, monitor health, manage the catalogue &mdash; all conversationally. The UI is for humans. These tools are for agents. This is how you give Agentforce a decisioning brain without building bespoke logic for every scenario.</div>
         </section>
 
-        <!-- ═══════════ SLIDE 14: Close ═══════════ -->
+        <!-- ═══════════ SLIDE 13: Close ═══════════ -->
         <section class="slide">
             <div style="max-width: 760px; text-align: center;">
                 <div class="accent-line" style="margin: 0 auto 24px;"></div>
@@ -985,7 +916,7 @@
         <div class="nav-dots" role="tablist" id="progress"></div>
         <div class="nav-controls">
             <button class="nav-btn" id="btn-prev" aria-label="Previous slide">&#8249;</button>
-            <span class="nav-counter" id="counter">1 / 15</span>
+            <span class="nav-counter" id="counter">1 / 14</span>
             <button class="nav-btn" id="btn-next" aria-label="Next slide">&#8250;</button>
         </div>
     </nav>
