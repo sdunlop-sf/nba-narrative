@@ -723,39 +723,228 @@
             <div class="speaker-notes">Now zoom out. Each era stored its memory somewhere different. Batch and blast stored it in a list. Journeys stored it in a journey table. Decisioning engines stored it in a rules graph. What you just watched stores it in the unified profile &mdash; alongside the customer it&rsquo;s about. This is why the Data Cloud work many of you are already doing is the foundation. The profile is where memory lives now. And once memory lives there, the agent can read it &mdash; which is exactly what you saw Jordan do.</div>
         </section>
 
-        <!-- ═══════════ SLIDE 11: Days, Not Years ═══════════ -->
+        <!-- ═══════════ SLIDE 11: The Architectural Inversion ═══════════ -->
         <section class="slide">
-            <div style="max-width: 820px; width: 100%;">
-                <div class="accent-line" style="margin: 0 auto 16px;"></div>
-                <div class="eyebrow">The New Path</div>
-                <h2 class="big" style="font-size: clamp(24px, 2.8vw, 38px); margin-bottom: 28px;">Days, not years.</h2>
+            <div style="max-width: 980px; width: 100%; text-align: left;">
+                <div class="accent-line" style="margin-bottom: 12px;"></div>
+                <div class="eyebrow" style="margin-bottom: 8px;">The Inversion</div>
+                <h2 class="big" style="font-size: clamp(26px, 3vw, 42px); margin-bottom: 22px;">Everyone builds a smarter brain.<br>We build a <span class="hl">better memory.</span></h2>
 
-                <div class="path-cols">
-                    <div class="path-col">
-                        <div class="path-label" style="color: var(--amber);">The Old Path</div>
-                        <div class="path-item"><div class="mem-dot" style="background: var(--amber);"></div>24&ndash;36 months</div>
-                        <div class="path-item"><div class="mem-dot" style="background: var(--amber);"></div>Specialist team</div>
-                        <div class="path-item"><div class="mem-dot" style="background: var(--amber);"></div>Eight figures</div>
-                        <div class="path-item"><div class="mem-dot" style="background: var(--amber);"></div>Partial delivery</div>
+                <div style="display: grid; grid-template-columns: 1fr 40px 1fr; gap: 0; width: 100%; max-width: 900px; margin: 0 auto;">
+
+                    <!-- Traditional -->
+                    <div style="background: var(--card-t); border: 1px solid var(--border); border-radius: 14px; padding: 24px; display: flex; flex-direction: column; gap: 10px;">
+                        <div style="font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; display: flex; align-items: center; gap: 8px;">
+                            <span style="width: 7px; height: 7px; border-radius: 50%; background: var(--muted); display: inline-block;"></span>
+                            Traditional -- brain at the center
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-radius: 10px; background: rgba(0,39,117,0.03); font-size: 13px; font-weight: 600; color: var(--muted);">
+                            <span style="font-size: 16px;">&#x1f4ca;</span> Data assembled at decision time
+                        </div>
+                        <div style="text-align: center; color: rgba(0,39,117,0.2); font-size: 12px;">&darr;</div>
+                        <div style="display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-radius: 10px; background: rgba(0,39,117,0.03); font-size: 13px; font-weight: 600; color: var(--muted);">
+                            <span style="font-size: 16px;">&#x1f9e0;</span> Scoring engine (the center of gravity)
+                        </div>
+                        <div style="text-align: center; color: rgba(0,39,117,0.2); font-size: 12px;">&darr;</div>
+                        <div style="display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-radius: 10px; background: rgba(0,39,117,0.03); font-size: 13px; font-weight: 600; color: var(--muted);">
+                            <span style="font-size: 16px;">&#x1f6e1;&#xfe0f;</span> Policy filters applied post-scoring
+                        </div>
+                        <div style="text-align: center; color: rgba(0,39,117,0.2); font-size: 12px;">&darr;</div>
+                        <div style="display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-radius: 10px; background: rgba(0,39,117,0.03); font-size: 13px; font-weight: 600; color: var(--muted);">
+                            <span style="font-size: 16px;">&#x1f4dd;</span> Decision logged (reporting afterthought)
+                        </div>
                     </div>
-                    <div class="path-vs">&rarr;</div>
-                    <div class="path-col" style="border-color: rgba(2,42,192,0.2);">
-                        <div class="path-label" style="color: var(--blue2);">The New Path</div>
-                        <div class="path-item"><div class="mem-dot" style="background: var(--blue2);"></div>Weeks to first decisions</div>
-                        <div class="path-item"><div class="mem-dot" style="background: var(--blue2);"></div>Your existing team</div>
-                        <div class="path-item"><div class="mem-dot" style="background: var(--blue2);"></div>Runs on what you already own</div>
-                        <div class="path-item"><div class="mem-dot" style="background: var(--blue2);"></div>Compounding from month one</div>
+
+                    <!-- VS -->
+                    <div style="display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 800; color: var(--muted);">vs</div>
+
+                    <!-- Memory-first -->
+                    <div style="background: var(--card-t); border: 1px solid rgba(2,42,192,0.2); border-radius: 14px; padding: 24px; display: flex; flex-direction: column; gap: 10px;">
+                        <div style="font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--blue2); margin-bottom: 8px; display: flex; align-items: center; gap: 8px;">
+                            <span style="width: 7px; height: 7px; border-radius: 50%; background: var(--blue2); display: inline-block;"></span>
+                            Memory-first -- state at the center
+                        </div>
+                        <div style="display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-radius: 10px; background: rgba(0,122,114,0.06); font-size: 13px; font-weight: 600; color: var(--teal-d);">
+                            <span style="font-size: 16px;">&#x1f91d;</span> Relationship state (always current)
+                        </div>
+                        <div style="text-align: center; color: rgba(0,39,117,0.2); font-size: 12px;">&darr;</div>
+                        <div style="display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-radius: 10px; background: rgba(196,28,0,0.04); font-size: 13px; font-weight: 600; color: var(--red);">
+                            <span style="font-size: 16px;">&#x1f6e1;&#xfe0f;</span> Action space pre-constrained by policy
+                        </div>
+                        <div style="text-align: center; color: rgba(0,39,117,0.2); font-size: 12px;">&darr;</div>
+                        <div style="display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-radius: 10px; background: rgba(252,192,3,0.06); font-size: 13px; font-weight: 600; color: var(--gold-d);">
+                            <span style="font-size: 16px;">&#x2696;&#xfe0f;</span> Value function defines the objective
+                        </div>
+                        <div style="text-align: center; color: rgba(0,39,117,0.2); font-size: 12px;">&darr;</div>
+                        <div style="display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-radius: 10px; background: rgba(2,42,192,0.04); font-size: 13px; font-weight: 600; color: var(--blue2);">
+                            <span style="font-size: 16px;">&#x1f9e0;</span> Reasoning engine (pluggable, swappable)
+                        </div>
+                        <div style="text-align: center; color: rgba(0,39,117,0.2); font-size: 12px;">&darr;</div>
+                        <div style="display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-radius: 10px; background: rgba(122,61,214,0.05); font-size: 13px; font-weight: 600; color: var(--purple-d);">
+                            <span style="font-size: 16px;">&#x1f504;</span> Learning loop (the compounding asset)
+                        </div>
                     </div>
+
                 </div>
 
-                <div style="text-align: center;">
-                    <div style="font-size: clamp(16px, 1.8vw, 22px); font-weight: 700; color: var(--ink);">Your three-year roadmap just became a one-week deployment.</div>
-                </div>
+                <p style="text-align: center; font-size: clamp(14px, 1.4vw, 17px); font-weight: 700; color: var(--ink); margin: 20px 0 0; letter-spacing: -0.01em;">The brain is pluggable. The institutional learning is the foundation.</p>
             </div>
-            <div class="speaker-notes">What you just saw used to take three years to stand up. It doesn&rsquo;t anymore. The platform pieces are already in your stack &mdash; Data Cloud, Einstein Studio, Agentforce. The orchestration on top is what we&rsquo;ve built. It&rsquo;s called Decisioning Hub. First decisions in weeks. Compounding intelligence from month one. Your three-year roadmap just became a one-week deployment.</div>
+            <div class="speaker-notes">This is the architectural inversion. Traditional decisioning puts the scoring engine at the center &mdash; data assembled at decision time, filters applied after, and logging as an afterthought. Memory-first flips it. Relationship state is always current. The action space is pre-constrained by policy before scoring even begins. The value function defines the objective. The reasoning engine &mdash; whether ML or agentic &mdash; is pluggable. And the learning loop compounds every outcome back into state. The brain is swappable. The memory is the moat.</div>
         </section>
 
-        <!-- ═══════════ SLIDE 12: Close ═══════════ -->
+        <!-- ═══════════ SLIDE 12: The Compounding Effect ═══════════ -->
+        <section class="slide">
+            <div style="max-width: 900px; width: 100%; text-align: left;">
+                <div class="accent-line" style="margin-bottom: 12px;"></div>
+                <div class="eyebrow" style="margin-bottom: 8px;">Why Now</div>
+                <h2 class="big" style="font-size: clamp(26px, 3vw, 42px); margin-bottom: 28px;">Every month you wait is a month of <span class="hl">learning you don't get back.</span></h2>
+
+                <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;">
+
+                    <div style="background: var(--card-t); border: 1px solid var(--border); border-radius: 14px; padding: 20px 18px; display: flex; flex-direction: column; gap: 10px; position: relative; overflow: hidden;">
+                        <div style="position: absolute; top: 10px; right: 14px; font-size: 30px; font-weight: 900; color: rgba(0,39,117,0.05); line-height: 1; pointer-events: none;">D1</div>
+                        <div style="font-size: 13px; font-weight: 800; color: var(--blue2); letter-spacing: 0.06em; text-transform: uppercase;">Day 1</div>
+                        <div style="font-size: 13px; color: var(--muted); line-height: 1.55;">Scores from historical CRM data. A good starting point. An LLM alone can do roughly this well with the right prompt.</div>
+                    </div>
+
+                    <div style="background: var(--card-t); border: 1px solid var(--border); border-radius: 14px; padding: 20px 18px; display: flex; flex-direction: column; gap: 10px; position: relative; overflow: hidden;">
+                        <div style="position: absolute; top: 10px; right: 14px; font-size: 30px; font-weight: 900; color: rgba(0,39,117,0.05); line-height: 1; pointer-events: none;">M1</div>
+                        <div style="font-size: 13px; font-weight: 800; color: var(--blue2); letter-spacing: 0.06em; text-transform: uppercase;">Month 1</div>
+                        <div style="font-size: 13px; color: var(--muted); line-height: 1.55;">10,000 observed outcomes. Adaptive weights shifted. The engine knows which actions work for which segments -- from its own decisions.</div>
+                    </div>
+
+                    <div style="background: var(--card-t); border: 1px solid var(--border); border-radius: 14px; padding: 20px 18px; display: flex; flex-direction: column; gap: 10px; position: relative; overflow: hidden;">
+                        <div style="position: absolute; top: 10px; right: 14px; font-size: 30px; font-weight: 900; color: rgba(0,39,117,0.05); line-height: 1; pointer-events: none;">M6</div>
+                        <div style="font-size: 13px; font-weight: 800; color: var(--blue2); letter-spacing: 0.06em; text-transform: uppercase;">Month 6</div>
+                        <div style="font-size: 13px; color: var(--muted); line-height: 1.55;">Decision journal contains sequence patterns. Value function calibrated to attribution. The system knows which action <em>sequences</em> compound value. <strong>No stateless agent can match this.</strong></div>
+                    </div>
+
+                    <div style="background: rgba(2,42,192,0.04); border: 1px solid rgba(2,42,192,0.18); border-radius: 14px; padding: 20px 18px; display: flex; flex-direction: column; gap: 10px; position: relative; overflow: hidden;">
+                        <div style="position: absolute; top: 10px; right: 14px; font-size: 30px; font-weight: 900; color: rgba(2,42,192,0.06); line-height: 1; pointer-events: none;">Y1</div>
+                        <div style="font-size: 13px; font-weight: 800; color: var(--blue2); letter-spacing: 0.06em; text-transform: uppercase;">Year 1</div>
+                        <div style="font-size: 13px; color: var(--ink); line-height: 1.55;"><strong>The memory is the foundation.</strong> A competitor can replicate the reasoning engine in a weekend. They cannot replicate 12 months of compounding institutional learning.</div>
+                    </div>
+
+                </div>
+
+                <div style="margin-top: 20px; display: flex; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; background: rgba(255,255,255,0.5);">
+                    <div style="flex: 1; padding: 14px 18px;">
+                        <div style="font-size: 14px; color: var(--ink); line-height: 1.55;"><strong>The switching cost isn't the software</strong> -- it's the loss of everything the system has learned. Stop the loop for 3-6 months while you re-platform, and your decisions degrade to static rules. That's the real cost of waiting.</div>
+                    </div>
+                </div>
+            </div>
+            <div class="speaker-notes">Here's the urgency. Day one you score from historical CRM data &mdash; any decent model can do that. Month one you have ten thousand observed outcomes and the adaptive weights have already shifted. Month six the decision journal contains sequence patterns &mdash; it knows which action sequences compound value. No stateless agent can match that. Year one? The memory is the foundation. Someone can replicate the engine in a weekend. They cannot replicate twelve months of compounding learning. The switching cost isn't the software &mdash; it's the loss of everything the system has learned.</div>
+        </section>
+
+        <!-- ═══════════ SLIDE 13: 30 Headless Decisioning Actions ═══════════ -->
+        <section class="slide" style="padding-top: 28px; padding-bottom: 64px;">
+            <div style="max-width: 1060px; width: 100%; margin: 0 auto; text-align: center;">
+                <div class="accent-line" style="margin: 0 auto 6px;"></div>
+                <div class="eyebrow" style="text-align: center; margin: 0 auto 4px; font-size: 11px;">Headless Decisioning</div>
+                <h2 class="big" style="text-align: center; font-size: clamp(20px, 2.2vw, 28px); margin: 0 auto 4px;">30 tools. <span class="hl">Fully headless.</span></h2>
+                <p class="sub" style="text-align: center; margin: 0 auto 8px; max-width: 680px; font-size: clamp(12px, 1.1vw, 14px);">Every capability exposed as an MCP tool. Any AI agent can query, decide, learn, and act -- conversationally.</p>
+
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; text-align: left;">
+
+                    <!-- DECIDE -->
+                    <div style="background: var(--card-t); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px;">
+                        <div style="font-size: 10px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--blue2); margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
+                            <span style="width: 6px; height: 6px; border-radius: 50%; background: var(--blue2);"></span>
+                            Decide &amp; Execute
+                        </div>
+                        <div style="display: flex; flex-direction: column; gap: 4px;">
+                            <div style="font-size: 12px; font-family: var(--mono); padding: 4px 8px; border-radius: 5px; background: rgba(2,42,192,0.06); border: 1px solid rgba(2,42,192,0.14); font-weight: 600; color: var(--ink);">run_simulation</div>
+                            <div style="font-size: 12px; font-family: var(--mono); padding: 4px 8px; border-radius: 5px; background: rgba(2,42,192,0.06); border: 1px solid rgba(2,42,192,0.14); font-weight: 600; color: var(--ink);">execute_decision</div>
+                            <div style="font-size: 12px; font-family: var(--mono); padding: 4px 8px; border-radius: 5px; background: rgba(2,42,192,0.06); border: 1px solid rgba(2,42,192,0.14); font-weight: 600; color: var(--ink);">dispatch_segment</div>
+                            <div style="font-size: 12px; font-family: var(--mono); padding: 4px 8px; border-radius: 5px; color: var(--muted);">get_execution_status</div>
+                            <div style="font-size: 12px; font-family: var(--mono); padding: 4px 8px; border-radius: 5px; color: var(--muted);">retry_execution</div>
+                        </div>
+                    </div>
+
+                    <!-- LEARN -->
+                    <div style="background: var(--card-t); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px;">
+                        <div style="font-size: 10px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--purple-d); margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
+                            <span style="width: 6px; height: 6px; border-radius: 50%; background: var(--purple-d);"></span>
+                            Learn &amp; Attribute
+                        </div>
+                        <div style="display: flex; flex-direction: column; gap: 4px;">
+                            <div style="font-size: 12px; font-family: var(--mono); padding: 4px 8px; border-radius: 5px; background: rgba(122,61,214,0.06); border: 1px solid rgba(122,61,214,0.14); font-weight: 600; color: var(--ink);">query_decisions</div>
+                            <div style="font-size: 12px; font-family: var(--mono); padding: 4px 8px; border-radius: 5px; background: rgba(122,61,214,0.06); border: 1px solid rgba(122,61,214,0.14); font-weight: 600; color: var(--ink);">explain_decision</div>
+                            <div style="font-size: 12px; font-family: var(--mono); padding: 4px 8px; border-radius: 5px; background: rgba(122,61,214,0.06); border: 1px solid rgba(122,61,214,0.14); font-weight: 600; color: var(--ink);">get_attribution</div>
+                            <div style="font-size: 12px; font-family: var(--mono); padding: 4px 8px; border-radius: 5px; color: var(--muted);">get_attribution_trend</div>
+                            <div style="font-size: 12px; font-family: var(--mono); padding: 4px 8px; border-radius: 5px; color: var(--muted);">get_clv_attribution</div>
+                        </div>
+                    </div>
+
+                    <!-- MONITOR -->
+                    <div style="background: var(--card-t); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px;">
+                        <div style="font-size: 10px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--lblue-d); margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
+                            <span style="width: 6px; height: 6px; border-radius: 50%; background: var(--lblue-d);"></span>
+                            Monitor &amp; Diagnose
+                        </div>
+                        <div style="display: flex; flex-direction: column; gap: 4px;">
+                            <div style="font-size: 12px; font-family: var(--mono); padding: 4px 8px; border-radius: 5px; background: rgba(0,87,184,0.06); border: 1px solid rgba(0,87,184,0.14); font-weight: 600; color: var(--ink);">analyze_health</div>
+                            <div style="font-size: 12px; font-family: var(--mono); padding: 4px 8px; border-radius: 5px; background: rgba(0,87,184,0.06); border: 1px solid rgba(0,87,184,0.14); font-weight: 600; color: var(--ink);">get_model_health</div>
+                            <div style="font-size: 12px; font-family: var(--mono); padding: 4px 8px; border-radius: 5px; color: var(--muted);">get_auc_trend</div>
+                            <div style="font-size: 12px; font-family: var(--mono); padding: 4px 8px; border-radius: 5px; color: var(--muted);">get_fatigue_scores</div>
+                            <div style="font-size: 12px; font-family: var(--mono); padding: 4px 8px; border-radius: 5px; color: var(--muted);">get_timing_data</div>
+                        </div>
+                    </div>
+
+                    <!-- CATALOGUE -->
+                    <div style="background: var(--card-t); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px;">
+                        <div style="font-size: 10px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--red); margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
+                            <span style="width: 6px; height: 6px; border-radius: 50%; background: var(--red);"></span>
+                            Action Catalogue
+                        </div>
+                        <div style="display: flex; flex-direction: column; gap: 4px;">
+                            <div style="font-size: 12px; font-family: var(--mono); padding: 4px 8px; border-radius: 5px; background: rgba(196,28,0,0.05); border: 1px solid rgba(196,28,0,0.14); font-weight: 600; color: var(--ink);">list_actions</div>
+                            <div style="font-size: 12px; font-family: var(--mono); padding: 4px 8px; border-radius: 5px; color: var(--muted);">create_action</div>
+                            <div style="font-size: 12px; font-family: var(--mono); padding: 4px 8px; border-radius: 5px; color: var(--muted);">update_action</div>
+                            <div style="font-size: 12px; font-family: var(--mono); padding: 4px 8px; border-radius: 5px; color: var(--muted);">delete_action</div>
+                            <div style="font-size: 12px; font-family: var(--mono); padding: 4px 8px; border-radius: 5px; color: var(--muted);">toggle_action</div>
+                        </div>
+                    </div>
+
+                    <!-- COMPOSITIONS -->
+                    <div style="background: var(--card-t); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px;">
+                        <div style="font-size: 10px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--gold-d); margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
+                            <span style="width: 6px; height: 6px; border-radius: 50%; background: var(--gold-d);"></span>
+                            Compositions
+                        </div>
+                        <div style="display: flex; flex-direction: column; gap: 4px;">
+                            <div style="font-size: 12px; font-family: var(--mono); padding: 4px 8px; border-radius: 5px; background: rgba(200,144,0,0.06); border: 1px solid rgba(200,144,0,0.14); font-weight: 600; color: var(--ink);">get_composition_queue</div>
+                            <div style="font-size: 12px; font-family: var(--mono); padding: 4px 8px; border-radius: 5px; color: var(--muted);">approve_composition</div>
+                            <div style="font-size: 12px; font-family: var(--mono); padding: 4px 8px; border-radius: 5px; color: var(--muted);">dismiss_composition</div>
+                            <div style="font-size: 12px; font-family: var(--mono); padding: 4px 8px; border-radius: 5px; color: var(--muted);">promote_composition</div>
+                        </div>
+                    </div>
+
+                    <!-- GOALS & CONFIG -->
+                    <div style="background: var(--card-t); border: 1px solid var(--border); border-radius: 10px; padding: 12px 14px;">
+                        <div style="font-size: 10px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--teal-d); margin-bottom: 8px; display: flex; align-items: center; gap: 6px;">
+                            <span style="width: 6px; height: 6px; border-radius: 50%; background: var(--teal-d);"></span>
+                            Goals &amp; Config
+                        </div>
+                        <div style="display: flex; flex-direction: column; gap: 4px;">
+                            <div style="font-size: 12px; font-family: var(--mono); padding: 4px 8px; border-radius: 5px; background: rgba(0,122,114,0.06); border: 1px solid rgba(0,122,114,0.14); font-weight: 600; color: var(--ink);">configure_policy</div>
+                            <div style="font-size: 12px; font-family: var(--mono); padding: 4px 8px; border-radius: 5px; background: rgba(0,122,114,0.06); border: 1px solid rgba(0,122,114,0.14); font-weight: 600; color: var(--ink);">get_settings</div>
+                            <div style="font-size: 12px; font-family: var(--mono); padding: 4px 8px; border-radius: 5px; color: var(--muted);">create_goal</div>
+                            <div style="font-size: 12px; font-family: var(--mono); padding: 4px 8px; border-radius: 5px; color: var(--muted);">list_goals</div>
+                            <div style="font-size: 12px; font-family: var(--mono); padding: 4px 8px; border-radius: 5px; color: var(--muted);">update_goal &middot; delete_goal</div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <p class="sub" style="text-align: center; max-width: 740px; margin: 8px auto 0; font-size: clamp(11px, 1vw, 13px); color: var(--muted);">
+                    <strong style="color: var(--ink);">Highlighted = most used.</strong> The UI is for humans. These tools are for agents. Any AI system that speaks MCP can operate this engine.
+                </p>
+            </div>
+            <div class="speaker-notes">And here's why this matters for Agentforce. Thirty tools. Fully headless. Every capability the engine has is exposed as an MCP tool. An AI agent can query decisions, run simulations, execute actions, monitor health, manage the catalogue &mdash; all conversationally. The UI is for humans. These tools are for agents. This is how you give Agentforce a decisioning brain without building bespoke logic for every scenario.</div>
+        </section>
+
+        <!-- ═══════════ SLIDE 14: Close ═══════════ -->
         <section class="slide">
             <div style="max-width: 760px; text-align: center;">
                 <div class="accent-line" style="margin: 0 auto 24px;"></div>
@@ -796,7 +985,7 @@
         <div class="nav-dots" role="tablist" id="progress"></div>
         <div class="nav-controls">
             <button class="nav-btn" id="btn-prev" aria-label="Previous slide">&#8249;</button>
-            <span class="nav-counter" id="counter">1 / 13</span>
+            <span class="nav-counter" id="counter">1 / 15</span>
             <button class="nav-btn" id="btn-next" aria-label="Next slide">&#8250;</button>
         </div>
     </nav>
