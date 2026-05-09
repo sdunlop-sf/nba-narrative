@@ -17806,5 +17806,17 @@
     "location": "Toronto, Ontario, Canada",
     "ua": "Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.4 Mobile/15E148 Safari/604.1",
     "returning": "no"
+  },
+  {
+    "timestamp": "Sat, 09 May 2026 14:10:40 GMT",
+    "name": "Geet Dhillon",
+    "company": "Salesforce",
+    "position": "Solutions Engineer",
+    "page": "Memory Architecture",
+    "url": "https://sdunlop-sf.github.io/nba-narrative/memory-architecture.html",
+    "ip": "2605:8d80:6ac0:6b77:c8d2:b127:4843:957f",
+    "location": "Toronto, Ontario, Canada",
+    "ua": "Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.4 Mobile/15E148 Safari/604.1",
+    "returning": "yes"
   }
 ]
