@@ -17746,5 +17746,17 @@
     "location": "New York City, New York, United States",
     "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
     "returning": "no"
+  },
+  {
+    "timestamp": "Sat, 09 May 2026 12:46:31 GMT",
+    "name": "GeetDhillon",
+    "company": "Salesforce",
+    "position": "SolutionsEngineer",
+    "page": "NBA Narrative · Slides Light Internal",
+    "url": "https://sdunlop-sf.github.io/nba-narrative/slides-light-internal.html",
+    "ip": "136.226.77.26",
+    "location": "Toronto, Ontario, Canada",
+    "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
+    "returning": "yes"
   }
 ]
