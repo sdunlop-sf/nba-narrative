@@ -17830,5 +17830,17 @@
     "location": "Toronto, Ontario, Canada",
     "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
     "returning": "yes"
+  },
+  {
+    "timestamp": "Mon, 11 May 2026 22:00:46 GMT",
+    "name": "Nick Hultink",
+    "company": "Salesforce",
+    "position": "Data 36O AE",
+    "page": "Amaysim Consumption Test",
+    "url": "https://sdunlop-sf.github.io/nba-narrative/amaysim-consumption.html",
+    "ip": "147.161.213.4",
+    "location": "Melbourne, Victoria, Australia",
+    "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36",
+    "returning": "yes"
   }
 ]
