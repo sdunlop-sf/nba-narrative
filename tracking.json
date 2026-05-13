@@ -18022,5 +18022,17 @@
     "location": "Vancouver, British Columbia, Canada",
     "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
     "returning": "no"
+  },
+  {
+    "timestamp": "Wed, 13 May 2026 04:42:08 GMT",
+    "name": "Stuart Dunlop",
+    "company": "Salesforce",
+    "position": "Solutions",
+    "page": "FINS Summit Slides",
+    "url": "https://sdunlop-sf.github.io/nba-narrative/fins-summit-slides.html",
+    "ip": "165.225.113.79",
+    "location": "Singapore, Singapore",
+    "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
+    "returning": "yes"
   }
 ]
