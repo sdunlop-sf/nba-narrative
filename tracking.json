@@ -17998,5 +17998,17 @@
     "location": "Zurich, Zurich, Switzerland",
     "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
     "returning": "no"
+  },
+  {
+    "timestamp": "Wed, 13 May 2026 00:02:33 GMT",
+    "name": "Gnanasekaran",
+    "company": "Thoppae",
+    "position": "EnterpriseArchitect",
+    "page": "Decisioning Hub Framing v4 Lite",
+    "url": "https://sdunlop-sf.github.io/decisioning-hub-framing/v4-lite.html",
+    "ip": "165.225.94.227",
+    "location": "Zurich, Zurich, Switzerland",
+    "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36",
+    "returning": "yes"
   }
 ]
