@@ -18010,5 +18010,17 @@
     "location": "Zurich, Zurich, Switzerland",
     "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36",
     "returning": "yes"
+  },
+  {
+    "timestamp": "Wed, 13 May 2026 00:12:33 GMT",
+    "name": "Suraj Chandrasekaran",
+    "company": "Salesforce",
+    "position": "Architect",
+    "page": "Decisioning Hub Framing v4 Lite",
+    "url": "https://sdunlop-sf.github.io/decisioning-hub-framing/v4-lite.html",
+    "ip": "165.225.210.218",
+    "location": "Vancouver, British Columbia, Canada",
+    "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
+    "returning": "no"
   }
 ]
