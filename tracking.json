@@ -18238,5 +18238,17 @@
     "location": "Vancouver, British Columbia, Canada",
     "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36",
     "returning": "no"
+  },
+  {
+    "timestamp": "Fri, 15 May 2026 15:56:01 GMT",
+    "name": "Blair",
+    "company": "Salesforce",
+    "position": "SE",
+    "page": "Memory Approach",
+    "url": "https://sdunlop-sf.github.io/nba-narrative/memory-approach.html",
+    "ip": "165.225.210.231",
+    "location": "Vancouver, British Columbia, Canada",
+    "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36",
+    "returning": "yes"
   }
 ]
