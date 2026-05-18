@@ -18454,5 +18454,17 @@
     "location": "Sydney, New South Wales, Australia",
     "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
     "returning": "yes"
+  },
+  {
+    "timestamp": "Mon, 18 May 2026 03:49:08 GMT",
+    "name": "Alex Marquez",
+    "company": "Salesforce",
+    "position": "SE",
+    "page": "Memory Approach",
+    "url": "https://sdunlop-sf.github.io/nba-narrative/memory-approach.html",
+    "ip": "165.225.227.4",
+    "location": "Melbourne, Victoria, Australia",
+    "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36",
+    "returning": "yes"
   }
 ]
