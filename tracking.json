@@ -18514,5 +18514,17 @@
     "location": "Sydney, New South Wales, Australia",
     "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
     "returning": "yes"
+  },
+  {
+    "timestamp": "Mon, 18 May 2026 07:55:13 GMT",
+    "name": "miles",
+    "company": "toolin",
+    "position": "goat",
+    "page": "Salesforce Decisioning · Optus",
+    "url": "https://sdunlop-sf.github.io/nba-narrative/optus.html",
+    "ip": "165.225.114.149",
+    "location": "Sydney, New South Wales, Australia",
+    "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36",
+    "returning": "yes"
   }
 ]
