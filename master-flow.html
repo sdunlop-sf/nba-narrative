@@ -3,47 +3,58 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>The Master Flow · NBA Decisioning Accelerator</title>
+  <title>The Master Flow &middot; NBA Decisioning Accelerator</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+  <script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg:     #C8E4FD;
-      --bg-alt: #D8ECFE;
-      --blue2:  #022AC0;
-      --teal:   #04E1CB;
-      --teal-d: #007A72;
+      --navy:    #001E5B;
+      --blue:    #022AC0;
+      --blue-m:  #066AFE;
+      --blue-l:  #00B3FF;
+      --cloud-80: #90D0FE;
+      --cloud-95: #EAF5FE;
+      --teal:    #06A59A;
+      --teal-l:  #04E1CB;
+      --teal-d:  #007A72;
       --lblue-d: #0057B8;
-      --gold:   #FCC003;
-      --gold-d: #A87700;
-      --purple: #7A3DD6;
+      --gold:    #E4A201;
+      --gold-d:  #A87700;
+      --purple:  #730394;
       --purple-d: #5521A8;
-      --ink:    #002775;
-      --muted:  rgba(0, 39, 117, 0.55);
-      --text:   rgba(0, 39, 117, 0.85);
-      --card:   #FFFFFF;
-      --card-h: #F4FAFF;
-      --border: rgba(0, 39, 117, 0.1);
-      --shadow: 0 1px 3px rgba(0,39,117,0.07), 0 4px 18px rgba(0,39,117,0.07);
-      --shadow-sm: 0 1px 2px rgba(0,39,117,0.06), 0 2px 8px rgba(0,39,117,0.05);
-      --red:    #C41C00;
-      --green:  #007A72;
-      --mono:   'JetBrains Mono', 'Courier New', monospace;
+      --violet:  #730394;
+      --ink:     #001E5B;
+      --text:    #001E5B;
+      --muted:   #5A5C61;
+      --dim:     rgba(0, 30, 91, 0.72);
+      --card:    #FFFFFF;
+      --card-bg: rgba(0, 30, 91, 0.04);
+      --card-h:  #F4FAFF;
+      --border:  rgba(0, 30, 91, 0.1);
+      --border-strong: rgba(0, 30, 91, 0.16);
+      --shadow:  0 1px 3px rgba(0,30,91,0.06), 0 4px 18px rgba(0,30,91,0.06);
+      --shadow-sm: 0 1px 2px rgba(0,30,91,0.05), 0 2px 8px rgba(0,30,91,0.04);
+      --red:     #C23934;
+      --green:   #06A59A;
+      --white:   #FFFFFF;
+      --mono:    'JetBrains Mono', 'SF Mono', 'Fira Code', monospace;
     }
 
     html { scroll-behavior: smooth; }
 
     body {
-      background: var(--bg);
+      background: var(--cloud-95);
       background-attachment: fixed;
       color: var(--ink);
-      font-family: 'Segoe UI', Arial, sans-serif;
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
       font-size: 15px;
       line-height: 1.7;
       -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
       min-height: 100vh;
     }
 
@@ -53,10 +64,20 @@
       inset: 0;
       z-index: 0;
       pointer-events: none;
-      opacity: 0.012;
+      opacity: 0.015;
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
       background-repeat: repeat;
       background-size: 200px 200px;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      background: radial-gradient(80% 60% at 80% 10%, rgba(2,42,192,0.06) 0%, transparent 55%),
+                  radial-gradient(50% 40% at 10% 90%, rgba(6,165,154,0.04) 0%, transparent 50%);
     }
 
     nav, .hero, .flow-strip-wrap, .section, .section-alt, hr.divider { position: relative; z-index: 1; }
@@ -67,25 +88,25 @@
       height: 56px;
       display: flex; align-items: center; justify-content: space-between;
       padding: 0 40px;
-      background: rgba(255, 255, 255, 0.96);
-      backdrop-filter: blur(20px);
-      border-bottom: 1px solid rgba(0, 39, 117, 0.1);
-      box-shadow: 0 1px 0 rgba(0,39,117,0.06), 0 2px 12px rgba(0,39,117,0.06);
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(20px) saturate(1.4);
+      -webkit-backdrop-filter: blur(20px) saturate(1.4);
+      border-bottom: 1px solid rgba(0, 30, 91, 0.08);
     }
 
     .nav-brand { display: flex; align-items: center; gap: 12px; }
-    .nav-logo { height: 24px; width: auto; }
-    .nav-divider { width: 1px; height: 18px; background: rgba(0, 39, 117, 0.14); }
+    .nav-logo { height: 22px; width: auto; }
+    .nav-divider { width: 1px; height: 18px; background: rgba(0, 30, 91, 0.14); }
     .nav-title {
       font-size: 11px; font-weight: 700; letter-spacing: 0.08em;
       text-transform: uppercase; color: var(--ink);
     }
-    .nav-sub { font-size: 11px; color: var(--muted); }
+    .nav-sub { font-size: 11px; color: var(--muted); font-weight: 500; }
     .nav-pill {
       font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
-      background: rgba(2, 42, 192, 0.08); color: var(--blue2);
-      border: 1px solid rgba(2, 42, 192, 0.22); border-radius: 20px;
-      padding: 3px 12px;
+      background: rgba(2, 42, 192, 0.06); color: var(--blue);
+      border: 1px solid rgba(2, 42, 192, 0.18); border-radius: 20px;
+      padding: 4px 14px;
     }
 
     /* ── HERO ── */
@@ -97,41 +118,41 @@
     }
 
     .hero-eyebrow {
-      font-size: 12px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase;
-      color: var(--blue2); margin-bottom: 16px;
+      font-size: 11px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--blue); margin-bottom: 16px;
     }
 
     .accent-line {
-      width: 40px; height: 3px; border-radius: 2px;
+      width: 44px; height: 3px; border-radius: 2px;
       margin: 0 auto 20px;
-      background: linear-gradient(90deg, var(--blue2), var(--teal));
+      background: linear-gradient(90deg, var(--blue), var(--teal-l));
     }
 
     .hero h1 {
       font-size: clamp(32px, 5vw, 52px);
-      font-weight: 900; line-height: 1.05; letter-spacing: -0.03em;
+      font-weight: 800; line-height: 1.05; letter-spacing: -0.035em;
       color: var(--ink); margin-bottom: 20px;
     }
 
     .hero h1 .hl {
-      background: linear-gradient(135deg, var(--blue2) 0%, #04E1CB 100%);
+      background: linear-gradient(135deg, var(--blue) 0%, var(--teal-l) 100%);
       -webkit-background-clip: text; -webkit-text-fill-color: transparent;
       background-clip: text;
     }
 
     .hero-sub {
       font-size: 17px; color: var(--muted); max-width: 640px; margin: 0 auto;
-      line-height: 1.75;
+      line-height: 1.75; font-weight: 400;
     }
 
     .hero-version {
       display: inline-flex; align-items: center; gap: 8px;
       margin-top: 22px;
       padding: 6px 14px; border-radius: 20px;
-      background: rgba(2, 42, 192, 0.08);
-      border: 1px solid rgba(2, 42, 192, 0.2);
-      font-size: 11px; font-weight: 700; letter-spacing: 0.08em;
-      color: var(--blue2); text-transform: uppercase;
+      background: rgba(2, 42, 192, 0.06);
+      border: 1px solid rgba(2, 42, 192, 0.16);
+      font-size: 11px; font-weight: 700; letter-spacing: 0.06em;
+      color: var(--blue); text-transform: uppercase;
     }
 
     .hero-version .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); }
@@ -141,7 +162,6 @@
       background: var(--card);
       border-top: 1px solid var(--border);
       border-bottom: 1px solid var(--border);
-      box-shadow: var(--shadow-sm);
       padding: 28px 40px;
       overflow-x: auto;
     }
@@ -163,14 +183,22 @@
       display: flex; align-items: center; justify-content: center;
       font-size: 20px;
       border: 1px solid var(--border);
+      transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s;
     }
 
+    .fs-icon:hover {
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 6px 16px rgba(0,30,91,0.1);
+    }
+
+    .fs-icon i { font-size: 22px; }
+
     .fs-label { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink); }
-    .fs-sub { font-size: 10px; color: var(--muted); }
+    .fs-sub { font-size: 10px; color: var(--muted); font-weight: 500; }
 
     .fs-arrow {
       flex-shrink: 0;
-      color: rgba(2, 42, 192, 0.3);
+      color: rgba(2, 42, 192, 0.25);
       font-size: 18px;
       padding: 0 4px;
       margin-bottom: 22px;
@@ -186,9 +214,9 @@
     .section + .section { border-top: 1px solid var(--border); }
 
     .section-alt {
-      background: var(--bg-alt);
-      border-top: 1px solid rgba(0,39,117,0.12);
-      border-bottom: 1px solid rgba(0,39,117,0.12);
+      background: rgba(0, 30, 91, 0.02);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
     }
 
     .section-alt .section { padding: 72px 40px; }
@@ -209,6 +237,8 @@
       box-shadow: var(--shadow-sm);
     }
 
+    .step-num i { font-size: 22px; }
+
     .step-title {
       font-size: 26px; font-weight: 800; color: var(--ink);
       letter-spacing: -0.02em; line-height: 1.2;
@@ -218,11 +248,11 @@
 
     /* ── EYEBROW ── */
     .eyebrow {
-      font-size: 12px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase;
-      color: var(--blue2); margin-bottom: 14px;
+      font-size: 11px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--blue); margin-bottom: 14px;
     }
 
-    /* ── TIER CARDS (three-tier + composition grid) ── */
+    /* ── TIER CARDS ── */
     .tier-grid {
       display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px;
       margin-bottom: 20px;
@@ -233,9 +263,12 @@
       border: 1px solid var(--border);
       border-radius: 16px;
       overflow: hidden;
-      box-shadow: var(--shadow);
+      box-shadow: var(--shadow-sm);
       display: flex; flex-direction: column;
+      transition: box-shadow 0.3s, transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
     }
+
+    .tier-card:hover { box-shadow: var(--shadow); transform: translateY(-2px); }
 
     .tier-card-head {
       padding: 14px 18px;
@@ -269,26 +302,26 @@
       background: var(--card);
       border: 1px solid var(--border);
       border-radius: 16px;
-      border-left: 4px solid var(--blue2);
+      border-left: 4px solid var(--blue);
       padding: 28px 32px;
       margin-bottom: 20px;
       position: relative; overflow: hidden;
-      box-shadow: var(--shadow);
+      box-shadow: var(--shadow-sm);
     }
 
     .trigger-primary::before {
       content: '';
       position: absolute; top: 0; left: 0; right: 0; height: 1px;
-      background: linear-gradient(90deg, var(--blue2), transparent);
+      background: linear-gradient(90deg, var(--blue), transparent);
       opacity: 0.4;
     }
 
     .trigger-primary-label {
       font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
-      color: var(--blue2); margin-bottom: 12px;
+      color: var(--blue); margin-bottom: 12px;
     }
 
-    .trigger-primary p { font-size: 15px; line-height: 1.75; color: var(--text); }
+    .trigger-primary p { font-size: 15px; line-height: 1.75; color: var(--muted); }
     .trigger-primary strong { color: var(--ink); }
 
     .trigger-alts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
@@ -301,9 +334,14 @@
       box-shadow: var(--shadow-sm);
       transition: box-shadow 0.2s, border-color 0.2s, transform 0.2s;
     }
-    .trigger-alt:hover { background: var(--card-h); border-color: rgba(2,42,192,0.22); box-shadow: var(--shadow); transform: translateY(-1px); }
+    .trigger-alt:hover { background: var(--card-h); border-color: rgba(2,42,192,0.18); box-shadow: var(--shadow); transform: translateY(-1px); }
 
-    .trigger-alt-icon { font-size: 20px; margin-bottom: 10px; }
+    .trigger-alt-icon {
+      width: 36px; height: 36px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 12px; border: 1px solid var(--border);
+    }
+    .trigger-alt-icon i { font-size: 18px; }
     .trigger-alt-title { font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 6px; }
     .trigger-alt-desc { font-size: 12px; color: var(--muted); line-height: 1.55; }
 
@@ -313,18 +351,18 @@
       border: 1px solid var(--border);
       border-radius: 16px;
       overflow: hidden;
-      box-shadow: var(--shadow);
+      box-shadow: var(--shadow-sm);
     }
 
     .catalogue-header {
-      background: rgba(2, 42, 192, 0.05);
+      background: rgba(2, 42, 192, 0.04);
       border-bottom: 1px solid var(--border);
       padding: 14px 24px;
       display: flex; align-items: center; gap: 10px;
     }
 
-    .catalogue-header-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--blue2); }
-    .catalogue-header-label { font-family: var(--mono); font-size: 12px; color: var(--blue2); font-weight: 500; }
+    .catalogue-header-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--blue); }
+    .catalogue-header-label { font-family: var(--mono); font-size: 12px; color: var(--blue); font-weight: 500; }
 
     .catalogue-rows { padding: 6px 0; }
 
@@ -332,7 +370,7 @@
       display: grid; grid-template-columns: 40px 1.3fr 1fr 90px 90px;
       align-items: center; gap: 16px;
       padding: 11px 24px;
-      border-bottom: 1px solid rgba(0, 39, 117, 0.05);
+      border-bottom: 1px solid rgba(0, 30, 91, 0.05);
       font-size: 12px;
     }
 
@@ -347,9 +385,9 @@
       border-radius: 6px; padding: 2px 8px; text-align: center;
       font-weight: 600;
     }
-    .cr-mode-model { background: rgba(0, 87, 184, 0.08); color: var(--lblue-d); border: 1px solid rgba(0, 87, 184, 0.18); }
-    .cr-mode-segment { background: rgba(0, 122, 114, 0.08); color: var(--teal-d); border: 1px solid rgba(0, 122, 114, 0.22); }
-    .cr-mode-rule { background: rgba(200, 144, 0, 0.08); color: var(--gold-d); border: 1px solid rgba(200, 144, 0, 0.22); }
+    .cr-mode-model { background: rgba(0, 87, 184, 0.06); color: var(--lblue-d); border: 1px solid rgba(0, 87, 184, 0.16); }
+    .cr-mode-segment { background: rgba(0, 122, 114, 0.06); color: var(--teal-d); border: 1px solid rgba(0, 122, 114, 0.18); }
+    .cr-mode-rule { background: rgba(200, 144, 0, 0.06); color: var(--gold-d); border: 1px solid rgba(200, 144, 0, 0.18); }
     .cr-channel { color: var(--muted); font-family: var(--mono); font-size: 10.5px; }
 
     /* ── RAILS ── */
@@ -358,7 +396,7 @@
       border: 1px solid var(--border);
       border-radius: 16px;
       padding: 22px 24px;
-      box-shadow: var(--shadow);
+      box-shadow: var(--shadow-sm);
     }
 
     .rails-label {
@@ -380,9 +418,9 @@
       justify-self: end;
       font-size: 9.5px; font-weight: 700; letter-spacing: 0.06em;
       padding: 3px 10px; border-radius: 20px;
-      background: rgba(196, 28, 0, 0.06);
+      background: rgba(194, 57, 52, 0.05);
       color: var(--red);
-      border: 1px solid rgba(196, 28, 0, 0.22);
+      border: 1px solid rgba(194, 57, 52, 0.18);
       text-transform: uppercase;
     }
 
@@ -393,7 +431,7 @@
       border-radius: 16px;
       padding: 28px;
       margin-bottom: 20px;
-      box-shadow: var(--shadow);
+      box-shadow: var(--shadow-sm);
     }
 
     .loop-label {
@@ -412,8 +450,8 @@
     }
 
     .loop-step {
-      background: #F4FAFF;
-      border: 1px solid rgba(0,39,117,0.1);
+      background: var(--card-h);
+      border: 1px solid var(--border);
       border-radius: 14px;
       padding: 20px;
     }
@@ -432,12 +470,12 @@
       border-radius: 20px; padding: 3px 10px;
     }
 
-    .loop-arr { text-align: center; color: rgba(2, 42, 192, 0.25); font-size: 18px; }
+    .loop-arr { text-align: center; color: rgba(2, 42, 192, 0.2); font-size: 18px; }
 
     /* ── CODE BLOCK ── */
     .code-block {
       background: #0D1B2E;
-      border: 1px solid rgba(2, 42, 192, 0.25);
+      border: 1px solid rgba(2, 42, 192, 0.2);
       border-radius: 12px;
       padding: 20px 24px;
       font-family: var(--mono);
@@ -500,25 +538,35 @@
       padding: 14px 18px;
       border-bottom: 1px solid var(--border);
       display: flex; align-items: center; gap: 10px;
-      background: #F4FAFF;
+      background: var(--card-h);
     }
 
-    .ec-icon { font-size: 17px; }
+    .ec-icon {
+      width: 32px; height: 32px; border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      border: 1px solid var(--border);
+    }
+    .ec-icon i { font-size: 17px; }
     .ec-title { font-size: 13px; font-weight: 700; color: var(--ink); }
     .ec-body { padding: 16px 18px; }
     .ec-body p { font-size: 12px; color: var(--muted); line-height: 1.65; }
     .ec-body strong { color: var(--text); }
 
     .exec-parallel {
-      background: rgba(200, 144, 0, 0.06);
-      border: 1px solid rgba(200, 144, 0, 0.2);
+      background: rgba(228, 162, 1, 0.04);
+      border: 1px solid rgba(228, 162, 1, 0.16);
       border-radius: 12px;
       padding: 18px 22px;
       display: flex; align-items: center; gap: 14px;
     }
 
-    .exec-parallel-icon { font-size: 20px; flex-shrink: 0; }
-    .exec-parallel p { font-size: 13px; color: var(--text); line-height: 1.65; }
+    .exec-parallel-icon {
+      width: 36px; height: 36px; border-radius: 10px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      background: rgba(228, 162, 1, 0.08); border: 1px solid rgba(228, 162, 1, 0.2);
+    }
+    .exec-parallel-icon i { font-size: 18px; color: var(--gold-d); }
+    .exec-parallel p { font-size: 13px; color: var(--muted); line-height: 1.65; }
     .exec-parallel strong { color: var(--gold-d); }
 
     /* ── FEEDBACK LOOP ── */
@@ -537,10 +585,15 @@
       box-shadow: var(--shadow-sm);
     }
 
-    .fb-node-icon { font-size: 24px; margin-bottom: 10px; }
+    .fb-node-icon {
+      width: 40px; height: 40px; border-radius: 10px;
+      display: inline-flex; align-items: center; justify-content: center;
+      margin-bottom: 10px; border: 1px solid var(--border);
+    }
+    .fb-node-icon i { font-size: 20px; }
     .fb-node-title { font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 5px; }
     .fb-node-desc { font-size: 11px; color: var(--muted); line-height: 1.55; }
-    .fb-arr { text-align: center; color: rgba(2, 42, 192, 0.25); font-size: 20px; }
+    .fb-arr { text-align: center; color: rgba(2, 42, 192, 0.2); font-size: 20px; }
 
     .retrain-callout {
       background: var(--card);
@@ -549,7 +602,7 @@
       border-radius: 14px;
       padding: 24px 28px;
       position: relative; overflow: hidden;
-      box-shadow: var(--shadow);
+      box-shadow: var(--shadow-sm);
     }
 
     .retrain-callout::before {
@@ -563,7 +616,7 @@
       color: var(--lblue-d); margin-bottom: 10px;
     }
 
-    .rc-body { font-size: 14px; color: var(--text); line-height: 1.75; }
+    .rc-body { font-size: 14px; color: var(--muted); line-height: 1.75; }
     .rc-body strong { color: var(--ink); }
 
     /* ── PROACTIVE AGENTS ── */
@@ -584,8 +637,8 @@
 
     .agent-head {
       padding: 14px 18px;
-      background: rgba(122, 61, 214, 0.06);
-      border-bottom: 1px solid rgba(122, 61, 214, 0.2);
+      background: rgba(115, 3, 148, 0.04);
+      border-bottom: 1px solid rgba(115, 3, 148, 0.12);
       display: flex; align-items: center; gap: 10px;
     }
     .agent-head .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--purple); }
@@ -604,11 +657,14 @@
       border-radius: 14px;
       padding: 22px;
       box-shadow: var(--shadow-sm);
+      transition: box-shadow 0.2s, transform 0.2s;
     }
+
+    .headless-card:hover { box-shadow: var(--shadow); transform: translateY(-1px); }
 
     .headless-card-label {
       font-family: var(--mono); font-size: 10px; font-weight: 700; letter-spacing: 0.08em;
-      color: var(--blue2); text-transform: uppercase; margin-bottom: 10px;
+      color: var(--blue); text-transform: uppercase; margin-bottom: 10px;
     }
 
     .headless-card-title { font-size: 14px; font-weight: 700; color: var(--ink); margin-bottom: 8px; }
@@ -617,10 +673,10 @@
     /* ── PACKAGE SCOPE ── */
     .scope-wrap {
       background: var(--card);
-      border: 1px solid rgba(0, 122, 114, 0.22);
+      border: 1px solid rgba(6, 165, 154, 0.18);
       border-radius: 16px;
       padding: 28px 32px;
-      box-shadow: var(--shadow);
+      box-shadow: var(--shadow-sm);
     }
 
     .scope-label {
@@ -652,23 +708,23 @@
       border: 1px solid var(--border);
       border-radius: 16px;
       padding: 26px 22px;
-      border-top: 3px solid var(--blue2);
+      border-top: 3px solid var(--blue);
       position: relative; overflow: hidden;
-      box-shadow: var(--shadow);
+      box-shadow: var(--shadow-sm);
       transition: box-shadow 0.2s, transform 0.2s;
     }
 
-    .effort-card:hover { box-shadow: 0 4px 24px rgba(0,39,117,0.12); transform: translateY(-2px); }
+    .effort-card:hover { box-shadow: var(--shadow); transform: translateY(-2px); }
 
     .effort-card::after {
       content: '';
       position: absolute; inset: 0;
-      background: linear-gradient(180deg, rgba(2, 42, 192, 0.03) 0%, transparent 40%);
+      background: linear-gradient(180deg, rgba(2, 42, 192, 0.02) 0%, transparent 40%);
     }
 
     .effort-card-num {
       font-family: var(--mono); font-size: 28px; font-weight: 700;
-      color: var(--blue2); line-height: 1; margin-bottom: 8px; position: relative;
+      color: var(--blue); line-height: 1; margin-bottom: 8px; position: relative;
     }
 
     .effort-card-label { font-size: 14px; font-weight: 700; color: var(--ink); margin-bottom: 8px; position: relative; }
@@ -679,12 +735,29 @@
 
     .muted-p { color: var(--muted); margin-bottom: 24px; font-size: 15px; line-height: 1.75; }
 
-    /* Tier/escalation badge styling helpers */
     .badge-inline {
       display: inline-flex; align-items: center;
       font-size: 10px; font-weight: 700; padding: 3px 10px;
       border-radius: 20px;
     }
+
+    /* ── CALLOUT BOX ── */
+    .callout-box {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 16px 22px;
+      display: flex; align-items: center; gap: 14px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .callout-box-icon {
+      width: 36px; height: 36px; border-radius: 10px; flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      border: 1px solid var(--border);
+    }
+
+    .callout-box-icon i { font-size: 18px; }
 
     /* ── RESPONSIVE ── */
     @media (max-width: 768px) {
@@ -723,61 +796,75 @@
       <span class="nav-title">Master Flow</span>
       <span class="nav-sub">/ NBA Decisioning Accelerator</span>
     </div>
-    <div class="nav-pill">v9 · Shipped</div>
+    <div class="nav-pill">v11 &middot; Shipped</div>
   </nav>
 
   <!-- HERO -->
   <div class="hero">
     <div class="accent-line"></div>
-    <div class="hero-eyebrow">Salesforce · Data Cloud · Einstein Studio · Agentforce · Flow</div>
+    <div class="hero-eyebrow">Salesforce &middot; Data Cloud &middot; Einstein Studio &middot; Agentforce &middot; Flow</div>
     <h1>How the Decisioning Accelerator<br/><span class="hl">actually runs</span></h1>
-    <p class="hero-sub">A practical guide to the shipped decisioning engine — from trigger to execution to feedback loop. Deterministic when it can be. Reasoning when it should be. Creative when it has to be. Rails hold in every mode.</p>
-    <div class="hero-version"><span class="dot"></span>v9.0.0 · Unlocked Package · Live in SDO</div>
+    <p class="hero-sub">A practical guide to the shipped decisioning engine &mdash; from trigger to execution to feedback loop. Deterministic when it can be. Reasoning when it should be. Creative when it has to be. Rails hold in every mode.</p>
+    <div class="hero-version"><span class="dot"></span>v11.0.0 &middot; Unlocked Package &middot; Live</div>
   </div>
 
   <!-- FLOW STRIP -->
   <div class="flow-strip-wrap">
     <div class="flow-strip">
       <div class="fs-node">
-        <div class="fs-icon" style="background:rgba(2,42,192,0.1);color:#022AC0;border-color:rgba(2,42,192,0.18);">⚡</div>
+        <div class="fs-icon" style="background:rgba(2,42,192,0.08);border-color:rgba(2,42,192,0.16);">
+          <i class="ph-duotone ph-lightning" style="color:#022AC0;"></i>
+        </div>
         <div class="fs-label">Trigger</div>
-        <div class="fs-sub">Segment · event · API</div>
+        <div class="fs-sub">Segment &middot; event &middot; API</div>
       </div>
-      <div class="fs-arrow">›</div>
+      <div class="fs-arrow">&rsaquo;</div>
       <div class="fs-node">
-        <div class="fs-icon" style="background:rgba(196,28,0,0.08);color:#C41C00;border-color:rgba(196,28,0,0.22);">🛡️</div>
+        <div class="fs-icon" style="background:rgba(194,57,52,0.06);border-color:rgba(194,57,52,0.16);">
+          <i class="ph-duotone ph-shield-check" style="color:#C23934;"></i>
+        </div>
         <div class="fs-label">Rails</div>
-        <div class="fs-sub">Suppressions · policy</div>
+        <div class="fs-sub">Suppressions &middot; policy</div>
       </div>
-      <div class="fs-arrow">›</div>
+      <div class="fs-arrow">&rsaquo;</div>
       <div class="fs-node">
-        <div class="fs-icon" style="background:rgba(4,225,203,0.15);color:#007A72;border-color:rgba(4,225,203,0.3);">📋</div>
+        <div class="fs-icon" style="background:rgba(6,165,154,0.08);border-color:rgba(6,165,154,0.18);">
+          <i class="ph-duotone ph-list-checks" style="color:#06A59A;"></i>
+        </div>
         <div class="fs-label">Catalogue</div>
         <div class="fs-sub">Eligible actions</div>
       </div>
-      <div class="fs-arrow">›</div>
+      <div class="fs-arrow">&rsaquo;</div>
       <div class="fs-node">
-        <div class="fs-icon" style="background:rgba(0,87,184,0.12);color:#0057B8;border-color:rgba(0,87,184,0.2);">🔁</div>
+        <div class="fs-icon" style="background:rgba(0,87,184,0.08);border-color:rgba(0,87,184,0.16);">
+          <i class="ph-duotone ph-chart-bar" style="color:#0057B8;"></i>
+        </div>
         <div class="fs-label">Score</div>
-        <div class="fs-sub">Model · segment · rule</div>
+        <div class="fs-sub">Model &middot; segment &middot; rule</div>
       </div>
-      <div class="fs-arrow">›</div>
+      <div class="fs-arrow">&rsaquo;</div>
       <div class="fs-node">
-        <div class="fs-icon" style="background:rgba(252,192,3,0.15);color:#A87700;border-color:rgba(252,192,3,0.3);">⚖️</div>
+        <div class="fs-icon" style="background:rgba(228,162,1,0.08);border-color:rgba(228,162,1,0.18);">
+          <i class="ph-duotone ph-scales" style="color:#A87700;"></i>
+        </div>
         <div class="fs-label">Arbitrate</div>
-        <div class="fs-sub">Tier 1 · 1.5 · 2 · compose</div>
+        <div class="fs-sub">Tier 1 &middot; 1.5 &middot; 2 &middot; compose</div>
       </div>
-      <div class="fs-arrow">›</div>
+      <div class="fs-arrow">&rsaquo;</div>
       <div class="fs-node">
-        <div class="fs-icon" style="background:rgba(4,225,203,0.15);color:#007A72;border-color:rgba(4,225,203,0.3);">🚀</div>
+        <div class="fs-icon" style="background:rgba(6,165,154,0.08);border-color:rgba(6,165,154,0.18);">
+          <i class="ph-duotone ph-paper-plane-tilt" style="color:#06A59A;"></i>
+        </div>
         <div class="fs-label">Execute</div>
-        <div class="fs-sub">Slack · Sales · MC · HTTP</div>
+        <div class="fs-sub">Slack &middot; Sales &middot; MC &middot; HTTP</div>
       </div>
-      <div class="fs-arrow">›</div>
+      <div class="fs-arrow">&rsaquo;</div>
       <div class="fs-node">
-        <div class="fs-icon" style="background:rgba(2,42,192,0.1);color:#022AC0;border-color:rgba(2,42,192,0.18);">🔄</div>
+        <div class="fs-icon" style="background:rgba(115,3,148,0.06);border-color:rgba(115,3,148,0.14);">
+          <i class="ph-duotone ph-arrows-clockwise" style="color:#730394;"></i>
+        </div>
         <div class="fs-label">Learn</div>
-        <div class="fs-sub">Outcome · retrain</div>
+        <div class="fs-sub">Outcome &middot; retrain</div>
       </div>
     </div>
   </div>
@@ -787,34 +874,34 @@
     <div class="section">
       <div class="eyebrow">Architecture</div>
       <div class="step-head" style="margin-bottom: 24px;">
-        <div class="step-num" style="background:rgba(2,42,192,0.08);color:#022AC0;border-color:rgba(2,42,192,0.2);font-size:22px;">⚙️</div>
+        <div class="step-num" style="background:rgba(2,42,192,0.06);border-color:rgba(2,42,192,0.16);">
+          <i class="ph-duotone ph-gear-six" style="color:#022AC0;font-size:22px;"></i>
+        </div>
         <div>
           <div class="step-title">Deterministic when it can be. Reasoning when it should be. Creative when it has to be.</div>
-          <div class="step-desc">The engine runs in four modes depending on decision difficulty. Most decisions never leave Tier 1. The harder the call, the more reasoning gets applied — and the rails hold in every mode.</div>
+          <div class="step-desc">The engine runs in four modes depending on decision difficulty. Most decisions never leave Tier 1. The harder the call, the more reasoning gets applied &mdash; and the rails hold in every mode.</div>
         </div>
       </div>
 
       <div class="tier-grid">
-        <!-- Tier 1 -->
         <div class="tier-card">
-          <div class="tier-card-head" style="background: rgba(2,42,192,0.05);">
-            <div class="tier-card-dot" style="background: var(--blue2);"></div>
-            <div class="tier-card-tier" style="color: var(--blue2);">Tier 1</div>
-            <div class="tier-card-share" style="background: rgba(2,42,192,0.08); color: var(--blue2); border: 1px solid rgba(2,42,192,0.2);">~85%</div>
+          <div class="tier-card-head" style="background: rgba(2,42,192,0.04);">
+            <div class="tier-card-dot" style="background: var(--blue);"></div>
+            <div class="tier-card-tier" style="color: var(--blue);">Tier 1</div>
+            <div class="tier-card-share" style="background: rgba(2,42,192,0.06); color: var(--blue); border: 1px solid rgba(2,42,192,0.16);">~85%</div>
           </div>
           <div class="tier-card-body">
             <div class="tier-card-title">Deterministic Arbitration</div>
-            <div class="tier-card-desc">Weighted score per eligible action — <em>module_score × priority × response_weight</em>. Winner is clear, rails pass, decision stamped. Sub-second. No LLM in the hot path.</div>
+            <div class="tier-card-desc">Weighted score per eligible action &mdash; <em>module_score &times; priority &times; response_weight</em>. Winner is clear, rails pass, decision stamped. Sub-second. No LLM in the hot path.</div>
             <div class="tier-card-cue">Fires when: clear score gap, rails pass</div>
           </div>
         </div>
 
-        <!-- Tier 1.5 -->
         <div class="tier-card">
-          <div class="tier-card-head" style="background: rgba(0,87,184,0.05);">
+          <div class="tier-card-head" style="background: rgba(0,87,184,0.04);">
             <div class="tier-card-dot" style="background: var(--lblue-d);"></div>
             <div class="tier-card-tier" style="color: var(--lblue-d);">Tier 1.5</div>
-            <div class="tier-card-share" style="background: rgba(0,87,184,0.08); color: var(--lblue-d); border: 1px solid rgba(0,87,184,0.2);">10–15%</div>
+            <div class="tier-card-share" style="background: rgba(0,87,184,0.06); color: var(--lblue-d); border: 1px solid rgba(0,87,184,0.16);">10&ndash;15%</div>
           </div>
           <div class="tier-card-body">
             <div class="tier-card-title">Reasoning Re-Rank</div>
@@ -823,12 +910,11 @@
           </div>
         </div>
 
-        <!-- Tier 2 -->
         <div class="tier-card">
-          <div class="tier-card-head" style="background: rgba(0,122,114,0.05);">
+          <div class="tier-card-head" style="background: rgba(6,165,154,0.04);">
             <div class="tier-card-dot" style="background: var(--teal-d);"></div>
             <div class="tier-card-tier" style="color: var(--teal-d);">Tier 2</div>
-            <div class="tier-card-share" style="background: rgba(0,122,114,0.08); color: var(--teal-d); border: 1px solid rgba(0,122,114,0.2);">2–5%</div>
+            <div class="tier-card-share" style="background: rgba(6,165,154,0.06); color: var(--teal-d); border: 1px solid rgba(6,165,154,0.16);">2&ndash;5%</div>
           </div>
           <div class="tier-card-body">
             <div class="tier-card-title">Human-in-the-Loop</div>
@@ -837,24 +923,25 @@
           </div>
         </div>
 
-        <!-- Composition -->
         <div class="tier-card">
-          <div class="tier-card-head" style="background: rgba(122, 61, 214, 0.06);">
+          <div class="tier-card-head" style="background: rgba(115,3,148,0.04);">
             <div class="tier-card-dot" style="background: var(--purple);"></div>
             <div class="tier-card-tier" style="color: var(--purple-d);">Compose</div>
-            <div class="tier-card-share" style="background: rgba(122, 61, 214, 0.08); color: var(--purple-d); border: 1px solid rgba(122, 61, 214, 0.2);">&lt;1%</div>
+            <div class="tier-card-share" style="background: rgba(115,3,148,0.06); color: var(--purple-d); border: 1px solid rgba(115,3,148,0.14);">&lt;1%</div>
           </div>
           <div class="tier-card-body">
             <div class="tier-card-title">Novel Treatment</div>
-            <div class="tier-card-desc">No catalogued action clears threshold. Composer async-drafts a new treatment — channel, offer, content — then re-runs every rail deterministically. Rails-checked drafts land in the unified Review Queue for approval.</div>
+            <div class="tier-card-desc">No catalogued action clears threshold. Composer async-drafts a new treatment &mdash; channel, offer, content &mdash; then re-runs every rail deterministically. Rails-checked drafts land in the unified Review Queue for approval.</div>
             <div class="tier-card-cue">Fires when: catalogue has a gap</div>
           </div>
         </div>
       </div>
 
-      <div style="background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 16px 22px; display: flex; align-items: center; gap: 14px; box-shadow: var(--shadow-sm);">
-        <div style="font-size: 20px; flex-shrink: 0;">🔀</div>
-        <p style="font-size: 13px; color: var(--muted); line-height: 1.65;"><strong style="color: var(--ink);">How tiers are selected:</strong> Tier 1 runs first — always. If the score gap is narrow or the winner is low-confidence, Tier 1.5 re-ranks. If the picture is still ambiguous, Tier 2 escalates to a human with an agent-drafted rationale. If <em>nothing</em> in the catalogue fits, composition kicks in. Every tier writes the same audit trace to <span style="font-family: var(--mono); font-size: 11px;">Decision_Trace__c</span> — schema-versioned JSON with eligibility, scores, reasoning, and rails evaluated.</p>
+      <div class="callout-box">
+        <div class="callout-box-icon" style="background:rgba(2,42,192,0.06);border-color:rgba(2,42,192,0.14);">
+          <i class="ph-duotone ph-shuffle" style="color:#022AC0;"></i>
+        </div>
+        <p style="font-size: 13px; color: var(--muted); line-height: 1.65;"><strong style="color: var(--ink);">How tiers are selected:</strong> Tier 1 runs first &mdash; always. If the score gap is narrow or the winner is low-confidence, Tier 1.5 re-ranks. If the picture is still ambiguous, Tier 2 escalates to a human with an agent-drafted rationale. If <em>nothing</em> in the catalogue fits, composition kicks in. Every tier writes the same audit trace to <span style="font-family: var(--mono); font-size: 11px;">Decision_Trace__c</span> &mdash; schema-versioned JSON with eligibility, scores, reasoning, and rails evaluated.</p>
       </div>
     </div>
   </div>
@@ -862,31 +949,39 @@
   <!-- TRIGGER -->
   <div class="section">
     <div class="step-head">
-      <div class="step-num" style="background:rgba(2,42,192,0.1);color:#022AC0;border-color:rgba(2,42,192,0.2);font-size:26px;">⚡</div>
+      <div class="step-num" style="background:rgba(2,42,192,0.06);border-color:rgba(2,42,192,0.16);">
+        <i class="ph-duotone ph-lightning" style="color:#022AC0;font-size:22px;"></i>
+      </div>
       <div>
         <div class="step-title">The Trigger</div>
-        <div class="step-desc">What fires arbitration — configured per module as <em>manual</em>, <em>scheduled</em>, or <em>real-time</em></div>
+        <div class="step-desc">What fires arbitration &mdash; configured per module as <em>manual</em>, <em>scheduled</em>, or <em>real-time</em></div>
       </div>
     </div>
 
     <div class="trigger-primary">
-      <div class="trigger-primary-label">Primary trigger — Data Cloud real-time segment activation</div>
+      <div class="trigger-primary-label">Primary trigger &mdash; Data Cloud real-time segment activation</div>
       <p>Every module has its own <strong>NBA_Module_Trigger__c</strong> rows. In <em>real_time</em> mode, a Data Cloud Real-Time Segment publishes a generic <strong>NBA_Decision_Trigger__e</strong> platform event. A handler Flow resolves the Contact, stamps the module + trigger type, and invokes the arbitration engine. Sub-second from segment entry to Decision record.</p>
     </div>
 
     <div class="trigger-alts">
       <div class="trigger-alt">
-        <div class="trigger-alt-icon">🕐</div>
+        <div class="trigger-alt-icon" style="background:rgba(0,87,184,0.06);border-color:rgba(0,87,184,0.14);">
+          <i class="ph-duotone ph-clock" style="color:#0057B8;"></i>
+        </div>
         <div class="trigger-alt-title">Scheduled</div>
-        <div class="trigger-alt-desc"><strong>NBASegmentTriggerSchedulable</strong> — hourly Apex. Walks every active <em>scheduled</em> trigger, evaluates its segment, and fires arbitration for each member. Useful for morning rep briefings and nightly nurture sweeps.</div>
+        <div class="trigger-alt-desc"><strong>NBASegmentTriggerSchedulable</strong> &mdash; hourly Apex. Walks every active <em>scheduled</em> trigger, evaluates its segment, and fires arbitration for each member. Useful for morning rep briefings and nightly nurture sweeps.</div>
       </div>
       <div class="trigger-alt">
-        <div class="trigger-alt-icon">🔌</div>
+        <div class="trigger-alt-icon" style="background:rgba(6,165,154,0.06);border-color:rgba(6,165,154,0.14);">
+          <i class="ph-duotone ph-plugs-connected" style="color:#06A59A;"></i>
+        </div>
         <div class="trigger-alt-title">Real-Time API</div>
-        <div class="trigger-alt-desc"><strong>POST /services/apexrest/nba/v1/decide</strong> — upstream systems get a decision synchronously. Verbose mode returns the full trace. Same response contract as the MCP tool.</div>
+        <div class="trigger-alt-desc"><strong>POST /services/apexrest/nba/v1/decide</strong> &mdash; upstream systems get a decision synchronously. Verbose mode returns the full trace. Same response contract as the MCP tool.</div>
       </div>
       <div class="trigger-alt">
-        <div class="trigger-alt-icon">🤖</div>
+        <div class="trigger-alt-icon" style="background:rgba(115,3,148,0.04);border-color:rgba(115,3,148,0.12);">
+          <i class="ph-duotone ph-robot" style="color:#730394;"></i>
+        </div>
         <div class="trigger-alt-title">Manual / Agent</div>
         <div class="trigger-alt-desc">Management Agent, Live Simulator, or an MCP tool call via <strong>InvokeArbitration</strong> (global @InvocableMethod). Used for testing, rep-initiated decisions, and agent-driven orchestration.</div>
       </div>
@@ -898,17 +993,19 @@
   <!-- RAILS -->
   <div class="section">
     <div class="step-head">
-      <div class="step-num" style="background:rgba(196,28,0,0.08);color:#C41C00;border-color:rgba(196,28,0,0.2);">🛡️</div>
+      <div class="step-num" style="background:rgba(194,57,52,0.06);border-color:rgba(194,57,52,0.16);">
+        <i class="ph-duotone ph-shield-check" style="color:#C23934;font-size:22px;"></i>
+      </div>
       <div>
         <div class="step-title">The Rails</div>
         <div class="step-desc">Constitutional checks. Enforced in Apex. Never bypassed by reasoning.</div>
       </div>
     </div>
 
-    <p class="muted-p">Every decision — Tier 1, Tier 1.5, Tier 2, composed — runs through the same rails. They exist precisely because agents can be wrong. Agents <em>cannot</em> convince the rails layer. Humans configure them. Compliance, finance, and operations own them.</p>
+    <p class="muted-p">Every decision &mdash; Tier 1, Tier 1.5, Tier 2, composed &mdash; runs through the same rails. They exist precisely because agents can be wrong. Agents <em>cannot</em> convince the rails layer. Humans configure them. Compliance, finance, and operations own them.</p>
 
     <div class="rails-wrap">
-      <div class="rails-label">Rails evaluated per decision · persisted to Decision_Trace__c</div>
+      <div class="rails-label">Rails evaluated per decision &middot; persisted to Decision_Trace__c</div>
 
       <div class="rail-row">
         <div class="rail-name">Global suppression</div>
@@ -942,17 +1039,17 @@
       </div>
     </div>
 
-    <p style="font-size: 13px; color: var(--muted); margin-top: 18px; line-height: 1.7;"><strong style="color: var(--ink);">Restraint is a first-class outcome.</strong> When every action fails a rail, the engine writes a <em>null_action</em> row with the specific suppression reason rather than silently returning nothing. Einstein Studio trains on these rows too — "we chose not to speak to this contact" is a training signal, not an absence of one.</p>
+    <p style="font-size: 13px; color: var(--muted); margin-top: 18px; line-height: 1.7;"><strong style="color: var(--ink);">Restraint is a first-class outcome.</strong> When every action fails a rail, the engine writes a <em>null_action</em> row with the specific suppression reason rather than silently returning nothing. Einstein Studio trains on these rows too &mdash; "we chose not to speak to this contact" is a training signal, not an absence of one.</p>
   </div>
 
   <!-- STEP 1 -->
   <div class="section-alt">
     <div class="section">
       <div class="step-head">
-        <div class="step-num" style="background:rgba(4,225,203,0.15);color:#007A72;border-color:rgba(4,225,203,0.35);">01</div>
+        <div class="step-num" style="background:rgba(6,165,154,0.08);border-color:rgba(6,165,154,0.18);">01</div>
         <div>
           <div class="step-title">Load the NBA Catalogue</div>
-          <div class="step-desc">Query the eligible actions for this module · packaged as first-class <em>NBAAction__c</em> records — not rules, not code</div>
+          <div class="step-desc">Query the eligible actions for this module &middot; packaged as first-class <em>NBAAction__c</em> records &mdash; not rules, not code</div>
         </div>
       </div>
 
@@ -961,7 +1058,7 @@
       <div class="catalogue-wrap">
         <div class="catalogue-header">
           <div class="catalogue-header-dot"></div>
-          <div class="catalogue-header-label">NBAAction__c · Active records for Churn Prevention module</div>
+          <div class="catalogue-header-label">NBAAction__c &middot; Active records for Churn Prevention module</div>
         </div>
         <div class="catalogue-rows">
           <div class="catalogue-row header">
@@ -970,21 +1067,21 @@
           <div class="catalogue-row">
             <div class="cr-id">A01</div>
             <div class="cr-name">Retention Discount 20%</div>
-            <div class="cr-criteria">Score ≥ 0.60, budget &lt; cap</div>
+            <div class="cr-criteria">Score &ge; 0.60, budget &lt; cap</div>
             <div class="cr-chip cr-mode-model">model</div>
             <div class="cr-channel">email</div>
           </div>
           <div class="catalogue-row">
             <div class="cr-id">A02</div>
             <div class="cr-name">Loyalty Reward</div>
-            <div class="cr-criteria">Score ≥ 0.50, Loyalty_Tier ≥ 2</div>
+            <div class="cr-criteria">Score &ge; 0.50, Loyalty_Tier &ge; 2</div>
             <div class="cr-chip cr-mode-model">model</div>
             <div class="cr-channel">push</div>
           </div>
           <div class="catalogue-row">
             <div class="cr-id">A03</div>
             <div class="cr-name">Relationship Manager Call</div>
-            <div class="cr-criteria">Score ≥ 0.75, CLV high</div>
+            <div class="cr-criteria">Score &ge; 0.75, CLV high</div>
             <div class="cr-chip cr-mode-model">model</div>
             <div class="cr-channel">outbound_call</div>
           </div>
@@ -997,7 +1094,7 @@
           </div>
           <div class="catalogue-row">
             <div class="cr-id">A05</div>
-            <div class="cr-name">Fraud Alert <span class="badge-inline" style="background: rgba(196,28,0,0.08); color: var(--red); border: 1px solid rgba(196,28,0,0.25); margin-left: 6px;">CRITICAL</span></div>
+            <div class="cr-name">Fraud Alert <span class="badge-inline" style="background: rgba(194,57,52,0.05); color: var(--red); border: 1px solid rgba(194,57,52,0.18); margin-left: 6px;">CRITICAL</span></div>
             <div class="cr-criteria">Rule: Fraud_Flag__c = true</div>
             <div class="cr-chip cr-mode-rule">rule</div>
             <div class="cr-channel">sms</div>
@@ -1007,11 +1104,11 @@
 
       <!-- SCORING MODE CALLOUT -->
       <div style="margin-top: 20px; background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 22px 26px; box-shadow: var(--shadow-sm);">
-        <div style="font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--blue2); margin-bottom: 14px;">v9 · Scoring Mode Abstraction</div>
+        <div style="font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--blue); margin-bottom: 14px;">Scoring Mode Abstraction</div>
         <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 18px;">
           <div>
             <div style="font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 5px;"><span class="cr-chip cr-mode-model" style="margin-right:6px;">model</span> Predictive</div>
-            <div style="font-size: 12px; color: var(--muted); line-height: 1.6;">Einstein Studio or external model returns 0–1. Weighted by priority and response_weight.</div>
+            <div style="font-size: 12px; color: var(--muted); line-height: 1.6;">Einstein Studio or external model returns 0&ndash;1. Weighted by priority and response_weight.</div>
           </div>
           <div>
             <div style="font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 5px;"><span class="cr-chip cr-mode-segment" style="margin-right:6px;">segment</span> Membership</div>
@@ -1029,10 +1126,10 @@
   <!-- STEP 2 -->
   <div class="section">
     <div class="step-head">
-      <div class="step-num" style="background:rgba(0,87,184,0.12);color:#0057B8;border-color:rgba(0,87,184,0.25);">02</div>
+      <div class="step-num" style="background:rgba(0,87,184,0.08);border-color:rgba(0,87,184,0.18);">02</div>
       <div>
         <div class="step-title">Score &amp; Arbitrate</div>
-        <div class="step-desc">For every eligible action, three sub-steps — then the winner is weighted-ranked deterministically</div>
+        <div class="step-desc">For every eligible action, three sub-steps &mdash; then the winner is weighted-ranked deterministically</div>
       </div>
     </div>
 
@@ -1040,75 +1137,72 @@
       <div class="loop-label">For each eligible NBAAction__c in module</div>
       <div class="loop-steps">
         <div class="loop-step">
-          <div class="loop-step-num" style="color:#007A72;">① Eligibility</div>
+          <div class="loop-step-num" style="color:#06A59A;">1 &middot; Eligibility</div>
           <div class="loop-step-title">Rails gate</div>
-          <div class="loop-step-desc">Segments, exclusions, dates, product holdings, budget. Pure logic. Most drop-outs happen here — no model call needed.</div>
-          <div class="loop-step-tag" style="background:rgba(0,122,114,0.08);color:#007A72;border:1px solid rgba(0,122,114,0.25);">Rules only</div>
+          <div class="loop-step-desc">Segments, exclusions, dates, product holdings, budget. Pure logic. Most drop-outs happen here &mdash; no model call needed.</div>
+          <div class="loop-step-tag" style="background:rgba(6,165,154,0.06);color:#06A59A;border:1px solid rgba(6,165,154,0.18);">Rules only</div>
         </div>
-        <div class="loop-arr">›</div>
+        <div class="loop-arr">&rsaquo;</div>
         <div class="loop-step">
-          <div class="loop-step-num" style="color:var(--blue2);">② Score</div>
+          <div class="loop-step-num" style="color:var(--blue);">2 &middot; Score</div>
           <div class="loop-step-title">Mode-aware scoring</div>
-          <div class="loop-step-desc">v9 branches on <em>Scoring_Mode__c</em> — Einstein/external callout for <em>model</em>, hardcoded 1.0 for <em>segment</em>, criterion evaluation for <em>rule</em>. Zero callouts when not needed.</div>
-          <div class="loop-step-tag" style="background:rgba(2,42,192,0.08);color:var(--blue2);border:1px solid rgba(2,42,192,0.22);">Model · Segment · Rule</div>
+          <div class="loop-step-desc">Branches on <em>Scoring_Mode__c</em> &mdash; Einstein/external callout for <em>model</em>, hardcoded 1.0 for <em>segment</em>, criterion evaluation for <em>rule</em>. Zero callouts when not needed.</div>
+          <div class="loop-step-tag" style="background:rgba(2,42,192,0.06);color:var(--blue);border:1px solid rgba(2,42,192,0.16);">Model &middot; Segment &middot; Rule</div>
         </div>
-        <div class="loop-arr">›</div>
+        <div class="loop-arr">&rsaquo;</div>
         <div class="loop-step">
-          <div class="loop-step-num" style="color:#C89000;">③ Weight</div>
-          <div class="loop-step-title">score × priority × response_weight</div>
+          <div class="loop-step-num" style="color:#A87700;">3 &middot; Weight</div>
+          <div class="loop-step-title">score &times; priority &times; response_weight</div>
           <div class="loop-step-desc">Admin-tunable multipliers bias the fast path without writing a reasoning prompt. Top two scores feed the tier decision.</div>
-          <div class="loop-step-tag" style="background:rgba(200,144,0,0.08);color:#C89000;border:1px solid rgba(200,144,0,0.25);">Deterministic</div>
+          <div class="loop-step-tag" style="background:rgba(228,162,1,0.06);color:#A87700;border:1px solid rgba(228,162,1,0.18);">Deterministic</div>
         </div>
       </div>
     </div>
 
     <div class="code-block">
-      <span class="c-comment">// InvokeArbitration — the one @InvocableMethod that runs a decision</span><br/>
+      <span class="c-comment">// InvokeArbitration &mdash; the one @InvocableMethod that runs a decision</span><br/>
       <span class="c-key">ArbitrationOutput</span> result = <span class="c-key">InvokeArbitration</span>.invoke(new <span class="c-key">Input</span> {<br/>
       &nbsp;&nbsp;<span class="c-str">contactId</span>: <span class="c-val">contactId</span>,<br/>
       &nbsp;&nbsp;<span class="c-str">moduleName</span>: <span class="c-val">'Churn Prevention'</span>,<br/>
       &nbsp;&nbsp;<span class="c-str">triggerType</span>: <span class="c-val">'segment_realtime'</span>,<br/>
       &nbsp;&nbsp;<span class="c-str">excludeActionIds</span>: <span class="c-val">chaseHistory</span>  <span class="c-comment">// outcome chasing</span><br/>
       });<br/>
-      <span class="c-comment">// → winner, tier, score_gap, low_confidence, reasoning_used, decision_trace</span><br/>
-      <span class="c-comment">// → written to NBADecision__c with Decision_Trace__c populated inline</span>
+      <span class="c-comment">// &rarr; winner, tier, score_gap, low_confidence, reasoning_used, decision_trace</span><br/>
+      <span class="c-comment">// &rarr; written to NBADecision__c with Decision_Trace__c populated inline</span>
     </div>
 
-    <!-- Tier 1.5 / Tier 2 / Composition escalation ladder -->
-    <div style="margin-top: 20px; background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 24px 26px; box-shadow: var(--shadow);">
-      <div style="font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink); margin-bottom: 20px;">Escalation ladder — when Tier 1 isn't enough</div>
+    <!-- Escalation ladder -->
+    <div style="margin-top: 20px; background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 24px 26px; box-shadow: var(--shadow-sm);">
+      <div style="font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink); margin-bottom: 20px;">Escalation ladder &mdash; when Tier 1 isn&rsquo;t enough</div>
 
       <div style="display: grid; grid-template-columns: 1fr; gap: 14px;">
-        <!-- Tier 1.5 -->
         <div style="display: grid; grid-template-columns: 140px 1fr; gap: 18px; padding: 16px 0; border-bottom: 1px dashed var(--border);">
           <div>
             <div style="font-family: var(--mono); font-size: 10px; font-weight: 700; color: var(--lblue-d); margin-bottom: 4px;">TIER 1.5</div>
             <div style="font-size: 13px; font-weight: 700; color: var(--ink);">Re-rank</div>
           </div>
           <div>
-            <div style="font-size: 13px; color: var(--text); line-height: 1.65;"><strong>Top two scores within <em>Reasoning_Gap_Threshold__c</em>.</strong> <code style="font-family: var(--mono); font-size: 12px; background: rgba(0,87,184,0.06); padding: 1px 6px; border-radius: 4px;">Tier1ReasoningArbiter</code> dispatches the shortlist + full context to Claude Haiku via Einstein Trust Layer. JSON returned, validated, winner swapped if the model has clear contextual rationale. Hard 3s CPU budget. Parse failures are silent fallbacks — the deterministic winner stands.</div>
+            <div style="font-size: 13px; color: var(--muted); line-height: 1.65;"><strong style="color:var(--ink);">Top two scores within <em>Reasoning_Gap_Threshold__c</em>.</strong> <code style="font-family: var(--mono); font-size: 12px; background: rgba(0,87,184,0.04); padding: 1px 6px; border-radius: 4px;">Tier1ReasoningArbiter</code> dispatches the shortlist + full context to Claude Haiku via Einstein Trust Layer. JSON returned, validated, winner swapped if the model has clear contextual rationale. Hard 3s CPU budget. Parse failures are silent fallbacks &mdash; the deterministic winner stands.</div>
           </div>
         </div>
 
-        <!-- Tier 2 -->
         <div style="display: grid; grid-template-columns: 140px 1fr; gap: 18px; padding: 16px 0; border-bottom: 1px dashed var(--border);">
           <div>
             <div style="font-family: var(--mono); font-size: 10px; font-weight: 700; color: var(--teal-d); margin-bottom: 4px;">TIER 2</div>
             <div style="font-size: 13px; font-weight: 700; color: var(--ink);">Human review</div>
           </div>
           <div>
-            <div style="font-size: 13px; color: var(--text); line-height: 1.65;"><strong>Still ambiguous or flagged for mandatory review.</strong> <code style="font-family: var(--mono); font-size: 12px; background: rgba(0,122,114,0.06); padding: 1px 6px; border-radius: 4px;">Tier2AgentDrafterQueueable</code> async-writes an <em>Agent_Rationale__c</em> + recommended action onto the Decision. Slack Block Kit approval card fires. Approver sees the agent's pick, the deterministic winner, and every eligible action in the module — picks, swaps, or dismisses. Siblings in the same run supersede.</div>
+            <div style="font-size: 13px; color: var(--muted); line-height: 1.65;"><strong style="color:var(--ink);">Still ambiguous or flagged for mandatory review.</strong> <code style="font-family: var(--mono); font-size: 12px; background: rgba(6,165,154,0.04); padding: 1px 6px; border-radius: 4px;">Tier2AgentDrafterQueueable</code> async-writes an <em>Agent_Rationale__c</em> + recommended action onto the Decision. Slack Block Kit approval card fires. Approver sees the agent's pick, the deterministic winner, and every eligible action in the module &mdash; picks, swaps, or dismisses. Siblings in the same run supersede.</div>
           </div>
         </div>
 
-        <!-- Composition -->
         <div style="display: grid; grid-template-columns: 140px 1fr; gap: 18px; padding: 16px 0;">
           <div>
             <div style="font-family: var(--mono); font-size: 10px; font-weight: 700; color: var(--purple-d); margin-bottom: 4px;">COMPOSE</div>
             <div style="font-size: 13px; font-weight: 700; color: var(--ink);">Novel treatment</div>
           </div>
           <div>
-            <div style="font-size: 13px; color: var(--text); line-height: 1.65;"><strong>No action clears threshold — catalogue gap.</strong> <code style="font-family: var(--mono); font-size: 12px; background: rgba(122,61,214,0.06); padding: 1px 6px; border-radius: 4px;">CompositionQueueable</code> async-invokes a composer model, drafts channel + offer + content, then <em>re-runs every rail deterministically</em>. Rails-checked drafts land in <em>NBA_Composed_Treatment__c</em> as <em>pending_approval</em> with a full Rails_Checked__c audit trail. Approved compositions can be promoted to first-class catalogued actions.</div>
+            <div style="font-size: 13px; color: var(--muted); line-height: 1.65;"><strong style="color:var(--ink);">No action clears threshold &mdash; catalogue gap.</strong> <code style="font-family: var(--mono); font-size: 12px; background: rgba(115,3,148,0.04); padding: 1px 6px; border-radius: 4px;">CompositionQueueable</code> async-invokes a composer model, drafts channel + offer + content, then <em>re-runs every rail deterministically</em>. Rails-checked drafts land in <em>NBA_Composed_Treatment__c</em> as <em>pending_approval</em> with a full Rails_Checked__c audit trail. Approved compositions can be promoted to first-class catalogued actions.</div>
           </div>
         </div>
       </div>
@@ -1119,10 +1213,10 @@
   <div class="section-alt">
     <div class="section">
       <div class="step-head">
-        <div class="step-num" style="background:rgba(252,192,3,0.15);color:#A87700;border-color:rgba(252,192,3,0.35);">03</div>
+        <div class="step-num" style="background:rgba(228,162,1,0.08);border-color:rgba(228,162,1,0.18);">03</div>
         <div>
           <div class="step-title">Channel Execution</div>
-          <div class="step-desc">v8 shipped a pluggable dispatcher framework — four channels live, more via <em>Type.forName</em> probe chain</div>
+          <div class="step-desc">Pluggable dispatcher framework &mdash; four channels live, more via <em>Type.forName</em> probe chain</div>
         </div>
       </div>
 
@@ -1131,7 +1225,9 @@
       <div class="exec-channels">
         <div class="exec-channel">
           <div class="ec-head">
-            <div class="ec-icon">💬</div>
+            <div class="ec-icon" style="background:rgba(2,42,192,0.06);border-color:rgba(2,42,192,0.14);">
+              <i class="ph-duotone ph-chat-circle" style="color:#022AC0;"></i>
+            </div>
             <div class="ec-title">Slack</div>
           </div>
           <div class="ec-body">
@@ -1140,7 +1236,9 @@
         </div>
         <div class="exec-channel">
           <div class="ec-head">
-            <div class="ec-icon">👤</div>
+            <div class="ec-icon" style="background:rgba(6,165,154,0.06);border-color:rgba(6,165,154,0.14);">
+              <i class="ph-duotone ph-user" style="color:#06A59A;"></i>
+            </div>
             <div class="ec-title">Sales Cloud</div>
           </div>
           <div class="ec-body">
@@ -1149,7 +1247,9 @@
         </div>
         <div class="exec-channel">
           <div class="ec-head">
-            <div class="ec-icon">📧</div>
+            <div class="ec-icon" style="background:rgba(0,87,184,0.06);border-color:rgba(0,87,184,0.14);">
+              <i class="ph-duotone ph-envelope-simple" style="color:#0057B8;"></i>
+            </div>
             <div class="ec-title">MC Next Flow</div>
           </div>
           <div class="ec-body">
@@ -1158,7 +1258,9 @@
         </div>
         <div class="exec-channel">
           <div class="ec-head">
-            <div class="ec-icon">🔗</div>
+            <div class="ec-icon" style="background:rgba(115,3,148,0.04);border-color:rgba(115,3,148,0.12);">
+              <i class="ph-duotone ph-link-simple" style="color:#730394;"></i>
+            </div>
             <div class="ec-title">Webhook</div>
           </div>
           <div class="ec-body">
@@ -1168,8 +1270,10 @@
       </div>
 
       <div class="exec-parallel">
-        <div class="exec-parallel-icon">🧪</div>
-        <p><strong>Exploration mode:</strong> a configurable percentage of Tier 1 decisions deliberately re-weight channel or action choice using Thompson sampling over Laplace-smoothed acceptance rates. Nightly batch updates the weights. Contextual bandit behaviour — the engine keeps learning which channels actually work for which segments, rather than always serving the historical winner.</p>
+        <div class="exec-parallel-icon">
+          <i class="ph-duotone ph-flask" style="color:var(--gold-d);"></i>
+        </div>
+        <p><strong>Exploration mode:</strong> a configurable percentage of Tier 1 decisions deliberately re-weight channel or action choice using Thompson sampling over Laplace-smoothed acceptance rates. Nightly batch updates the weights. Contextual bandit behaviour &mdash; the engine keeps learning which channels actually work for which segments, rather than always serving the historical winner.</p>
       </div>
     </div>
   </div>
@@ -1177,34 +1281,42 @@
   <!-- STEP 4 -->
   <div class="section">
     <div class="step-head">
-      <div class="step-num" style="background:rgba(0,87,184,0.12);color:#0057B8;border-color:rgba(0,87,184,0.25);">04</div>
+      <div class="step-num" style="background:rgba(0,87,184,0.08);border-color:rgba(0,87,184,0.18);">04</div>
       <div>
         <div class="step-title">Feedback Loop</div>
-        <div class="step-desc">Outcome capture · Data Cloud ingestion · cadence-gated retraining · external model feedback</div>
+        <div class="step-desc">Outcome capture &middot; Data Cloud ingestion &middot; cadence-gated retraining &middot; external model feedback</div>
       </div>
     </div>
 
     <div class="feedback-loop">
       <div class="fb-node">
-        <div class="fb-node-icon">✅</div>
+        <div class="fb-node-icon" style="background:rgba(6,165,154,0.06);border-color:rgba(6,165,154,0.14);">
+          <i class="ph-duotone ph-check-circle" style="color:#06A59A;"></i>
+        </div>
         <div class="fb-node-title">Outcome captured</div>
-        <div class="fb-node-desc">Accepted / declined / converted / null_action. Every tier writes — including restraint rows.</div>
+        <div class="fb-node-desc">Accepted / declined / converted / null_action. Every tier writes &mdash; including restraint rows.</div>
       </div>
-      <div class="fb-arr">›</div>
+      <div class="fb-arr">&rsaquo;</div>
       <div class="fb-node">
-        <div class="fb-node-icon">☁️</div>
+        <div class="fb-node-icon" style="background:rgba(2,42,192,0.06);border-color:rgba(2,42,192,0.14);">
+          <i class="ph-duotone ph-cloud" style="color:#022AC0;"></i>
+        </div>
         <div class="fb-node-title">Data Cloud stream</div>
         <div class="fb-node-desc">NBA_Decision__dlm ingests every row. Six Calculated Insights aggregate served, accepted, declined, and null_action counts per Unified Individual.</div>
       </div>
-      <div class="fb-arr">›</div>
+      <div class="fb-arr">&rsaquo;</div>
       <div class="fb-node">
-        <div class="fb-node-icon">🧠</div>
+        <div class="fb-node-icon" style="background:rgba(115,3,148,0.04);border-color:rgba(115,3,148,0.12);">
+          <i class="ph-duotone ph-brain" style="color:#730394;"></i>
+        </div>
         <div class="fb-node-title">Retrain</div>
         <div class="fb-node-desc"><em>NBARetrainingScheduler</em> gates per-module cadence (20h/6d/28d). Refreshes CIs, waits for IR, triggers Einstein Studio training.</div>
       </div>
-      <div class="fb-arr">›</div>
+      <div class="fb-arr">&rsaquo;</div>
       <div class="fb-node">
-        <div class="fb-node-icon">📡</div>
+        <div class="fb-node-icon" style="background:rgba(228,162,1,0.06);border-color:rgba(228,162,1,0.14);">
+          <i class="ph-duotone ph-broadcast" style="color:#A87700;"></i>
+        </div>
         <div class="fb-node-title">External feedback</div>
         <div class="fb-node-desc">Vertex / SageMaker / Azure endpoints receive symmetric <em>{features, outcome}</em> posts so BYOM models learn too.</div>
       </div>
@@ -1212,7 +1324,7 @@
 
     <div class="retrain-callout">
       <div class="rc-label">Why the loop matters</div>
-      <div class="rc-body">On day one, Einstein scores on historical CRM and ERP data — a good starting point, not yet tuned to this org's reps, regions, and contacts. <strong>Every accepted action, every declined offer, every null_action restraint row is a training signal.</strong> The scheduler refuses to retrain while Identity Resolution is running (IR re-runs spike credits), skips locked CIs, and posts a Block Kit summary on success. After a few retraining cycles the model is meaningfully more accurate than any rules-based approach — and the composition agent has learned which catalogue gaps to fill.</div>
+      <div class="rc-body">On day one, Einstein scores on historical CRM and ERP data &mdash; a good starting point, not yet tuned to this org's reps, regions, and contacts. <strong>Every accepted action, every declined offer, every null_action restraint row is a training signal.</strong> The scheduler refuses to retrain while Identity Resolution is running (IR re-runs spike credits), skips locked CIs, and posts a Block Kit summary on success. After a few retraining cycles the model is meaningfully more accurate than any rules-based approach &mdash; and the composition agent has learned which catalogue gaps to fill.</div>
     </div>
   </div>
 
@@ -1221,14 +1333,16 @@
   <!-- PROACTIVE AGENTS -->
   <div class="section">
     <div class="step-head">
-      <div class="step-num" style="background:rgba(122, 61, 214, 0.08);color:#5521A8;border-color:rgba(122, 61, 214, 0.25);font-size:22px;">🧭</div>
+      <div class="step-num" style="background:rgba(115,3,148,0.04);border-color:rgba(115,3,148,0.12);">
+        <i class="ph-duotone ph-compass" style="color:#730394;font-size:22px;"></i>
+      </div>
       <div>
         <div class="step-title">The Proactive Agentic Layer</div>
-        <div class="step-desc">The engine reasons about itself daily — not just per-decision. Operator reviews suggestions instead of watching dashboards.</div>
+        <div class="step-desc">The engine reasons about itself daily &mdash; not just per-decision. Operator reviews suggestions instead of watching dashboards.</div>
       </div>
     </div>
 
-    <p class="muted-p">Three queueable agents run nightly, reading the Decision Audit Trace and outcome-chase chains. They notice patterns, propose changes, and drop insights into the unified Review Queue. Nothing self-applies by default — the human approves. Over time, approvals train which insights are worth surfacing.</p>
+    <p class="muted-p">Three queueable agents run nightly, reading the Decision Audit Trace and outcome-chase chains. They notice patterns, propose changes, and drop insights into the unified Review Queue. Nothing self-applies by default &mdash; the human approves. Over time, approvals train which insights are worth surfacing.</p>
 
     <div class="agents-grid">
       <div class="agent-card">
@@ -1255,13 +1369,13 @@
           <div class="agent-title">Journey Suggestion Agent</div>
         </div>
         <div class="agent-body">
-          <p>Reads outcome-chase chains. When a pattern (e.g. discount → follow-up → escalation) repeats 5+ times with high acceptance, drafts a concrete Flow / MC Next journey spec.</p>
+          <p>Reads outcome-chase chains. When a pattern (e.g. discount &rarr; follow-up &rarr; escalation) repeats 5+ times with high acceptance, drafts a concrete Flow / MC Next journey spec.</p>
         </div>
       </div>
     </div>
 
-    <div style="margin-top: 16px; background: rgba(122, 61, 214, 0.04); border: 1px solid rgba(122, 61, 214, 0.2); border-radius: 12px; padding: 18px 22px;">
-      <p style="font-size: 13px; color: var(--text); line-height: 1.65;"><strong style="color: var(--purple-d);">This is the architectural move.</strong> Agents that reason <em>about the system</em>, not just per decision. Cannot be retrofitted onto a rules engine — rules are deterministic, reasoning is non-deterministic. Architecturally incompatible unless you design for it from day one. The operator's job shifts from "watch dashboards and adjust" to "review suggestions and approve."</p>
+    <div style="margin-top: 16px; background: rgba(115, 3, 148, 0.03); border: 1px solid rgba(115, 3, 148, 0.14); border-radius: 12px; padding: 18px 22px;">
+      <p style="font-size: 13px; color: var(--muted); line-height: 1.65;"><strong style="color: var(--purple-d);">This is the architectural move.</strong> Agents that reason <em>about the system</em>, not just per decision. Cannot be retrofitted onto a rules engine &mdash; rules are deterministic, reasoning is non-deterministic. Architecturally incompatible unless you design for it from day one. The operator's job shifts from "watch dashboards and adjust" to "review suggestions and approve."</p>
     </div>
   </div>
 
@@ -1269,10 +1383,12 @@
   <div class="section-alt">
     <div class="section">
       <div class="step-head">
-        <div class="step-num" style="background:rgba(2,42,192,0.08);color:#022AC0;border-color:rgba(2,42,192,0.2);">🔌</div>
+        <div class="step-num" style="background:rgba(2,42,192,0.06);border-color:rgba(2,42,192,0.14);">
+          <i class="ph-duotone ph-plugs-connected" style="color:#022AC0;font-size:22px;"></i>
+        </div>
         <div>
           <div class="step-title">Headless Surfaces</div>
-          <div class="step-desc">The decisioning engine is a callable service · same arbitration, three entry points</div>
+          <div class="step-desc">The decisioning engine is a callable service &middot; same arbitration, three entry points</div>
         </div>
       </div>
 
@@ -1284,13 +1400,13 @@
         </div>
         <div class="headless-card">
           <div class="headless-card-label">MCP Server</div>
-          <div class="headless-card-title">18 tools · JWT auth · stdio transport</div>
+          <div class="headless-card-title">33 tools &middot; JWT auth &middot; stdio transport</div>
           <div class="headless-card-desc">Typescript MCP server exposes arbitration, composition, outcomes, experiments, insights, and engine settings as agent-callable tools. Agents orchestrate across modules.</div>
         </div>
         <div class="headless-card">
           <div class="headless-card-label">Apex</div>
           <div class="headless-card-title">InvokeArbitration.invoke (global)</div>
-          <div class="headless-card-desc">@InvocableMethod — callable from Flow, another Apex class, or a Salesforce-hosted agent. Same response contract as REST and MCP.</div>
+          <div class="headless-card-desc">@InvocableMethod &mdash; callable from Flow, another Apex class, or a Salesforce-hosted agent. Same response contract as REST and MCP.</div>
         </div>
       </div>
     </div>
@@ -1299,10 +1415,12 @@
   <!-- PACKAGE SCOPE -->
   <div class="section">
     <div class="step-head">
-      <div class="step-num" style="background:rgba(0,122,114,0.1);color:#007A72;border-color:rgba(0,122,114,0.25);">📦</div>
+      <div class="step-num" style="background:rgba(6,165,154,0.06);border-color:rgba(6,165,154,0.14);">
+        <i class="ph-duotone ph-package" style="color:#06A59A;font-size:22px;"></i>
+      </div>
       <div>
         <div class="step-title">What's in the Package</div>
-        <div class="step-desc">v9.0.0 unlocked package · what ships vs what the customer configures post-install</div>
+        <div class="step-desc">v11.0.0 unlocked package &middot; what ships vs what the customer configures post-install</div>
       </div>
     </div>
 
@@ -1310,40 +1428,42 @@
       <div class="scope-label">Package scope audit</div>
       <div class="scope-grid">
         <div>
-          <div class="scope-col-label" style="color:#007A72;">✓ Ships in the package</div>
-          <div class="scope-item"><div class="dot" style="background:#007A72;"></div>Core objects: NBAAction, NBADecision, NBA_Module, NBA_Module_Trigger, NBA_Composed_Treatment, NBA_Experiment, NBA_Agent_Memory</div>
-          <div class="scope-item"><div class="dot" style="background:#007A72;"></div>Arbitration engine: InvokeArbitration + InvokeCrossModuleArbitration (both global)</div>
-          <div class="scope-item"><div class="dot" style="background:#007A72;"></div>Six Calculated Insights · cadence-gated NBARetrainingScheduler + Queueable</div>
-          <div class="scope-item"><div class="dot" style="background:#007A72;"></div>Decisioning Hub LWC app: Overview, Catalogue, Contact Policy, Live Simulator, Review Queue, Experiments, Engine Settings, Insight Queue</div>
-          <div class="scope-item"><div class="dot" style="background:#007A72;"></div>Management Agent · 15 GenAiFunctions · PostInstallSeeder</div>
-          <div class="scope-item"><div class="dot" style="background:#007A72;"></div>Slack surface: insight alerts, daily digest, Tier 2 approval cards, approve-from-Slack via Site</div>
-          <div class="scope-item"><div class="dot" style="background:#007A72;"></div>Proactive agent queueables: Model Debug, Segment Strategy, Journey Suggestion</div>
-          <div class="scope-item"><div class="dot" style="background:#007A72;"></div>Channel Execution Framework: Slack, Sales Cloud LWC, MC Next Flow, Webhook dispatchers</div>
-          <div class="scope-item"><div class="dot" style="background:#007A72;"></div>REST API + MCP server (18 tools) · Decisioning_Admin permission set</div>
+          <div class="scope-col-label" style="color:#06A59A;">Ships in the package</div>
+          <div class="scope-item"><div class="dot" style="background:#06A59A;"></div>Core objects: NBAAction, NBADecision, NBA_Module, NBA_Module_Trigger, NBA_Composed_Treatment, NBA_Experiment, NBA_Agent_Memory</div>
+          <div class="scope-item"><div class="dot" style="background:#06A59A;"></div>Arbitration engine: InvokeArbitration + InvokeCrossModuleArbitration (both global)</div>
+          <div class="scope-item"><div class="dot" style="background:#06A59A;"></div>Six Calculated Insights &middot; cadence-gated NBARetrainingScheduler + Queueable</div>
+          <div class="scope-item"><div class="dot" style="background:#06A59A;"></div>Decisioning Hub LWC app: Overview, Catalogue, Contact Policy, Live Simulator, Review Queue, Experiments, Engine Settings, Insight Queue</div>
+          <div class="scope-item"><div class="dot" style="background:#06A59A;"></div>Management Agent &middot; 15 GenAiFunctions &middot; PostInstallSeeder</div>
+          <div class="scope-item"><div class="dot" style="background:#06A59A;"></div>Slack surface: insight alerts, daily digest, Tier 2 approval cards, approve-from-Slack via Site</div>
+          <div class="scope-item"><div class="dot" style="background:#06A59A;"></div>Proactive agent queueables: Model Debug, Segment Strategy, Journey Suggestion</div>
+          <div class="scope-item"><div class="dot" style="background:#06A59A;"></div>Channel Execution Framework: Slack, Sales Cloud LWC, MC Next Flow, Webhook dispatchers</div>
+          <div class="scope-item"><div class="dot" style="background:#06A59A;"></div>REST API + MCP server (33 tools) &middot; Decisioning_Admin permission set</div>
         </div>
         <div>
-          <div class="scope-col-label" style="color:var(--lblue-d);">⚙ Configured post-install</div>
-          <div class="scope-item"><div class="dot" style="background:var(--lblue-d);"></div>Data Cloud bundles (Sales + Service) — org-level prerequisite, not package metadata</div>
-          <div class="scope-item"><div class="dot" style="background:var(--lblue-d);"></div>NBAAction catalogue — PostInstallSeeder loads defaults; customer tunes offers, weights, segments via the Catalogue Manager</div>
-          <div class="scope-item"><div class="dot" style="background:var(--lblue-d);"></div>Einstein Studio model training — run once from the Model Health card after CIs and the outcome Data Stream are live</div>
-          <div class="scope-item"><div class="dot" style="background:var(--lblue-d);"></div>Tier1ReasoningArbiter + Tier2AgentDrafter + CompositionComposer — <em>.forceignored</em>, direct-deployed on orgs with <em>aiplatform</em></div>
+          <div class="scope-col-label" style="color:var(--lblue-d);">Configured post-install</div>
+          <div class="scope-item"><div class="dot" style="background:var(--lblue-d);"></div>Data Cloud bundles (Sales + Service) &mdash; org-level prerequisite, not package metadata</div>
+          <div class="scope-item"><div class="dot" style="background:var(--lblue-d);"></div>NBAAction catalogue &mdash; PostInstallSeeder loads defaults; customer tunes offers, weights, segments via the Catalogue Manager</div>
+          <div class="scope-item"><div class="dot" style="background:var(--lblue-d);"></div>Einstein Studio model training &mdash; run once from the Model Health card after CIs and the outcome Data Stream are live</div>
+          <div class="scope-item"><div class="dot" style="background:var(--lblue-d);"></div>Tier1ReasoningArbiter + Tier2AgentDrafter + CompositionComposer &mdash; <em>.forceignored</em>, direct-deployed on orgs with <em>aiplatform</em></div>
           <div class="scope-item"><div class="dot" style="background:var(--lblue-d);"></div>Named Credentials: Einstein Trust Layer, Slack webhook, external model endpoints</div>
-          <div class="scope-item"><div class="dot" style="background:var(--lblue-d);"></div>Real-Time Segment + Data Action per trigger — Data Cloud configuration, not metadata</div>
-          <div class="scope-item"><div class="dot" style="background:var(--lblue-d);"></div>NBA_Decision__c → Data Cloud outcome stream — manual DMO setup via SetupCreateOutcomeStream walkthrough</div>
-          <div class="scope-item"><div class="dot" style="background:var(--lblue-d);"></div>GenAiPlugin topic metadata — on-org schema has drifted from the repo, tuned via Agentforce Builder UI</div>
-          <div class="scope-item"><div class="dot" style="background:var(--lblue-d);"></div>Decision Record Page flexipage activation — manual App Builder step per org default</div>
+          <div class="scope-item"><div class="dot" style="background:var(--lblue-d);"></div>Real-Time Segment + Data Action per trigger &mdash; Data Cloud configuration, not metadata</div>
+          <div class="scope-item"><div class="dot" style="background:var(--lblue-d);"></div>NBA_Decision__c &rarr; Data Cloud outcome stream &mdash; manual DMO setup via SetupCreateOutcomeStream walkthrough</div>
+          <div class="scope-item"><div class="dot" style="background:var(--lblue-d);"></div>GenAiPlugin topic metadata &mdash; on-org schema has drifted from the repo, tuned via Agentforce Builder UI</div>
+          <div class="scope-item"><div class="dot" style="background:var(--lblue-d);"></div>Decision Record Page flexipage activation &mdash; manual App Builder step per org default</div>
         </div>
       </div>
     </div>
 
-    <p style="font-size: 12.5px; color: var(--muted); margin-top: 20px; line-height: 1.7;"><strong style="color: var(--ink);">Post-install loop:</strong> install the package → assign <em>Decisioning_Admin</em> permission set → PostInstallSeeder creates CIs, seeds the catalogue, wires the Hub, schedules the agents → admin trains the model, wires the outcome Data Stream, and deploys the reasoning/drafter/composer classes. The operator's first deliberate decision is which actions to keep in the catalogue — not which Apex class to deploy.</p>
+    <p style="font-size: 12.5px; color: var(--muted); margin-top: 20px; line-height: 1.7;"><strong style="color: var(--ink);">Post-install loop:</strong> install the package &rarr; assign <em>Decisioning_Admin</em> permission set &rarr; PostInstallSeeder creates CIs, seeds the catalogue, wires the Hub, schedules the agents &rarr; admin trains the model, wires the outcome Data Stream, and deploys the reasoning/drafter/composer classes. The operator's first deliberate decision is which actions to keep in the catalogue &mdash; not which Apex class to deploy.</p>
   </div>
 
   <!-- BUILD EFFORT -->
   <div class="section-alt">
     <div class="section">
       <div class="step-head">
-        <div class="step-num" style="background:rgba(2,42,192,0.1);color:#022AC0;border-color:rgba(2,42,192,0.2);">🏗️</div>
+        <div class="step-num" style="background:rgba(2,42,192,0.06);border-color:rgba(2,42,192,0.14);">
+          <i class="ph-duotone ph-hard-hat" style="color:#022AC0;font-size:22px;"></i>
+        </div>
         <div>
           <div class="step-title">Install Timeline</div>
           <div class="step-desc">What a real customer spin-up takes once the package is in the org</div>
@@ -1352,24 +1472,24 @@
 
       <div class="effort-grid">
         <div class="effort-card">
-          <div class="effort-card-num">2–4h</div>
+          <div class="effort-card-num">2&ndash;4h</div>
           <div class="effort-card-label">Data Cloud basics</div>
-          <div class="effort-card-desc">Sales + Service bundles land Contact / Account / Case / Opportunity correctly. Identity Resolution runs. Hours, not weeks — the package assumes Data Cloud is already enabled on the org.</div>
+          <div class="effort-card-desc">Sales + Service bundles land Contact / Account / Case / Opportunity correctly. Identity Resolution runs. Hours, not weeks &mdash; the package assumes Data Cloud is already enabled on the org.</div>
         </div>
-        <div class="effort-card" style="border-top-color:#007A72;">
-          <div class="effort-card-num" style="color:#007A72;">Minutes</div>
+        <div class="effort-card" style="border-top-color:#06A59A;">
+          <div class="effort-card-num" style="color:#06A59A;">Minutes</div>
           <div class="effort-card-label">Package install</div>
           <div class="effort-card-desc"><em>sf package install</em> the unlocked package. PostInstallSeeder creates six CIs, seeds the NBAAction catalogue, wires the Decisioning Hub, and schedules the retraining + insight agents. Done in minutes.</div>
         </div>
-        <div class="effort-card" style="border-top-color:#C89000;">
-          <div class="effort-card-num" style="color:#C89000;">2 days</div>
+        <div class="effort-card" style="border-top-color:#A87700;">
+          <div class="effort-card-num" style="color:#A87700;">2 days</div>
           <div class="effort-card-label">Manual config</div>
-          <div class="effort-card-desc">Train the first Einstein model · wire the NBA_Decision outcome Data Stream · configure Named Credentials (Trust Layer, Slack) · deploy the <em>.forceignored</em> reasoning / drafter / composer classes · Real-Time Segment + Data Action per trigger. Genuinely manual, not automatable.</div>
+          <div class="effort-card-desc">Train the first Einstein model &middot; wire the NBA_Decision outcome Data Stream &middot; configure Named Credentials (Trust Layer, Slack) &middot; deploy the <em>.forceignored</em> reasoning / drafter / composer classes &middot; Real-Time Segment + Data Action per trigger. Genuinely manual, not automatable.</div>
         </div>
         <div class="effort-card" style="border-top-color:var(--teal-d);">
           <div class="effort-card-num" style="color:var(--teal-d);">Go live</div>
           <div class="effort-card-label">First decision fires</div>
-          <div class="effort-card-desc">Commercial alignment on offers, weights, segments, and contact policy happens in parallel via Catalogue Manager. Once the first module's rails are tuned, flip the trigger to real-time and the engine is live — first Decision record lands inside the hour.</div>
+          <div class="effort-card-desc">Commercial alignment on offers, weights, segments, and contact policy happens in parallel via Catalogue Manager. Once the first module's rails are tuned, flip the trigger to real-time and the engine is live &mdash; first Decision record lands inside the hour.</div>
         </div>
       </div>
     </div>
