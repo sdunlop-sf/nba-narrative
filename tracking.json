@@ -18634,5 +18634,17 @@
     "location": "Sydney, New South Wales, Australia",
     "ua": "Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.5 Mobile/15E148 Safari/604.1",
     "returning": "yes"
+  },
+  {
+    "timestamp": "Tue, 19 May 2026 15:21:20 GMT",
+    "name": "jordan",
+    "company": "J",
+    "position": "j",
+    "page": "FINS Keynote Memory-First",
+    "url": "https://sdunlop-sf.github.io/nba-narrative/fins-keynote.html",
+    "ip": "112.213.132.87",
+    "location": "Sydney, New South Wales, Australia",
+    "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36",
+    "returning": "yes"
   }
 ]
