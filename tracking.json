@@ -18730,5 +18730,17 @@
     "location": "Sydney, New South Wales, Australia",
     "ua": "Mozilla/5.0 (iPhone; CPU iPhone OS 26_5_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) CriOS/148.0.7778.166 Mobile/15E148 Safari/604.1",
     "returning": "yes"
+  },
+  {
+    "timestamp": "Thu, 21 May 2026 14:48:33 GMT",
+    "name": "AdamFeder",
+    "company": "Salesforce",
+    "position": "MCSE",
+    "page": "Decisioning Hub Framing v4 Lite",
+    "url": "https://sdunlop-sf.github.io/decisioning-hub-framing/v4-lite.html",
+    "ip": "136.226.2.248",
+    "location": "Atlanta, Georgia, United States",
+    "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36",
+    "returning": "no"
   }
 ]
