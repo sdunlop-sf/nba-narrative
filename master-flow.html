@@ -796,7 +796,7 @@
       <span class="nav-title">Master Flow</span>
       <span class="nav-sub">/ NBA Decisioning Accelerator</span>
     </div>
-    <div class="nav-pill">v11 &middot; Shipped</div>
+    <div class="nav-pill">v19 &middot; Shipped</div>
   </nav>
 
   <!-- HERO -->
@@ -805,7 +805,7 @@
     <div class="hero-eyebrow">Salesforce &middot; Data Cloud &middot; Einstein Studio &middot; Agentforce &middot; Flow</div>
     <h1>How the Decisioning Accelerator<br/><span class="hl">actually runs</span></h1>
     <p class="hero-sub">A practical guide to the shipped decisioning engine &mdash; from trigger to execution to feedback loop. Deterministic when it can be. Reasoning when it should be. Creative when it has to be. Rails hold in every mode.</p>
-    <div class="hero-version"><span class="dot"></span>v11.0.0 &middot; Unlocked Package &middot; Live</div>
+    <div class="hero-version"><span class="dot"></span>v19.0.0 &middot; Unlocked Package &middot; Live</div>
   </div>
 
   <!-- FLOW STRIP -->
@@ -1412,6 +1412,116 @@
     </div>
   </div>
 
+  <!-- OFFER RESOLUTION & AGENTIC WEB -->
+  <div class="section">
+    <div class="step-head">
+      <div class="step-num" style="background:rgba(6,165,154,0.06);border-color:rgba(6,165,154,0.14);">
+        <i class="ph-duotone ph-storefront" style="color:#06A59A;font-size:22px;"></i>
+      </div>
+      <div>
+        <div class="step-title">Offer Resolution &amp; the Agentic Web</div>
+        <div class="step-desc">The engine resolves at the depth the endpoint requires. Human channels get intent. Buyer agents get a structured bid.</div>
+      </div>
+    </div>
+
+    <!-- Resolution Depth -->
+    <div class="trigger-alts">
+      <div class="trigger-alt">
+        <div class="trigger-alt-icon" style="background:rgba(0,87,184,0.06);border-color:rgba(0,87,184,0.14);">
+          <i class="ph-duotone ph-envelope-simple" style="color:#0057B8;"></i>
+        </div>
+        <div class="trigger-alt-title">Marketing Channel</div>
+        <div class="trigger-alt-desc">DH outputs: action + channel + timing. SP/RTOM handles variant selection and offer rendering. Treatment_Template blank &mdash; downstream owns content.</div>
+      </div>
+      <div class="trigger-alt">
+        <div class="trigger-alt-icon" style="background:rgba(204,153,0,0.06);border-color:rgba(204,153,0,0.14);">
+          <i class="ph-duotone ph-phone-call" style="color:#CC9900;"></i>
+        </div>
+        <div class="trigger-alt-title">Service Channel</div>
+        <div class="trigger-alt-desc">DH outputs: action + channel + treatment. Treatment_Template holds the call brief / task description. No downstream presentation layer exists.</div>
+      </div>
+      <div class="trigger-alt">
+        <div class="trigger-alt-icon" style="background:rgba(6,165,154,0.06);border-color:rgba(6,165,154,0.14);">
+          <i class="ph-duotone ph-robot" style="color:#06A59A;"></i>
+        </div>
+        <div class="trigger-alt-title">A2A / Buyer Agent</div>
+        <div class="trigger-alt-desc">DH outputs: full structured offer payload. RTOMResolver hydrates: price, terms, validity, margin floor. Response is the offer &mdash; machines don't need creative.</div>
+      </div>
+    </div>
+
+    <!-- The A2A Contract -->
+    <div class="code-block">
+      <span class="c-key">POST</span> /services/apexrest/nba/v1/offer<br/>
+      {<br/>
+      &nbsp;&nbsp;<span class="c-str">"buyerAgentId"</span>: <span class="c-val">"agt_..."</span>,<br/>
+      &nbsp;&nbsp;<span class="c-str">"intent"</span>: <span class="c-val">"home_insurance_quote"</span>,<br/>
+      &nbsp;&nbsp;<span class="c-str">"context"</span>: { <span class="c-str">"postcode"</span>: <span class="c-val">"3000"</span>, <span class="c-str">"age"</span>: <span class="c-num">34</span> }<br/>
+      }<br/>
+      <br/>
+      <span class="c-comment">// Response</span><br/>
+      {<br/>
+      &nbsp;&nbsp;<span class="c-str">"action"</span>: <span class="c-val">"Cross_Sell_Home_Insurance"</span>,<br/>
+      &nbsp;&nbsp;<span class="c-str">"offer"</span>: {<br/>
+      &nbsp;&nbsp;&nbsp;&nbsp;<span class="c-str">"code"</span>: <span class="c-val">"HOME-BUNDLE-Q3"</span>,<br/>
+      &nbsp;&nbsp;&nbsp;&nbsp;<span class="c-str">"value"</span>: <span class="c-num">150.00</span>,<br/>
+      &nbsp;&nbsp;&nbsp;&nbsp;<span class="c-str">"validFrom"</span>: <span class="c-val">"2026-06-01"</span>,<br/>
+      &nbsp;&nbsp;&nbsp;&nbsp;<span class="c-str">"validTo"</span>: <span class="c-val">"2026-08-31"</span>,<br/>
+      &nbsp;&nbsp;&nbsp;&nbsp;<span class="c-str">"marginFloor"</span>: <span class="c-num">0.12</span><br/>
+      &nbsp;&nbsp;},<br/>
+      &nbsp;&nbsp;<span class="c-str">"governance"</span>: {<br/>
+      &nbsp;&nbsp;&nbsp;&nbsp;<span class="c-str">"budgetRemaining"</span>: <span class="c-num">24500.00</span>,<br/>
+      &nbsp;&nbsp;&nbsp;&nbsp;<span class="c-str">"fatigueClear"</span>: <span class="c-val">true</span>,<br/>
+      &nbsp;&nbsp;&nbsp;&nbsp;<span class="c-str">"auditRef"</span>: <span class="c-val">"DEC-2026-05-24-00142"</span><br/>
+      &nbsp;&nbsp;}<br/>
+      }
+    </div>
+
+    <!-- The Flywheel callout -->
+    <div style="margin-top: 16px; background: rgba(6, 165, 154, 0.03); border: 1px solid rgba(6, 165, 154, 0.14); border-radius: 12px; padding: 18px 22px;">
+      <p style="font-size: 13px; color: var(--muted); line-height: 1.65;"><strong style="color: #06A59A;">The Flywheel.</strong> Today the engine decides what to send a human. Tomorrow it decides what to bid a machine. The arbitration logic is identical &mdash; scoring, fatigue, governance, attribution. What changes is the response depth: intent for marketing channels, content for service channels, structured offer for buyer agents. One engine, three depths, same feedback loop.</p>
+    </div>
+
+    <!-- What's new grid -->
+    <div class="arb-rules" style="margin-top: 16px;">
+      <div class="arb-rule">
+        <div class="arb-rule-icon" style="background:rgba(6,165,154,0.06);border-color:rgba(6,165,154,0.14);">
+          <i class="ph-duotone ph-trophy" style="color:#06A59A;"></i>
+        </div>
+        <div>
+          <div class="arb-rule-title">Ranked Offer Selection</div>
+          <div class="arb-rule-desc">When Promotion_Id is linked, RTOMResolver queries eligible offers from the RTOM catalogue, ranks by priority and eligibility, and returns the winning offer &mdash; not just the promotion.</div>
+        </div>
+      </div>
+      <div class="arb-rule">
+        <div class="arb-rule-icon" style="background:rgba(6,165,154,0.06);border-color:rgba(6,165,154,0.14);">
+          <i class="ph-duotone ph-shield-check" style="color:#06A59A;"></i>
+        </div>
+        <div>
+          <div class="arb-rule-title">Margin Governance</div>
+          <div class="arb-rule-desc">A2A responses enforce a margin floor. The engine won't bid below cost even when the buyer agent negotiates. Governance that scales to machine-speed commerce.</div>
+        </div>
+      </div>
+      <div class="arb-rule">
+        <div class="arb-rule-icon" style="background:rgba(6,165,154,0.06);border-color:rgba(6,165,154,0.14);">
+          <i class="ph-duotone ph-chart-line-up" style="color:#06A59A;"></i>
+        </div>
+        <div>
+          <div class="arb-rule-title">Attribution: Machine Outcomes</div>
+          <div class="arb-rule-desc">Did the buyer agent select our offer? A2A outcomes feed the same learning loop &mdash; response weights adjust, future bids improve. Compounding memory across human and machine channels.</div>
+        </div>
+      </div>
+      <div class="arb-rule">
+        <div class="arb-rule-icon" style="background:rgba(6,165,154,0.06);border-color:rgba(6,165,154,0.14);">
+          <i class="ph-duotone ph-lifebuoy" style="color:#06A59A;"></i>
+        </div>
+        <div>
+          <div class="arb-rule-title">Graceful Degradation</div>
+          <div class="arb-rule-desc">No RTOM? The engine uses OfferValue and Treatment_Template as the self-contained payload. The A2A contract works regardless of which downstream systems are deployed.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- PACKAGE SCOPE -->
   <div class="section">
     <div class="step-head">
@@ -1420,7 +1530,7 @@
       </div>
       <div>
         <div class="step-title">What's in the Package</div>
-        <div class="step-desc">v11.0.0 unlocked package &middot; what ships vs what the customer configures post-install</div>
+        <div class="step-desc">v19.0.0 unlocked package &middot; what ships vs what the customer configures post-install</div>
       </div>
     </div>
 

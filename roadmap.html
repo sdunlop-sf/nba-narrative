@@ -565,6 +565,68 @@
         </div>
     </section>
 
+    <!-- ⑨ OFFER RESOLUTION & A2A -->
+    <section class="slide">
+        <div style="max-width: 980px; width: 100%;">
+            <div class="accent-line" style="margin: 0 auto 12px;"></div>
+            <div class="eyebrow" style="text-align: center; margin-bottom: 8px;">Mode 2 · Roadmap</div>
+            <h2 class="big" style="text-align: center; font-size: clamp(24px, 2.8vw, 40px); margin-bottom: 22px;">Offer Resolution <span class="hl">& the Agentic Web</span></h2>
+
+            <!-- 3-phase flow -->
+            <div class="flow" style="margin-bottom: 20px;">
+                <div class="flow-step">
+                    <div class="flow-num">Phase 1</div>
+                    <div class="flow-label">Action-Level</div>
+                    <div class="flow-prod">Today</div>
+                    <div class="flow-desc">Engine picks the winning action + channel. SP/RTOM renders content. Service channels get treatment template.</div>
+                    <span class="pill-now" style="margin-top: 8px;">Live</span>
+                </div>
+                <div class="flow-step">
+                    <div class="flow-num">Phase 2</div>
+                    <div class="flow-label">RTOM Offer Resolution</div>
+                    <div class="flow-prod">Next</div>
+                    <div class="flow-desc">RTOMResolver ranks eligible offers from the Promotion catalogue. Returns the winning offer &mdash; not just the promotion. Dates, value, treatments inherited at decision time.</div>
+                    <span class="pill-next" style="margin-top: 8px;">In progress</span>
+                </div>
+                <div class="flow-step">
+                    <div class="flow-num">Phase 3</div>
+                    <div class="flow-label">A2A Structured Bids</div>
+                    <div class="flow-prod">Future</div>
+                    <div class="flow-desc">Buyer agents call the engine via MCP/REST. Response is a full structured offer: price, terms, margin floor, validity. Same governance, same attribution, machine-speed.</div>
+                    <span class="pill-future" style="margin-top: 8px;">Planned</span>
+                </div>
+            </div>
+
+            <!-- What Offer Resolution adds -->
+            <div class="card" style="margin-bottom: 16px;">
+                <div style="font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.12em; color: var(--blue); margin-bottom: 14px;">What Offer Resolution adds to Mode 2</div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+                    <div style="font-size: 13px; color: var(--muted); line-height: 1.6; padding-left: 14px; position: relative;">
+                        <span style="position:absolute;left:0;color:var(--blue);font-weight:700;">·</span>
+                        <strong style="color: var(--text);">Ranked offer selection</strong> &mdash; RTOMResolver queries eligible Offers under the linked Promotion, ranks by priority, returns the winner
+                    </div>
+                    <div style="font-size: 13px; color: var(--muted); line-height: 1.6; padding-left: 14px; position: relative;">
+                        <span style="position:absolute;left:0;color:var(--blue);font-weight:700;">·</span>
+                        <strong style="color: var(--text);">Date + value inheritance</strong> &mdash; Promotion dates override action eligibility windows; MaxRewardValue resolves OfferValue at runtime
+                    </div>
+                    <div style="font-size: 13px; color: var(--muted); line-height: 1.6; padding-left: 14px; position: relative;">
+                        <span style="position:absolute;left:0;color:var(--blue);font-weight:700;">·</span>
+                        <strong style="color: var(--text);">Treatment hydration</strong> &mdash; OfferTreatment heading, body, and CTA pulled for the matched channel
+                    </div>
+                    <div style="font-size: 13px; color: var(--muted); line-height: 1.6; padding-left: 14px; position: relative;">
+                        <span style="position:absolute;left:0;color:var(--blue);font-weight:700;">·</span>
+                        <strong style="color: var(--text);">Margin governance (A2A)</strong> &mdash; engine enforces margin floor before responding to buyer agents. Won't bid below cost
+                    </div>
+                </div>
+            </div>
+
+            <!-- Callout -->
+            <div style="background: rgba(2,42,192,0.05); border: 1px solid var(--border); border-left: 3px solid var(--blue); border-radius: 8px; padding: 14px 18px;">
+                <p style="font-size: 13px; color: var(--text); line-height: 1.65;">The engine already has RTOMResolver and OfferValueResolver. Offer Resolution extends the post-arbitration path: after scoring picks a winner, the resolver hydrates the full offer payload before responding. <strong>Same arbitration. Deeper response. No schema changes required.</strong></p>
+            </div>
+        </div>
+    </section>
+
 </div><!-- end deck -->
 
 <!-- Nav -->
@@ -575,7 +637,7 @@
     </div>
     <div class="nav-controls">
         <button class="nav-btn" id="btn-prev" disabled>‹</button>
-        <span class="nav-counter" id="counter">1 / 8</span>
+        <span class="nav-counter" id="counter">1 / 9</span>
         <button class="nav-btn" id="btn-next">›</button>
     </div>
 </nav>

@@ -848,6 +848,36 @@
       <div class="callout-label" style="color: var(--blue2);">The clean boundary</div>
       <div class="callout-body">The Hub owns the <strong>what</strong> (which promotion, for whom, why). The serving layer owns the <strong>when and where</strong> (which offer, which treatment, which channel, right now). Without the Hub, the serving layer optimises tactics with no relationship intelligence. With the Hub, it serves offers backed by compounding memory. <strong>That's the upgrade story.</strong></div>
     </div>
+
+    <!-- RESOLUTION DEPTH -->
+    <div class="eyebrow" style="margin-top: 40px;">Resolution Depth</div>
+    <p class="muted-p" style="margin-bottom: 20px;">The boundary above holds for human marketing channels. But not every endpoint has a serving layer. The Hub resolves at the depth the endpoint requires:</p>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin-bottom: 24px;">
+      <div style="background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 20px; box-shadow: var(--shadow-sm);">
+        <div style="font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--blue2); margin-bottom: 10px;">Marketing Channel</div>
+        <div style="font-size: 14px; font-weight: 700; color: var(--ink); margin-bottom: 8px;">Intent only</div>
+        <div style="font-size: 12.5px; color: var(--muted); line-height: 1.6;">Hub outputs: action + channel + timing. SP/RTOM handles variant selection, offer rendering, creative. Treatment_Template is blank &mdash; downstream owns content.</div>
+        <div style="margin-top: 12px; font-size: 10px; font-weight: 700; padding: 3px 10px; border-radius: 20px; display: inline-block; background: rgba(2,42,192,0.08); color: var(--blue2); border: 1px solid rgba(2,42,192,0.2);">SP + RTOM serves</div>
+      </div>
+      <div style="background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 20px; box-shadow: var(--shadow-sm);">
+        <div style="font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold-d); margin-bottom: 10px;">Service Channel</div>
+        <div style="font-size: 14px; font-weight: 700; color: var(--ink); margin-bottom: 8px;">Intent + treatment</div>
+        <div style="font-size: 12.5px; color: var(--muted); line-height: 1.6;">Hub outputs: action + call brief or task description. Treatment_Template holds the content. No downstream presentation layer exists &mdash; the Hub <em>is</em> the source of truth.</div>
+        <div style="margin-top: 12px; font-size: 10px; font-weight: 700; padding: 3px 10px; border-radius: 20px; display: inline-block; background: rgba(168,119,0,0.08); color: var(--gold-d); border: 1px solid rgba(168,119,0,0.2);">Self-contained</div>
+      </div>
+      <div style="background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 20px; box-shadow: var(--shadow-sm);">
+        <div style="font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--teal-d); margin-bottom: 10px;">A2A / Buyer Agent</div>
+        <div style="font-size: 14px; font-weight: 700; color: var(--ink); margin-bottom: 8px;">Full structured offer</div>
+        <div style="font-size: 12.5px; color: var(--muted); line-height: 1.6;">Hub outputs: price, terms, validity, margin floor. RTOMResolver hydrates the full offer payload from the Promotion catalogue. Machines don't need creative &mdash; they need data.</div>
+        <div style="margin-top: 12px; font-size: 10px; font-weight: 700; padding: 3px 10px; border-radius: 20px; display: inline-block; background: rgba(0,122,114,0.08); color: var(--teal-d); border: 1px solid rgba(0,122,114,0.2);">Agentic Web</div>
+      </div>
+    </div>
+
+    <div class="callout callout-teal">
+      <div class="callout-label" style="color: var(--teal-d);">Offer Resolution &mdash; the post-arbitration step</div>
+      <div class="callout-body">After arbitration picks a winner, a thin <strong>Offer Resolution</strong> step runs for machine endpoints. RTOMResolver queries ranked offers under the linked Promotion, hydrates metadata (dates, value, treatments, margin), and shapes the response. For human channels this step doesn't fire &mdash; the serving layer handles it. For buyer agents, the response <em>is</em> the offer. Same arbitration engine. Same learning loop. Same governance. Different resolution depth.</div>
+    </div>
   </div>
 
   <hr class="divider" />
