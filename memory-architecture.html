@@ -6,55 +6,76 @@
   <title>Architecture · Memory-First Decisioning</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
+  <script src="https://unpkg.com/@phosphor-icons/web@2.1.1"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg:     #C8E4FD;
-      --bg-alt: #D8ECFE;
-      --blue2:  #022AC0;
-      --teal:   #04E1CB;
-      --teal-d: #007A72;
+      --navy:    #001E5B;
+      --blue:    #022AC0;
+      --blue-m:  #066AFE;
+      --blue-l:  #00B3FF;
+      --cloud-80: #90D0FE;
+      --cloud-95: #EAF5FE;
+      --teal:    #06A59A;
+      --teal-l:  #04E1CB;
+      --teal-d:  #007A72;
       --lblue-d: #0057B8;
-      --gold:   #FCC003;
-      --gold-d: #A87700;
-      --purple: #7A3DD6;
+      --gold:    #E4A201;
+      --gold-d:  #A87700;
+      --purple:  #730394;
       --purple-d: #5521A8;
-      --ink:    #002775;
-      --muted:  rgba(0, 39, 117, 0.55);
-      --text:   rgba(0, 39, 117, 0.85);
-      --card:   #FFFFFF;
-      --card-h: #F4FAFF;
-      --border: rgba(0, 39, 117, 0.1);
-      --shadow: 0 1px 3px rgba(0,39,117,0.07), 0 4px 18px rgba(0,39,117,0.07);
-      --shadow-sm: 0 1px 2px rgba(0,39,117,0.06), 0 2px 8px rgba(0,39,117,0.05);
-      --red:    #C41C00;
-      --green:  #007A72;
-      --mono:   'JetBrains Mono', 'Courier New', monospace;
+      --violet:  #730394;
+      --ink:     #001E5B;
+      --text:    #001E5B;
+      --muted:   #5A5C61;
+      --dim:     rgba(0, 30, 91, 0.72);
+      --card:    #FFFFFF;
+      --card-bg: rgba(0, 30, 91, 0.04);
+      --card-h:  #F4FAFF;
+      --border:  rgba(0, 30, 91, 0.1);
+      --border-strong: rgba(0, 30, 91, 0.16);
+      --shadow:  0 1px 3px rgba(0,30,91,0.06), 0 4px 18px rgba(0,30,91,0.06);
+      --shadow-sm: 0 1px 2px rgba(0,30,91,0.05), 0 2px 8px rgba(0,30,91,0.04);
+      --red:     #C23934;
+      --green:   #06A59A;
+      --white:   #FFFFFF;
+      --mono:    'JetBrains Mono', 'SF Mono', 'Fira Code', monospace;
     }
 
     html { scroll-behavior: smooth; }
 
     body {
-      background: var(--bg);
+      background: var(--cloud-95);
       background-attachment: fixed;
       color: var(--ink);
-      font-family: 'Segoe UI', Arial, sans-serif;
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
       font-size: 15px;
       line-height: 1.7;
       -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
       min-height: 100vh;
     }
 
     body::before {
       content: '';
-      position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: 0.012;
+      position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: 0.015;
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
       background-repeat: repeat; background-size: 200px 200px;
     }
 
-    nav, .hero, .section, .section-alt, hr.divider { position: relative; z-index: 1; }
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      pointer-events: none;
+      background: radial-gradient(80% 60% at 80% 10%, rgba(2,42,192,0.06) 0%, transparent 55%),
+                  radial-gradient(50% 40% at 10% 90%, rgba(6,165,154,0.04) 0%, transparent 50%);
+    }
+
+    nav, .hero, .section, .section-alt, hr.divider, .flow-strip-wrap { position: relative; z-index: 1; }
 
     /* ── NAV ── */
     nav {
@@ -62,26 +83,26 @@
       height: 56px;
       display: flex; align-items: center; justify-content: space-between;
       padding: 0 40px;
-      background: rgba(255, 255, 255, 0.96);
-      backdrop-filter: blur(20px);
-      border-bottom: 1px solid rgba(0, 39, 117, 0.1);
-      box-shadow: 0 1px 0 rgba(0,39,117,0.06), 0 2px 12px rgba(0,39,117,0.06);
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(20px) saturate(1.4);
+      -webkit-backdrop-filter: blur(20px) saturate(1.4);
+      border-bottom: 1px solid rgba(0, 30, 91, 0.08);
     }
 
     .nav-brand { display: flex; align-items: center; gap: 12px; }
     .nav-logo { height: 24px; width: auto; }
-    .nav-divider { width: 1px; height: 18px; background: rgba(0, 39, 117, 0.14); }
+    .nav-divider { width: 1px; height: 18px; background: rgba(0, 30, 91, 0.14); }
     .nav-title { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink); }
-    .nav-sub { font-size: 11px; color: var(--muted); }
+    .nav-sub { font-size: 11px; color: var(--muted); font-weight: 500; }
     .nav-links { display: flex; gap: 8px; }
     .nav-pill {
       font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
-      background: rgba(2, 42, 192, 0.08); color: var(--blue2);
-      border: 1px solid rgba(2, 42, 192, 0.22); border-radius: 20px;
+      background: rgba(2, 42, 192, 0.06); color: var(--blue);
+      border: 1px solid rgba(2, 42, 192, 0.18); border-radius: 20px;
       padding: 3px 12px; text-decoration: none;
     }
     .nav-pill:hover { background: rgba(2, 42, 192, 0.14); }
-    .nav-pill.active { background: var(--blue2); color: #fff; border-color: var(--blue2); }
+    .nav-pill.active { background: var(--blue); color: #fff; border-color: var(--blue); }
 
     /* ── HERO ── */
     .hero {
@@ -92,14 +113,14 @@
     }
 
     .accent-line {
-      width: 40px; height: 3px; border-radius: 2px;
+      width: 44px; height: 3px; border-radius: 2px;
       margin: 0 auto 20px;
-      background: linear-gradient(90deg, var(--blue2), var(--teal));
+      background: linear-gradient(90deg, var(--blue), var(--teal-l));
     }
 
     .hero-eyebrow {
-      font-size: 12px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase;
-      color: var(--blue2); margin-bottom: 16px;
+      font-size: 11px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase;
+      color: var(--blue); margin-bottom: 16px;
     }
 
     .hero h1 {
@@ -109,7 +130,7 @@
     }
 
     .hero h1 .hl {
-      background: linear-gradient(135deg, var(--blue2) 0%, #04E1CB 100%);
+      background: linear-gradient(135deg, var(--blue) 0%, var(--teal-l) 100%);
       -webkit-background-clip: text; -webkit-text-fill-color: transparent;
       background-clip: text;
     }
@@ -123,10 +144,10 @@
       display: inline-flex; align-items: center; gap: 8px;
       margin-top: 22px;
       padding: 6px 14px; border-radius: 20px;
-      background: rgba(2, 42, 192, 0.08);
-      border: 1px solid rgba(2, 42, 192, 0.2);
-      font-size: 11px; font-weight: 700; letter-spacing: 0.08em;
-      color: var(--blue2); text-transform: uppercase;
+      background: rgba(2, 42, 192, 0.06);
+      border: 1px solid rgba(2, 42, 192, 0.16);
+      font-size: 11px; font-weight: 700; letter-spacing: 0.06em;
+      color: var(--blue); text-transform: uppercase;
     }
 
     .hero-version .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--green); }
@@ -141,9 +162,9 @@
     .section + .section { border-top: 1px solid var(--border); }
 
     .section-alt {
-      background: var(--bg-alt);
-      border-top: 1px solid rgba(0,39,117,0.12);
-      border-bottom: 1px solid rgba(0,39,117,0.12);
+      background: rgba(0, 30, 91, 0.02);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
     }
 
     .section-alt .section { padding: 72px 40px; }
@@ -172,7 +193,7 @@
 
     .eyebrow {
       font-size: 12px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase;
-      color: var(--blue2); margin-bottom: 14px;
+      color: var(--blue); margin-bottom: 14px;
     }
 
     .muted-p { color: var(--muted); margin-bottom: 24px; font-size: 15px; line-height: 1.75; }
@@ -190,10 +211,10 @@
       margin-bottom: 20px;
     }
 
-    .callout-left { border-left: 4px solid var(--blue2); }
+    .callout-left { border-left: 4px solid var(--blue); }
     .callout-left::before {
       content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
-      background: linear-gradient(90deg, var(--blue2), transparent); opacity: 0.4;
+      background: linear-gradient(90deg, var(--blue), transparent); opacity: 0.4;
     }
 
     .callout-purple { border-left: 4px solid var(--purple); }
@@ -231,7 +252,7 @@
     .arch-diagram::before {
       content: '';
       position: absolute; top: 0; left: 0; right: 0; height: 4px;
-      background: linear-gradient(90deg, var(--teal-d), var(--blue2), var(--purple));
+      background: linear-gradient(90deg, var(--teal-d), var(--blue), var(--purple));
     }
 
     .arch-title {
@@ -316,7 +337,7 @@
 
     .arch-connector-arrow {
       font-size: 11px;
-      color: rgba(0,39,117,0.25);
+      color: rgba(0,30,91,0.25);
       font-weight: 700;
     }
 
@@ -331,7 +352,7 @@
     .arch-flow-down {
       text-align: center;
       padding: 8px 0;
-      color: rgba(0,39,117,0.2);
+      color: rgba(0,30,91,0.2);
       font-size: 20px;
       display: flex;
       align-items: center;
@@ -363,7 +384,7 @@
       border-radius: 20px;
       padding: 2px 14px;
       font-size: 9px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
-      color: var(--blue2);
+      color: var(--blue);
       white-space: nowrap;
     }
 
@@ -382,8 +403,8 @@
       background: rgba(2,42,192,0.3);
     }
 
-    .brain-option.active { color: var(--blue2); font-weight: 700; }
-    .brain-option.active .brain-option-dot { background: var(--blue2); }
+    .brain-option.active { color: var(--blue); font-weight: 700; }
+    .brain-option.active .brain-option-dot { background: var(--blue); }
 
     /* ── PLATFORM MAP ── */
     .platform-grid {
@@ -445,7 +466,7 @@
       min-width: 0; flex: 1;
     }
 
-    .mapping-arrow { color: rgba(0,39,117,0.2); font-size: 12px; flex-shrink: 0; }
+    .mapping-arrow { color: rgba(0,30,91,0.2); font-size: 12px; flex-shrink: 0; }
 
     .mapping-to {
       font-family: var(--mono); font-size: 10px; font-weight: 500;
@@ -483,6 +504,8 @@
       border: 1px solid var(--border);
     }
 
+    .fs-icon i { font-size: 22px; }
+
     .fs-label { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink); }
     .fs-sub { font-size: 10px; color: var(--muted); max-width: 120px; }
 
@@ -496,7 +519,7 @@
 
     .fs-loop-arrow {
       flex-shrink: 0;
-      color: rgba(122, 61, 214, 0.4);
+      color: rgba(115, 3, 148, 0.4);
       font-size: 14px;
       padding: 0 2px;
       margin-bottom: 22px;
@@ -604,6 +627,8 @@
       font-size: 16px; flex-shrink: 0;
     }
 
+    .tier-content-icon i { font-size: 18px; }
+
     .tier-content-text { flex: 1; }
 
     .tier-content-title {
@@ -621,7 +646,7 @@
     }
 
     .tier-connector-arrow {
-      color: rgba(0,39,117,0.15);
+      color: rgba(0,30,91,0.15);
       font-size: 14px;
     }
 
@@ -676,6 +701,8 @@
       margin: 0 auto 10px;
     }
 
+    .lifecycle-icon i { font-size: 20px; }
+
     .lifecycle-label {
       font-size: 11px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
       margin-bottom: 6px;
@@ -728,6 +755,7 @@
       <span class="nav-sub">/ Architecture</span>
     </div>
     <div class="nav-links">
+      <a href="master-flow.html" class="nav-pill">Master Flow</a>
       <a href="memory-approach.html" class="nav-pill">Narrative</a>
       <a href="memory-architecture.html" class="nav-pill active">Architecture</a>
     </div>
@@ -785,7 +813,7 @@
 
         <!-- Layer 2: Action Space + Value Function (side by side) -->
         <div class="arch-layer">
-          <div class="arch-block" style="background: rgba(196,28,0,0.04); border: 1px solid rgba(196,28,0,0.15); flex: 1;">
+          <div class="arch-block" style="background: rgba(194,57,52,0.04); border: 1px solid rgba(194,57,52,0.15); flex: 1;">
             <div class="arch-block-label" style="color: var(--red);">
               <div class="arch-block-dot" style="background: var(--red);"></div>
               Primitive 2
@@ -793,15 +821,15 @@
             <div class="arch-block-title" style="color: var(--red);">Action Space</div>
             <div class="arch-block-desc" style="color: var(--text);">Everything you could do, constrained by everything you shouldn't. Policy, budget, eligibility, fatigue &mdash; evaluated <strong>before</strong> the brain sees a single action.</div>
             <div class="arch-block-items">
-              <span class="arch-tag" style="background: rgba(196,28,0,0.05); color: var(--red); border: 1px solid rgba(196,28,0,0.15);">Action catalogue</span>
-              <span class="arch-tag" style="background: rgba(196,28,0,0.05); color: var(--red); border: 1px solid rgba(196,28,0,0.15);">Contact policy</span>
-              <span class="arch-tag" style="background: rgba(196,28,0,0.05); color: var(--red); border: 1px solid rgba(196,28,0,0.15);">Budget caps</span>
-              <span class="arch-tag" style="background: rgba(196,28,0,0.05); color: var(--red); border: 1px solid rgba(196,28,0,0.15);">Eligibility rules</span>
-              <span class="arch-tag" style="background: rgba(196,28,0,0.05); color: var(--red); border: 1px solid rgba(196,28,0,0.15);">Channel routing</span>
+              <span class="arch-tag" style="background: rgba(194,57,52,0.05); color: var(--red); border: 1px solid rgba(194,57,52,0.15);">Action catalogue</span>
+              <span class="arch-tag" style="background: rgba(194,57,52,0.05); color: var(--red); border: 1px solid rgba(194,57,52,0.15);">Contact policy</span>
+              <span class="arch-tag" style="background: rgba(194,57,52,0.05); color: var(--red); border: 1px solid rgba(194,57,52,0.15);">Budget caps</span>
+              <span class="arch-tag" style="background: rgba(194,57,52,0.05); color: var(--red); border: 1px solid rgba(194,57,52,0.15);">Eligibility rules</span>
+              <span class="arch-tag" style="background: rgba(194,57,52,0.05); color: var(--red); border: 1px solid rgba(194,57,52,0.15);">Channel routing</span>
             </div>
           </div>
 
-          <div class="arch-block" style="background: rgba(252,192,3,0.06); border: 1px solid rgba(252,192,3,0.22); flex: 1;">
+          <div class="arch-block" style="background: rgba(228,162,1,0.06); border: 1px solid rgba(228,162,1,0.22); flex: 1;">
             <div class="arch-block-label" style="color: var(--gold-d);">
               <div class="arch-block-dot" style="background: var(--gold-d);"></div>
               Primitive 3
@@ -809,11 +837,11 @@
             <div class="arch-block-title" style="color: var(--gold-d);">Value Function</div>
             <div class="arch-block-desc" style="color: var(--text);">The composable objective. What are we optimizing, measured how? Weights are configurable by industry and strategy. The business strategy expressed as math.</div>
             <div class="arch-block-items">
-              <span class="arch-tag" style="background: rgba(252,192,3,0.08); color: var(--gold-d); border: 1px solid rgba(252,192,3,0.2);">Propensity score</span>
-              <span class="arch-tag" style="background: rgba(252,192,3,0.08); color: var(--gold-d); border: 1px solid rgba(252,192,3,0.2);">Expected value</span>
-              <span class="arch-tag" style="background: rgba(252,192,3,0.08); color: var(--gold-d); border: 1px solid rgba(252,192,3,0.2);">pCLV multiplier</span>
-              <span class="arch-tag" style="background: rgba(252,192,3,0.08); color: var(--gold-d); border: 1px solid rgba(252,192,3,0.2);">Priority weight</span>
-              <span class="arch-tag" style="background: rgba(252,192,3,0.08); color: var(--gold-d); border: 1px solid rgba(252,192,3,0.2);">Adaptive weight</span>
+              <span class="arch-tag" style="background: rgba(228,162,1,0.08); color: var(--gold-d); border: 1px solid rgba(228,162,1,0.2);">Propensity score</span>
+              <span class="arch-tag" style="background: rgba(228,162,1,0.08); color: var(--gold-d); border: 1px solid rgba(228,162,1,0.2);">Expected value</span>
+              <span class="arch-tag" style="background: rgba(228,162,1,0.08); color: var(--gold-d); border: 1px solid rgba(228,162,1,0.2);">pCLV multiplier</span>
+              <span class="arch-tag" style="background: rgba(228,162,1,0.08); color: var(--gold-d); border: 1px solid rgba(228,162,1,0.2);">Priority weight</span>
+              <span class="arch-tag" style="background: rgba(228,162,1,0.08); color: var(--gold-d); border: 1px solid rgba(228,162,1,0.2);">Adaptive weight</span>
             </div>
           </div>
         </div>
@@ -829,8 +857,8 @@
         <div class="arch-layer">
           <div class="brain-block" style="flex: 1;">
             <div class="brain-swap-tag">Pluggable &middot; Swappable</div>
-            <div class="arch-block-label" style="color: var(--blue2); justify-content: center; margin-top: 6px;">
-              <div class="arch-block-dot" style="background: var(--blue2);"></div>
+            <div class="arch-block-label" style="color: var(--blue); justify-content: center; margin-top: 6px;">
+              <div class="arch-block-dot" style="background: var(--blue);"></div>
               Reasoning Engine
             </div>
             <div class="arch-block-desc" style="color: var(--text); text-align: center; max-width: 580px; margin: 4px auto 0;">Consumes state, operates within the action space, optimizes the value function. Today it's deterministic scoring with LLM re-rank. Tomorrow it could be anything.</div>
@@ -853,7 +881,7 @@
 
         <!-- Layer 4: Learning Loop (full width, wraps back) -->
         <div class="arch-layer">
-          <div class="arch-block" style="background: rgba(122,61,214,0.05); border: 1px solid rgba(122,61,214,0.18); position: relative;">
+          <div class="arch-block" style="background: rgba(115,3,148,0.05); border: 1px solid rgba(115,3,148,0.18); position: relative;">
             <div class="arch-block-label" style="color: var(--purple-d);">
               <div class="arch-block-dot" style="background: var(--purple);"></div>
               Primitive 4 &mdash; The Actual Product
@@ -861,28 +889,28 @@
             <div class="arch-block-title" style="color: var(--purple-d);">Learning Loop</div>
             <div class="arch-block-desc" style="color: var(--text);">Every decision produces an outcome. Every outcome updates relationship state and refines the value function. This is the infrastructure that compounds. Month 6 is measurably smarter than month 1.</div>
             <div class="arch-block-items">
-              <span class="arch-tag" style="background: rgba(122,61,214,0.06); color: var(--purple-d); border: 1px solid rgba(122,61,214,0.15);">Outcome attribution</span>
-              <span class="arch-tag" style="background: rgba(122,61,214,0.06); color: var(--purple-d); border: 1px solid rgba(122,61,214,0.15);">Adaptive weights</span>
-              <span class="arch-tag" style="background: rgba(122,61,214,0.06); color: var(--purple-d); border: 1px solid rgba(122,61,214,0.15);">Model retraining</span>
-              <span class="arch-tag" style="background: rgba(122,61,214,0.06); color: var(--purple-d); border: 1px solid rgba(122,61,214,0.15);">CLV recalculation</span>
-              <span class="arch-tag" style="background: rgba(122,61,214,0.06); color: var(--purple-d); border: 1px solid rgba(122,61,214,0.15);">Explore / exploit</span>
-              <span class="arch-tag" style="background: rgba(122,61,214,0.06); color: var(--purple-d); border: 1px solid rgba(122,61,214,0.15);">Decision journal</span>
+              <span class="arch-tag" style="background: rgba(115,3,148,0.06); color: var(--purple-d); border: 1px solid rgba(115,3,148,0.15);">Outcome attribution</span>
+              <span class="arch-tag" style="background: rgba(115,3,148,0.06); color: var(--purple-d); border: 1px solid rgba(115,3,148,0.15);">Adaptive weights</span>
+              <span class="arch-tag" style="background: rgba(115,3,148,0.06); color: var(--purple-d); border: 1px solid rgba(115,3,148,0.15);">Model retraining</span>
+              <span class="arch-tag" style="background: rgba(115,3,148,0.06); color: var(--purple-d); border: 1px solid rgba(115,3,148,0.15);">CLV recalculation</span>
+              <span class="arch-tag" style="background: rgba(115,3,148,0.06); color: var(--purple-d); border: 1px solid rgba(115,3,148,0.15);">Explore / exploit</span>
+              <span class="arch-tag" style="background: rgba(115,3,148,0.06); color: var(--purple-d); border: 1px solid rgba(115,3,148,0.15);">Decision journal</span>
             </div>
           </div>
         </div>
 
         <!-- Loop-back arrow -->
         <div class="arch-flow-down" style="padding: 12px 0;">
-          <span style="font-size: 13px; color: rgba(122,61,214,0.4); font-weight: 700;">&#x21ba;</span>
+          <span style="font-size: 13px; color: rgba(115,3,148,0.4); font-weight: 700;">&#x21ba;</span>
           <span class="flow-label" style="color: var(--purple-d);">Outcomes update relationship state &bull; refine value function &bull; retrain models</span>
-          <span style="font-size: 13px; color: rgba(122,61,214,0.4); font-weight: 700;">&#x21bb;</span>
+          <span style="font-size: 13px; color: rgba(115,3,148,0.4); font-weight: 700;">&#x21bb;</span>
         </div>
 
       </div>
     </div>
 
     <div class="callout callout-left">
-      <div class="callout-label" style="color: var(--blue2);">Read the diagram bottom-to-top for the real insight</div>
+      <div class="callout-label" style="color: var(--blue);">Read the diagram bottom-to-top for the real insight</div>
       <div class="callout-body">The learning loop feeds back into relationship state (new decision history, updated CLV) and the value function (adaptive weights, retrained models). <strong>The brain doesn't learn &mdash; the memory does.</strong> Swap the brain and the system keeps getting smarter. Remove the memory and even the best brain starts from zero.</div>
     </div>
   </div>
@@ -892,7 +920,7 @@
   <!-- SCORING FORMULA -->
   <div class="section">
     <div class="step-head">
-      <div class="step-num" style="background:rgba(252,192,3,0.15);color:#A87700;border-color:rgba(252,192,3,0.35);">02</div>
+      <div class="step-num" style="background:rgba(228,162,1,0.15);color:#A87700;border-color:rgba(228,162,1,0.35);">02</div>
       <div>
         <div class="step-title">The Value Function</div>
         <div class="step-desc">A composable scoring formula where each component maps to a primitive. The weights are configurable &mdash; industry templates ship different weightings for different business strategies.</div>
@@ -902,11 +930,11 @@
     <div class="formula-block">
       <div class="formula-label">Scoring Formula</div>
       <div class="formula-expr">
-        <span class="formula-var"><span class="formula-var-dot" style="background: var(--teal-d);"></span>weighted</span>&nbsp;=&nbsp;<span class="formula-var"><span class="formula-var-dot" style="background: var(--blue2);"></span>propensity</span>&nbsp;&times;&nbsp;<span class="formula-var"><span class="formula-var-dot" style="background: var(--gold-d);"></span>expectedValue</span>&nbsp;&times;&nbsp;<span class="formula-var"><span class="formula-var-dot" style="background: var(--teal-d);"></span>pclvMultiplier</span>&nbsp;&times;&nbsp;<span class="formula-var"><span class="formula-var-dot" style="background: var(--red);"></span>priority</span>&nbsp;&times;&nbsp;<span class="formula-var"><span class="formula-var-dot" style="background: var(--purple);"></span>adaptiveWeight</span>
+        <span class="formula-var"><span class="formula-var-dot" style="background: var(--teal-d);"></span>weighted</span>&nbsp;=&nbsp;<span class="formula-var"><span class="formula-var-dot" style="background: var(--blue);"></span>propensity</span>&nbsp;&times;&nbsp;<span class="formula-var"><span class="formula-var-dot" style="background: var(--gold-d);"></span>expectedValue</span>&nbsp;&times;&nbsp;<span class="formula-var"><span class="formula-var-dot" style="background: var(--teal-d);"></span>pclvMultiplier</span>&nbsp;&times;&nbsp;<span class="formula-var"><span class="formula-var-dot" style="background: var(--red);"></span>priority</span>&nbsp;&times;&nbsp;<span class="formula-var"><span class="formula-var-dot" style="background: var(--purple);"></span>adaptiveWeight</span>
       </div>
       <div class="formula-legend">
         <div class="formula-legend-item">
-          <div class="formula-legend-dot" style="background: var(--blue2);"></div>
+          <div class="formula-legend-dot" style="background: var(--blue);"></div>
           <div><strong>Propensity</strong> &mdash; ML model prediction. How likely is this customer to respond positively? From Einstein Studio.</div>
         </div>
         <div class="formula-legend-item">
@@ -942,43 +970,43 @@
   <div class="flow-strip-wrap">
     <div class="flow-strip">
       <div class="fs-node">
-        <div class="fs-icon" style="background:rgba(0,122,114,0.12);color:#007A72;border-color:rgba(0,122,114,0.25);">&#x1f91d;</div>
+        <div class="fs-icon" style="background:rgba(0,122,114,0.12);color:#007A72;border-color:rgba(0,122,114,0.25);"><i class="ph-duotone ph-handshake" style="color:#007A72;font-size:22px;"></i></div>
         <div class="fs-label">Read State</div>
         <div class="fs-sub">Profile, history, pCLV, signals</div>
       </div>
       <div class="fs-arrow">&rsaquo;</div>
       <div class="fs-node">
-        <div class="fs-icon" style="background:rgba(196,28,0,0.08);color:#C41C00;border-color:rgba(196,28,0,0.22);">&#x1f6e1;&#xfe0f;</div>
+        <div class="fs-icon" style="background:rgba(194,57,52,0.08);color:#C23934;border-color:rgba(194,57,52,0.22);"><i class="ph-duotone ph-shield-check" style="color:#C23934;font-size:22px;"></i></div>
         <div class="fs-label">Constrain</div>
         <div class="fs-sub">Policy, budget, eligibility, fatigue</div>
       </div>
       <div class="fs-arrow">&rsaquo;</div>
       <div class="fs-node">
-        <div class="fs-icon" style="background:rgba(252,192,3,0.15);color:#A87700;border-color:rgba(252,192,3,0.3);">&#x2696;&#xfe0f;</div>
+        <div class="fs-icon" style="background:rgba(228,162,1,0.15);color:#A87700;border-color:rgba(228,162,1,0.3);"><i class="ph-duotone ph-scales" style="color:#A87700;font-size:22px;"></i></div>
         <div class="fs-label">Score</div>
         <div class="fs-sub">Composable value function</div>
       </div>
       <div class="fs-arrow">&rsaquo;</div>
       <div class="fs-node">
-        <div class="fs-icon" style="background:rgba(2,42,192,0.1);color:#022AC0;border-color:rgba(2,42,192,0.18);">&#x1f9e0;</div>
+        <div class="fs-icon" style="background:rgba(2,42,192,0.1);color:#022AC0;border-color:rgba(2,42,192,0.18);"><i class="ph-duotone ph-brain" style="color:#022AC0;font-size:22px;"></i></div>
         <div class="fs-label">Reason</div>
         <div class="fs-sub">Tier 1 / 1.5 / 2 / Compose</div>
       </div>
       <div class="fs-arrow">&rsaquo;</div>
       <div class="fs-node">
-        <div class="fs-icon" style="background:rgba(0,87,184,0.08);color:#0057B8;border-color:rgba(0,87,184,0.18);">&#x1f4be;</div>
+        <div class="fs-icon" style="background:rgba(0,87,184,0.08);color:#0057B8;border-color:rgba(0,87,184,0.18);"><i class="ph-duotone ph-database" style="color:#0057B8;font-size:22px;"></i></div>
         <div class="fs-label">Write</div>
         <div class="fs-sub">Latent decision to Data Cloud</div>
       </div>
       <div class="fs-arrow">&rsaquo;</div>
       <div class="fs-node">
-        <div class="fs-icon" style="background:rgba(0,39,117,0.06);color:var(--ink);border-color:rgba(0,39,117,0.12);">&#x1f4e4;</div>
+        <div class="fs-icon" style="background:rgba(0,30,91,0.06);color:var(--ink);border-color:rgba(0,30,91,0.12);"><i class="ph-duotone ph-paper-plane-tilt" style="color:var(--ink);font-size:22px;"></i></div>
         <div class="fs-label">Serve</div>
         <div class="fs-sub">RT channel &rarr; offer + treatment</div>
       </div>
       <div class="fs-loop-arrow">&#x21ba;</div>
       <div class="fs-node">
-        <div class="fs-icon" style="background:rgba(122,61,214,0.08);color:#5521A8;border-color:rgba(122,61,214,0.25);">&#x1f504;</div>
+        <div class="fs-icon" style="background:rgba(115,3,148,0.08);color:#5521A8;border-color:rgba(115,3,148,0.25);"><i class="ph-duotone ph-arrows-clockwise" style="color:#5521A8;font-size:22px;"></i></div>
         <div class="fs-label">Learn</div>
         <div class="fs-sub">Outcome &rarr; state + weights</div>
       </div>
@@ -1004,7 +1032,7 @@
             <div class="tier-label-pct">~80%</div>
           </div>
           <div class="tier-content" style="border-color: rgba(0,122,114,0.2);">
-            <div class="tier-content-icon" style="background: rgba(0,122,114,0.1); color: var(--teal-d); border: 1px solid rgba(0,122,114,0.2);">&#x26a1;</div>
+            <div class="tier-content-icon" style="background: rgba(0,122,114,0.1); color: var(--teal-d); border: 1px solid rgba(0,122,114,0.2);"><i class="ph-duotone ph-lightning" style="color:var(--teal-d);font-size:18px;"></i></div>
             <div class="tier-content-text">
               <div class="tier-content-title" style="color: var(--teal-d);">Deterministic Scoring</div>
               <div class="tier-content-desc">Clear winner by formula. Wide gap between top-ranked and second-ranked action. No ambiguity, no LLM call. Fastest, cheapest, most auditable. The formula is the decision.</div>
@@ -1023,13 +1051,13 @@
         <!-- Tier 1.5 -->
         <div class="tier-row">
           <div class="tier-label-col">
-            <div class="tier-label-name" style="color: var(--blue2);">Tier 1.5</div>
+            <div class="tier-label-name" style="color: var(--blue);">Tier 1.5</div>
             <div class="tier-label-pct">~15%</div>
           </div>
           <div class="tier-content" style="border-color: rgba(2,42,192,0.2);">
-            <div class="tier-content-icon" style="background: rgba(2,42,192,0.08); color: var(--blue2); border: 1px solid rgba(2,42,192,0.18);">&#x1f9e0;</div>
+            <div class="tier-content-icon" style="background: rgba(2,42,192,0.08); color: var(--blue); border: 1px solid rgba(2,42,192,0.18);"><i class="ph-duotone ph-brain" style="color:var(--blue);font-size:18px;"></i></div>
             <div class="tier-content-text">
-              <div class="tier-content-title" style="color: var(--blue2);">Agentic Re-rank</div>
+              <div class="tier-content-title" style="color: var(--blue);">Agentic Re-rank</div>
               <div class="tier-content-desc">Narrow gap between top actions. LLM receives the shortlist plus relationship context and re-ranks with reasoning. Reports confidence. If low confidence &rarr; escalates to Tier 2.</div>
             </div>
           </div>
@@ -1049,8 +1077,8 @@
             <div class="tier-label-name" style="color: var(--gold-d);">Tier 2</div>
             <div class="tier-label-pct">~4%</div>
           </div>
-          <div class="tier-content" style="border-color: rgba(252,192,3,0.25);">
-            <div class="tier-content-icon" style="background: rgba(252,192,3,0.1); color: var(--gold-d); border: 1px solid rgba(252,192,3,0.22);">&#x1f464;</div>
+          <div class="tier-content" style="border-color: rgba(228,162,1,0.25);">
+            <div class="tier-content-icon" style="background: rgba(228,162,1,0.1); color: var(--gold-d); border: 1px solid rgba(228,162,1,0.22);"><i class="ph-duotone ph-user" style="color:var(--gold-d);font-size:18px;"></i></div>
             <div class="tier-content-text">
               <div class="tier-content-title" style="color: var(--gold-d);">Human Escalation</div>
               <div class="tier-content-desc">System confidence too low for autonomous action. Decision queued for human review with full context, reasoning trace, and recommended action. Slack integration for approval workflows.</div>
@@ -1072,8 +1100,8 @@
             <div class="tier-label-name" style="color: var(--purple-d);">Compose</div>
             <div class="tier-label-pct">~1%</div>
           </div>
-          <div class="tier-content" style="border-color: rgba(122,61,214,0.2);">
-            <div class="tier-content-icon" style="background: rgba(122,61,214,0.08); color: var(--purple-d); border: 1px solid rgba(122,61,214,0.18);">&#x2728;</div>
+          <div class="tier-content" style="border-color: rgba(115,3,148,0.2);">
+            <div class="tier-content-icon" style="background: rgba(115,3,148,0.08); color: var(--purple-d); border: 1px solid rgba(115,3,148,0.18);"><i class="ph-duotone ph-magic-wand" style="color:var(--purple-d);font-size:18px;"></i></div>
             <div class="tier-content-text">
               <div class="tier-content-title" style="color: var(--purple-d);">Agentic Composition</div>
               <div class="tier-content-desc">Nothing in the catalogue fits. LLM composes a novel treatment within constitutional rails &mdash; budget caps, policy constraints, confidence thresholds. Created treatment enters review queue before execution.</div>
@@ -1101,14 +1129,14 @@
 
     <div style="display: grid; grid-template-columns: 1fr 40px 1fr; gap: 0; margin-bottom: 24px;">
       <div style="background: var(--card); border: 1px solid rgba(2,42,192,0.2); border-radius: 16px; padding: 28px; box-shadow: var(--shadow);">
-        <div style="font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--blue2); margin-bottom: 16px;">Decisioning Hub</div>
-        <div style="font-size: 13px; color: var(--text); margin-bottom: 12px; line-height: 1.55; display: flex; align-items: flex-start; gap: 10px;"><span style="flex-shrink:0;width:6px;height:6px;border-radius:50%;background:var(--blue2);margin-top:7px;"></span>Batch / segment-triggered / event-driven</div>
-        <div style="font-size: 13px; color: var(--text); margin-bottom: 12px; line-height: 1.55; display: flex; align-items: flex-start; gap: 10px;"><span style="flex-shrink:0;width:6px;height:6px;border-radius:50%;background:var(--blue2);margin-top:7px;"></span>Selects the best <strong>promotion</strong> per customer</div>
-        <div style="font-size: 13px; color: var(--text); margin-bottom: 12px; line-height: 1.55; display: flex; align-items: flex-start; gap: 10px;"><span style="flex-shrink:0;width:6px;height:6px;border-radius:50%;background:var(--blue2);margin-top:7px;"></span>Writes latent decisions to Data Cloud</div>
-        <div style="font-size: 13px; color: var(--text); margin-bottom: 12px; line-height: 1.55; display: flex; align-items: flex-start; gap: 10px;"><span style="flex-shrink:0;width:6px;height:6px;border-radius:50%;background:var(--blue2);margin-top:7px;"></span>No Apex in the hot path</div>
-        <div style="font-size: 13px; color: var(--text); line-height: 1.55; display: flex; align-items: flex-start; gap: 10px;"><span style="flex-shrink:0;width:6px;height:6px;border-radius:50%;background:var(--blue2);margin-top:7px;"></span>Owns the learning loop</div>
+        <div style="font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--blue); margin-bottom: 16px;">Decisioning Hub</div>
+        <div style="font-size: 13px; color: var(--text); margin-bottom: 12px; line-height: 1.55; display: flex; align-items: flex-start; gap: 10px;"><span style="flex-shrink:0;width:6px;height:6px;border-radius:50%;background:var(--blue);margin-top:7px;"></span>Batch / segment-triggered / event-driven</div>
+        <div style="font-size: 13px; color: var(--text); margin-bottom: 12px; line-height: 1.55; display: flex; align-items: flex-start; gap: 10px;"><span style="flex-shrink:0;width:6px;height:6px;border-radius:50%;background:var(--blue);margin-top:7px;"></span>Selects the best <strong>promotion</strong> per customer</div>
+        <div style="font-size: 13px; color: var(--text); margin-bottom: 12px; line-height: 1.55; display: flex; align-items: flex-start; gap: 10px;"><span style="flex-shrink:0;width:6px;height:6px;border-radius:50%;background:var(--blue);margin-top:7px;"></span>Writes latent decisions to Data Cloud</div>
+        <div style="font-size: 13px; color: var(--text); margin-bottom: 12px; line-height: 1.55; display: flex; align-items: flex-start; gap: 10px;"><span style="flex-shrink:0;width:6px;height:6px;border-radius:50%;background:var(--blue);margin-top:7px;"></span>No Apex in the hot path</div>
+        <div style="font-size: 13px; color: var(--text); line-height: 1.55; display: flex; align-items: flex-start; gap: 10px;"><span style="flex-shrink:0;width:6px;height:6px;border-radius:50%;background:var(--blue);margin-top:7px;"></span>Owns the learning loop</div>
       </div>
-      <div style="display: flex; align-items: center; justify-content: center; font-size: 18px; color: rgba(0,39,117,0.2);">&rarr;</div>
+      <div style="display: flex; align-items: center; justify-content: center; font-size: 18px; color: rgba(0,30,91,0.2);">&rarr;</div>
       <div style="background: var(--card); border: 1px solid rgba(0,122,114,0.2); border-radius: 16px; padding: 28px; box-shadow: var(--shadow);">
         <div style="font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--teal-d); margin-bottom: 16px;">Serving Layer (SP / Agentforce / Console)</div>
         <div style="font-size: 13px; color: var(--text); margin-bottom: 12px; line-height: 1.55; display: flex; align-items: flex-start; gap: 10px;"><span style="flex-shrink:0;width:6px;height:6px;border-radius:50%;background:var(--teal-d);margin-top:7px;"></span>Reads latent decisions from Data Cloud</div>
@@ -1127,7 +1155,7 @@
       </div>
       <div style="background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 18px; box-shadow: var(--shadow-sm); text-align: center;">
         <div style="font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px;">Service</div>
-        <div style="font-size: 13px; font-weight: 700; color: var(--blue2);">Agentforce / Console</div>
+        <div style="font-size: 13px; font-weight: 700; color: var(--blue);">Agentforce / Console</div>
         <div style="font-size: 11px; color: var(--muted); margin-top: 4px;">Live arbitration or cached decision</div>
       </div>
       <div style="background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 18px; box-shadow: var(--shadow-sm); text-align: center;">
@@ -1138,7 +1166,7 @@
     </div>
 
     <div class="callout callout-left">
-      <div class="callout-label" style="color: var(--blue2);">The pre-compute pattern</div>
+      <div class="callout-label" style="color: var(--blue);">The pre-compute pattern</div>
       <div class="callout-body">The Hub runs batch on its own schedule, writes latent decisions to Data Cloud, and the serving layer reads from Data Cloud at whatever concurrency it needs. <strong>No Apex in the hot path. No governor limits in the serving layer.</strong> SP without the Hub serves offers based on segments and rules. SP with the Hub serves offers backed by compounding relationship intelligence. That's the upgrade story.</div>
     </div>
   </div>
@@ -1149,7 +1177,7 @@
   <div class="section-alt">
     <div class="section">
       <div class="step-head">
-        <div class="step-num" style="background:rgba(122,61,214,0.08);color:#5521A8;border-color:rgba(122,61,214,0.2);">05</div>
+        <div class="step-num" style="background:rgba(115,3,148,0.08);color:#5521A8;border-color:rgba(115,3,148,0.2);">05</div>
         <div>
           <div class="step-title">Outcome Attribution</div>
           <div class="step-desc">"Accepted" is a proxy. The learning loop needs to know what actually happened &mdash; did the customer renew, buy, stay?</div>
@@ -1163,7 +1191,7 @@
           <div style="font-size: 12.5px; color: var(--muted); line-height: 1.65;">Agent or system accepts/rejects the recommendation. CampaignMember status writes back to Data Cloud. <strong>Available today.</strong></div>
         </div>
         <div style="background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 22px; box-shadow: var(--shadow-sm);">
-          <div style="font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--blue2); margin-bottom: 10px;">Signal 2 &mdash; Near-term</div>
+          <div style="font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--blue); margin-bottom: 10px;">Signal 2 &mdash; Near-term</div>
           <div style="font-size: 14px; font-weight: 700; color: var(--ink); margin-bottom: 6px;">Business Outcome</div>
           <div style="font-size: 12.5px; color: var(--muted); line-height: 1.65;">Match NBADecision__c to downstream CRM events (Opportunity closed, Case resolved, renewal completed) within a configurable <strong>attribution window</strong> per module.</div>
         </div>
@@ -1223,7 +1251,7 @@
 
       <!-- Action Space -->
       <div class="platform-card">
-        <div class="platform-card-head" style="background: rgba(196,28,0,0.03);">
+        <div class="platform-card-head" style="background: rgba(194,57,52,0.03);">
           <div class="platform-card-dot" style="background: var(--red);"></div>
           <div class="platform-card-label" style="color: var(--red);">Action Space</div>
         </div>
@@ -1252,7 +1280,7 @@
 
       <!-- Value Function -->
       <div class="platform-card">
-        <div class="platform-card-head" style="background: rgba(252,192,3,0.05);">
+        <div class="platform-card-head" style="background: rgba(228,162,1,0.05);">
           <div class="platform-card-dot" style="background: var(--gold-d);"></div>
           <div class="platform-card-label" style="color: var(--gold-d);">Value Function</div>
         </div>
@@ -1281,7 +1309,7 @@
 
       <!-- Learning Loop -->
       <div class="platform-card">
-        <div class="platform-card-head" style="background: rgba(122,61,214,0.04);">
+        <div class="platform-card-head" style="background: rgba(115,3,148,0.04);">
           <div class="platform-card-dot" style="background: var(--purple);"></div>
           <div class="platform-card-label" style="color: var(--purple-d);">Learning Loop</div>
         </div>
@@ -1310,7 +1338,7 @@
     </div>
 
     <div class="callout callout-left">
-      <div class="callout-label" style="color: var(--blue2);">The orchestration layer</div>
+      <div class="callout-label" style="color: var(--blue);">The orchestration layer</div>
       <div class="callout-body">None of these platform capabilities are new. What's new is the orchestration: the system that reads relationship state, constrains the action space, applies the value function, gates reasoning by confidence, records the decision, and feeds outcomes back into the loop. <strong>The accelerator doesn't replace platform capabilities. It connects them into a system that compounds.</strong></div>
     </div>
   </div>
@@ -1320,7 +1348,7 @@
   <!-- COMPOUNDING LIFECYCLE -->
   <div class="section">
     <div class="step-head">
-      <div class="step-num" style="background:rgba(122,61,214,0.08);color:#5521A8;border-color:rgba(122,61,214,0.2);">07</div>
+      <div class="step-num" style="background:rgba(115,3,148,0.08);color:#5521A8;border-color:rgba(115,3,148,0.2);">07</div>
       <div>
         <div class="step-title">The Compounding Lifecycle</div>
         <div class="step-desc">The system gets measurably better over time. Not because the brain improves, but because the memory accumulates. Each phase builds on the last.</div>
@@ -1331,28 +1359,28 @@
       <div class="lifecycle-title">Intelligence Compounding Over Time</div>
       <div class="lifecycle-row">
         <div class="lifecycle-phase">
-          <div class="lifecycle-icon" style="background: rgba(0,39,117,0.06); color: var(--ink);">&#x1f680;</div>
+          <div class="lifecycle-icon" style="background: rgba(0,30,91,0.06); color: var(--ink);"><i class="ph-duotone ph-rocket-launch" style="color:var(--ink);font-size:20px;"></i></div>
           <div class="lifecycle-label" style="color: var(--ink);">Day 1</div>
           <div class="lifecycle-desc">Scoring on historical CRM data. Good starting point. An LLM alone can do roughly this well with the right prompt.</div>
-          <div class="lifecycle-time" style="background: rgba(0,39,117,0.06); color: var(--muted);">Baseline</div>
+          <div class="lifecycle-time" style="background: rgba(0,30,91,0.06); color: var(--muted);">Baseline</div>
         </div>
         <div class="lifecycle-phase">
-          <div class="lifecycle-icon" style="background: rgba(0,122,114,0.1); color: var(--teal-d);">&#x1f4c8;</div>
+          <div class="lifecycle-icon" style="background: rgba(0,122,114,0.1); color: var(--teal-d);"><i class="ph-duotone ph-trend-up" style="color:var(--teal-d);font-size:20px;"></i></div>
           <div class="lifecycle-label" style="color: var(--teal-d);">Month 1</div>
           <div class="lifecycle-desc">10,000 outcomes observed. Adaptive weights shifting. Actions that work get boosted. Actions that don't, attenuated.</div>
           <div class="lifecycle-time" style="background: rgba(0,122,114,0.06); color: var(--teal-d);">Learning</div>
         </div>
         <div class="lifecycle-phase">
-          <div class="lifecycle-icon" style="background: rgba(252,192,3,0.12); color: var(--gold-d);">&#x1f3af;</div>
+          <div class="lifecycle-icon" style="background: rgba(228,162,1,0.12); color: var(--gold-d);"><i class="ph-duotone ph-crosshair" style="color:var(--gold-d);font-size:20px;"></i></div>
           <div class="lifecycle-label" style="color: var(--gold-d);">Month 6</div>
           <div class="lifecycle-desc">Decision journal reveals sequence patterns. Value function calibrated against real attribution. Sequence-aware decisioning emerges.</div>
-          <div class="lifecycle-time" style="background: rgba(252,192,3,0.08); color: var(--gold-d);">Compounding</div>
+          <div class="lifecycle-time" style="background: rgba(228,162,1,0.08); color: var(--gold-d);">Compounding</div>
         </div>
         <div class="lifecycle-phase">
-          <div class="lifecycle-icon" style="background: rgba(122,61,214,0.08); color: var(--purple-d);">&#x1f3f0;</div>
+          <div class="lifecycle-icon" style="background: rgba(115,3,148,0.08); color: var(--purple-d);"><i class="ph-duotone ph-buildings" style="color:var(--purple-d);font-size:20px;"></i></div>
           <div class="lifecycle-label" style="color: var(--purple-d);">Year 1</div>
           <div class="lifecycle-desc">The memory IS the moat. A competitor can replicate the brain in a weekend. They cannot replicate 12 months of compounding institutional memory.</div>
-          <div class="lifecycle-time" style="background: rgba(122,61,214,0.06); color: var(--purple-d);">Defensible</div>
+          <div class="lifecycle-time" style="background: rgba(115,3,148,0.06); color: var(--purple-d);">Defensible</div>
         </div>
       </div>
     </div>
@@ -1376,24 +1404,24 @@
 
       <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 24px;">
         <div style="background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 22px; box-shadow: var(--shadow-sm);">
-          <div style="font-size: 20px; margin-bottom: 10px;">&#x2601;&#xfe0f;</div>
+          <div style="margin-bottom: 10px;"><i class="ph-duotone ph-cloud" style="color:var(--blue);font-size:22px;"></i></div>
           <div style="font-size: 14px; font-weight: 700; color: var(--ink); margin-bottom: 8px;">Data Cloud CIs</div>
           <div style="font-size: 12.5px; color: var(--muted); line-height: 1.65;">Calculated Insights turn CRM + behavioral data into queryable signals (pCLV, engagement scores, churn probability). <strong>This is relationship state as infrastructure.</strong> Without it, every decision requires re-computing customer context from raw data.</div>
         </div>
         <div style="background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 22px; box-shadow: var(--shadow-sm);">
-          <div style="font-size: 20px; margin-bottom: 10px;">&#x1f916;</div>
+          <div style="margin-bottom: 10px;"><i class="ph-duotone ph-robot" style="color:var(--blue);font-size:22px;"></i></div>
           <div style="font-size: 14px; font-weight: 700; color: var(--ink); margin-bottom: 8px;">Agentforce + LLMs</div>
           <div style="font-size: 12.5px; color: var(--muted); line-height: 1.65;">Reasoning capability within the platform at sub-second latency. The pluggable brain layer becomes practical when you can call an LLM in 200ms. <strong>Makes tiered reasoning viable</strong> &mdash; deterministic by default, LLM when needed.</div>
         </div>
         <div style="background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 22px; box-shadow: var(--shadow-sm);">
-          <div style="font-size: 20px; margin-bottom: 10px;">&#x1f3af;</div>
+          <div style="margin-bottom: 10px;"><i class="ph-duotone ph-crosshair" style="color:var(--blue);font-size:22px;"></i></div>
           <div style="font-size: 14px; font-weight: 700; color: var(--ink); margin-bottom: 8px;">Einstein Studio</div>
           <div style="font-size: 12.5px; color: var(--muted); line-height: 1.65;">Train, deploy, and retrain ML models on Data Cloud data without leaving the platform. <strong>Closes the learning loop:</strong> outcomes feed back into model training, which feeds back into the value function, which improves the next decision.</div>
         </div>
       </div>
 
       <div style="background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 16px 22px; display: flex; align-items: center; gap: 14px; box-shadow: var(--shadow-sm);">
-        <div style="font-size: 20px; flex-shrink: 0;">&#x1f500;</div>
+        <div style="flex-shrink: 0;"><i class="ph-duotone ph-swap" style="color:var(--blue);font-size:22px;"></i></div>
         <p style="font-size: 13px; color: var(--muted); line-height: 1.65;"><strong style="color: var(--ink);">The timing thesis:</strong> The platform pieces exist but nobody has connected them into a compounding system. This space was historically ceded to specialist vendors who built on pre-cloud, pre-AI infrastructure. The opportunity is to build the orchestration layer that turns platform capabilities into memory-first decisioning &mdash; before anyone else does.</p>
       </div>
     </div>
