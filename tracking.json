@@ -19330,5 +19330,17 @@
     "location": "Melbourne, Victoria, Australia",
     "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36",
     "returning": "no"
+  },
+  {
+    "timestamp": "Wed, 27 May 2026 15:22:21 GMT",
+    "name": "Martin Kihn",
+    "company": "Salesforce",
+    "position": "SVP",
+    "page": "Memory Approach",
+    "url": "https://sdunlop-sf.github.io/nba-narrative/memory-approach.html",
+    "ip": "165.225.39.112",
+    "location": "New York City, New York, United States",
+    "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36",
+    "returning": "yes"
   }
 ]
