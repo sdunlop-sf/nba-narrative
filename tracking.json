@@ -19450,5 +19450,17 @@
     "location": "Sydney, New South Wales, Australia",
     "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36",
     "returning": "no"
+  },
+  {
+    "timestamp": "Thu, 28 May 2026 23:59:13 GMT",
+    "name": "t",
+    "company": "t",
+    "position": "t",
+    "page": "Memory Architecture",
+    "url": "https://sdunlop-sf.github.io/nba-narrative/memory-architecture.html",
+    "ip": "165.225.114.142",
+    "location": "Sydney, New South Wales, Australia",
+    "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36",
+    "returning": "yes"
   }
 ]
