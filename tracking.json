@@ -19558,5 +19558,17 @@
     "location": "Sydney, New South Wales, Australia",
     "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36",
     "returning": "no"
+  },
+  {
+    "timestamp": "Wed, 03 Jun 2026 01:56:39 GMT",
+    "name": "Mohammed Nadeem Shaikh",
+    "company": "Salesforce",
+    "position": "Architect",
+    "page": "Headless Agentic Decisioning (v5-lite)",
+    "url": "https://sdunlop-sf.github.io/decisioning-hub-framing/v5-lite/",
+    "ip": "165.225.233.25",
+    "location": "Sydney, New South Wales, Australia",
+    "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36",
+    "returning": "yes"
   }
 ]
