@@ -19546,5 +19546,17 @@
     "location": "Sydney, New South Wales, Australia",
     "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36",
     "returning": "yes"
+  },
+  {
+    "timestamp": "Wed, 03 Jun 2026 01:55:51 GMT",
+    "name": "Mohammed Nadeem Shaikh",
+    "company": "Salesforce",
+    "position": "Architect",
+    "page": "Decisioning Hub GTM & Monetisation",
+    "url": "https://sdunlop-sf.github.io/decisioning-hub-gtm/",
+    "ip": "165.225.233.25",
+    "location": "Sydney, New South Wales, Australia",
+    "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36",
+    "returning": "no"
   }
 ]
