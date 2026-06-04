@@ -19774,5 +19774,17 @@
     "location": "Chicago, Illinois, United States",
     "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36",
     "returning": "no"
+  },
+  {
+    "timestamp": "Thu, 04 Jun 2026 15:15:56 GMT",
+    "name": "David",
+    "company": "Salesforce",
+    "position": "AE",
+    "page": "Memory Approach",
+    "url": "https://sdunlop-sf.github.io/nba-narrative/memory-approach.html",
+    "ip": "65.212.192.225",
+    "location": "Round Rock, Texas, United States",
+    "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36",
+    "returning": "no"
   }
 ]
