@@ -19822,5 +19822,17 @@
     "location": "Sydney, New South Wales, Australia",
     "ua": "Mozilla/5.0 (iPhone; CPU iPhone OS 26_5_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) CriOS/148.0.7778.166 Mobile/15E148 Safari/604.1",
     "returning": "yes"
+  },
+  {
+    "timestamp": "Thu, 04 Jun 2026 19:42:22 GMT",
+    "name": "Stu",
+    "company": "SF",
+    "position": "SE",
+    "page": "Headless Agentic Decisioning (v5-lite)",
+    "url": "https://sdunlop-sf.github.io/decisioning-hub-framing/v5-lite/",
+    "ip": "2405:6e00:444:8c5d:e50a:b582:7f5:57ad",
+    "location": "Sydney, New South Wales, Australia",
+    "ua": "Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.5 Mobile/15E148 Safari/604.1",
+    "returning": "yes"
   }
 ]
