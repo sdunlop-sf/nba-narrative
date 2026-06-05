@@ -19846,5 +19846,17 @@
     "location": "Canberra, Australian Capital Territory, Australia",
     "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36",
     "returning": "no"
+  },
+  {
+    "timestamp": "Fri, 05 Jun 2026 12:25:04 GMT",
+    "name": "TravisNg",
+    "company": "Salesforce",
+    "position": "SE",
+    "page": "Memory Approach",
+    "url": "https://sdunlop-sf.github.io/nba-narrative/memory-approach.html",
+    "ip": "147.161.214.248",
+    "location": "Sydney, New South Wales, Australia",
+    "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36",
+    "returning": "yes"
   }
 ]
