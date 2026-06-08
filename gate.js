@@ -14,7 +14,7 @@
   /* ── CONFIG ─────────────────────────────────────────────────── */
   var _scriptTag = document.querySelector('script[src*="gate.js"]');
   var C = {
-    password:   (_scriptTag && _scriptTag.dataset.password) ? _scriptTag.dataset.password : 'SFNBA2026!',
+    password:   (_scriptTag && _scriptTag.dataset.password) ? _scriptTag.dataset.password : 'SFNBA2026!!',
     workerUrl:  'https://summer-mountain-4569.sdunlop.workers.dev',
     web3Key:    'ec698e10-6e6a-4c3a-974e-54a7cd7d4343',
     storeKey:   'nba_visitor_v2',
@@ -125,7 +125,7 @@
       return;
     }
     if (password !== C.password) {
-      err.textContent = 'Incorrect password. Please try again.';
+      err.innerHTML = 'Incorrect password. Access has been updated.<br/>Contact <strong>Stuart Dunlop</strong> via Slack for the new password.';
       document.getElementById('nba-g-pass').value = '';
       document.getElementById('nba-g-pass').focus();
       return;
