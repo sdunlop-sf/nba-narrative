@@ -20374,5 +20374,17 @@
     "location": "Sydney, New South Wales, Australia",
     "ua": "Mozilla/5.0 (iPhone; CPU iPhone OS 26_5_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) CriOS/149.0.7827.45 Mobile/15E148 Safari/604.1",
     "returning": "yes"
+  },
+  {
+    "timestamp": "Sun, 14 Jun 2026 09:13:13 GMT",
+    "name": "Stu",
+    "company": "SF",
+    "position": "SE",
+    "page": "Memory Approach",
+    "url": "https://sdunlop-sf.github.io/nba-narrative/memory-approach.html",
+    "ip": "122.107.179.17",
+    "location": "Sydney, New South Wales, Australia",
+    "ua": "Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.5 Mobile/15E148 Safari/604.1",
+    "returning": "yes"
   }
 ]
