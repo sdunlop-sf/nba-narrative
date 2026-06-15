@@ -20890,5 +20890,17 @@
     "location": "Sydney, New South Wales, Australia",
     "ua": "Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.5 Mobile/15E148 Safari/604.1",
     "returning": "yes"
+  },
+  {
+    "timestamp": "Mon, 15 Jun 2026 20:22:30 GMT",
+    "name": "GeetDhillon",
+    "company": "Salesforce",
+    "position": "SolutionsEngineer",
+    "page": "Memory Approach",
+    "url": "https://sdunlop-sf.github.io/nba-narrative/memory-approach.html",
+    "ip": "76.64.95.21",
+    "location": "Toronto, Ontario, Canada",
+    "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+    "returning": "yes"
   }
 ]
