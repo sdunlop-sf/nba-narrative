@@ -508,7 +508,7 @@
     <div class="hero-eyebrow">A new mental model for enterprise decisioning</div>
     <h1>Stop building a smarter brain.<br/><span class="hl">Start building a better memory.</span></h1>
     <p class="hero-sub">The brain changes every few years &mdash; rules engines, then ML models, now LLMs. The memory is durable: what we did, what happened, what we learned, what constraints apply. A clean-sheet design optimizes for the memory, not the brain.</p>
-    <div class="hero-version"><span class="dot"></span>v19.0.0 &middot; Design Thesis &middot; Live</div>
+    <div class="hero-version"><span class="dot"></span>v24.11.0 &middot; Design Thesis &middot; Live</div>
   </div>
 
   <!-- FLOW STRIP -->
@@ -649,7 +649,18 @@
 
     <div class="callout callout-left">
       <div class="callout-label" style="color: var(--blue);">The reasoning engine is deliberately absent from the primitives</div>
-      <div class="callout-body">The brain &mdash; rules, ML, LLM, hybrid &mdash; queries the relationship state, operates within the action space, optimizes the value function, and feeds the learning loop. It's the consumer of all four primitives, not one of them. <strong>Today's brain is deterministic scoring with LLM re-rank. Tomorrow's could be a full LLM planner, a contextual bandit, or something that doesn't exist yet.</strong> Because it operates against well-defined interfaces, the swap is clean.</div>
+      <div class="callout-body">The brain &mdash; rules, ML, LLM, hybrid &mdash; queries the relationship state, operates within the action space, optimizes the value function, and feeds the learning loop. It's the consumer of all four primitives, not one of them. Because it operates against well-defined interfaces, the reasoning depth is configurable <strong>per module</strong> &mdash; not a global architecture decision.
+      <br/><br/>
+      A single module escalates through reasoning tiers based on confidence and value:
+      <br/><br/>
+      <strong>Tier 1</strong> &mdash; Deterministic. Formula scores, picks the winner, dispatches. Handles 95% of volume in milliseconds.<br/>
+      <strong>Adaptive</strong> &mdash; Bandits explore and exploit from response data. No model needed. Learns which actions convert without human tuning.<br/>
+      <strong>Rerank</strong> &mdash; When the score gap is narrow, an LLM reorders the shortlist using relationship context. Auto-resolves ambiguity.<br/>
+      <strong>Adjudication</strong> &mdash; When confidence is low and stakes are high, the decision is flagged for LLM reasoning or human review. Full rationale recorded.<br/>
+      <strong>Composition</strong> &mdash; When no catalogued action fits, the system composes a novel treatment within constitutional rails. Budget caps, contact policy, and banding enforced deterministically around the creative output.<br/>
+      <br/>
+      Each module configures which tiers are active and at what thresholds they engage. A cross-sell module might use Tier 1 + Bandits only. A wealth management module might use all five. The primitives don't change &mdash; only the depth of reasoning applied to them.
+      </div>
     </div>
   </div>
 
@@ -772,7 +783,7 @@
             <i class="ph-duotone ph-shield-check" style="color:#C23934;"></i>
           </div>
           <div class="gap-card-title">Rails, not just reasoning</div>
-          <div class="gap-card-desc">The LLM composes a novel treatment, but it runs through budget caps, contact policy, and confidence thresholds before it touches a customer. In regulated industries, <strong>the rails ARE the product.</strong> Governance, auditability, and deterministic enforcement aren't features &mdash; they're the foundation.</div>
+          <div class="gap-card-desc">When reasoning tiers escalate &mdash; reranking, adjudication, composition &mdash; every output runs through budget caps, contact policy, banding, and confidence thresholds before it touches a customer. The reasoning gets deeper; the governance doesn't loosen. In regulated industries, <strong>the rails ARE the product.</strong> Deterministic enforcement wraps around creative output, not the other way around.</div>
         </div>
         <div class="gap-card">
           <div class="gap-card-icon" style="background:rgba(115,3,148,0.06);border-color:rgba(115,3,148,0.14);">
