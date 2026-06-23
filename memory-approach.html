@@ -499,6 +499,7 @@
     <div class="nav-links">
       <a href="memory-approach.html" class="nav-pill active">Narrative</a>
       <a href="memory-architecture.html" class="nav-pill">Architecture</a>
+      <a href="master-flow.html" class="nav-pill">Master Flow</a>
     </div>
   </nav>
 
@@ -508,7 +509,7 @@
     <div class="hero-eyebrow">A new mental model for enterprise decisioning</div>
     <h1>Stop building a smarter brain.<br/><span class="hl">Start building a better memory.</span></h1>
     <p class="hero-sub">The brain changes every few years &mdash; rules engines, then ML models, now LLMs. The memory is durable: what we did, what happened, what we learned, what constraints apply. A clean-sheet design optimizes for the memory, not the brain.</p>
-    <div class="hero-version"><span class="dot"></span>v24.11.0 &middot; Design Thesis &middot; Live</div>
+    <div class="hero-version"><span class="dot"></span>v25 &middot; Design Thesis &middot; Live</div>
   </div>
 
   <!-- FLOW STRIP -->
@@ -653,7 +654,7 @@
       <br/><br/>
       A single module escalates through reasoning tiers based on confidence and value:
       <br/><br/>
-      <strong>Tier 1</strong> &mdash; Deterministic. Formula scores, picks the winner, dispatches. Handles 95% of volume in milliseconds.<br/>
+      <strong>Tier 1</strong> &mdash; Deterministic. Formula scores, picks the winner, dispatches. Handles ~85% of volume in milliseconds.<br/>
       <strong>Adaptive</strong> &mdash; Bandits explore and exploit from response data. No model needed. Learns which actions convert without human tuning.<br/>
       <strong>Rerank</strong> &mdash; When the score gap is narrow, an LLM reorders the shortlist using relationship context. Auto-resolves ambiguity.<br/>
       <strong>Adjudication</strong> &mdash; When confidence is low and stakes are high, the decision is flagged for LLM reasoning or human review. Full rationale recorded.<br/>

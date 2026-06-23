@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>The Master Flow &middot; NBA Decisioning Accelerator</title>
+  <title>Master Flow &middot; Memory-First Decisioning</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet" />
@@ -102,12 +102,15 @@
       text-transform: uppercase; color: var(--ink);
     }
     .nav-sub { font-size: 11px; color: var(--muted); font-weight: 500; }
+    .nav-links { display: flex; gap: 8px; }
     .nav-pill {
       font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
       background: rgba(2, 42, 192, 0.06); color: var(--blue);
       border: 1px solid rgba(2, 42, 192, 0.18); border-radius: 20px;
-      padding: 4px 14px;
+      padding: 4px 14px; text-decoration: none;
     }
+    .nav-pill:hover { background: rgba(2, 42, 192, 0.12); }
+    .nav-pill.active { background: var(--blue); color: #fff; border-color: var(--blue); }
 
     /* ── HERO ── */
     .hero {
@@ -793,19 +796,23 @@
     <div class="nav-brand">
       <img src="sf-logo-cloud.png" class="nav-logo" alt="Salesforce">
       <div class="nav-divider"></div>
-      <span class="nav-title">Master Flow</span>
-      <span class="nav-sub">/ NBA Decisioning Accelerator</span>
+      <span class="nav-title">Memory-First Decisioning</span>
+      <span class="nav-sub">/ Master Flow</span>
     </div>
-    <div class="nav-pill">v19 &middot; Shipped</div>
+    <div class="nav-links">
+      <a href="memory-approach.html" class="nav-pill">Narrative</a>
+      <a href="memory-architecture.html" class="nav-pill">Architecture</a>
+      <a href="master-flow.html" class="nav-pill active">Master Flow</a>
+    </div>
   </nav>
 
   <!-- HERO -->
   <div class="hero">
     <div class="accent-line"></div>
     <div class="hero-eyebrow">Salesforce &middot; Data Cloud &middot; Einstein Studio &middot; Agentforce &middot; Flow</div>
-    <h1>How the Decisioning Accelerator<br/><span class="hl">actually runs</span></h1>
-    <p class="hero-sub">A practical guide to the shipped decisioning engine &mdash; from trigger to execution to feedback loop. Deterministic when it can be. Reasoning when it should be. Creative when it has to be. Rails hold in every mode.</p>
-    <div class="hero-version"><span class="dot"></span>v19.0.0 &middot; Unlocked Package &middot; Live</div>
+    <h1>How the engine<br/><span class="hl">actually runs</span></h1>
+    <p class="hero-sub">The operational guide to the shipped decisioning engine &mdash; from trigger to execution to learning loop. Deterministic when it can be. Reasoning when it should be. Creative when it has to be. Rails hold in every mode.</p>
+    <div class="hero-version"><span class="dot"></span>v25 &middot; Unlocked Package &middot; Live</div>
   </div>
 
   <!-- FLOW STRIP -->
@@ -1530,7 +1537,7 @@
       </div>
       <div>
         <div class="step-title">What's in the Package</div>
-        <div class="step-desc">v19.0.0 unlocked package &middot; what ships vs what the customer configures post-install</div>
+        <div class="step-desc">Unlocked package &middot; what ships vs what the customer configures post-install</div>
       </div>
     </div>
 
