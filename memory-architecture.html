@@ -767,7 +767,7 @@
     <div class="hero-eyebrow">System Architecture</div>
     <h1>Four primitives.<br/><span class="hl">One pluggable brain.</span></h1>
     <p class="hero-sub">The durable assets &mdash; relationship state, action space, value function, learning loop &mdash; are the architecture. The reasoning engine reads from them. It doesn't define them.</p>
-    <div class="hero-version"><span class="dot"></span>Reference architecture &middot; April 2026</div>
+    <div class="hero-version"><span class="dot"></span>Reference architecture &middot; v25 &middot; Live</div>
   </div>
 
   <!-- MAIN ARCHITECTURE DIAGRAM -->
@@ -794,7 +794,7 @@
             <div class="arch-block-title" style="color: var(--teal-d);">Relationship State</div>
             <div class="arch-block-desc" style="color: var(--text);">The living model of each customer relationship. Current state, trajectory, decision history, constraints, value. Always current. Updated by every interaction and every decision outcome.</div>
             <div class="arch-block-items">
-              <span class="arch-tag" style="background: rgba(0,122,114,0.08); color: var(--teal-d); border: 1px solid rgba(0,122,114,0.2);">Customer profile</span>
+              <span class="arch-tag" style="background: rgba(0,122,114,0.08); color: var(--teal-d); border: 1px solid rgba(0,122,114,0.2);">Unified Individual</span>
               <span class="arch-tag" style="background: rgba(0,122,114,0.08); color: var(--teal-d); border: 1px solid rgba(0,122,114,0.2);">Decision journal</span>
               <span class="arch-tag" style="background: rgba(0,122,114,0.08); color: var(--teal-d); border: 1px solid rgba(0,122,114,0.2);">pCLV trajectory</span>
               <span class="arch-tag" style="background: rgba(0,122,114,0.08); color: var(--teal-d); border: 1px solid rgba(0,122,114,0.2);">Contact history</span>
@@ -861,12 +861,12 @@
               <div class="arch-block-dot" style="background: var(--blue);"></div>
               Reasoning Engine
             </div>
-            <div class="arch-block-desc" style="color: var(--text); text-align: center; max-width: 580px; margin: 4px auto 0;">Consumes state, operates within the action space, optimizes the value function. Today it's deterministic scoring with LLM re-rank. Tomorrow it could be anything.</div>
+            <div class="arch-block-desc" style="color: var(--text); text-align: center; max-width: 580px; margin: 4px auto 0;">Consumes state, operates within the action space, optimizes the value function. Today it's deterministic scoring + bandits + LLM re-rank + agentic composition. Tomorrow the brain can be anything &mdash; the primitives don't change.</div>
             <div class="brain-options">
               <div class="brain-option active"><div class="brain-option-dot"></div>Deterministic scoring</div>
               <div class="brain-option active"><div class="brain-option-dot"></div>LLM re-rank</div>
-              <div class="brain-option"><div class="brain-option-dot"></div>Contextual bandit</div>
-              <div class="brain-option"><div class="brain-option-dot"></div>Full LLM planner</div>
+              <div class="brain-option active"><div class="brain-option-dot"></div>Contextual bandit</div>
+              <div class="brain-option active"><div class="brain-option-dot"></div>Agentic composition</div>
               <div class="brain-option"><div class="brain-option-dot"></div>Future model</div>
             </div>
           </div>
@@ -890,10 +890,11 @@
             <div class="arch-block-desc" style="color: var(--text);">Every decision produces an outcome. Every outcome updates relationship state and refines the value function. This is the infrastructure that compounds. Month 6 is measurably smarter than month 1.</div>
             <div class="arch-block-items">
               <span class="arch-tag" style="background: rgba(115,3,148,0.06); color: var(--purple-d); border: 1px solid rgba(115,3,148,0.15);">Outcome attribution</span>
+              <span class="arch-tag" style="background: rgba(115,3,148,0.06); color: var(--purple-d); border: 1px solid rgba(115,3,148,0.15);">Verified revenue</span>
               <span class="arch-tag" style="background: rgba(115,3,148,0.06); color: var(--purple-d); border: 1px solid rgba(115,3,148,0.15);">Adaptive weights</span>
               <span class="arch-tag" style="background: rgba(115,3,148,0.06); color: var(--purple-d); border: 1px solid rgba(115,3,148,0.15);">Model retraining</span>
-              <span class="arch-tag" style="background: rgba(115,3,148,0.06); color: var(--purple-d); border: 1px solid rgba(115,3,148,0.15);">CLV recalculation</span>
               <span class="arch-tag" style="background: rgba(115,3,148,0.06); color: var(--purple-d); border: 1px solid rgba(115,3,148,0.15);">Explore / exploit</span>
+              <span class="arch-tag" style="background: rgba(115,3,148,0.06); color: var(--purple-d); border: 1px solid rgba(115,3,148,0.15);">Proactive agents</span>
               <span class="arch-tag" style="background: rgba(115,3,148,0.06); color: var(--purple-d); border: 1px solid rgba(115,3,148,0.15);">Decision journal</span>
             </div>
           </div>
@@ -1029,7 +1030,7 @@
         <div class="tier-row">
           <div class="tier-label-col">
             <div class="tier-label-name" style="color: var(--green);">Tier 1</div>
-            <div class="tier-label-pct">~80%</div>
+            <div class="tier-label-pct">~85%</div>
           </div>
           <div class="tier-content" style="border-color: rgba(0,122,114,0.2);">
             <div class="tier-content-icon" style="background: rgba(0,122,114,0.1); color: var(--teal-d); border: 1px solid rgba(0,122,114,0.2);"><i class="ph-duotone ph-lightning" style="color:var(--teal-d);font-size:18px;"></i></div>
@@ -1052,7 +1053,7 @@
         <div class="tier-row">
           <div class="tier-label-col">
             <div class="tier-label-name" style="color: var(--blue);">Tier 1.5</div>
-            <div class="tier-label-pct">~15%</div>
+            <div class="tier-label-pct">10-15%</div>
           </div>
           <div class="tier-content" style="border-color: rgba(2,42,192,0.2);">
             <div class="tier-content-icon" style="background: rgba(2,42,192,0.08); color: var(--blue); border: 1px solid rgba(2,42,192,0.18);"><i class="ph-duotone ph-brain" style="color:var(--blue);font-size:18px;"></i></div>
@@ -1075,7 +1076,7 @@
         <div class="tier-row">
           <div class="tier-label-col">
             <div class="tier-label-name" style="color: var(--gold-d);">Tier 2</div>
-            <div class="tier-label-pct">~4%</div>
+            <div class="tier-label-pct">2-5%</div>
           </div>
           <div class="tier-content" style="border-color: rgba(228,162,1,0.25);">
             <div class="tier-content-icon" style="background: rgba(228,162,1,0.1); color: var(--gold-d); border: 1px solid rgba(228,162,1,0.22);"><i class="ph-duotone ph-user" style="color:var(--gold-d);font-size:18px;"></i></div>
@@ -1098,7 +1099,7 @@
         <div class="tier-row">
           <div class="tier-label-col">
             <div class="tier-label-name" style="color: var(--purple-d);">Compose</div>
-            <div class="tier-label-pct">~1%</div>
+            <div class="tier-label-pct">&lt;1%</div>
           </div>
           <div class="tier-content" style="border-color: rgba(115,3,148,0.2);">
             <div class="tier-content-icon" style="background: rgba(115,3,148,0.08); color: var(--purple-d); border: 1px solid rgba(115,3,148,0.18);"><i class="ph-duotone ph-magic-wand" style="color:var(--purple-d);font-size:18px;"></i></div>
@@ -1267,7 +1268,7 @@
             <div class="mapping-row">
               <span class="mapping-from">Contact policy</span>
               <span class="mapping-arrow">&rarr;</span>
-              <span class="mapping-to">NBAContactPolicy__c</span>
+              <span class="mapping-to">NBA_Channel_Policy__c</span>
             </div>
             <div class="mapping-row">
               <span class="mapping-from">Offer depth</span>
@@ -1391,11 +1392,97 @@
     </div>
   </div>
 
+  <!-- PROACTIVE AGENTIC LAYER -->
+  <div class="section-alt">
+    <div class="section">
+      <div class="step-head">
+        <div class="step-num" style="background:rgba(115,3,148,0.08);color:#5521A8;border-color:rgba(115,3,148,0.2);">08</div>
+        <div>
+          <div class="step-title">The Proactive Agentic Layer</div>
+          <div class="step-desc">Agents that reason about the system, not just per decision. The operator reviews suggestions instead of watching dashboards.</div>
+        </div>
+      </div>
+
+      <p class="muted-p">Three queueable agents run nightly, reading the decision audit trace and outcome-chase chains. They notice patterns, propose changes, and drop insights into the unified Review Queue. Nothing self-applies by default &mdash; the human approves.</p>
+
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 24px;">
+        <div style="background: var(--card); border: 1px solid rgba(115,3,148,0.14); border-radius: 14px; overflow: hidden; box-shadow: var(--shadow-sm);">
+          <div style="padding: 14px 18px; background: rgba(115,3,148,0.04); border-bottom: 1px solid rgba(115,3,148,0.12); display: flex; align-items: center; gap: 10px;">
+            <div style="width: 7px; height: 7px; border-radius: 50%; background: var(--purple);"></div>
+            <div style="font-size: 12px; font-weight: 800; color: var(--purple-d); letter-spacing: 0.05em; text-transform: uppercase;">Model Debug Agent</div>
+          </div>
+          <div style="padding: 16px 18px;">
+            <p style="font-size: 12.5px; color: var(--muted); line-height: 1.65;">Watches Einstein scores. Flags <strong style="color:var(--text);">score collapse</strong> (stddev &lt; 0.05), <strong style="color:var(--text);">low-confidence spikes</strong> (7d vs 30d), and <strong style="color:var(--text);">distribution anomalies</strong>. Drafts plain-language explanations of suspected drift.</p>
+          </div>
+        </div>
+        <div style="background: var(--card); border: 1px solid rgba(115,3,148,0.14); border-radius: 14px; overflow: hidden; box-shadow: var(--shadow-sm);">
+          <div style="padding: 14px 18px; background: rgba(115,3,148,0.04); border-bottom: 1px solid rgba(115,3,148,0.12); display: flex; align-items: center; gap: 10px;">
+            <div style="width: 7px; height: 7px; border-radius: 50%; background: var(--purple);"></div>
+            <div style="font-size: 12px; font-weight: 800; color: var(--purple-d); letter-spacing: 0.05em; text-transform: uppercase;">Segment Strategy Agent</div>
+          </div>
+          <div style="padding: 16px 18px;">
+            <p style="font-size: 12.5px; color: var(--muted); line-height: 1.65;">Parses Decision_Trace__c for high segment-mismatch drop rates and narrow eligibility funnels. Proposes segment tweaks, new excluded-segment links, or catalogue extensions.</p>
+          </div>
+        </div>
+        <div style="background: var(--card); border: 1px solid rgba(115,3,148,0.14); border-radius: 14px; overflow: hidden; box-shadow: var(--shadow-sm);">
+          <div style="padding: 14px 18px; background: rgba(115,3,148,0.04); border-bottom: 1px solid rgba(115,3,148,0.12); display: flex; align-items: center; gap: 10px;">
+            <div style="width: 7px; height: 7px; border-radius: 50%; background: var(--purple);"></div>
+            <div style="font-size: 12px; font-weight: 800; color: var(--purple-d); letter-spacing: 0.05em; text-transform: uppercase;">Journey Suggestion Agent</div>
+          </div>
+          <div style="padding: 16px 18px;">
+            <p style="font-size: 12.5px; color: var(--muted); line-height: 1.65;">Reads outcome-chase chains. When a pattern (e.g. discount &rarr; follow-up &rarr; escalation) repeats 5+ times with high acceptance, drafts a concrete journey spec for the catalogue.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout callout-purple">
+        <div class="callout-label" style="color: var(--purple-d);">The architectural move</div>
+        <div class="callout-body">Agents that reason <em>about the system</em>, not just per decision. Cannot be retrofitted onto a rules engine &mdash; rules are deterministic, reasoning is non-deterministic. Architecturally incompatible unless you design for it from day one. The operator's job shifts from "watch dashboards and adjust" to "review suggestions and approve."</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- OFFER RESOLUTION & A2A -->
+  <div class="section">
+    <div class="step-head">
+      <div class="step-num" style="background:rgba(6,165,154,0.1);color:#007A72;border-color:rgba(6,165,154,0.25);">09</div>
+      <div>
+        <div class="step-title">Resolution Depth &amp; the Agentic Web</div>
+        <div class="step-desc">The engine resolves at the depth the endpoint requires. Human channels get intent. Buyer agents get a structured bid. Same arbitration, same governance, different output shape.</div>
+      </div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 24px;">
+      <div style="background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 20px; box-shadow: var(--shadow-sm);">
+        <div style="font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--blue); margin-bottom: 10px;">Marketing Channel</div>
+        <div style="font-size: 14px; font-weight: 700; color: var(--ink); margin-bottom: 8px;">Intent only</div>
+        <div style="font-size: 12.5px; color: var(--muted); line-height: 1.6;">Hub outputs: action + channel + timing. The serving layer (SP / RTOM) handles variant selection, offer rendering, and creative. The Hub decides <em>what</em>; the channel decides <em>how</em>.</div>
+      </div>
+      <div style="background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 20px; box-shadow: var(--shadow-sm);">
+        <div style="font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold-d); margin-bottom: 10px;">Service Channel</div>
+        <div style="font-size: 14px; font-weight: 700; color: var(--ink); margin-bottom: 8px;">Intent + treatment</div>
+        <div style="font-size: 12.5px; color: var(--muted); line-height: 1.6;">Hub outputs: action + call brief or task description. No downstream presentation layer exists &mdash; the Hub is the source of truth for what to say and why.</div>
+      </div>
+      <div style="background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 20px; box-shadow: var(--shadow-sm);">
+        <div style="font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--teal-d); margin-bottom: 10px;">A2A / Buyer Agent</div>
+        <div style="font-size: 14px; font-weight: 700; color: var(--ink); margin-bottom: 8px;">Full structured offer</div>
+        <div style="font-size: 12.5px; color: var(--muted); line-height: 1.6;">Hub outputs: price, terms, validity, margin floor. RTOMResolver hydrates the full offer payload. Machines don't need creative &mdash; they need data. Margin governance ensures the engine won't bid below cost.</div>
+      </div>
+    </div>
+
+    <div class="callout callout-teal">
+      <div class="callout-label" style="color: var(--teal-d);">The flywheel</div>
+      <div class="callout-body">Today the engine decides what to send a human. Tomorrow it decides what to bid a machine. The arbitration logic is identical &mdash; scoring, fatigue, governance, attribution. What changes is the response depth. A2A outcomes feed the same learning loop &mdash; response weights adjust, future bids improve. <strong>Compounding memory across human and machine channels.</strong></div>
+    </div>
+  </div>
+
+  <hr class="divider" />
+
   <!-- WHY NOW -->
   <div class="section-alt">
     <div class="section">
       <div class="step-head">
-        <div class="step-num" style="background:rgba(0,87,184,0.12);color:#0057B8;border-color:rgba(0,87,184,0.25);">08</div>
+        <div class="step-num" style="background:rgba(0,87,184,0.12);color:#0057B8;border-color:rgba(0,87,184,0.25);">10</div>
         <div>
           <div class="step-title">Why This Wasn't Possible Before</div>
           <div class="step-desc">Three platform capabilities that didn't exist (or weren't mature) even 18 months ago make this architecture viable now.</div>
