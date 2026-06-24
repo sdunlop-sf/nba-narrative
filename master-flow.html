@@ -967,7 +967,7 @@
 
     <div class="trigger-primary">
       <div class="trigger-primary-label">Primary trigger &mdash; Data Cloud real-time segment activation</div>
-      <p>Every module has its own <strong>NBA_Module_Trigger__c</strong> rows. In <em>real_time</em> mode, a Data Cloud Real-Time Segment publishes a generic <strong>NBA_Decision_Trigger__e</strong> platform event. A handler Flow resolves the Contact, stamps the module + trigger type, and invokes the arbitration engine. Sub-second from segment entry to Decision record.</p>
+      <p>Every module has its own <strong>NBA_Module_Trigger__c</strong> rows. In <em>real_time</em> mode, a Data Cloud Real-Time Segment publishes a generic <strong>NBA_Decision_Trigger__e</strong> platform event. A handler resolves the person (Contact ID or Data Cloud Individual ID), stamps the module + trigger type, and invokes the arbitration engine. Sub-second from segment entry to Decision record.</p>
     </div>
 
     <div class="trigger-alts">
@@ -1026,7 +1026,7 @@
       </div>
       <div class="rail-row">
         <div class="rail-name">Cross-module cooldown</div>
-        <div class="rail-desc">Same contact doesn't get hit by multiple modules within N hours. Only <em>Critical</em> actions (fraud, security, regulatory) punch through.</div>
+        <div class="rail-desc">Same person doesn't get hit by multiple modules within N hours. Only <em>Critical</em> actions (fraud, security, regulatory) punch through.</div>
         <div class="rail-tag">Configurable</div>
       </div>
       <div class="rail-row">
@@ -1114,16 +1114,26 @@
         <div style="font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--blue); margin-bottom: 14px;">Scoring Mode Abstraction</div>
         <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 18px;">
           <div>
-            <div style="font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 5px;"><span class="cr-chip cr-mode-model" style="margin-right:6px;">model</span> Predictive</div>
-            <div style="font-size: 12px; color: var(--muted); line-height: 1.6;">Einstein Studio or external model returns 0&ndash;1. Weighted by priority and response_weight.</div>
+            <div style="font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 5px;"><span class="cr-chip cr-mode-segment" style="margin-right:6px;">segment</span> Membership</div>
+            <div style="font-size: 12px; color: var(--muted); line-height: 1.6;">All qualifying people score 1.0. No model required. Fast path for list-based plays. Default for most modules.</div>
           </div>
           <div>
-            <div style="font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 5px;"><span class="cr-chip cr-mode-segment" style="margin-right:6px;">segment</span> Membership</div>
-            <div style="font-size: 12px; color: var(--muted); line-height: 1.6;">All qualifying contacts score 1.0. No model required. Fast path for list-based plays.</div>
+            <div style="font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 5px;"><span class="cr-chip cr-mode-model" style="margin-right:6px;">einstein</span> AI Studio Flow</div>
+            <div style="font-size: 12px; color: var(--muted); line-height: 1.6;">Runtime scoring via a configurable Autolaunched Flow wired to an AI Studio prediction action. Returns 0&ndash;1.</div>
           </div>
           <div>
             <div style="font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 5px;"><span class="cr-chip cr-mode-rule" style="margin-right:6px;">rule</span> Deterministic</div>
             <div style="font-size: 12px; color: var(--muted); line-height: 1.6;">Pass/fail on a criterion. Pass = 1.0. Used for compliance-driven and emergency actions.</div>
+          </div>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin-top: 14px;">
+          <div>
+            <div style="font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 5px;"><span class="cr-chip cr-mode-model" style="margin-right:6px;">data_cloud</span> Pre-computed</div>
+            <div style="font-size: 12px; color: var(--muted); line-height: 1.6;">CI-based score pre-computed in Data Cloud and cached on Relationship State. No runtime callout.</div>
+          </div>
+          <div>
+            <div style="font-size: 13px; font-weight: 700; color: var(--ink); margin-bottom: 5px;"><span class="cr-chip cr-mode-model" style="margin-right:6px;">external</span> HTTP Callout</div>
+            <div style="font-size: 12px; color: var(--muted); line-height: 1.6;">Calls a configured external endpoint (Vertex, SageMaker, Azure). Returns 0&ndash;1. For BYOM patterns.</div>
           </div>
         </div>
       </div>
@@ -1169,7 +1179,7 @@
     <div class="code-block">
       <span class="c-comment">// InvokeArbitration &mdash; the one @InvocableMethod that runs a decision</span><br/>
       <span class="c-key">ArbitrationOutput</span> result = <span class="c-key">InvokeArbitration</span>.invoke(new <span class="c-key">Input</span> {<br/>
-      &nbsp;&nbsp;<span class="c-str">contactId</span>: <span class="c-val">contactId</span>,<br/>
+      &nbsp;&nbsp;<span class="c-str">contactId</span>: <span class="c-val">contactId</span>,  <span class="c-comment">// OR individualId for person-only mode</span><br/>
       &nbsp;&nbsp;<span class="c-str">moduleName</span>: <span class="c-val">'Churn Prevention'</span>,<br/>
       &nbsp;&nbsp;<span class="c-str">triggerType</span>: <span class="c-val">'segment_realtime'</span>,<br/>
       &nbsp;&nbsp;<span class="c-str">excludeActionIds</span>: <span class="c-val">chaseHistory</span>  <span class="c-comment">// outcome chasing</span><br/>
@@ -1244,23 +1254,23 @@
         <div class="exec-channel">
           <div class="ec-head">
             <div class="ec-icon" style="background:rgba(6,165,154,0.06);border-color:rgba(6,165,154,0.14);">
-              <i class="ph-duotone ph-user" style="color:#06A59A;"></i>
+              <i class="ph-duotone ph-envelope-simple" style="color:#06A59A;"></i>
             </div>
-            <div class="ec-title">Sales Cloud</div>
+            <div class="ec-title">Email</div>
           </div>
           <div class="ec-body">
-            <p><strong>nbaRecommendationPanel</strong> LWC on Contact + Account pages. Real-time list of recommended actions with talking points and one-click accept/decline. Outcome writes back to the Decision record.</p>
+            <p><strong>EmailChannelExecutor</strong> dispatches via configured email service (Resend API for demo, MC engagement for production). Templates resolved from <em>NBAAction__c.ExperienceRef__c</em>.</p>
           </div>
         </div>
         <div class="exec-channel">
           <div class="ec-head">
             <div class="ec-icon" style="background:rgba(0,87,184,0.06);border-color:rgba(0,87,184,0.14);">
-              <i class="ph-duotone ph-envelope-simple" style="color:#0057B8;"></i>
+              <i class="ph-duotone ph-git-branch" style="color:#0057B8;"></i>
             </div>
-            <div class="ec-title">MC Next Flow</div>
+            <div class="ec-title">Flow</div>
           </div>
           <div class="ec-body">
-            <p><strong>ExecutionMCNextFlowHandler</strong> invokes a configurable Autolaunched Flow that triggers the MC Next journey specified on <em>NBAAction__c.ExperienceRef__c</em>. Journey handles templating, rendering, and delivery.</p>
+            <p><strong>FlowChannelExecutor</strong> invokes a configurable Autolaunched Flow specified on <em>NBAAction__c.ExperienceRef__c</em>. Handles MC Next journeys, custom orchestration, or any flow-based delivery.</p>
           </div>
         </div>
         <div class="exec-channel">
@@ -1280,7 +1290,7 @@
         <div class="exec-parallel-icon">
           <i class="ph-duotone ph-flask" style="color:var(--gold-d);"></i>
         </div>
-        <p><strong>Exploration mode:</strong> a configurable percentage of Tier 1 decisions deliberately re-weight channel or action choice using Thompson sampling over Laplace-smoothed acceptance rates. Nightly batch updates the weights. Contextual bandit behaviour &mdash; the engine keeps learning which channels actually work for which segments, rather than always serving the historical winner.</p>
+        <p><strong>Exploration mode:</strong> a configurable percentage of Tier 1 decisions deliberately re-weight action choice using Laplace-smoothed adaptive weights. Nightly batch updates <em>Response_Weight__c</em> per action based on observed acceptance rates. The engine keeps learning which actions actually work for which segments, rather than always serving the historical winner.</p>
       </div>
     </div>
   </div>
@@ -1309,7 +1319,7 @@
           <i class="ph-duotone ph-cloud" style="color:#022AC0;"></i>
         </div>
         <div class="fb-node-title">Data Cloud stream</div>
-        <div class="fb-node-desc">NBA_Decision__dlm ingests every row. Six Calculated Insights aggregate served, accepted, declined, and null_action counts per Unified Individual.</div>
+        <div class="fb-node-desc">NBA_Decision__dlm ingests every row. 14 Calculated Insights aggregate served, accepted, declined, null_action counts, fatigue, trajectory, and channel preference per person.</div>
       </div>
       <div class="fb-arr">&rsaquo;</div>
       <div class="fb-node">
@@ -1331,7 +1341,7 @@
 
     <div class="retrain-callout">
       <div class="rc-label">Why the loop matters</div>
-      <div class="rc-body">On day one, Einstein scores on historical CRM and ERP data &mdash; a good starting point, not yet tuned to this org's reps, regions, and contacts. <strong>Every accepted action, every declined offer, every null_action restraint row is a training signal.</strong> The scheduler refuses to retrain while Identity Resolution is running (IR re-runs spike credits), skips locked CIs, and posts a Block Kit summary on success. After a few retraining cycles the model is meaningfully more accurate than any rules-based approach &mdash; and the composition agent has learned which catalogue gaps to fill.</div>
+      <div class="rc-body">On day one, Einstein scores on historical CRM and ERP data &mdash; a good starting point, not yet tuned to this org's customers. <strong>Every accepted action, every declined offer, every null_action restraint row is a training signal.</strong> The scheduler refuses to retrain while Identity Resolution is running (IR re-runs spike credits), skips locked CIs, and posts a Block Kit summary on success. After a few retraining cycles the model is meaningfully more accurate than any rules-based approach &mdash; and the composition agent has learned which catalogue gaps to fill.</div>
     </div>
   </div>
 
@@ -1349,13 +1359,13 @@
       </div>
     </div>
 
-    <p class="muted-p">Three queueable agents run nightly, reading the Decision Audit Trace and outcome-chase chains. They notice patterns, propose changes, and drop insights into the unified Review Queue. Nothing self-applies by default &mdash; the human approves. Over time, approvals train which insights are worth surfacing.</p>
+    <p class="muted-p">A unified InsightAgent runs nightly with three analysis scopes &mdash; model health, segment strategy, and journey patterns &mdash; reading the Decision Audit Trace and outcome-chase chains. It notices patterns, proposes changes, and drops insights into the unified Review Queue. Nothing self-applies by default &mdash; the human approves. Over time, approvals train which insights are worth surfacing.</p>
 
     <div class="agents-grid">
       <div class="agent-card">
         <div class="agent-head">
           <div class="dot"></div>
-          <div class="agent-title">Model Debug Agent</div>
+          <div class="agent-title">Model Health Scope</div>
         </div>
         <div class="agent-body">
           <p>Watches Einstein scores. Flags <strong>score collapse</strong> (stddev &lt; 0.05), <strong>low-confidence spikes</strong> (7d vs 30d), and <strong>distribution anomalies</strong> (&gt;80% extreme). Drafts plain-language explanations of suspected drift.</p>
@@ -1364,7 +1374,7 @@
       <div class="agent-card">
         <div class="agent-head">
           <div class="dot"></div>
-          <div class="agent-title">Segment Strategy Agent</div>
+          <div class="agent-title">Segment Strategy Scope</div>
         </div>
         <div class="agent-body">
           <p>Parses Decision_Trace__c for high segment-mismatch drop rates and narrow eligibility funnels. Proposes segment tweaks, new excluded-segment links, or catalogue extensions.</p>
@@ -1373,10 +1383,10 @@
       <div class="agent-card">
         <div class="agent-head">
           <div class="dot"></div>
-          <div class="agent-title">Journey Suggestion Agent</div>
+          <div class="agent-title">Journey Pattern Scope</div>
         </div>
         <div class="agent-body">
-          <p>Reads outcome-chase chains. When a pattern (e.g. discount &rarr; follow-up &rarr; escalation) repeats 5+ times with high acceptance, drafts a concrete Flow / MC Next journey spec.</p>
+          <p>Reads outcome-chase chains. When a pattern (e.g. discount &rarr; follow-up &rarr; escalation) repeats 5+ times with high acceptance, drafts a concrete journey spec for the catalogue.</p>
         </div>
       </div>
     </div>
@@ -1407,7 +1417,7 @@
         </div>
         <div class="headless-card">
           <div class="headless-card-label">MCP Server</div>
-          <div class="headless-card-title">33 tools &middot; JWT auth &middot; stdio transport</div>
+          <div class="headless-card-title">39 tools &middot; JWT auth &middot; stdio transport</div>
           <div class="headless-card-desc">Typescript MCP server exposes arbitration, composition, outcomes, experiments, insights, and engine settings as agent-callable tools. Agents orchestrate across modules.</div>
         </div>
         <div class="headless-card">
@@ -1458,14 +1468,14 @@
 
     <!-- The A2A Contract -->
     <div class="code-block">
-      <span class="c-key">POST</span> /services/apexrest/nba/v1/offer<br/>
+      <span class="c-key">POST</span> /services/apexrest/nba/v1/decide<br/>
       {<br/>
-      &nbsp;&nbsp;<span class="c-str">"buyerAgentId"</span>: <span class="c-val">"agt_..."</span>,<br/>
-      &nbsp;&nbsp;<span class="c-str">"intent"</span>: <span class="c-val">"home_insurance_quote"</span>,<br/>
-      &nbsp;&nbsp;<span class="c-str">"context"</span>: { <span class="c-str">"postcode"</span>: <span class="c-val">"3000"</span>, <span class="c-str">"age"</span>: <span class="c-num">34</span> }<br/>
+      &nbsp;&nbsp;<span class="c-str">"individualId"</span>: <span class="c-val">"ind_..."</span>,<br/>
+      &nbsp;&nbsp;<span class="c-str">"moduleName"</span>: <span class="c-val">"Cross-Sell"</span>,<br/>
+      &nbsp;&nbsp;<span class="c-str">"verbose"</span>: <span class="c-val">true</span><br/>
       }<br/>
       <br/>
-      <span class="c-comment">// Response</span><br/>
+      <span class="c-comment">// Response &mdash; RTOMResolver hydrates offer metadata when Promotion_Id is linked</span><br/>
       {<br/>
       &nbsp;&nbsp;<span class="c-str">"action"</span>: <span class="c-val">"Cross_Sell_Home_Insurance"</span>,<br/>
       &nbsp;&nbsp;<span class="c-str">"offer"</span>: {<br/>
@@ -1546,15 +1556,15 @@
       <div class="scope-grid">
         <div>
           <div class="scope-col-label" style="color:#06A59A;">Ships in the package</div>
-          <div class="scope-item"><div class="dot" style="background:#06A59A;"></div>Core objects: NBAAction, NBADecision, NBA_Module, NBA_Module_Trigger, NBA_Composed_Treatment, NBA_Experiment, NBA_Agent_Memory</div>
-          <div class="scope-item"><div class="dot" style="background:#06A59A;"></div>Arbitration engine: InvokeArbitration + InvokeCrossModuleArbitration (both global)</div>
-          <div class="scope-item"><div class="dot" style="background:#06A59A;"></div>Six Calculated Insights &middot; cadence-gated NBARetrainingScheduler + Queueable</div>
-          <div class="scope-item"><div class="dot" style="background:#06A59A;"></div>Decisioning Hub LWC app: Overview, Catalogue, Contact Policy, Live Simulator, Review Queue, Experiments, Engine Settings, Insight Queue</div>
-          <div class="scope-item"><div class="dot" style="background:#06A59A;"></div>Management Agent &middot; 15 GenAiFunctions &middot; PostInstallSeeder</div>
+          <div class="scope-item"><div class="dot" style="background:#06A59A;"></div>Core objects: NBAAction, NBADecision, NBA_Module, NBA_Module_Trigger, NBA_Composed_Treatment, NBA_Experiment, NBA_Agent_Memory, NBA_Relationship_State</div>
+          <div class="scope-item"><div class="dot" style="background:#06A59A;"></div>Arbitration engine: InvokeArbitration + InvokeCrossModuleArbitration (both global) &middot; Person-aware (Contact ID or Data Cloud Individual ID)</div>
+          <div class="scope-item"><div class="dot" style="background:#06A59A;"></div>14 Calculated Insights &middot; cadence-gated NBARetrainingScheduler + Queueable</div>
+          <div class="scope-item"><div class="dot" style="background:#06A59A;"></div>Decisioning Hub LWC app: Overview, Ops Centre, Catalogue, Contact Policy, Live Simulator, Review Queue, Customer Context, Experiments, Engine Settings, Insight Queue</div>
+          <div class="scope-item"><div class="dot" style="background:#06A59A;"></div>Management Agent &middot; 38 GenAiFunctions &middot; PostInstallSeeder</div>
           <div class="scope-item"><div class="dot" style="background:#06A59A;"></div>Slack surface: insight alerts, daily digest, Tier 2 approval cards, approve-from-Slack via Site</div>
-          <div class="scope-item"><div class="dot" style="background:#06A59A;"></div>Proactive agent queueables: Model Debug, Segment Strategy, Journey Suggestion</div>
-          <div class="scope-item"><div class="dot" style="background:#06A59A;"></div>Channel Execution Framework: Slack, Sales Cloud LWC, MC Next Flow, Webhook dispatchers</div>
-          <div class="scope-item"><div class="dot" style="background:#06A59A;"></div>REST API + MCP server (33 tools) &middot; Decisioning_Admin permission set</div>
+          <div class="scope-item"><div class="dot" style="background:#06A59A;"></div>Unified InsightAgent: model debug, segment strategy, journey suggestion (single queueable, three analysis scopes)</div>
+          <div class="scope-item"><div class="dot" style="background:#06A59A;"></div>Channel Execution Framework: Slack, Email, Flow, Webhook dispatchers</div>
+          <div class="scope-item"><div class="dot" style="background:#06A59A;"></div>REST API + MCP server (39 tools) &middot; Decisioning_Admin permission set</div>
         </div>
         <div>
           <div class="scope-col-label" style="color:var(--lblue-d);">Configured post-install</div>

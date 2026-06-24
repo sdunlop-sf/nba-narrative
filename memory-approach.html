@@ -650,12 +650,12 @@
 
     <div class="callout callout-left">
       <div class="callout-label" style="color: var(--blue);">The reasoning engine is configured, not fixed</div>
-      <div class="callout-body">The brain &mdash; rules, ML, LLM, hybrid &mdash; queries the relationship state, operates within the action space, optimizes the value function, and feeds the learning loop. It orchestrates all four primitives. What makes it different from traditional architectures: <strong>the reasoning depth is configured per module, not welded into the platform.</strong> A cross-sell module uses deterministic scoring + bandits. A retention module adds adjudication. A wealth module uses full agentic reasoning. Same primitives, same governance, different reasoning depth &mdash; chosen by the operator, not the vendor.
+      <div class="callout-body">The brain &mdash; rules, ML, LLM, hybrid &mdash; queries the relationship state, operates within the action space, optimizes the value function, and feeds the learning loop. It orchestrates all four primitives. What makes it different from traditional architectures: <strong>the reasoning depth is configured per module, not welded into the platform.</strong> A cross-sell module uses deterministic scoring + adaptive weights. A retention module adds adjudication. A wealth module uses full agentic reasoning. Same primitives, same governance, different reasoning depth &mdash; chosen by the operator, not the vendor.
       <br/><br/>
       A single module escalates through reasoning tiers based on confidence and value:
       <br/><br/>
       <strong>Tier 1</strong> &mdash; Deterministic. Formula scores, picks the winner, dispatches. Handles ~85% of volume in milliseconds.<br/>
-      <strong>Adaptive</strong> &mdash; Bandits explore and exploit from response data. No model needed. Learns which actions convert without human tuning.<br/>
+      <strong>Adaptive</strong> &mdash; Explore and exploit from response data via Laplace-smoothed adaptive weights. No model needed. Learns which actions convert without human tuning.<br/>
       <strong>Rerank</strong> &mdash; When the score gap is narrow, an LLM reorders the shortlist using relationship context. Auto-resolves ambiguity.<br/>
       <strong>Adjudication</strong> &mdash; When confidence is low and stakes are high, the decision is flagged for LLM reasoning or human review. Full rationale recorded.<br/>
       <strong>Composition</strong> &mdash; When no catalogued action fits, the system composes a novel treatment within constitutional rails. Budget caps, contact policy, and banding enforced deterministically around the creative output.<br/>

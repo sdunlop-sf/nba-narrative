@@ -840,6 +840,7 @@
               <span class="arch-tag" style="background: rgba(228,162,1,0.08); color: var(--gold-d); border: 1px solid rgba(228,162,1,0.2);">Propensity score</span>
               <span class="arch-tag" style="background: rgba(228,162,1,0.08); color: var(--gold-d); border: 1px solid rgba(228,162,1,0.2);">Expected value</span>
               <span class="arch-tag" style="background: rgba(228,162,1,0.08); color: var(--gold-d); border: 1px solid rgba(228,162,1,0.2);">pCLV multiplier</span>
+              <span class="arch-tag" style="background: rgba(228,162,1,0.08); color: var(--gold-d); border: 1px solid rgba(228,162,1,0.2);">Health multiplier</span>
               <span class="arch-tag" style="background: rgba(228,162,1,0.08); color: var(--gold-d); border: 1px solid rgba(228,162,1,0.2);">Priority weight</span>
               <span class="arch-tag" style="background: rgba(228,162,1,0.08); color: var(--gold-d); border: 1px solid rgba(228,162,1,0.2);">Adaptive weight</span>
             </div>
@@ -865,7 +866,7 @@
             <div class="brain-options">
               <div class="brain-option active"><div class="brain-option-dot"></div>Deterministic scoring</div>
               <div class="brain-option active"><div class="brain-option-dot"></div>LLM re-rank</div>
-              <div class="brain-option active"><div class="brain-option-dot"></div>Contextual bandit</div>
+              <div class="brain-option active"><div class="brain-option-dot"></div>Adaptive explore/exploit</div>
               <div class="brain-option active"><div class="brain-option-dot"></div>Agentic composition</div>
               <div class="brain-option"><div class="brain-option-dot"></div>Future model</div>
             </div>
@@ -931,7 +932,7 @@
     <div class="formula-block">
       <div class="formula-label">Scoring Formula</div>
       <div class="formula-expr">
-        <span class="formula-var"><span class="formula-var-dot" style="background: var(--teal-d);"></span>weighted</span>&nbsp;=&nbsp;<span class="formula-var"><span class="formula-var-dot" style="background: var(--blue);"></span>propensity</span>&nbsp;&times;&nbsp;<span class="formula-var"><span class="formula-var-dot" style="background: var(--gold-d);"></span>expectedValue</span>&nbsp;&times;&nbsp;<span class="formula-var"><span class="formula-var-dot" style="background: var(--teal-d);"></span>pclvMultiplier</span>&nbsp;&times;&nbsp;<span class="formula-var"><span class="formula-var-dot" style="background: var(--red);"></span>priority</span>&nbsp;&times;&nbsp;<span class="formula-var"><span class="formula-var-dot" style="background: var(--purple);"></span>adaptiveWeight</span>
+        <span class="formula-var"><span class="formula-var-dot" style="background: var(--teal-d);"></span>weighted</span>&nbsp;=&nbsp;<span class="formula-var"><span class="formula-var-dot" style="background: var(--blue);"></span>propensity</span>&nbsp;&times;&nbsp;<span class="formula-var"><span class="formula-var-dot" style="background: var(--gold-d);"></span>expectedValue</span>&nbsp;&times;&nbsp;<span class="formula-var"><span class="formula-var-dot" style="background: var(--teal-d);"></span>pclvMultiplier</span>&nbsp;&times;&nbsp;<span class="formula-var"><span class="formula-var-dot" style="background: var(--green);"></span>healthMultiplier</span>&nbsp;&times;&nbsp;<span class="formula-var"><span class="formula-var-dot" style="background: var(--red);"></span>priority</span>&nbsp;&times;&nbsp;<span class="formula-var"><span class="formula-var-dot" style="background: var(--purple);"></span>adaptiveWeight</span>
       </div>
       <div class="formula-legend">
         <div class="formula-legend-item">
@@ -945,6 +946,10 @@
         <div class="formula-legend-item">
           <div class="formula-legend-dot" style="background: var(--teal-d);"></div>
           <div><strong>pCLV Multiplier</strong> &mdash; Customer's predicted lifetime value, normalized against the median. High-value customers get priority. From Data Cloud CIs.</div>
+        </div>
+        <div class="formula-legend-item">
+          <div class="formula-legend-dot" style="background: var(--green);"></div>
+          <div><strong>Health Multiplier</strong> &mdash; Relationship health score (acceptance rate, recency, trajectory, response speed). Healthy relationships get boosted. From Relationship State.</div>
         </div>
         <div class="formula-legend-item">
           <div class="formula-legend-dot" style="background: var(--red);"></div>
@@ -1315,13 +1320,13 @@
           <div class="platform-card-label" style="color: var(--purple-d);">Learning Loop</div>
         </div>
         <div class="platform-card-body">
-          <div class="platform-card-title">CRM Outcomes + Feedback</div>
-          <div class="platform-card-desc">Decision outcomes write back to CRM (Campaign, CampaignMember). Data Cloud ingests outcomes. <strong>Einstein Studio retrains</strong> on new signal. Adaptive weights shift automatically.</div>
+          <div class="platform-card-title">Decision Outcomes + Feedback</div>
+          <div class="platform-card-desc">Outcomes write directly to NBADecision__c. Data Cloud ingests via Data Stream. <strong>Einstein Studio retrains</strong> on new signal. Adaptive weights shift automatically.</div>
           <div class="platform-card-mapping">
             <div class="mapping-row">
               <span class="mapping-from">Outcomes</span>
               <span class="mapping-arrow">&rarr;</span>
-              <span class="mapping-to">CampaignMember</span>
+              <span class="mapping-to">NBADecision__c</span>
             </div>
             <div class="mapping-row">
               <span class="mapping-from">Retraining</span>
@@ -1403,13 +1408,13 @@
         </div>
       </div>
 
-      <p class="muted-p">Three queueable agents run nightly, reading the decision audit trace and outcome-chase chains. They notice patterns, propose changes, and drop insights into the unified Review Queue. Nothing self-applies by default &mdash; the human approves.</p>
+      <p class="muted-p">A unified InsightAgent runs nightly with three analysis scopes, reading the decision audit trace and outcome-chase chains. It notices patterns, proposes changes, and drops insights into the unified Review Queue. Nothing self-applies by default &mdash; the human approves.</p>
 
       <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 24px;">
         <div style="background: var(--card); border: 1px solid rgba(115,3,148,0.14); border-radius: 14px; overflow: hidden; box-shadow: var(--shadow-sm);">
           <div style="padding: 14px 18px; background: rgba(115,3,148,0.04); border-bottom: 1px solid rgba(115,3,148,0.12); display: flex; align-items: center; gap: 10px;">
             <div style="width: 7px; height: 7px; border-radius: 50%; background: var(--purple);"></div>
-            <div style="font-size: 12px; font-weight: 800; color: var(--purple-d); letter-spacing: 0.05em; text-transform: uppercase;">Model Debug Agent</div>
+            <div style="font-size: 12px; font-weight: 800; color: var(--purple-d); letter-spacing: 0.05em; text-transform: uppercase;">Model Health Scope</div>
           </div>
           <div style="padding: 16px 18px;">
             <p style="font-size: 12.5px; color: var(--muted); line-height: 1.65;">Watches Einstein scores. Flags <strong style="color:var(--text);">score collapse</strong> (stddev &lt; 0.05), <strong style="color:var(--text);">low-confidence spikes</strong> (7d vs 30d), and <strong style="color:var(--text);">distribution anomalies</strong>. Drafts plain-language explanations of suspected drift.</p>
@@ -1418,7 +1423,7 @@
         <div style="background: var(--card); border: 1px solid rgba(115,3,148,0.14); border-radius: 14px; overflow: hidden; box-shadow: var(--shadow-sm);">
           <div style="padding: 14px 18px; background: rgba(115,3,148,0.04); border-bottom: 1px solid rgba(115,3,148,0.12); display: flex; align-items: center; gap: 10px;">
             <div style="width: 7px; height: 7px; border-radius: 50%; background: var(--purple);"></div>
-            <div style="font-size: 12px; font-weight: 800; color: var(--purple-d); letter-spacing: 0.05em; text-transform: uppercase;">Segment Strategy Agent</div>
+            <div style="font-size: 12px; font-weight: 800; color: var(--purple-d); letter-spacing: 0.05em; text-transform: uppercase;">Segment Strategy Scope</div>
           </div>
           <div style="padding: 16px 18px;">
             <p style="font-size: 12.5px; color: var(--muted); line-height: 1.65;">Parses Decision_Trace__c for high segment-mismatch drop rates and narrow eligibility funnels. Proposes segment tweaks, new excluded-segment links, or catalogue extensions.</p>
@@ -1427,7 +1432,7 @@
         <div style="background: var(--card); border: 1px solid rgba(115,3,148,0.14); border-radius: 14px; overflow: hidden; box-shadow: var(--shadow-sm);">
           <div style="padding: 14px 18px; background: rgba(115,3,148,0.04); border-bottom: 1px solid rgba(115,3,148,0.12); display: flex; align-items: center; gap: 10px;">
             <div style="width: 7px; height: 7px; border-radius: 50%; background: var(--purple);"></div>
-            <div style="font-size: 12px; font-weight: 800; color: var(--purple-d); letter-spacing: 0.05em; text-transform: uppercase;">Journey Suggestion Agent</div>
+            <div style="font-size: 12px; font-weight: 800; color: var(--purple-d); letter-spacing: 0.05em; text-transform: uppercase;">Journey Pattern Scope</div>
           </div>
           <div style="padding: 16px 18px;">
             <p style="font-size: 12.5px; color: var(--muted); line-height: 1.65;">Reads outcome-chase chains. When a pattern (e.g. discount &rarr; follow-up &rarr; escalation) repeats 5+ times with high acceptance, drafts a concrete journey spec for the catalogue.</p>
