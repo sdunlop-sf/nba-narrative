@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>SP Credit Volume — SCA (LiSTNR + Hit + Triple M + Press Start)</title>
+<style>
+  body { font-family: Arial, sans-serif; max-width: 800px; margin: 40px auto; padding: 0 20px; color: #1a1a1a; line-height: 1.5; }
+  h1 { font-size: 22px; border-bottom: 2px solid #0070d2; padding-bottom: 8px; }
+  h2 { font-size: 17px; color: #032d60; margin-top: 32px; }
+  h3 { font-size: 14px; color: #444; margin-top: 24px; }
+  table { border-collapse: collapse; width: 100%; margin: 12px 0 24px; }
+  th, td { border: 1px solid #d8dde6; padding: 8px 12px; text-align: left; font-size: 13px; }
+  th { background: #f3f3f3; font-weight: 600; }
+  td:nth-child(2), th:nth-child(2) { text-align: right; }
+  .total td { font-weight: 700; background: #f0f7ff; }
+  .highlight { background: #fffbe6; }
+  .formula { background: #f4f6f9; padding: 12px 16px; border-radius: 6px; font-family: monospace; font-size: 13px; margin: 12px 0; }
+  .note { font-size: 12px; color: #666; margin-top: -8px; }
+  ul { font-size: 13px; }
+  li { margin-bottom: 4px; }
+</style>
+</head>
+<body>
+
+<h1>SP Credit Volume — SCA</h1>
+<p>LiSTNR + Hit + Triple M + Press Start &mdash; April 2026 metrics, 1-year contract</p>
+
+<h2>1. Input Summary</h2>
+
+<h3>Web MUVs</h3>
+<table>
+  <tr><th>Property</th><th>Monthly Unique Visitors</th></tr>
+  <tr><td>LiSTNR Home</td><td>41,000</td></tr>
+  <tr><td>LiSTNR Articles</td><td>100,000</td></tr>
+  <tr><td>LiSTNR Player</td><td>210,000</td></tr>
+  <tr><td>Hit</td><td>82,000</td></tr>
+  <tr><td>Triple M</td><td>92,000</td></tr>
+  <tr><td>Press Start</td><td>192,000</td></tr>
+  <tr><td>Corporate</td><td>21,000</td></tr>
+  <tr class="total"><td>Total Web MUVs</td><td>738,000</td></tr>
+</table>
+
+<h3>Mobile MUVs</h3>
+<table>
+  <tr><th>Property</th><th>Monthly Active Users</th></tr>
+  <tr><td>LiSTNR App</td><td>350,000</td></tr>
+  <tr class="total"><td>Total Mobile MUVs</td><td>350,000</td></tr>
+</table>
+
+<h3>Combined MUVs</h3>
+<table>
+  <tr><th>Channel</th><th>Monthly Volume</th></tr>
+  <tr><td>Web</td><td>738,000</td></tr>
+  <tr><td>Mobile</td><td>350,000</td></tr>
+  <tr class="total"><td>Total MUVs</td><td>1,088,000</td></tr>
+</table>
+
+<h3>Monthly Email Sends</h3>
+<table>
+  <tr><th>Brand</th><th>Monthly Sends</th></tr>
+  <tr><td>LiSTNR</td><td>370,000</td></tr>
+  <tr><td>Hit</td><td>1,100,000</td></tr>
+  <tr><td>Triple M</td><td>541,000</td></tr>
+  <tr><td>Press Start</td><td>80,000</td></tr>
+  <tr class="total"><td>Total Monthly Emails</td><td>2,091,000</td></tr>
+</table>
+
+<h3>Other Volumes (not in SP credit formula)</h3>
+<table>
+  <tr><th>Metric</th><th>Monthly Volume</th></tr>
+  <tr><td>LiSTNR total email subscribers</td><td>2,600,000</td></tr>
+  <tr><td>LiSTNR mobile real-time ingest events</td><td>90,000,000</td></tr>
+  <tr><td>LiSTNR monthly push sends</td><td>425,000</td></tr>
+  <tr><td>LiSTNR monthly in-app sends</td><td>200,000</td></tr>
+  <tr><td>LiSTNR personalisation campaign responses</td><td>120,000</td></tr>
+  <tr><td>LiSTNR Content Metadata RT API events</td><td>42,000</td></tr>
+  <tr><td>BigQuery zero-ETL tables</td><td>10 tables</td></tr>
+  <tr><td>Hit email subscribers</td><td>900,000</td></tr>
+  <tr><td>Triple M email subscribers</td><td>650,000</td></tr>
+  <tr><td>Press Start email subscribers</td><td>180,000</td></tr>
+  <tr><td>B2B/Trade email subscribers</td><td>35,000</td></tr>
+  <tr><td>Internal/Staff email subscribers</td><td>2,700</td></tr>
+</table>
+
+<h2>2. Credit Calculation</h2>
+
+<h3>Formulas (from SP Calculator)</h3>
+<div class="formula">
+Web + Mobile Credits = MUVs &times; 8 decisions/MUV &times; 12 months &times; contract years<br><br>
+Email Credits = monthly emails &times; % with recommendations &times; 1.25 batch multiplier &times; 12 months &times; contract years
+</div>
+
+<h3>Web + Mobile Personalisation Credits</h3>
+<div class="formula">1,088,000 &times; 8 &times; 12 &times; 1 = <strong>104,448,000</strong></div>
+
+<h3>Email Personalisation Credits (33% recommendation rate)</h3>
+<div class="formula">2,091,000 &times; 0.33 &times; 1.25 &times; 12 &times; 1 = <strong>10,350,450</strong></div>
+
+<h3>Total Annual Credits</h3>
+<table>
+  <tr><th>Component</th><th>Annual Credits</th></tr>
+  <tr><td>Web + Mobile</td><td>104,448,000</td></tr>
+  <tr><td>Email (33% recs)</td><td>10,350,450</td></tr>
+  <tr class="total"><td>Total</td><td>114,798,450</td></tr>
+</table>
+
+<h2>3. SKU Breakdown</h2>
+
+<table>
+  <tr><th style="text-align:left">SKU</th><th>Qty</th><th style="text-align:left">Notes</th></tr>
+  <tr><td>Salesforce Personalization (base)</td><td style="text-align:center">1</td><td>Includes 50M credits/year</td></tr>
+  <tr class="highlight"><td>Personalization Card (1M credits)</td><td style="text-align:center"><strong>65</strong></td><td>115M total &minus; 50M included = 65M additional</td></tr>
+  <tr><td>RT Profiles (10K units)</td><td style="text-align:center">109<br><span style="font-size:11px;color:#666">min 1,000</span></td><td>1,088,000 MUVs &divide; 10,000</td></tr>
+  <tr><td>DC Data Services Card (100K credits)</td><td style="text-align:center">Scope via BVD</td><td>90M RT events/month + 42K API events drive this</td></tr>
+</table>
+
+<h2>4. Items Not Captured in SP Credits</h2>
+<ul>
+  <li><strong>90M monthly real-time ingest events</strong> (LiSTNR mobile) &mdash; biggest DC Data Services driver, scoped separately via BVD</li>
+  <li><strong>425K monthly push sends</strong> + <strong>200K in-app sends</strong> &mdash; not in SP credit formula</li>
+  <li><strong>10 BigQuery zero-ETL tables</strong> &mdash; DC ingestion/storage, scoped in BVD</li>
+  <li><strong>B2B/Trade</strong> (35K subscribers) and <strong>Internal/Staff</strong> (2,700 subscribers) &mdash; no send volumes provided, minimal impact</li>
+</ul>
+
+<h2>5. Sensitivity Analysis</h2>
+
+<table>
+  <tr><th style="text-align:left">Scenario</th><th>Annual Credits</th><th>Cards Needed</th></tr>
+  <tr><td>33% email recs (default)</td><td>114,798,450</td><td>65</td></tr>
+  <tr><td>50% email recs</td><td>120,594,000</td><td>71</td></tr>
+  <tr><td>100% email recs</td><td>130,536,000</td><td>81</td></tr>
+  <tr><td>2-year contract (33% recs)</td><td>229,596,900</td><td>180</td></tr>
+</table>
+
+<p class="note">The 8 decisions/MUV multiplier is the dominant variable (5 page views &times; 1.5 personalisations per page). 738K web MUVs is relatively modest, but the 350K mobile MAUs add meaningfully. If SCA ramps personalisation across more pages, the 8x could go higher.</p>
+
+</body>
+</html>

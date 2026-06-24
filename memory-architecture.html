@@ -917,12 +917,50 @@
     </div>
   </div>
 
+  <!-- CUSTOMER CONTEXT / RELATIONSHIP STATE -->
+  <div class="section-alt">
+    <div class="section">
+      <div class="step-head">
+        <div class="step-num" style="background:rgba(0,122,114,0.12);color:#007A72;border-color:rgba(0,122,114,0.25);">02</div>
+        <div>
+          <div class="step-title">Customer Context</div>
+          <div class="step-desc">The per-person memory record. Updated nightly from Data Cloud CIs. Feeds the scoring formula, fatigue checks, and channel preference at arbitration time.</div>
+        </div>
+      </div>
+
+      <p class="muted-p"><strong>NBA_Relationship_State__c</strong> is the materialised memory for each person (Contact or Individual). The engine reads it at decision time &mdash; no runtime queries against Data Cloud. The overnight batch computes it from 14 Calculated Insights that aggregate all decision outcomes, acceptance patterns, channel behaviour, and response timing.</p>
+
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 24px;">
+        <div style="background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 20px; box-shadow: var(--shadow-sm);">
+          <div style="font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--teal-d); margin-bottom: 10px;">Health &amp; Trajectory</div>
+          <div style="font-size: 14px; font-weight: 700; color: var(--ink); margin-bottom: 8px;">Relationship Health Score</div>
+          <div style="font-size: 12.5px; color: var(--muted); line-height: 1.6;">Composite of acceptance rate, recency, trajectory, and response speed. Weighted (configurable). Feeds <em>healthMultiplier</em> in the scoring formula &mdash; healthy relationships get boosted.</div>
+        </div>
+        <div style="background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 20px; box-shadow: var(--shadow-sm);">
+          <div style="font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--teal-d); margin-bottom: 10px;">Fatigue &amp; Channel</div>
+          <div style="font-size: 14px; font-weight: 700; color: var(--ink); margin-bottom: 8px;">Per-Channel Fatigue + Preference</div>
+          <div style="font-size: 12.5px; color: var(--muted); line-height: 1.6;">7-day rolling fatigue score per channel. Preferred channel learned from response patterns. The engine knows this person responds to email but ignores push &mdash; without a model telling it.</div>
+        </div>
+        <div style="background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 20px; box-shadow: var(--shadow-sm);">
+          <div style="font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--teal-d); margin-bottom: 10px;">Value</div>
+          <div style="font-size: 14px; font-weight: 700; color: var(--ink); margin-bottom: 8px;">pCLV + CLV Scores</div>
+          <div style="font-size: 12.5px; color: var(--muted); line-height: 1.6;">Predicted and historical lifetime value, written from AI Studio model predictions via CI. Normalised against median to produce the pCLV multiplier &mdash; high-value customers get priority.</div>
+        </div>
+      </div>
+
+      <div class="callout callout-teal">
+        <div class="callout-label" style="color: var(--teal-d);">Why this matters</div>
+        <div class="callout-body">Without Customer Context, every decision starts from scratch &mdash; querying raw data, recomputing state, making the same mistakes. With it, the engine remembers: this person has been declining email offers for 3 weeks, prefers SMS, has a rising CLV trajectory, and was last contacted 4 days ago. <strong>That context is pre-computed and cached. The decision reads it in milliseconds.</strong> This is Relationship State as a primitive &mdash; the foundation the whole architecture builds on.</div>
+      </div>
+    </div>
+  </div>
+
   <hr class="divider" />
 
   <!-- SCORING FORMULA -->
   <div class="section">
     <div class="step-head">
-      <div class="step-num" style="background:rgba(228,162,1,0.15);color:#A87700;border-color:rgba(228,162,1,0.35);">02</div>
+      <div class="step-num" style="background:rgba(228,162,1,0.15);color:#A87700;border-color:rgba(228,162,1,0.35);">03</div>
       <div>
         <div class="step-title">The Value Function</div>
         <div class="step-desc">A composable scoring formula where each component maps to a primitive. The weights are configurable &mdash; industry templates ship different weightings for different business strategies.</div>
@@ -937,7 +975,7 @@
       <div class="formula-legend">
         <div class="formula-legend-item">
           <div class="formula-legend-dot" style="background: var(--blue);"></div>
-          <div><strong>Propensity</strong> &mdash; ML model prediction. How likely is this customer to respond positively? From Einstein Studio.</div>
+          <div><strong>Propensity</strong> &mdash; ML model prediction. How likely is this customer to respond positively? From AI Studio.</div>
         </div>
         <div class="formula-legend-item">
           <div class="formula-legend-dot" style="background: var(--gold-d);"></div>
@@ -1023,7 +1061,7 @@
   <div class="section-alt">
     <div class="section">
       <div class="step-head">
-        <div class="step-num" style="background:rgba(2,42,192,0.1);color:#022AC0;border-color:rgba(2,42,192,0.2);">03</div>
+        <div class="step-num" style="background:rgba(2,42,192,0.1);color:#022AC0;border-color:rgba(2,42,192,0.2);">04</div>
         <div>
           <div class="step-title">Tiered Reasoning</div>
           <div class="step-desc">The reasoning engine isn't one thing. It's a confidence-gated escalation from fast deterministic scoring to progressively more expensive reasoning. Most decisions never need LLM involvement.</div>
@@ -1123,57 +1161,57 @@
     </div>
   </div>
 
-  <!-- DECIDING vs SERVING -->
+  <!-- DECIDING vs DELIVERING -->
   <div class="section">
     <div class="step-head">
-      <div class="step-num" style="background:rgba(0,87,184,0.12);color:#0057B8;border-color:rgba(0,87,184,0.25);">04</div>
+      <div class="step-num" style="background:rgba(0,87,184,0.12);color:#0057B8;border-color:rgba(0,87,184,0.25);">05</div>
       <div>
-        <div class="step-title">Deciding vs. Serving</div>
-        <div class="step-desc">The Decisioning Hub writes latent decisions. The serving layer reads them in real-time. Clean boundary &mdash; the Hub owns the what, the serving layer owns the when and where.</div>
+        <div class="step-title">Deciding vs. Delivering</div>
+        <div class="step-desc">The Decisioning Hub selects the action. The channel delivers it. Clean boundary &mdash; the Hub owns the what, the delivery channel owns the when and how.</div>
       </div>
     </div>
 
     <div style="display: grid; grid-template-columns: 1fr 40px 1fr; gap: 0; margin-bottom: 24px;">
       <div style="background: var(--card); border: 1px solid rgba(2,42,192,0.2); border-radius: 16px; padding: 28px; box-shadow: var(--shadow);">
         <div style="font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--blue); margin-bottom: 16px;">Decisioning Hub</div>
-        <div style="font-size: 13px; color: var(--text); margin-bottom: 12px; line-height: 1.55; display: flex; align-items: flex-start; gap: 10px;"><span style="flex-shrink:0;width:6px;height:6px;border-radius:50%;background:var(--blue);margin-top:7px;"></span>Batch / segment-triggered / event-driven</div>
-        <div style="font-size: 13px; color: var(--text); margin-bottom: 12px; line-height: 1.55; display: flex; align-items: flex-start; gap: 10px;"><span style="flex-shrink:0;width:6px;height:6px;border-radius:50%;background:var(--blue);margin-top:7px;"></span>Selects the best <strong>promotion</strong> per customer</div>
-        <div style="font-size: 13px; color: var(--text); margin-bottom: 12px; line-height: 1.55; display: flex; align-items: flex-start; gap: 10px;"><span style="flex-shrink:0;width:6px;height:6px;border-radius:50%;background:var(--blue);margin-top:7px;"></span>Writes latent decisions to Data Cloud</div>
-        <div style="font-size: 13px; color: var(--text); margin-bottom: 12px; line-height: 1.55; display: flex; align-items: flex-start; gap: 10px;"><span style="flex-shrink:0;width:6px;height:6px;border-radius:50%;background:var(--blue);margin-top:7px;"></span>No Apex in the hot path</div>
-        <div style="font-size: 13px; color: var(--text); line-height: 1.55; display: flex; align-items: flex-start; gap: 10px;"><span style="flex-shrink:0;width:6px;height:6px;border-radius:50%;background:var(--blue);margin-top:7px;"></span>Owns the learning loop</div>
+        <div style="font-size: 13px; color: var(--text); margin-bottom: 12px; line-height: 1.55; display: flex; align-items: flex-start; gap: 10px;"><span style="flex-shrink:0;width:6px;height:6px;border-radius:50%;background:var(--blue);margin-top:7px;"></span>Segment-triggered, event-driven, or API-invoked</div>
+        <div style="font-size: 13px; color: var(--text); margin-bottom: 12px; line-height: 1.55; display: flex; align-items: flex-start; gap: 10px;"><span style="flex-shrink:0;width:6px;height:6px;border-radius:50%;background:var(--blue);margin-top:7px;"></span>Selects the best <strong>action</strong> per person (Contact or Individual)</div>
+        <div style="font-size: 13px; color: var(--text); margin-bottom: 12px; line-height: 1.55; display: flex; align-items: flex-start; gap: 10px;"><span style="flex-shrink:0;width:6px;height:6px;border-radius:50%;background:var(--blue);margin-top:7px;"></span>Writes NBADecision__c &rarr; replicates to Data Cloud via Data Stream</div>
+        <div style="font-size: 13px; color: var(--text); margin-bottom: 12px; line-height: 1.55; display: flex; align-items: flex-start; gap: 10px;"><span style="flex-shrink:0;width:6px;height:6px;border-radius:50%;background:var(--blue);margin-top:7px;"></span>Dispatches to channel executors (Slack, Email, Flow, Webhook)</div>
+        <div style="font-size: 13px; color: var(--text); line-height: 1.55; display: flex; align-items: flex-start; gap: 10px;"><span style="flex-shrink:0;width:6px;height:6px;border-radius:50%;background:var(--blue);margin-top:7px;"></span>Owns the learning loop &mdash; outcomes feed back into the memory</div>
       </div>
       <div style="display: flex; align-items: center; justify-content: center; font-size: 18px; color: rgba(0,30,91,0.2);">&rarr;</div>
       <div style="background: var(--card); border: 1px solid rgba(0,122,114,0.2); border-radius: 16px; padding: 28px; box-shadow: var(--shadow);">
-        <div style="font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--teal-d); margin-bottom: 16px;">Serving Layer (SP / Agentforce / Console)</div>
-        <div style="font-size: 13px; color: var(--text); margin-bottom: 12px; line-height: 1.55; display: flex; align-items: flex-start; gap: 10px;"><span style="flex-shrink:0;width:6px;height:6px;border-radius:50%;background:var(--teal-d);margin-top:7px;"></span>Reads latent decisions from Data Cloud</div>
-        <div style="font-size: 13px; color: var(--text); margin-bottom: 12px; line-height: 1.55; display: flex; align-items: flex-start; gap: 10px;"><span style="flex-shrink:0;width:6px;height:6px;border-radius:50%;background:var(--teal-d);margin-top:7px;"></span>Selects the best <strong>offer, treatment, channel</strong></div>
-        <div style="font-size: 13px; color: var(--text); margin-bottom: 12px; line-height: 1.55; display: flex; align-items: flex-start; gap: 10px;"><span style="flex-shrink:0;width:6px;height:6px;border-radius:50%;background:var(--teal-d);margin-top:7px;"></span>Real-time rendering at any concurrency</div>
-        <div style="font-size: 13px; color: var(--text); margin-bottom: 12px; line-height: 1.55; display: flex; align-items: flex-start; gap: 10px;"><span style="flex-shrink:0;width:6px;height:6px;border-radius:50%;background:var(--teal-d);margin-top:7px;"></span>No governor limits in the serving path</div>
-        <div style="font-size: 13px; color: var(--text); line-height: 1.55; display: flex; align-items: flex-start; gap: 10px;"><span style="flex-shrink:0;width:6px;height:6px;border-radius:50%;background:var(--teal-d);margin-top:7px;"></span>Returns outcomes to the Hub</div>
+        <div style="font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--teal-d); margin-bottom: 16px;">Delivery Channels</div>
+        <div style="font-size: 13px; color: var(--text); margin-bottom: 12px; line-height: 1.55; display: flex; align-items: flex-start; gap: 10px;"><span style="flex-shrink:0;width:6px;height:6px;border-radius:50%;background:var(--teal-d);margin-top:7px;"></span>DC dispatch segment &rarr; MCE (production pattern)</div>
+        <div style="font-size: 13px; color: var(--text); margin-bottom: 12px; line-height: 1.55; display: flex; align-items: flex-start; gap: 10px;"><span style="flex-shrink:0;width:6px;height:6px;border-radius:50%;background:var(--teal-d);margin-top:7px;"></span>Slack approval cards + info cards (operator surface)</div>
+        <div style="font-size: 13px; color: var(--text); margin-bottom: 12px; line-height: 1.55; display: flex; align-items: flex-start; gap: 10px;"><span style="flex-shrink:0;width:6px;height:6px;border-radius:50%;background:var(--teal-d);margin-top:7px;"></span>Record page LWC (Sales / Service reps)</div>
+        <div style="font-size: 13px; color: var(--text); margin-bottom: 12px; line-height: 1.55; display: flex; align-items: flex-start; gap: 10px;"><span style="flex-shrink:0;width:6px;height:6px;border-radius:50%;background:var(--teal-d);margin-top:7px;"></span>Webhook to any external system</div>
+        <div style="font-size: 13px; color: var(--text); line-height: 1.55; display: flex; align-items: flex-start; gap: 10px;"><span style="flex-shrink:0;width:6px;height:6px;border-radius:50%;background:var(--teal-d);margin-top:7px;"></span>Returns outcomes to the Hub for the learning loop</div>
       </div>
     </div>
 
     <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin-bottom: 24px;">
       <div style="background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 18px; box-shadow: var(--shadow-sm); text-align: center;">
-        <div style="font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px;">Web / Marketing</div>
-        <div style="font-size: 13px; font-weight: 700; color: var(--teal-d);">Salesforce Personalisation</div>
-        <div style="font-size: 11px; color: var(--muted); margin-top: 4px;">Latent decisions from Data Cloud, real-time rendering</div>
+        <div style="font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px;">Marketing</div>
+        <div style="font-size: 13px; font-weight: 700; color: var(--teal-d);">MC Engagement / Data Cloud Activation</div>
+        <div style="font-size: 11px; color: var(--muted); margin-top: 4px;">DC dispatch segment fires to MCE for delivery</div>
       </div>
       <div style="background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 18px; box-shadow: var(--shadow-sm); text-align: center;">
-        <div style="font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px;">Service</div>
-        <div style="font-size: 13px; font-weight: 700; color: var(--blue);">Agentforce / Console</div>
-        <div style="font-size: 11px; color: var(--muted); margin-top: 4px;">Live arbitration or cached decision</div>
+        <div style="font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px;">Service / Sales</div>
+        <div style="font-size: 13px; font-weight: 700; color: var(--blue);">Agentforce / Record Page LWC</div>
+        <div style="font-size: 11px; color: var(--muted); margin-top: 4px;">Live arbitration via InvocableMethod or cached decisions</div>
       </div>
       <div style="background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 18px; box-shadow: var(--shadow-sm); text-align: center;">
-        <div style="font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px;">Sales</div>
-        <div style="font-size: 13px; font-weight: 700; color: var(--gold-d);">Agentforce / Record Page</div>
-        <div style="font-size: 11px; color: var(--muted); margin-top: 4px;">Live arbitration or cached decision</div>
+        <div style="font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-bottom: 8px;">Operations</div>
+        <div style="font-size: 13px; font-weight: 700; color: var(--gold-d);">Slack + Decisioning Hub UI</div>
+        <div style="font-size: 11px; color: var(--muted); margin-top: 4px;">Approval workflows, insight alerts, daily digest</div>
       </div>
     </div>
 
     <div class="callout callout-left">
-      <div class="callout-label" style="color: var(--blue);">The pre-compute pattern</div>
-      <div class="callout-body">The Hub runs batch on its own schedule, writes latent decisions to Data Cloud, and the serving layer reads from Data Cloud at whatever concurrency it needs. <strong>No Apex in the hot path. No governor limits in the serving layer.</strong> SP without the Hub serves offers based on segments and rules. SP with the Hub serves offers backed by compounding relationship intelligence. That's the upgrade story.</div>
+      <div class="callout-label" style="color: var(--blue);">The separation</div>
+      <div class="callout-body">The Hub decides which action, for whom, and why. It writes a decision record with full audit trace. Downstream channels &mdash; MCE, Slack, record pages, webhooks &mdash; deliver that decision without re-evaluating it. <strong>The decision is made once, delivered many ways, and every outcome feeds back into the learning loop regardless of which channel delivered it.</strong> The delivery channel doesn't need to understand arbitration, scoring, or policy &mdash; it just serves what the Hub selected.</div>
     </div>
   </div>
 
@@ -1183,7 +1221,7 @@
   <div class="section-alt">
     <div class="section">
       <div class="step-head">
-        <div class="step-num" style="background:rgba(115,3,148,0.08);color:#5521A8;border-color:rgba(115,3,148,0.2);">05</div>
+        <div class="step-num" style="background:rgba(115,3,148,0.08);color:#5521A8;border-color:rgba(115,3,148,0.2);">06</div>
         <div>
           <div class="step-title">Outcome Attribution</div>
           <div class="step-desc">"Accepted" is a proxy. The learning loop needs to know what actually happened &mdash; did the customer renew, buy, stay?</div>
@@ -1218,7 +1256,7 @@
   <!-- PLATFORM MAPPING -->
   <div class="section">
     <div class="step-head">
-      <div class="step-num" style="background:rgba(0,122,114,0.1);color:#007A72;border-color:rgba(0,122,114,0.25);">06</div>
+      <div class="step-num" style="background:rgba(0,122,114,0.1);color:#007A72;border-color:rgba(0,122,114,0.25);">07</div>
       <div>
         <div class="step-title">Platform Mapping</div>
         <div class="step-desc">Each primitive maps to Salesforce platform capabilities that already exist. The accelerator is the orchestration layer that connects them into a compounding system.</div>
@@ -1291,8 +1329,8 @@
           <div class="platform-card-label" style="color: var(--gold-d);">Value Function</div>
         </div>
         <div class="platform-card-body">
-          <div class="platform-card-title">Einstein Studio + CIs</div>
-          <div class="platform-card-desc"><strong>Einstein Studio</strong> trains propensity models on outcome data. Data Cloud CIs provide CLV and engagement signals. The accelerator composes them into a configurable scoring formula.</div>
+          <div class="platform-card-title">AI Studio + CIs</div>
+          <div class="platform-card-desc"><strong>AI Studio</strong> trains propensity models on outcome data. Data Cloud CIs provide CLV and engagement signals. The accelerator composes them into a configurable scoring formula.</div>
           <div class="platform-card-mapping">
             <div class="mapping-row">
               <span class="mapping-from">Propensity</span>
@@ -1321,7 +1359,7 @@
         </div>
         <div class="platform-card-body">
           <div class="platform-card-title">Decision Outcomes + Feedback</div>
-          <div class="platform-card-desc">Outcomes write directly to NBADecision__c. Data Cloud ingests via Data Stream. <strong>Einstein Studio retrains</strong> on new signal. Adaptive weights shift automatically.</div>
+          <div class="platform-card-desc">Outcomes write directly to NBADecision__c. Data Cloud ingests via Data Stream. <strong>AI Studio retrains</strong> on new signal. Adaptive weights shift automatically.</div>
           <div class="platform-card-mapping">
             <div class="mapping-row">
               <span class="mapping-from">Outcomes</span>
@@ -1331,7 +1369,7 @@
             <div class="mapping-row">
               <span class="mapping-from">Retraining</span>
               <span class="mapping-arrow">&rarr;</span>
-              <span class="mapping-to">Einstein Studio</span>
+              <span class="mapping-to">AI Studio</span>
             </div>
             <div class="mapping-row">
               <span class="mapping-from">Weight shifts</span>
@@ -1354,7 +1392,7 @@
   <!-- COMPOUNDING LIFECYCLE -->
   <div class="section">
     <div class="step-head">
-      <div class="step-num" style="background:rgba(115,3,148,0.08);color:#5521A8;border-color:rgba(115,3,148,0.2);">07</div>
+      <div class="step-num" style="background:rgba(115,3,148,0.08);color:#5521A8;border-color:rgba(115,3,148,0.2);">08</div>
       <div>
         <div class="step-title">The Compounding Lifecycle</div>
         <div class="step-desc">The system gets measurably better over time. Not because the brain improves, but because the memory accumulates. Each phase builds on the last.</div>
@@ -1401,7 +1439,7 @@
   <div class="section-alt">
     <div class="section">
       <div class="step-head">
-        <div class="step-num" style="background:rgba(115,3,148,0.08);color:#5521A8;border-color:rgba(115,3,148,0.2);">08</div>
+        <div class="step-num" style="background:rgba(115,3,148,0.08);color:#5521A8;border-color:rgba(115,3,148,0.2);">09</div>
         <div>
           <div class="step-title">The Proactive Agentic Layer</div>
           <div class="step-desc">Agents that reason about the system, not just per decision. The operator reviews suggestions instead of watching dashboards.</div>
@@ -1450,7 +1488,7 @@
   <!-- OFFER RESOLUTION & A2A -->
   <div class="section">
     <div class="step-head">
-      <div class="step-num" style="background:rgba(6,165,154,0.1);color:#007A72;border-color:rgba(6,165,154,0.25);">09</div>
+      <div class="step-num" style="background:rgba(6,165,154,0.1);color:#007A72;border-color:rgba(6,165,154,0.25);">10</div>
       <div>
         <div class="step-title">Resolution Depth &amp; the Agentic Web</div>
         <div class="step-desc">The engine resolves at the depth the endpoint requires. Human channels get intent. Buyer agents get a structured bid. Same arbitration, same governance, different output shape.</div>
@@ -1487,7 +1525,7 @@
   <div class="section-alt">
     <div class="section">
       <div class="step-head">
-        <div class="step-num" style="background:rgba(0,87,184,0.12);color:#0057B8;border-color:rgba(0,87,184,0.25);">10</div>
+        <div class="step-num" style="background:rgba(0,87,184,0.12);color:#0057B8;border-color:rgba(0,87,184,0.25);">11</div>
         <div>
           <div class="step-title">Why This Wasn't Possible Before</div>
           <div class="step-desc">Three platform capabilities that didn't exist (or weren't mature) even 18 months ago make this architecture viable now.</div>
@@ -1507,7 +1545,7 @@
         </div>
         <div style="background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 22px; box-shadow: var(--shadow-sm);">
           <div style="margin-bottom: 10px;"><i class="ph-duotone ph-crosshair" style="color:var(--blue);font-size:22px;"></i></div>
-          <div style="font-size: 14px; font-weight: 700; color: var(--ink); margin-bottom: 8px;">Einstein Studio</div>
+          <div style="font-size: 14px; font-weight: 700; color: var(--ink); margin-bottom: 8px;">AI Studio</div>
           <div style="font-size: 12.5px; color: var(--muted); line-height: 1.65;">Train, deploy, and retrain ML models on Data Cloud data without leaving the platform. <strong>Closes the learning loop:</strong> outcomes feed back into model training, which feeds back into the value function, which improves the next decision.</div>
         </div>
       </div>

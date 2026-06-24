@@ -809,7 +809,7 @@
   <!-- HERO -->
   <div class="hero">
     <div class="accent-line"></div>
-    <div class="hero-eyebrow">Salesforce &middot; Data Cloud &middot; Einstein Studio &middot; Agentforce &middot; Flow</div>
+    <div class="hero-eyebrow">Salesforce &middot; Data Cloud &middot; AI Studio &middot; Agentforce &middot; MCP</div>
     <h1>How the engine<br/><span class="hl">actually runs</span></h1>
     <p class="hero-sub">The operational guide to the shipped decisioning engine &mdash; from trigger to execution to learning loop. Deterministic when it can be. Reasoning when it should be. Creative when it has to be. Rails hold in every mode.</p>
     <div class="hero-version"><span class="dot"></span>v25 &middot; Unlocked Package &middot; Live</div>
@@ -1046,7 +1046,7 @@
       </div>
     </div>
 
-    <p style="font-size: 13px; color: var(--muted); margin-top: 18px; line-height: 1.7;"><strong style="color: var(--ink);">Restraint is a first-class outcome.</strong> When every action fails a rail, the engine writes a <em>null_action</em> row with the specific suppression reason rather than silently returning nothing. Einstein Studio trains on these rows too &mdash; "we chose not to speak to this contact" is a training signal, not an absence of one.</p>
+    <p style="font-size: 13px; color: var(--muted); margin-top: 18px; line-height: 1.7;"><strong style="color: var(--ink);">Restraint is a first-class outcome.</strong> When every action fails a rail, the engine writes a <em>null_action</em> row with the specific suppression reason rather than silently returning nothing. AI Studio trains on these rows too &mdash; "we chose not to speak to this contact" is a training signal, not an absence of one.</p>
   </div>
 
   <!-- STEP 1 -->
@@ -1163,7 +1163,7 @@
         <div class="loop-step">
           <div class="loop-step-num" style="color:var(--blue);">2 &middot; Score</div>
           <div class="loop-step-title">Mode-aware scoring</div>
-          <div class="loop-step-desc">Branches on <em>Scoring_Mode__c</em> &mdash; Einstein/external callout for <em>model</em>, hardcoded 1.0 for <em>segment</em>, criterion evaluation for <em>rule</em>. Zero callouts when not needed.</div>
+          <div class="loop-step-desc">Branches on <em>Scoring_Mode__c</em> &mdash; AI Studio flow / external callout for predictive modes, hardcoded 1.0 for <em>segment</em>, criterion evaluation for <em>rule</em>. Zero callouts when not needed.</div>
           <div class="loop-step-tag" style="background:rgba(2,42,192,0.06);color:var(--blue);border:1px solid rgba(2,42,192,0.16);">Model &middot; Segment &middot; Rule</div>
         </div>
         <div class="loop-arr">&rsaquo;</div>
@@ -1327,7 +1327,7 @@
           <i class="ph-duotone ph-brain" style="color:#730394;"></i>
         </div>
         <div class="fb-node-title">Retrain</div>
-        <div class="fb-node-desc"><em>NBARetrainingScheduler</em> gates per-module cadence (20h/6d/28d). Refreshes CIs, waits for IR, triggers Einstein Studio training.</div>
+        <div class="fb-node-desc"><em>NBARetrainingScheduler</em> gates per-module cadence (20h/6d/28d). Refreshes CIs, waits for IR, triggers AI Studio training.</div>
       </div>
       <div class="fb-arr">&rsaquo;</div>
       <div class="fb-node">
@@ -1341,7 +1341,7 @@
 
     <div class="retrain-callout">
       <div class="rc-label">Why the loop matters</div>
-      <div class="rc-body">On day one, Einstein scores on historical CRM and ERP data &mdash; a good starting point, not yet tuned to this org's customers. <strong>Every accepted action, every declined offer, every null_action restraint row is a training signal.</strong> The scheduler refuses to retrain while Identity Resolution is running (IR re-runs spike credits), skips locked CIs, and posts a Block Kit summary on success. After a few retraining cycles the model is meaningfully more accurate than any rules-based approach &mdash; and the composition agent has learned which catalogue gaps to fill.</div>
+      <div class="rc-body">On day one, AI Studio scores on historical CRM and ERP data &mdash; a good starting point, not yet tuned to this org's customers. <strong>Every accepted action, every declined offer, every null_action restraint row is a training signal.</strong> The scheduler refuses to retrain while Identity Resolution is running (IR re-runs spike credits), skips locked CIs, and posts a Block Kit summary on success. After a few retraining cycles the model is meaningfully more accurate than any rules-based approach &mdash; and the composition agent has learned which catalogue gaps to fill.</div>
     </div>
   </div>
 
@@ -1368,7 +1368,7 @@
           <div class="agent-title">Model Health Scope</div>
         </div>
         <div class="agent-body">
-          <p>Watches Einstein scores. Flags <strong>score collapse</strong> (stddev &lt; 0.05), <strong>low-confidence spikes</strong> (7d vs 30d), and <strong>distribution anomalies</strong> (&gt;80% extreme). Drafts plain-language explanations of suspected drift.</p>
+          <p>Watches AI Studio scores. Flags <strong>score collapse</strong> (stddev &lt; 0.05), <strong>low-confidence spikes</strong> (7d vs 30d), and <strong>distribution anomalies</strong> (&gt;80% extreme). Drafts plain-language explanations of suspected drift.</p>
         </div>
       </div>
       <div class="agent-card">
@@ -1570,7 +1570,7 @@
           <div class="scope-col-label" style="color:var(--lblue-d);">Configured post-install</div>
           <div class="scope-item"><div class="dot" style="background:var(--lblue-d);"></div>Data Cloud bundles (Sales + Service) &mdash; org-level prerequisite, not package metadata</div>
           <div class="scope-item"><div class="dot" style="background:var(--lblue-d);"></div>NBAAction catalogue &mdash; PostInstallSeeder loads defaults; customer tunes offers, weights, segments via the Catalogue Manager</div>
-          <div class="scope-item"><div class="dot" style="background:var(--lblue-d);"></div>Einstein Studio model training &mdash; run once from the Model Health card after CIs and the outcome Data Stream are live</div>
+          <div class="scope-item"><div class="dot" style="background:var(--lblue-d);"></div>AI Studio model training &mdash; run once from the Model Health card after CIs and the outcome Data Stream are live</div>
           <div class="scope-item"><div class="dot" style="background:var(--lblue-d);"></div>Tier1ReasoningArbiter + Tier2AgentDrafter + CompositionComposer &mdash; <em>.forceignored</em>, direct-deployed on orgs with <em>aiplatform</em></div>
           <div class="scope-item"><div class="dot" style="background:var(--lblue-d);"></div>Named Credentials: Einstein Trust Layer, Slack webhook, external model endpoints</div>
           <div class="scope-item"><div class="dot" style="background:var(--lblue-d);"></div>Real-Time Segment + Data Action per trigger &mdash; Data Cloud configuration, not metadata</div>
@@ -1611,7 +1611,7 @@
         <div class="effort-card" style="border-top-color:#A87700;">
           <div class="effort-card-num" style="color:#A87700;">2 days</div>
           <div class="effort-card-label">Manual config</div>
-          <div class="effort-card-desc">Train the first Einstein model &middot; wire the NBA_Decision outcome Data Stream &middot; configure Named Credentials (Trust Layer, Slack) &middot; deploy the <em>.forceignored</em> reasoning / drafter / composer classes &middot; Real-Time Segment + Data Action per trigger. Genuinely manual, not automatable.</div>
+          <div class="effort-card-desc">Train the first AI Studio model &middot; wire the NBA_Decision outcome Data Stream &middot; configure Named Credentials (Trust Layer, Slack) &middot; deploy the <em>.forceignored</em> reasoning / drafter / composer classes &middot; Real-Time Segment + Data Action per trigger. Genuinely manual, not automatable.</div>
         </div>
         <div class="effort-card" style="border-top-color:var(--teal-d);">
           <div class="effort-card-num" style="color:var(--teal-d);">Go live</div>

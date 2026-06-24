@@ -909,38 +909,38 @@
     </div>
   </div>
 
-  <!-- DECIDING vs SERVING -->
+  <!-- DECIDING vs DELIVERING -->
   <div class="section">
     <div class="step-head">
       <div class="step-num" style="background:rgba(0,87,184,0.08);border-color:rgba(0,87,184,0.18);">06</div>
       <div>
-        <div class="step-title">Deciding vs. Serving</div>
-        <div class="step-desc">The Decisioning Hub decides what to do. It doesn't deliver the experience. That separation is the architecture.</div>
+        <div class="step-title">Deciding vs. Delivering</div>
+        <div class="step-desc">The Decisioning Hub decides what to do. The channel delivers it. That separation is the architecture.</div>
       </div>
     </div>
 
     <div class="compare-grid">
       <div class="compare-card">
-        <div class="compare-label" style="color: var(--blue);">Decisioning Hub (batch, promotion-level)</div>
-        <div class="compare-item"><div class="dot" style="background: var(--blue);"></div>Evaluates relationship state, constrains the action space, scores the value function, selects the best promotion</div>
-        <div class="compare-item"><div class="dot" style="background: var(--blue);"></div>Writes pre-computed <strong>latent decisions</strong> to Data Cloud, cached and ready for any channel</div>
-        <div class="compare-item"><div class="dot" style="background: var(--blue);"></div>Runs on its own schedule (batch, segment-triggered, event-driven). No Apex in the hot path.</div>
+        <div class="compare-label" style="color: var(--blue);">Decisioning Hub (the what)</div>
+        <div class="compare-item"><div class="dot" style="background: var(--blue);"></div>Evaluates relationship state, constrains the action space, scores the value function, selects the best action</div>
+        <div class="compare-item"><div class="dot" style="background: var(--blue);"></div>Writes NBADecision__c &mdash; replicates to Data Cloud via Data Stream</div>
+        <div class="compare-item"><div class="dot" style="background: var(--blue);"></div>Segment-triggered, event-driven, or API-invoked</div>
         <div class="compare-item"><div class="dot" style="background: var(--blue);"></div>Records everything in the decision journal. Owns the learning loop.</div>
       </div>
       <div class="compare-vs">vs</div>
       <div class="compare-card">
-        <div class="compare-label" style="color: var(--teal-d);">Serving Layer (real-time, offer/treatment-level)</div>
-        <div class="compare-item"><div class="dot" style="background: var(--teal-d);"></div>Reads latent decisions from Data Cloud</div>
-        <div class="compare-item"><div class="dot" style="background: var(--teal-d);"></div>Selects the best <strong>offer, treatment, and channel</strong> for the moment</div>
-        <div class="compare-item"><div class="dot" style="background: var(--teal-d);"></div>Optimises in real-time: which creative, which channel, which time. This is what SP / Personalisation does natively.</div>
-        <div class="compare-item"><div class="dot" style="background: var(--teal-d);"></div>Operates at whatever concurrency the channel requires. No governor limits in the serving layer.</div>
-        <div class="compare-item"><div class="dot" style="background: var(--teal-d);"></div>Returns channel-level outcomes to the Hub for the learning loop.</div>
+        <div class="compare-label" style="color: var(--teal-d);">Delivery Channels (the how)</div>
+        <div class="compare-item"><div class="dot" style="background: var(--teal-d);"></div>DC dispatch segment activates to MCE (production marketing pattern)</div>
+        <div class="compare-item"><div class="dot" style="background: var(--teal-d);"></div>Slack cards for operator approval and info surfaces</div>
+        <div class="compare-item"><div class="dot" style="background: var(--teal-d);"></div>Record page LWC for reps (reads cached decisions)</div>
+        <div class="compare-item"><div class="dot" style="background: var(--teal-d);"></div>Webhook to any external system</div>
+        <div class="compare-item"><div class="dot" style="background: var(--teal-d);"></div>Returns outcomes to the Hub for the learning loop.</div>
       </div>
     </div>
 
     <div class="callout callout-left">
       <div class="callout-label" style="color: var(--blue);">The clean boundary</div>
-      <div class="callout-body">The Hub owns the <strong>what</strong> (which promotion, for whom, why). The serving layer owns the <strong>when and where</strong> (which offer, which treatment, which channel, right now). Without the Hub, the serving layer optimises tactics with no relationship intelligence. With the Hub, it serves offers backed by compounding memory. <strong>That's the upgrade story.</strong></div>
+      <div class="callout-body">The Hub owns the <strong>what</strong> (which action, for whom, why). The delivery channel owns the <strong>how</strong> (which creative, which timing, which format). The decision is made once, delivered through whatever channel the action specifies, and every outcome feeds back regardless of delivery path. <strong>The channel doesn't need to understand arbitration &mdash; it just delivers what the Hub selected.</strong></div>
     </div>
 
     <!-- RESOLUTION DEPTH -->
@@ -995,7 +995,7 @@
             <i class="ph-duotone ph-check-circle" style="color:#06A59A;"></i>
           </div>
           <div class="gap-card-title">What we capture today</div>
-          <div class="gap-card-desc">Agent or system accepts/rejects the recommendation. CampaignMember status writes back to Data Cloud. Einstein Studio retrains on this signal. <strong>This is necessary but not sufficient.</strong></div>
+          <div class="gap-card-desc">Agent or system accepts/rejects the recommendation. Outcome writes to NBADecision__c, replicates to Data Cloud. AI Studio retrains on this signal. <strong>This is necessary but not sufficient.</strong></div>
         </div>
         <div class="gap-card">
           <div class="gap-card-icon" style="background:rgba(2,42,192,0.06);border-color:rgba(2,42,192,0.14);">
@@ -1052,8 +1052,8 @@
           <div class="prim-card-label" style="color: var(--gold-d);">Value Function</div>
         </div>
         <div class="prim-card-body">
-          <div class="prim-card-desc">Einstein Studio models + Data Cloud calculated insights provide the signals. The value function composes them with configurable weights. Industry templates ship pre-tuned objective functions &mdash; banking weights compliance, telco weights churn risk.</div>
-          <div class="prim-card-cue">Einstein Studio + Data Cloud CIs = composable signals</div>
+          <div class="prim-card-desc">AI Studio models + Data Cloud calculated insights provide the signals. The value function composes them with configurable weights. Industry templates ship pre-tuned objective functions &mdash; banking weights compliance, telco weights churn risk.</div>
+          <div class="prim-card-cue">AI Studio + Data Cloud CIs = composable signals</div>
         </div>
       </div>
 
@@ -1063,8 +1063,8 @@
           <div class="prim-card-label" style="color: var(--purple-d);">Learning Loop</div>
         </div>
         <div class="prim-card-body">
-          <div class="prim-card-desc">Outcomes write back to CRM and Data Cloud. CIs aggregate decision patterns. Einstein Studio retrains on outcome data. Agentforce agents reason about the system itself &mdash; not just per-decision, but about whether the decisions are collectively working.</div>
-          <div class="prim-card-cue">CRM outcomes + Data Cloud + Einstein Studio = closed loop</div>
+          <div class="prim-card-desc">Outcomes write back to CRM and Data Cloud. CIs aggregate decision patterns. AI Studio retrains on outcome data. Agentforce agents reason about the system itself &mdash; not just per-decision, but about whether the decisions are collectively working.</div>
+          <div class="prim-card-cue">CRM outcomes + Data Cloud + AI Studio = closed loop</div>
         </div>
       </div>
     </div>
