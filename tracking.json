@@ -21106,5 +21106,17 @@
     "location": "Sydney, New South Wales, Australia",
     "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
     "returning": "yes"
+  },
+  {
+    "timestamp": "Wed, 24 Jun 2026 00:58:18 GMT",
+    "name": "Stuart Dunlop",
+    "company": "Salesforce",
+    "position": "Solutions",
+    "page": "Memory Architecture",
+    "url": "https://sdunlop-sf.github.io/nba-narrative/memory-architecture.html",
+    "ip": "147.161.214.184",
+    "location": "Sydney, New South Wales, Australia",
+    "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+    "returning": "yes"
   }
 ]
