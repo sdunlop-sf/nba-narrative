@@ -21418,5 +21418,17 @@
     "location": "-",
     "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
     "returning": "no"
+  },
+  {
+    "timestamp": "Tue, 30 Jun 2026 16:56:21 GMT",
+    "name": "Phil Howard",
+    "company": "SF",
+    "position": "SE",
+    "page": "Memory Approach",
+    "url": "https://sdunlop-sf.github.io/nba-narrative/memory-approach.html",
+    "ip": "-",
+    "location": "-",
+    "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+    "returning": "yes"
   }
 ]
