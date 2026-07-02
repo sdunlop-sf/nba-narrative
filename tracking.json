@@ -21430,5 +21430,17 @@
     "location": "-",
     "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
     "returning": "yes"
+  },
+  {
+    "timestamp": "Thu, 02 Jul 2026 01:47:30 GMT",
+    "name": "Stu",
+    "company": "SF",
+    "position": "SE",
+    "page": "Memory Architecture",
+    "url": "https://sdunlop-sf.github.io/nba-narrative/memory-architecture.html",
+    "ip": "2a02:8086:d74:c780:88b0:df69:f6bf:8142",
+    "location": "Dublin, Leinster, Ireland",
+    "ua": "Mozilla/5.0 (iPhone; CPU iPhone OS 18_7 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/26.5 Mobile/15E148 Safari/604.1",
+    "returning": "yes"
   }
 ]
