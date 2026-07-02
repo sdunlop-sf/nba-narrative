@@ -21454,5 +21454,17 @@
     "location": "London, England, United Kingdom",
     "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
     "returning": "yes"
+  },
+  {
+    "timestamp": "Thu, 02 Jul 2026 20:01:03 GMT",
+    "name": "jack",
+    "company": "salesforce",
+    "position": "se",
+    "page": "Memory Approach",
+    "url": "https://sdunlop-sf.github.io/nba-narrative/memory-approach.html",
+    "ip": "147.161.167.33",
+    "location": "London, England, United Kingdom",
+    "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36",
+    "returning": "yes"
   }
 ]
