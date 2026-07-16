@@ -21526,5 +21526,17 @@
     "location": "Canberra, Australian Capital Territory, Australia",
     "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36",
     "returning": "no"
+  },
+  {
+    "timestamp": "Thu, 16 Jul 2026 15:18:42 GMT",
+    "name": "Blair",
+    "company": "Salesforce",
+    "position": "SE",
+    "page": "Decisioning Hub Framing v2 Lite",
+    "url": "https://sdunlop-sf.github.io/decisioning-hub-framing/v2-lite.html",
+    "ip": "165.225.210.238",
+    "location": "Vancouver, British Columbia, Canada",
+    "ua": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/150.0.0.0 Safari/537.36",
+    "returning": "yes"
   }
 ]
