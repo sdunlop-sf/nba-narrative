@@ -24,7 +24,7 @@
   <div class="wrap">
     <div class="kick">01 · Why · the positioning</div>
     <h1>Stop building a smarter brain. <span class="hl">Start building a better memory.</span></h1>
-    <p class="lede">Most decisioning programmes put a new engine at the centre and ask every channel to plug into it. We do the opposite: a thin, governed <b>decisioning harness</b> that owns each customer moment, remembers every decision, and lets every channel keep doing what it does best.</p>
+    <p class="lede">Most decisioning programmes put a new engine at the centre and ask every channel to plug into it. We do the opposite: a thin, governed <b>decisioning harness</b> that owns each customer moment, remembers every decision, and lets every channel do what it's best at: reading the live context and converting.</p>
     <div class="tabsrow">
       <a class="tabcard on" href="#problem"><i>01 · Why</i><b>The idea</b><span>Why a harness beats another brain</span></a>
       <a class="tabcard" href="memory-architecture.html"><i>02 · What</i><b>The architecture</b><span>The parts, and where they sit</span></a>
@@ -41,7 +41,7 @@
     <h2 class="h rv">The AI is fine. <b>The system around it forgets.</b></h2>
     <p class="lede rv">A call, a claim, a renewal, a lapsed login: every signal is a moment in a relationship. Campaign tools answer some of them on a schedule. Central decision engines try to answer all of them, and over time they turn into a system the business stops using.</p>
     <div class="vs">
-      <div class="card old rv"><p class="k">Brain at the centre</p><h3>What usually happens</h3>
+      <div class="card old rv"><p class="k">Brain at the centre</p><h3>What usually happens with decisioning programmes</h3>
         <ul>
           <li><em>!</em><span><b>Every change queues behind one team.</b> New offer, copy tweak, channel rule: all through central specialists.</span></li>
           <li><em>!</em><span><b>The business stops going in.</b> A separate tool, its own concepts and skills. Channel teams build work-arounds.</span></li>
@@ -63,25 +63,27 @@
 <section class="s" data-s="dark" id="idea">
   <div class="wrap">
     <p class="eb rv"><span class="no">02</span><span class="sep"></span>The idea</p>
-    <h2 class="h rv">The harness owns the moment. <b>The channel owns the rest.</b></h2>
-    <p class="lede rv">A decisioning harness is the governed layer every channel, app and agent calls to decide what happens next. In each lifecycle moment it decides what's right for this customer, and whether to act at all. The channel decides how it's delivered.</p>
+    <h2 class="h rv">The harness decides. <b>The channel converts.</b></h2>
+    <p class="lede rv">A decisioning harness is the governed layer every channel, app and agent calls to decide what happens next. In each lifecycle moment it decides what's right for this customer, whether to act at all, with which content and when. The channel receives that decision as a payload, reads the live context and turns it into a conversion.</p>
     <div class="own">
       <div class="card rv"><p class="k">The harness owns</p>
-        <div class="row"><b>What</b><span>Which action or offer, or none, in this moment</span></div>
+        <div class="row"><b>What</b><span>Which action or offer, or none; a ranked set when there are several placements</span></div>
         <div class="row"><b>Whether</b><span>Consent, suppression, fatigue, conflicts across teams</span></div>
-        <div class="row"><b>Which</b><span>Which approved content, or delegated to the channel</span></div>
+        <div class="row"><b>Which</b><span>Which approved content from the shelf, or delegated to the channel</span></div>
+        <div class="row"><b>When</b><span>The timing window and best time to reach the customer</span></div>
         <div class="row"><b>Start</b><span>Fulfilment, through existing Salesforce Flows</span></div>
         <div class="row"><b>Record</b><span>Why it decided, and what happened</span></div>
       </div>
       <div class="card rv"><p class="k">The channel owns</p>
-        <div class="row"><b>How</b><span>Rendering, layout, creative production and testing</span></div>
-        <div class="row"><b>When</b><span>Exact send time, quiet hours, journey steps</span></div>
-        <div class="row"><b>Mechanics</b><span>Journeys, placements and scripts</span></div>
-        <div class="row"><b>Reporting</b><span>Channel engagement</span></div>
+        <div class="row"><b>Context</b><span>The live session: what's on screen, who's on the call, what just happened</span></div>
+        <div class="row"><b>Render</b><span>Furnish the payload: layout, assets and placement</span></div>
+        <div class="row"><b>Convert</b><span>In-session optimisation and testing to turn the decision into a result</span></div>
+        <div class="row"><b>Mechanics</b><span>Journey steps, delivery rules and scripts</span></div>
+        <div class="row"><b>Report</b><span>Engagement back to the harness as outcomes</span></div>
       </div>
     </div>
     <div class="grid c3">
-      <div class="card spot lift rv"><h3>One decision per customer</h3><p>It arbitrates across every team's objectives (retention, cross-sell, service), so the customer gets the most relevant interaction, not the loudest campaign.</p></div>
+      <div class="card spot lift rv"><h3>One governed decision</h3><p>It arbitrates across every team's objectives (retention, cross-sell, service), so the customer gets the most relevant interaction, not the loudest campaign. Where a page or app has several slots, it returns a ranked set.</p></div>
       <div class="card spot lift rv"><h3>"Do nothing" is a decision</h3><p>When the right answer is to hold back (an open complaint, hardship, recent contact), the harness records that choice and the reason.</p></div>
       <div class="card spot lift rv"><h3>The reasoning is pluggable</h3><p>Rules, your own models, learning, and AI where it's justified. The reasoning can change; the governed record of decisions stays.</p></div>
     </div>
@@ -93,11 +95,12 @@
   <div class="wrap">
     <p class="eb rv"><span class="no">03</span><span class="sep"></span>Two sides of the work</p>
     <h2 class="h rv">Stop building campaigns. <b>Stock a shelf, and let the harness decide from it.</b></h2>
-    <p class="lede rv">Marketing splits into two sides. On the build side, people (working with AI) create and approve the actions, offers and content that go on a composable shelf. On the delivery side, the harness decides from that shelf for each customer, within guardrails the business sets.</p>
-    <div class="grid c3">
-      <div class="card spot lift rv"><p class="k">Build side</p><h3>Stock the shelf</h3><p>Offers, content and short journeys are created, tagged and approved once, then reused everywhere. AI helps draft; people approve.</p></div>
-      <div class="card hero-card lift rv"><p class="k">Delivery side</p><h3>Decide from the shelf</h3><p>The harness picks the right action, offer and approved content for each customer and moment, then the channel delivers it.</p></div>
-      <div class="card spot lift rv"><p class="k">Governance</p><h3>Set the guardrails</h3><p>The business sets objectives, priorities and contact rules, and approves bigger changes the system proposes. Small adjustments apply automatically; larger ones need a person.</p></div>
+    <p class="lede rv">Marketing splits into two sides, under guardrails the business sets first. On the build side, people (working with AI) create and approve what goes on a composable shelf. On the delivery side, the harness decides from that shelf for each customer.</p>
+    <div class="gov rv"><span class="k">Governance, set first</span><p>The business sets objectives, priorities, contact rules and approval thresholds before anything is delivered. Small adjustments the system proposes apply automatically; larger ones need a person.</p></div>
+    <div class="sides">
+      <div class="card spot lift rv"><p class="k">Build side · people with AI</p><h3>Stock the shelf</h3><p>Actions, offers, content, journeys and fulfilment Flows are created, tagged and approved once, then reused everywhere. AI helps draft; people approve.</p></div>
+      <div class="arrowx rv" aria-hidden="true"><svg viewBox="0 0 60 24"><path d="M2 12 H54 M46 4 L56 12 L46 20"/></svg></div>
+      <div class="card hero-card lift rv"><p class="k">Delivery side · the harness</p><h3>Decide from the shelf</h3><p>For each customer and moment, the harness picks the action, offer, approved content and timing, then hands the payload to the channel to convert.</p></div>
     </div>
     <h3 class="sub rv">The four gaps it closes</h3>
     <div class="grid c4" style="margin-top:18px">
@@ -137,11 +140,11 @@
 <section class="s" data-s="light" id="io">
   <div class="wrap">
     <p class="eb rv"><span class="no">05</span><span class="sep"></span>Outbound meets inbound</p>
-    <h2 class="h rv">One decision, <b>two speeds</b></h2>
+    <h2 class="h rv">Decide ahead. <b>Serve in the moment.</b></h2>
     <p class="lede rv">Lifecycle decisions are made ahead of time and kept current. Inbound channels serve that decision in the moment, and a new decision is made when context changes. An outcome in one channel updates all the others.</p>
     <div class="grid c3">
       <div class="card spot lift rv"><p class="k">Decide ahead</p><h3>Lifecycle &amp; outbound</h3><p>Decisions made on customer events and in daily cycles, across every objective and policy, then held as each customer's current next best action. Delivered through journeys and outbound teams.</p></div>
-      <div class="card spot lift rv"><p class="k">Serve in the moment</p><h3>Inbound</h3><p>Web, app, contact centre and stores read the current decision. A call, a complaint or a decline triggers a fresh one.</p></div>
+      <div class="card spot lift rv"><p class="k">Serve in the moment</p><h3>Inbound</h3><p>Web, app, contact centre and stores read the current decision (or a ranked set for several slots) and add the live context. A call, a complaint or a decline triggers a fresh decision.</p></div>
       <div class="card hero-card lift rv"><p class="k">Close the loop</p><h3>Consistent everywhere</h3><p>Accept in an email and the web tile disappears. Decline on a call and the next channel gets a different, better-suited action.</p></div>
     </div>
   </div>

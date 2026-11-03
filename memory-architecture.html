@@ -57,7 +57,7 @@
             <div class="it" data-g="b" data-k="loop">④ Learning loop<small>outcomes make the next decision better</small></div>
           </div>
           <div class="wire"><svg viewBox="0 0 64 24"><path d="M2 12 H62"/><circle cx="2" cy="12" r="4"/></svg></div>
-          <div class="col card"><h4>Channels · keep their craft</h4>
+          <div class="col card"><h4>Channels · context &amp; conversion</h4>
             <div class="it" data-g="c" data-k="ch">Journeys<small>Marketing Cloud</small></div>
             <div class="it" data-g="c" data-k="ch">Service console<small>contact centre, stores</small></div>
             <div class="it" data-g="c" data-k="ch">Web, app, agents<small>by API</small></div>
@@ -78,11 +78,12 @@
     <h2 class="h rv">Everything the harness can choose from, <b>built once and reused everywhere</b></h2>
     <p class="lede rv">The shelf is a living inventory, not a content library. Each item is tagged (channel, eligibility, dates, regulatory flags) so the harness knows what it may use and when. Tap a level to see how it maps to the platform.</p>
     <div class="dx" style="margin-top:36px">
-      <div class="grid c4" style="margin-top:0" id="shelf-levels">
+      <div class="grid c5" style="margin-top:0" id="shelf-levels">
         <button class="card spot lift lvl-b rv" data-l="idx"><p class="k">Index</p><h3>Action catalogue</h3><p>What the business can do, with value, eligibility and limits.</p></button>
         <button class="card spot lift lvl-b rv" data-l="atom"><p class="k">Level 1</p><h3>Atomic assets</h3><p>Copy, images, offer constructs and templates.</p></button>
         <button class="card spot lift lvl-b rv" data-l="comp"><p class="k">Level 2</p><h3>Compiled communications</h3><p>An offer, a creative and a channel, ready to send.</p></button>
         <button class="card spot lift lvl-b rv" data-l="micro"><p class="k">Level 3</p><h3>Micro-journeys</h3><p>Short, self-contained sequences delivered as a block.</p></button>
+        <button class="card spot lift lvl-b rv" data-l="ful"><p class="k">Fulfilment</p><h3>Fulfilment Flows</h3><p>The processes an action starts when it's accepted.</p></button>
       </div>
       <div class="card detail rv" id="shelf-detail"></div>
     </div>
@@ -154,9 +155,9 @@
     <p class="eb rv"><span class="no">06</span><span class="sep"></span>Resolution depth</p>
     <h2 class="h rv">Same decision. <b>The right level of detail for each endpoint.</b></h2>
     <div class="grid c4">
-      <div class="card spot lift rv"><p class="k">Marketing</p><h3>Intent</h3><p>The action and the timing window. The journey owns the rest.</p></div>
+      <div class="card spot lift rv"><p class="k">Marketing</p><h3>Intent</h3><p>The action, content and timing window. The journey runs the steps.</p></div>
       <div class="card spot lift rv"><p class="k">Service</p><h3>Intent + treatment</h3><p>The action plus a script, the eligible options and the reason.</p></div>
-      <div class="card spot lift rv"><p class="k">Web &amp; app</p><h3>Intent + content</h3><p>The action and the approved content reference to render.</p></div>
+      <div class="card spot lift rv"><p class="k">Web &amp; app</p><h3>Intent + content</h3><p>The action and approved content to render, or a ranked set for several slots.</p></div>
       <div class="card hero-card lift rv"><p class="k">Agents</p><h3>A structured offer</h3><p>The full offer: code, value, validity and limits, so another agent can negotiate within guardrails.</p></div>
     </div>
   </div>
@@ -183,7 +184,7 @@
     <table class="t rv">
       <thead><tr><th style="width:24%">Part</th><th>Salesforce capability</th><th style="width:28%">Shipped as</th></tr></thead>
       <tbody>
-        <tr><td>Composable shelf</td><td>Action catalogue; promotions, offers and treatments in Real-Time Offer Management; content from the CMS (Contentful, AEM or Salesforce CMS) catalogued in Data 360; journeys in Marketing Cloud or Flow as micro-journeys</td><td>Package + your content and offers</td></tr>
+        <tr><td>Composable shelf</td><td>Action catalogue; promotions, offers and treatments in Real-Time Offer Management; content from the CMS (Contentful, AEM or Salesforce CMS) catalogued in Data 360; journeys in Marketing Cloud as micro-journeys; fulfilment Flows</td><td>Package + your content and offers</td></tr>
         <tr><td>Relationship state</td><td>Data 360 and calculated insights; cached customer context (fatigue, preference, value)</td><td>Package + Data 360 setup</td></tr>
         <tr><td>Action space</td><td>Action catalogue, contact policy and suppression; offers via Real-Time Offer Management (optional)</td><td>Package</td></tr>
         <tr><td>Value function</td><td>AI Studio models, external model endpoints, Data 360 scores</td><td>Package + your models</td></tr>
@@ -210,9 +211,9 @@ const D={
  value:{k:"Primitive ③",t:"Value function",p:"What \"best\" means, written as configurable math rather than hard-coded rules. The business weighs model score, offer value, customer value, priority and what has been learned.",ex:"Raise the retention priority and a retention conversation outranks an upgrade for customers whose renewal is due. Try it in section 03.",plat:["AI Studio","Your models","Business priorities"]},
  loop:{k:"Primitive ④",t:"Learning loop",p:"Every outcome is written back: accepted, declined, verified against real events, and compared with a holdout. Learned weights adjust which actions win, by segment.",ex:"Retention calls convert better than emails for long-tenure customers, so the harness learns to prefer the call for that group.",plat:["Decision record","Holdouts","Learned weights"]},
  ctx:{k:"Context",t:"Context stays where it is",p:"The harness reads context in place: the CRM natively, the data warehouse through Data 360 without copying, and models through AI Studio or an external endpoint. It isn't a second customer database.",ex:"A score from a model built in the data science team's own platform is read at decision time; nothing is re-platformed.",plat:["Salesforce CRM","Data 360 zero-copy","External models"]},
- ch:{k:"Channels",t:"Channels keep their craft",p:"Each channel receives the decision at the level of detail it needs, and keeps ownership of how it's delivered: rendering, creative, timing and journey steps.",ex:"Marketing Cloud gets \"retention offer, this week\". The contact centre gets the same decision with a script and the reasons.",plat:["Marketing Cloud","Service console","REST API","Agentforce"]}
+ ch:{k:"Channels",t:"Channels: context and conversion",p:"Each channel receives the decision as a payload at the level of detail it needs: the action, content, timing window, or a ranked set for several slots. Its job is to read the live context, render the payload and convert, then report the outcome back.",ex:"Marketing Cloud gets \"retention offer, this week\". The contact centre gets the same decision with a script and the reasons.",plat:["Marketing Cloud","Service console","REST API","Agentforce"]}
 };
-D.shelf={k:"Context",t:"The composable shelf",p:"Everything the harness can choose from: the action catalogue, offers and promotions, approved content, and short journeys. It's built and approved once on the build side, then reused by every channel.",ex:"A retention action points to a loyalty promotion in Real-Time Offer Management, with three approved content variants from the CMS for email, console and app.",plat:["Action catalogue","Real-Time Offer Management","Data 360 content catalogue","Contentful / AEM / Salesforce CMS"]};
+D.shelf={k:"Context",t:"The composable shelf",p:"Everything the harness can choose from: the action catalogue, offers and promotions, approved content, short journeys and the fulfilment Flows actions start. It's built and approved once on the build side, then reused by every channel.",ex:"A retention action points to a loyalty promotion in Real-Time Offer Management, with three approved content variants from the CMS for email, console and app.",plat:["Action catalogue","Real-Time Offer Management","Data 360 content catalogue","Contentful / AEM / Salesforce CMS","Salesforce Flow"]};
 const det=$('dx-detail');
 function pick(k){ const d=D[k]; document.querySelectorAll('#system .it').forEach(e=>e.classList.toggle('sel',e.dataset.k===k&&e.closest('.core')));
   det.classList.remove('swap'); void det.offsetWidth; det.classList.add('swap');
@@ -224,6 +225,7 @@ const L={
  idx:{k:"Index",t:"Action catalogue",p:"The list of things the business can do for a customer. Each action carries its objective, value, priority, eligibility, start and end dates, budget, stock and a fallback action. It points to the offer and content it uses.",ex:"\"Retention conversation\": retention objective, high value, eligible 30 days before renewal, budget capped per month.",plat:["Action catalogue","Objectives","Contact policy"]},
  atom:{k:"Level 1",t:"Atomic assets",p:"The smallest reusable pieces: copy variants, images, offer constructs and templates, each tagged with channel, eligibility and expiry. They live in the systems built for them and are referenced, not copied.",ex:"Three headline variants and two images for a loyalty offer, held in the CMS and catalogued in Data 360.",plat:["Contentful / AEM / Salesforce CMS","Data 360 content catalogue","Offer constructs"]},
  comp:{k:"Level 2",t:"Compiled communications",p:"An offer bundled with a treatment for a specific channel, approved and ready to deliver. The harness selects the right one for the moment; it doesn't rebuild it.",ex:"A loyalty promotion with its email treatment, SMS treatment and console script, rotated through escalating tiers.",plat:["Real-Time Offer Management","Promotions & offers","Treatments"]},
+ ful:{k:"Fulfilment",t:"Fulfilment Flows",p:"Each action can point to the Salesforce Flow that fulfils it: create a quote, raise a booking, open a case, schedule a follow-up. They're approved, reusable shelf items like any other, so the decision fits the processes the business already runs.",ex:"Accepting \"retention conversation\" in the console runs the Flow that creates the retention quote and logs the follow-up task.",plat:["Salesforce Flow","Action catalogue (fulfilment reference)"]},
  micro:{k:"Level 3",t:"Micro-journeys",p:"Short, purpose-built sequences, such as a welcome series or a renewal sequence. The harness decides when to start one; the journey keeps its own steps.",ex:"Accepting a retention offer starts a three-step renewal journey in Marketing Cloud, or a Flow that creates the quote.",plat:["Marketing Cloud journeys","Salesforce Flow"]}
 };
 const sd=$('shelf-detail');
