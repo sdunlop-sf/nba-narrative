@@ -310,3 +310,4 @@ button.card{font:inherit;color:inherit;text-align:left;cursor:pointer;border:0;w
 .c5{grid-template-columns:repeat(5,1fr)}
 @media (max-width:1100px){.c5{grid-template-columns:repeat(3,1fr)}}@media (max-width:700px){.c5{grid-template-columns:1fr}}
 .hero .wrap{width:100%}
+@media (min-width:1101px){#shelf-levels h3{min-height:2.5em;display:flex;align-items:flex-end}}
